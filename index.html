@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng Đăng Nhập Lớp 4A</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <h2 style="color:#0284c7; margin-bottom:10px">🎓 ĐIỂM DANH LỚP 4A</h2>
+        <p style="color:#666">Chọn tên của em để vào lớp:</p>
+        
+        <select id="student-name">
+            <option value="">-- Chọn tên --</option>
+        </select>
+        
+        <button onclick="saveName()">VÀO LỚP HỌC</button>
+    </div>
+
+    <script>
+        const DANH_SACH = [
+            "Vũ Việt Anh", "Vũ Gia Bảo", "Lê Thị Liên Chi", "Bùi Anh Dũng", "Vũ Quốc Duy",
+            "Nguyễn Đăng Dương", "Nguyễn Trí Đại", "Lê Bá Đạt", "Nguyễn Văn Đạt", "Lê Minh Hạnh",
+            "Vũ Ngọc Huyền", "Lê Gia Khánh", "Nguyễn Đăng Kiên", "Vũ Đình Khánh Linh", "Mai Quang Long",
+            "Lê Văn Lộc", "Vũ Anh Minh", "Hoàng Bảo Nam", "Phạm Thị Kim Ngân", "Vũ Thu Ngân",
+            "Vũ Thị Yến Nhi", "Đàm Thị Quỳnh Như", "Phạm Hạnh Gia Phát", "Nguyễn Hoàng Thiên Phúc", "Vũ Quang Phúc",
+            "Nguyễn Nhã Phương", "Nguyễn Thị Quỳnh", "Lê Ngọc Sơn", "Đặng Thị Thanh Tâm", "Vũ Thị Minh Tâm",
+            "Lê Vũ Chí Thành", "Lê Anh Thơ", "Vũ Song Vũ", "--- GIÁO VIÊN TEST ---"
+        ];
+        
+        const sel = document.getElementById("student-name");
+        DANH_SACH.forEach(ten => {
+            let opt = document.createElement("option");
+            opt.value = ten; opt.text = ten;
+            sel.add(opt);
+        });
+
+        function saveName() {
+            const name = sel.value;
+            if(!name) return alert("Em chưa chọn tên!");
+            
+            localStorage.setItem("hocSinhLop4A", name);
+            // Chuyển hướng đến Menu chọn 4 môn
+            window.location.href = "Menu.html";
+        }
+    </script>
+</body>
+</html>
