@@ -1,0 +1,260 @@
+/* style.css - GIAO DIỆN 3D GAME HÓA CHO LỚP 4A */
+
+/* 1. Cấu hình chung */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e0f2fe; /* Màu nền xanh nhạt dịu mắt */
+    background-image: radial-gradient(#bae6fd 1px, transparent 1px);
+    background-size: 20px 20px; /* Họa tiết chấm bi mờ */
+    margin: 0;
+    padding: 0;
+    display: flex;             /* Dùng Flexbox để căn giữa */
+    justify-content: center;   /* Căn giữa ngang */
+    align-items: center;       /* Căn giữa dọc */
+    min-height: 100vh;         /* Chiều cao full màn hình */
+    color: #333;
+}
+
+/* 2. Khung chứa chính (Container) */
+.quiz-container, .login-container {
+    background: white;
+    width: 90%;                 /* Chiếm 90% màn hình điện thoại */
+    max-width: 600px;           /* Không quá to trên máy tính */
+    padding: 30px;
+    border-radius: 20px;        /* Bo tròn nhiều hơn */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Bóng mờ mềm mại */
+    text-align: center;         /* Căn giữa nội dung bên trong */
+    margin: 20px auto;          /* Canh giữa tuyệt đối */
+    border: 4px solid #fff;     /* Viền trắng tạo độ nổi */
+}
+
+/* ĐIỀU CHỈNH RIÊNG CHO KHUNG ĐĂNG NHẬP (Để ô chọn tên đẹp hơn) */
+.login-container {
+    max-width: 400px;
+    padding: 40px;
+}
+
+/* --- Ô CHỌN TÊN (Đã nâng cấp to rõ) --- */
+.login-container select {
+    width: 100%;
+    padding: 15px 20px;      /* Tăng độ dày vùng bấm */
+    margin: 20px 0;
+    border-radius: 12px;     /* Bo tròn mềm mại */
+    border: 3px solid #bae6fd; /* Viền dày màu xanh nhạt */
+    font-size: 20px;         /* Cỡ chữ to rõ */
+    font-weight: bold;       /* Chữ đậm */
+    color: #0284c7;          /* Chữ màu xanh thương hiệu */
+    background-color: #f0f9ff; /* Nền xanh rất nhạt */
+    cursor: pointer;
+    outline: none;
+    appearance: none;        /* Xóa giao diện mặc định */
+    
+    /* Mũi tên chỉ xuống tùy chỉnh màu xanh */
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230284c7%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 16px auto;
+}
+
+.login-container select:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.3);
+}
+
+/* 3. NÚT BẤM 3D (IMPRESSIVE BUTTONS) */
+button, .btn-submit {
+    background: linear-gradient(to bottom, #38bdf8, #0284c7); /* Màu chuyển sắc */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 900;           /* Chữ đậm */
+    text-transform: uppercase;  /* Chữ in hoa */
+    border-radius: 15px;        /* Bo tròn nút */
+    padding: 15px 20px;
+    font-size: 18px;
+    width: 100%;
+    margin-top: 20px;
+    transition: all 0.1s;
+    
+    /* TẠO KHỐI 3D */
+    box-shadow: 0 6px 0 #0369a1; /* Bóng cứng phía dưới */
+    position: relative;
+    top: 0;
+}
+
+/* Hiệu ứng khi bấm vào (Nút lún xuống) */
+button:active, .btn-submit:active {
+    top: 6px;                   /* Dịch xuống 6px */
+    box-shadow: 0 0 0 #0369a1;  /* Mất bóng */
+}
+
+button:hover, .btn-submit:hover {
+    filter: brightness(1.1);    /* Sáng lên khi di chuột vào */
+}
+
+button:disabled {
+    background: #cbd5e1;
+    box-shadow: none;
+    cursor: not-allowed;
+    top: 0;
+}
+
+/* 4. Thẻ Môn học trong Menu (Cũng làm 3D) */
+.menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 cột */
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.subject-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    color: #0284c7;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid #38bdf8;
+    
+    /* Hiệu ứng 3D cho thẻ */
+    box-shadow: 0 5px 0 #bae6fd;
+    transition: all 0.1s;
+    position: relative;
+    top: 0;
+}
+
+.subject-card:hover {
+    background: #f0f9ff;
+    transform: translateY(-2px); /* Nhảy lên nhẹ */
+}
+
+.subject-card:active {
+    top: 5px;
+    box-shadow: 0 0 0 #bae6fd;
+}
+
+/* 5. Giao diện câu hỏi */
+.header {
+    background: #e0f2fe;
+    padding: 15px;
+    border-radius: 15px;
+    border: 2px dashed #7dd3fc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header h2 { margin: 0; color: #0284c7; font-size: 1.1rem; text-align: left; }
+
+.question-block {
+    background: #fff;
+    border: 2px solid #f1f5f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    text-align: left; /* Câu hỏi căn trái cho dễ đọc */
+    box-shadow: 0 4px 0 #f1f5f9; /* Khối nhẹ */
+}
+
+.question-text { font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; }
+
+.options label {
+    display: block;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: left;
+}
+
+.options label:hover {
+    background: #f0f9ff;
+    border-color: #38bdf8;
+    color: #0284c7;
+    font-weight: bold;
+}
+
+.options input { margin-right: 10px; transform: scale(1.3); }
+
+/* Menu điều hướng trên cùng */
+.menu-top { margin-bottom: 15px; text-align: left; }
+.menu-top a {
+    text-decoration: none;
+    color: #64748b;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.menu-top a:hover { color: #0284c7; }
+
+/* 6. Bảng kết quả (Popup) */
+.result-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex; justify-content: center; align-items: center; z-index: 1000;
+}
+.result-box {
+    background: white; padding: 40px; border-radius: 20px; width: 90%; max-width: 400px;
+    text-align: center; border-bottom: 8px solid #0284c7;
+    animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng nảy */
+}
+.result-box h3 { margin-top: 0; color: #0284c7; font-size: 1.5rem; }
+.result-score { font-size: 4rem; font-weight: 900; color: #ea580c; margin: 10px 0; text-shadow: 2px 2px 0 #fed7aa; }
+.result-info { color: #555; margin-bottom: 25px; font-size: 1.1rem; }
+
+.btn-group-result { display: flex; gap: 10px; flex-direction: column; }
+.btn-continue { background: linear-gradient(to bottom, #38bdf8, #0284c7); }
+.btn-finish { background: linear-gradient(to bottom, #94a3b8, #64748b); box-shadow: 0 6px 0 #475569; }
+.btn-finish:active { box-shadow: none; top: 6px; }
+
+@keyframes popUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+/* --- PHẦN MỚI: CHẾ ĐỘ XEM LẠI BÀI --- */
+
+/* 1. Nút Xem lại trong bảng kết quả */
+.btn-review {
+    background: linear-gradient(to bottom, #f59e0b, #d97706); /* Màu cam */
+    box-shadow: 0 6px 0 #b45309;
+}
+.btn-review:active { box-shadow: none; top: 6px; }
+
+/* 2. Hiển thị Đúng/Sai khi xem lại */
+/* Đáp án ĐÚNG: Nền xanh lá, chữ đậm */
+.res-correct {
+    background-color: #dcfce7 !important;
+    border: 2px solid #22c55e !important;
+    color: #15803d !important;
+}
+/* Thêm icon tick xanh vào đáp án đúng */
+.res-correct::after {
+    content: " ✅ Chính xác!";
+    font-weight: bold;
+    color: #15803d;
+    float: right;
+}
+
+/* Đáp án SAI (Học sinh chọn nhầm): Nền đỏ, chữ đậm */
+.res-wrong {
+    background-color: #fee2e2 !important;
+    border: 2px solid #ef4444 !important;
+    color: #b91c1c !important;
+}
+/* Thêm icon x đỏ vào đáp án sai */
+.res-wrong::after {
+    content: " ❌ Sai rồi";
+    font-weight: bold;
+    color: #b91c1c;
+    float: right;
+}
+
+/* 3. Ẩn nút nộp bài khi đang xem lại */
+.hidden-btn { display: none; }

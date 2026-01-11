@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Sử & Địa Lý</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="menu-top"><a href="Menu.html">⬅ Quay về chọn môn</a></div>
+        <div class="header">
+            <div class="info">
+                <h2 id="ten-bai-tap">LỊCH SỬ & ĐỊA LÝ - TUẦN ...</h2>
+                <p>Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
+            </div>
+            <div class="timer">⏱ <span id="timer">00:00</span></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 1: Câu hỏi mẫu môn Sử - Địa...</div>
+            <div class="options">
+                <label><input type="radio" name="sd1" value="A"> A. Đáp án A</label>
+                <label><input type="radio" name="sd1" value="B" data-correct="true"> B. Đáp án đúng</label>
+            </div>
+        </div>
+
+        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
+    </div>
+    <script type="module" src="core.js"></script>
+</body>
+</html>
