@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bài Tập Tiếng Việt</title>
     
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #e0f2fe; padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; width: 100%; max-width: 600px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #fff; }
         
-        /* Header */
+        /* Header & Timer */
         .header { background: #f0f9ff; padding: 15px; border-radius: 12px; border: 2px dashed #bae6fd; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .header h2 { font-size: 1.1rem; margin: 0; color: #0284c7; }
         .timer { font-size: 1.5rem; font-weight: 900; color: #dc2626; }
@@ -21,7 +25,7 @@
         .options label:hover { background: #f0f9ff; border-color: #0284c7; color: #0284c7; }
         .options input { margin-right: 10px; transform: scale(1.3); }
 
-        /* Nút bấm */
+        /* Nút bấm Nộp bài */
         #btn-nop { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 18px; font-weight: 900; color: white; cursor: pointer; background: linear-gradient(to bottom, #38bdf8, #0284c7); box-shadow: 0 6px 0 #075985; transition: all 0.1s; margin-top: 10px; }
         #btn-nop:active { top: 6px; box-shadow: none; transform: translateY(4px); }
         
@@ -86,31 +90,22 @@
         <p id="status-log" style="text-align:center; color:#666; font-size:12px; margin-top:10px;"></p>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        // Import Confetti
-        import confetti from "https://cdn.skypack.dev/canvas-confetti";
-
+    <script>
+        // Cấu hình Firebase
         const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
-
+        
         let db;
         try {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            document.getElementById("status-log").innerText = "✅ Đã kết nối hệ thống chấm điểm.";
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            document.getElementById("status-log").innerText = "✅ Hệ thống sẵn sàng.";
         } catch (e) {
-            document.getElementById("status-log").innerText = "❌ Lỗi kết nối Firebase: " + e.message;
-            alert("Lỗi kết nối mạng hoặc Firebase!");
+            document.getElementById("status-log").innerText = "⚠️ Lỗi kết nối: " + e.message;
         }
 
-        // Kiểm tra tên học sinh
+        // Hiện tên học sinh
         const studentName = localStorage.getItem("hocSinhLop4A");
-        if (studentName) {
-            document.getElementById("student-display").innerText = studentName;
-        } else {
-            document.getElementById("student-display").innerText = "Khách (Chưa đăng nhập)";
-        }
+        document.getElementById("student-display").innerText = studentName ? studentName : "Chưa đăng nhập";
 
         // Đồng hồ
         let seconds = 0;
@@ -121,20 +116,17 @@
             document.getElementById("timer").innerText = `${m}:${s}`;
         }, 1000);
 
-        // --- GÁN SỰ KIỆN NÚT BẤM (CÁCH MỚI - CHẮC CHẮN CHẠY) ---
+        // --- BẮT SỰ KIỆN NÚT BẤM (FIX LỖI LIỆT NÚT) ---
+        // Thay vì dùng onclick trong HTML, ta dùng addEventListener trong JS
         const btnNop = document.getElementById("btn-nop");
         if(btnNop) {
             btnNop.addEventListener("click", xuLyNopBai);
-        } else {
-            alert("Lỗi: Không tìm thấy nút nộp bài!");
         }
 
         async function xuLyNopBai() {
-            // alert("Đã nhận lệnh nộp bài!"); // Debug
-
-            // 1. Khóa nút
+            // 1. Hiệu ứng đang xử lý
             btnNop.disabled = true;
-            btnNop.innerText = "ĐANG CHẤM ĐIỂM...";
+            btnNop.innerText = "ĐANG CHẤM...";
             btnNop.style.opacity = "0.7";
             clearInterval(timerInterval);
 
@@ -158,12 +150,8 @@
             // 3. Gửi Firebase
             try {
                 if (studentName) {
-                    // Logic tìm điểm cũ
-                    const q = query(collection(db, "KET_QUA_TONG_HOP"), 
-                        where("hoc_sinh", "==", studentName), 
-                        where("bai_tap", "==", tieuDe)
-                    );
-                    const snapshot = await getDocs(q);
+                    const q = db.collection("KET_QUA_TONG_HOP").where("hoc_sinh", "==", studentName).where("bai_tap", "==", tieuDe);
+                    const snapshot = await q.get();
 
                     let isNewRecord = false; 
                     let oldScore = -1;
@@ -172,23 +160,22 @@
                         const oldDoc = snapshot.docs[0];
                         oldScore = oldDoc.data().diem;
                         if (diemSo > oldScore) {
-                            await setDoc(doc(db, "KET_QUA_TONG_HOP", oldDoc.id), {
+                            await db.collection("KET_QUA_TONG_HOP").doc(oldDoc.id).set({
                                 hoc_sinh: studentName, bai_tap: tieuDe, diem: diemSo, 
                                 so_cau_dung: score, tong_so_cau: total, 
-                                thoi_gian_lam: seconds, ngay_nop: serverTimestamp()
+                                thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
                             });
                             isNewRecord = true;
                         }
                     } else {
-                        await addDoc(collection(db, "KET_QUA_TONG_HOP"), {
+                        await db.collection("KET_QUA_TONG_HOP").add({
                             hoc_sinh: studentName, bai_tap: tieuDe, diem: diemSo, 
                             so_cau_dung: score, tong_so_cau: total, 
-                            thoi_gian_lam: seconds, ngay_nop: serverTimestamp()
+                            thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
                         });
                         isNewRecord = true;
                     }
 
-                    // 4. Hiển thị
                     hienThiKetQua(diemSo, score, total, isNewRecord, oldScore);
                     banPhaoGiay(diemSo);
                     docLoiChuc(studentName, diemSo);
@@ -197,16 +184,13 @@
                     btnNop.disabled = false;
                     btnNop.innerText = "NỘP BÀI";
                 }
-
             } catch (e) {
                 alert("Lỗi gửi điểm: " + e.message);
-                console.error(e);
                 btnNop.disabled = false;
                 btnNop.innerText = "NỘP BÀI LẠI";
             }
         }
 
-        // --- CÁC HÀM PHỤ TRỢ ---
         function hienThiKetQua(diem, dung, tong, isNewRecord, oldScore) {
             let msgTitle = isNewRecord || oldScore === -1 ? "✅ NỘP BÀI THÀNH CÔNG!" : `⚠️ CHƯA VƯỢT QUA KỶ LỤC CŨ (${oldScore.toFixed(1)})`;
             
@@ -223,11 +207,8 @@
                         <button class="btn-review" id="btn-review">🔍 Xem lại bài</button>
                         <button class="btn-continue" onclick="window.location.href='Menu.html'">➜ Làm môn khác</button>
                     </div>
-                </div>
-            `;
+                </div>`;
             document.body.appendChild(div);
-
-            // Gán sự kiện cho nút Xem lại (Vì trong module không dùng onclick HTML được)
             document.getElementById("btn-review").addEventListener("click", xemLaiBai);
         }
 
@@ -235,10 +216,8 @@
             document.getElementById("result-popup").style.display = "none";
             document.getElementById("btn-nop").style.display = "none";
             document.querySelectorAll("input").forEach(i => i.disabled = true);
-            
             document.querySelectorAll("input[data-correct='true']").forEach(i => i.parentElement.classList.add("res-correct"));
             document.querySelectorAll("input:checked:not([data-correct='true'])").forEach(i => i.parentElement.classList.add("res-wrong"));
-            
             window.scrollTo(0,0);
             
             const btn = document.createElement("button");
@@ -249,7 +228,6 @@
             btn.style.padding = "15px";
             btn.style.border = "none";
             btn.style.borderRadius = "10px";
-            btn.style.fontWeight = "bold";
             btn.onclick = () => window.location.href = "Menu.html";
             document.querySelector(".quiz-container").appendChild(btn);
         }
@@ -273,6 +251,5 @@
             }
         }
     </script>
-
 </body>
 </html>
