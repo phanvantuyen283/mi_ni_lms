@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bài Tập Tiếng Việt</title>
     
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #e0f2fe; padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; width: 100%; max-width: 600px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #fff; }
@@ -26,8 +22,8 @@
         .options input { margin-right: 10px; transform: scale(1.3); }
 
         /* Nút bấm */
-        button#btn-nop { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 18px; font-weight: 900; color: white; cursor: pointer; background: linear-gradient(to bottom, #38bdf8, #0284c7); box-shadow: 0 6px 0 #075985; transition: all 0.1s; margin-top: 10px; }
-        button#btn-nop:active { top: 6px; box-shadow: none; transform: translateY(4px); }
+        #btn-nop { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 18px; font-weight: 900; color: white; cursor: pointer; background: linear-gradient(to bottom, #38bdf8, #0284c7); box-shadow: 0 6px 0 #075985; transition: all 0.1s; margin-top: 10px; }
+        #btn-nop:active { top: 6px; box-shadow: none; transform: translateY(4px); }
         
         /* Popup kết quả */
         .result-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 9999; }
@@ -86,19 +82,26 @@
             </div>
         </div>
 
-        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
+        <button id="btn-nop">NỘP BÀI</button>
+        <p id="status-log" style="text-align:center; color:#666; font-size:12px; margin-top:10px;"></p>
     </div>
 
-    <script>
-        // Cấu hình Firebase
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        // Import Confetti
+        import confetti from "https://cdn.skypack.dev/canvas-confetti";
+
         const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
-        
+
+        let db;
         try {
-            firebase.initializeApp(firebaseConfig);
-            var db = firebase.firestore();
-            console.log("Firebase kết nối thành công!");
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            document.getElementById("status-log").innerText = "✅ Đã kết nối hệ thống chấm điểm.";
         } catch (e) {
-            alert("Lỗi kết nối Firebase: " + e.message);
+            document.getElementById("status-log").innerText = "❌ Lỗi kết nối Firebase: " + e.message;
+            alert("Lỗi kết nối mạng hoặc Firebase!");
         }
 
         // Kiểm tra tên học sinh
@@ -107,10 +110,9 @@
             document.getElementById("student-display").innerText = studentName;
         } else {
             document.getElementById("student-display").innerText = "Khách (Chưa đăng nhập)";
-            // alert("Bạn chưa đăng nhập!"); // Tạm tắt để dễ test
         }
 
-        // Đồng hồ đếm giờ
+        // Đồng hồ
         let seconds = 0;
         let timerInterval = setInterval(() => {
             seconds++;
@@ -119,18 +121,24 @@
             document.getElementById("timer").innerText = `${m}:${s}`;
         }, 1000);
 
-        // --- HÀM NỘP BÀI ---
-        async function nopBai() {
-            console.log("Đã bấm nút nộp bài!");
-            
-            // 1. Giao diện đang xử lý
-            const btn = document.getElementById("btn-nop");
-            btn.disabled = true;
-            btn.innerText = "ĐANG CHẤM ĐIỂM...";
-            btn.style.opacity = "0.7";
+        // --- GÁN SỰ KIỆN NÚT BẤM (CÁCH MỚI - CHẮC CHẮN CHẠY) ---
+        const btnNop = document.getElementById("btn-nop");
+        if(btnNop) {
+            btnNop.addEventListener("click", xuLyNopBai);
+        } else {
+            alert("Lỗi: Không tìm thấy nút nộp bài!");
+        }
+
+        async function xuLyNopBai() {
+            // alert("Đã nhận lệnh nộp bài!"); // Debug
+
+            // 1. Khóa nút
+            btnNop.disabled = true;
+            btnNop.innerText = "ĐANG CHẤM ĐIỂM...";
+            btnNop.style.opacity = "0.7";
             clearInterval(timerInterval);
 
-            // 2. Tính điểm
+            // 2. Chấm điểm
             const tieuDe = document.getElementById("ten-bai-tap").innerText;
             const questionBlocks = document.querySelectorAll(".question-block");
             let score = 0;
@@ -147,14 +155,15 @@
 
             const diemSo = (total > 0) ? (score / total) * 10 : 0;
 
-            // 3. Gửi lên Firebase
+            // 3. Gửi Firebase
             try {
                 if (studentName) {
-                    // Logic lưu điểm cao nhất
-                    const snapshot = await db.collection("KET_QUA_TONG_HOP")
-                        .where("hoc_sinh", "==", studentName)
-                        .where("bai_tap", "==", tieuDe)
-                        .get();
+                    // Logic tìm điểm cũ
+                    const q = query(collection(db, "KET_QUA_TONG_HOP"), 
+                        where("hoc_sinh", "==", studentName), 
+                        where("bai_tap", "==", tieuDe)
+                    );
+                    const snapshot = await getDocs(q);
 
                     let isNewRecord = false; 
                     let oldScore = -1;
@@ -163,41 +172,41 @@
                         const oldDoc = snapshot.docs[0];
                         oldScore = oldDoc.data().diem;
                         if (diemSo > oldScore) {
-                            await db.collection("KET_QUA_TONG_HOP").doc(oldDoc.id).set({
+                            await setDoc(doc(db, "KET_QUA_TONG_HOP", oldDoc.id), {
                                 hoc_sinh: studentName, bai_tap: tieuDe, diem: diemSo, 
                                 so_cau_dung: score, tong_so_cau: total, 
-                                thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
+                                thoi_gian_lam: seconds, ngay_nop: serverTimestamp()
                             });
                             isNewRecord = true;
                         }
                     } else {
-                        await db.collection("KET_QUA_TONG_HOP").add({
+                        await addDoc(collection(db, "KET_QUA_TONG_HOP"), {
                             hoc_sinh: studentName, bai_tap: tieuDe, diem: diemSo, 
                             so_cau_dung: score, tong_so_cau: total, 
-                            thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
+                            thoi_gian_lam: seconds, ngay_nop: serverTimestamp()
                         });
                         isNewRecord = true;
                     }
 
-                    // 4. Hiển thị kết quả
+                    // 4. Hiển thị
                     hienThiKetQua(diemSo, score, total, isNewRecord, oldScore);
                     banPhaoGiay(diemSo);
                     docLoiChuc(studentName, diemSo);
                 } else {
-                    alert(`Bạn chưa đăng nhập nên không lưu điểm.\nĐiểm của bạn là: ${diemSo.toFixed(1)}`);
-                    btn.disabled = false;
-                    btn.innerText = "NỘP BÀI";
+                    alert(`Bạn chưa đăng nhập. Điểm: ${diemSo.toFixed(1)}`);
+                    btnNop.disabled = false;
+                    btnNop.innerText = "NỘP BÀI";
                 }
 
             } catch (e) {
-                alert("Lỗi khi gửi điểm: " + e.message);
+                alert("Lỗi gửi điểm: " + e.message);
                 console.error(e);
-                btn.disabled = false;
-                btn.innerText = "NỘP BÀI LẠI";
+                btnNop.disabled = false;
+                btnNop.innerText = "NỘP BÀI LẠI";
             }
         }
 
-        // Hàm hiển thị Popup
+        // --- CÁC HÀM PHỤ TRỢ ---
         function hienThiKetQua(diem, dung, tong, isNewRecord, oldScore) {
             let msgTitle = isNewRecord || oldScore === -1 ? "✅ NỘP BÀI THÀNH CÔNG!" : `⚠️ CHƯA VƯỢT QUA KỶ LỤC CŨ (${oldScore.toFixed(1)})`;
             
@@ -209,17 +218,19 @@
                 <div class="result-box">
                     <h3>${msgTitle}</h3>
                     <div class="result-score">${diem.toFixed(1)}</div>
-                    <div class="result-info">Bạn làm đúng <strong>${dung}/${tong}</strong> câu.</div>
+                    <div class="result-info">Đúng <strong>${dung}/${tong}</strong> câu.</div>
                     <div class="btn-group-result">
-                        <button class="btn-review" onclick="xemLaiBai()">🔍 Xem lại bài</button>
+                        <button class="btn-review" id="btn-review">🔍 Xem lại bài</button>
                         <button class="btn-continue" onclick="window.location.href='Menu.html'">➜ Làm môn khác</button>
                     </div>
                 </div>
             `;
             document.body.appendChild(div);
+
+            // Gán sự kiện cho nút Xem lại (Vì trong module không dùng onclick HTML được)
+            document.getElementById("btn-review").addEventListener("click", xemLaiBai);
         }
 
-        // Hàm xem lại bài
         function xemLaiBai() {
             document.getElementById("result-popup").style.display = "none";
             document.getElementById("btn-nop").style.display = "none";
@@ -243,7 +254,6 @@
             document.querySelector(".quiz-container").appendChild(btn);
         }
 
-        // Hàm pháo giấy
         function banPhaoGiay(diem) {
             if (diem < 5) return;
             var duration = 2000; var end = Date.now() + duration;
@@ -254,7 +264,6 @@
             }());
         }
 
-        // Hàm đọc giọng nói
         function docLoiChuc(ten, diem) {
             if ('speechSynthesis' in window) {
                 let msg = diem >= 9 ? `Xuất sắc! Chúc mừng ${ten}` : `Bạn ${ten} được ${diem} điểm`;
