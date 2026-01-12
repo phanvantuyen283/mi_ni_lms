@@ -1,39 +1,3 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cổng Đăng Nhập Lớp 4A</title>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Thêm style cho ô nhập mã */
-        #access-code {
-            width: 100%; padding: 15px 20px; margin: 10px 0 20px 0;
-            border-radius: 12px; border: 3px solid #e2e8f0;
-            font-size: 20px; font-weight: bold; color: #dc2626; letter-spacing: 2px; text-align: center; text-transform: uppercase;
-            outline: none; background: #fff;
-        }
-        #access-code:focus { border-color: #ef4444; }
-        #access-code::placeholder { color: #ccc; font-size: 14px; letter-spacing: normal; text-transform: none; }
-    </style>
-</head>
-<body>
-
-    <div class="login-container">
-        <h2 style="color:#0284c7; margin-bottom:10px">🔐 CỔNG BẢO MẬT LỚP 4A</h2>
-        <p style="color:#666">Chọn tên và nhập mã bí mật để vào lớp:</p>
-        
-        <select id="student-name">
-            <option value="">-- Chọn tên của em --</option>
-        </select>
-        
-        <input type="text" id="access-code" placeholder="Nhập mã (Ví dụ: ABC123)">
-        
-        <button id="btn-login" onclick="checkLogin()">KIỂM TRA & VÀO LỚP</button>
-    </div>
-
     <script>
         // CẤU HÌNH FIREBASE
         const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
@@ -47,7 +11,7 @@
             let opt = document.createElement("option"); opt.value = ten; opt.text = ten; sel.add(opt);
         });
 
-        // HÀM KIỂM TRA ĐĂNG NHẬP
+        // HÀM KIỂM TRA ĐĂNG NHẬP (ĐÃ SỬA LỖI exists)
         async function checkLogin() {
             const name = sel.value;
             const codeInput = document.getElementById("access-code").value.trim().toUpperCase();
@@ -63,29 +27,30 @@
                 // Lấy danh sách mã từ Firebase
                 const docSnap = await db.collection("BAO_MAT").doc("danh_sach_ma").get();
                 
-                if (docSnap.exists()) {
+                // --- SỬA LỖI TẠI ĐÂY: bỏ ngoặc đơn () ---
+                if (docSnap.exists) { 
                     const data = docSnap.data();
                     const codeDung = data[name]; // Mã đúng của học sinh này
 
-                    if (codeInput === codeDung) {
+                    if (codeDung && codeInput === codeDung) {
                         // ĐÚNG MÃ -> LƯU VÀ CHUYỂN
                         localStorage.setItem("hocSinhLop4A", name);
                         window.location.href = "Menu.html";
                     } else {
-                        // SAI MÃ -> BÁO LỖI
+                        // SAI MÃ
                         alert("⛔ Sai mã đăng nhập!\nHãy liên hệ Zalo với thầy Tuyến để lấy mã đúng.");
                         btn.innerText = "KIỂM TRA & VÀO LỚP";
                         btn.disabled = false;
                     }
                 } else {
-                    alert("Hệ thống chưa có dữ liệu mã. Vui lòng báo thầy giáo.");
+                    alert("Hệ thống chưa kích hoạt mã bảo mật. Hãy báo thầy giáo tạo mã.");
+                    btn.innerText = "KIỂM TRA & VÀO LỚP";
                     btn.disabled = false;
                 }
             } catch (e) {
                 alert("Lỗi kết nối: " + e.message);
+                btn.innerText = "KIỂM TRA & VÀO LỚP";
                 btn.disabled = false;
             }
         }
     </script>
-</body>
-</html>
