@@ -3,30 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khoa Học</title>
+    <title>Làm Bài Tập Khoa Học - Lớp 4A</title>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="quiz-container">
-        <div class="menu-top"><a href="Menu.html">⬅ Quay về chọn môn</a></div>
+        
+        <div class="menu-top">
+            <a href="Menu.html">⬅ Quay về chọn môn khác</a>
+        </div>
+
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">KHOA HỌC - TUẦN ...</h2>
+                <h2 id="ten-bai-tap">KHOA HỌC - BÀI 18: ÔN TẬP THỰC VẬT VÀ ĐỘNG VẬT</h2>
+                
                 <p>Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Câu hỏi mẫu môn Khoa học...</div>
+            <div class="question-text">Câu 1: Theo sơ đồ bài học, yếu tố nào dưới đây <b>Thực vật</b> cần cho sự sống và phát triển?</div>
             <div class="options">
-                <label><input type="radio" name="kh1" value="A"> A. Đáp án A</label>
-                <label><input type="radio" name="kh1" value="B" data-correct="true"> B. Đáp án đúng</label>
+                <label><input type="radio" name="c1" value="A"> A. Ánh sáng, nhiệt độ, không khí, thức ăn.</label>
+                <label><input type="radio" name="c1" value="B" data-correct="true"> B. Ánh sáng, nhiệt độ, không khí, nước, chất khoáng.</label>
+                <label><input type="radio" name="c1" value="C"> C. Thịt, cá, trứng, sữa.</label>
+                <label><input type="radio" name="c1" value="D"> D. Chỉ cần nước là đủ.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 2: Động vật lấy thức ăn từ đâu?</div>
+            <div class="options">
+                <label><input type="radio" name="c2" value="A"> A. Tự tổng hợp từ ánh sáng mặt trời.</label>
+                <label><input type="radio" name="c2" value="B"> B. Hút từ đất như cây.</label>
+                <label><input type="radio" name="c2" value="C" data-correct="true"> C. Lấy từ thực vật hoặc động vật khác.</label>
+                <label><input type="radio" name="c2" value="D"> D. Tổng hợp từ không khí và nước.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 3: Điểm khác biệt lớn nhất về dinh dưỡng giữa Thực vật và Động vật là gì?</div>
+            <div class="options">
+                <label><input type="radio" name="c3" value="A" data-correct="true"> A. Thực vật tự tổng hợp chất dinh dưỡng, Động vật phải kiếm ăn.</label>
+                <label><input type="radio" name="c3" value="B"> B. Thực vật ăn thịt, Động vật ăn cỏ.</label>
+                <label><input type="radio" name="c3" value="C"> C. Thực vật không cần nước, Động vật cần nước.</label>
+                <label><input type="radio" name="c3" value="D"> D. Không có gì khác biệt.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 4: Thực vật tự tổng hợp chất dinh dưỡng từ những nguồn nào?</div>
+            <div class="options">
+                <label><input type="radio" name="c4" value="A"> A. Thức ăn nhanh.</label>
+                <label><input type="radio" name="c4" value="B" data-correct="true"> B. Khí các-bô-nic, nước, các chất khoáng, ánh sáng.</label>
+                <label><input type="radio" name="c4" value="C"> C. Khí ô-xi và đường.</label>
+                <label><input type="radio" name="c4" value="D"> D. Vitamin tổng hợp.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 5: Cả thực vật và động vật đều cần thực hiện quá trình nào với môi trường để tồn tại?</div>
+            <div class="options">
+                <label><input type="radio" name="c5" value="A"> A. Ngủ đông.</label>
+                <label><input type="radio" name="c5" value="B"> B. Săn mồi.</label>
+                <label><input type="radio" name="c5" value="C" data-correct="true"> C. Trao đổi chất.</label>
+                <label><input type="radio" name="c5" value="D"> D. Chạy nhảy.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 6: Quan sát Hình 2 (trang 69), tại vị trí D (đặt chậu cây trước cục nóng máy điều hòa), cây sẽ phát triển như thế nào?</div>
+            <div class="options">
+                <label><input type="radio" name="c6" value="A"> A. Phát triển rất tốt vì có gió mát.</label>
+                <label><input type="radio" name="c6" value="B" data-correct="true"> B. Kém phát triển hoặc chết vì quá nóng và mất nước.</label>
+                <label><input type="radio" name="c6" value="C"> C. Bình thường như các cây khác.</label>
+                <label><input type="radio" name="c6" value="D"> D. Cây sẽ ra hoa ngay lập tức.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 7: Quan sát Hình 2, tại vị trí E (dưới tán cây rậm rạp), cây con có thể gặp khó khăn gì?</div>
+            <div class="options">
+                <label><input type="radio" name="c7" value="A" data-correct="true"> A. Thiếu ánh sáng mặt trời để quang hợp.</label>
+                <label><input type="radio" name="c7" value="B"> B. Thiếu nước trầm trọng.</label>
+                <label><input type="radio" name="c7" value="C"> C. Bị quá nhiều nắng chiếu vào.</label>
+                <label><input type="radio" name="c7" value="D"> D. Nhiệt độ quá cao.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 8: Ở Hình 2, vị trí C (trên nền sỏi đá/bê tông), hạt giống khó nảy mầm và phát triển vì lí do chính nào?</div>
+            <div class="options">
+                <label><input type="radio" name="c8" value="A"> A. Thiếu không khí.</label>
+                <label><input type="radio" name="c8" value="B"> B. Thiếu ánh sáng.</label>
+                <label><input type="radio" name="c8" value="C" data-correct="true"> C. Thiếu đất và chất dinh dưỡng, nước khó giữ lại.</label>
+                <label><input type="radio" name="c8" value="D"> D. Có quá nhiều côn trùng.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 9: Trong các vị trí ở Hình 2 (A, B, C, D, E), vị trí nào là lý tưởng nhất để gieo hạt và trồng cây ngoài tự nhiên?</div>
+            <div class="options">
+                <label><input type="radio" name="c9" value="A"> A. Vị trí D (Trước máy lạnh).</label>
+                <label><input type="radio" name="c9" value="B" data-correct="true"> B. Vị trí B (Bãi cỏ, đất tơi xốp, đủ sáng).</label>
+                <label><input type="radio" name="c9" value="C"> C. Vị trí C (Trên nền đá).</label>
+                <label><input type="radio" name="c9" value="D"> D. Vị trí E (Trong bóng tối rậm rạp).</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 10: Nếu muốn trồng cây trong nhà (như Hình A), em cần đặt chậu cây ở đâu để cây sống khỏe mạnh?</div>
+            <div class="options">
+                <label><input type="radio" name="c10" value="A"> A. Đặt trong tủ kín.</label>
+                <label><input type="radio" name="c10" value="B"> B. Đặt dưới gầm giường.</label>
+                <label><input type="radio" name="c10" value="C"> C. Đặt trong phòng tắm không có cửa sổ.</label>
+                <label><input type="radio" name="c10" value="D" data-correct="true"> D. Đặt gần cửa sổ nơi có ánh sáng mặt trời chiếu vào.</label>
             </div>
         </div>
 
         <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
     </div>
+
     <script type="module" src="core.js"></script>
+
 </body>
 </html>
