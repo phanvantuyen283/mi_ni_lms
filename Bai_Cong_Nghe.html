@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Công Nghệ 4 - Bài 8: Bộ Lắp Ghép</title>
-    
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -163,11 +162,11 @@
 
         async function hienThiKetQua(diem, dung, tong) {
             // CHECK CẤU HÌNH ADMIN ĐỂ ẨN/HIỆN NÚT XEM LẠI
-            let allowReview = false; // Mặc định là KHÔNG cho xem
+            let allowReview = false; // Mặc định là KHÔNG cho xem (An toàn)
             try {
                 const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
-                if (configDoc.exists) {
-                    // Nếu giáo viên bật (true) thì mới cho xem
+                // SỬA LỖI Ở ĐÂY: Dùng .exists (thuộc tính) thay vì .exists() (hàm)
+                if (configDoc.exists) { 
                     if (configDoc.data().xem_dap_an === true) {
                         allowReview = true;
                     }
