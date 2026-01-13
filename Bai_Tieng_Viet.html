@@ -3,322 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài Tập Tiếng Việt</title>
-    
+    <title>Tiếng Việt 4 - Viết đoạn văn biểu cảm (Nâng cao)</title>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #e0f2fe; padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; width: 100%; max-width: 600px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #fff; }
-        
-        /* Header & Timer */
-        .header { background: #f0f9ff; padding: 15px; border-radius: 12px; border: 2px dashed #bae6fd; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .header h2 { font-size: 1.1rem; margin: 0; color: #0284c7; }
-        .timer { font-size: 1.5rem; font-weight: 900; color: #dc2626; }
-        
-        /* Câu hỏi */
-        .question-block { background: #fff; border: 2px solid #e2e8f0; padding: 20px; margin-bottom: 20px; border-radius: 12px; }
-        .question-text { font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; line-height: 1.4; }
-        .options label { display: block; padding: 12px; margin-top: 8px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: 0.2s; }
-        .options label:hover { background: #f0f9ff; border-color: #0284c7; color: #0284c7; }
-        .options input { margin-right: 10px; transform: scale(1.3); }
-
-        /* Nút bấm Nộp bài */
-        #btn-nop { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 18px; font-weight: 900; color: white; cursor: pointer; background: linear-gradient(to bottom, #38bdf8, #0284c7); box-shadow: 0 6px 0 #075985; transition: all 0.1s; margin-top: 10px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0fdf4; padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; width: 100%; max-width: 720px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #fff; }
+        .header { background: #dcfce7; padding: 15px; border-radius: 12px; border: 2px dashed #16a34a; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 0; z-index: 10; }
+        .header h2 { font-size: 0.9rem; margin: 0; color: #15803d; text-transform: uppercase; }
+        .timer { font-size: 1.2rem; font-weight: 900; color: #dc2626; }
+        .question-block { background: #fff; border: 2px solid #e2e8f0; padding: 20px; margin-bottom: 18px; border-radius: 12px; transition: 0.2s; }
+        .question-block:hover { border-color: #4ade80; }
+        .security-quest { border: 3px solid #e11d48; background-color: #fff1f2; }
+        .question-text { font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; line-height: 1.4; color: #1e293b; }
+        .options label { display: block; padding: 12px; margin-top: 8px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 1rem; }
+        .options label:hover { background: #f0fdf4; border-color: #16a34a; color: #15803d; font-weight: 500; }
+        #btn-nop { width: 100%; padding: 18px; border: none; border-radius: 12px; font-size: 20px; font-weight: 900; color: white; cursor: pointer; background: linear-gradient(to bottom, #4ade80, #16a34a); box-shadow: 0 6px 0 #14532d; transition: all 0.1s; margin-top: 15px; }
         #btn-nop:active { top: 6px; box-shadow: none; transform: translateY(4px); }
-        
-        /* Popup kết quả */
-        .result-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 9999; }
-        .result-box { background: white; padding: 40px; width: 90%; max-width: 400px; border-radius: 20px; text-align: center; border-top: 8px solid #ea580c; animation: popUp 0.4s ease; }
-        .result-score { font-size: 4rem; font-weight: 900; color: #ea580c; margin: 10px 0; }
-        .btn-group-result button { width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: none; color: white; font-weight: bold; cursor: pointer; }
-        .btn-review { background: #f59e0b; } .btn-continue { background: #0284c7; } .btn-finish { background: #64748b; }
-        
-        /* Review Mode */
-        .res-correct { background-color: #dcfce7 !important; border: 2px solid #22c55e !important; }
-        .res-wrong { background-color: #fee2e2 !important; border: 2px solid #ef4444 !important; }
-        
-        @keyframes popUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .result-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
+        .result-box { background: white; padding: 40px; width: 90%; max-width: 450px; border-radius: 20px; text-align: center; border-top: 8px solid #16a34a; }
+        .result-score { font-size: 5rem; font-weight: 900; color: #16a34a; margin: 10px 0; }
     </style>
 </head>
 <body>
-
     <div class="quiz-container">
-        <div style="margin-bottom:15px"><a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold">⬅ Quay về chọn môn khác</a></div>
-
+        <div style="margin-bottom:10px"><a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:13px">⬅ Quay về Menu</a></div>
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TIẾNG VIỆT - TUẦN 19 - HẢI THƯỢNG LÃN ÔNG</h2>
-                <p>Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
+                <h2 id="ten-bai-tap">TIẾNG VIỆT - LUYỆN VIẾT ĐOẠN VĂN BIỂU CẢM</h2>
+                <p style="margin:5px 0 0 0; font-size:11px">Học sinh: <b id="student-display">...</b></p>
             </div>
-            <div class="timer">⏱ <span id="timer">00:00</span></div>
+            <div class="timer">⏱ <b id="timer">00:00</b></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 1: Hải Thượng Lãn Ông tên thật là gì và ông sống vào thời gian nào?</div>
+        <div class="question-block security-quest">
+            <div class="question-text">🔒 Câu 18: Để xác nhận thành viên lớp 4A, hãy cho biết: Bạn Nguyễn Thị Quỳnh là em gái của bạn nào?</div>
             <div class="options">
-                <label><input type="radio" name="c1" value="A"> A. Lê Hữu Trác, thế kỉ XIX.</label>
-                <label><input type="radio" name="c1" value="B" data-correct="true"> B. Lê Hữu Trác, thế kỉ XVIII.</label>
-                <label><input type="radio" name="c1" value="C"> C. Nguyễn Du, thế kỉ XVIII.</label>
-                <label><input type="radio" name="c1" value="D"> D. Tuệ Tĩnh, thế kỉ XVII.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 2: Chi tiết nào dưới đây cho thấy Hải Thượng Lãn Ông rất thương người nghèo?</div>
-            <div class="options">
-                <label><input type="radio" name="c2" value="A"> A. Ông về quê đóng cửa để đọc sách.</label>
-                <label><input type="radio" name="c2" value="B"> B. Ông khám bệnh cho các quan lại trong triều đình.</label>
-                <label><input type="radio" name="c2" value="C" data-correct="true"> C. Ông thường khám bệnh và cho thuốc không lấy tiền.</label>
-                <label><input type="radio" name="c2" value="D"> D. Ông viết rất nhiều sách y học quý giá.</label>
+                <label><input type="radio" name="c18" value="A"> A. Bạn Quang Phúc</label>
+                <label><input type="radio" name="c18" value="B"> B. Bạn Minh Tâm</label>
+                <label><input type="radio" name="c18" value="C"> C. Bạn Anh Minh</label>
+                <label><input type="radio" name="c18" value="D" id="security-correct"> D. Bạn Trí Đại</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Vì sao Hải Thượng Lãn Ông quyết định về quê "đóng cửa để đọc sách"?</div>
+            <div class="question-text">Câu 1: Dòng nào dưới đây chỉ chứa các từ ngữ biểu lộ tình cảm, cảm xúc?</div>
             <div class="options">
-                <label><input type="radio" name="c3" value="A"> A. Vì ông bị ốm nặng cần nghỉ ngơi.</label>
-                <label><input type="radio" name="c3" value="B"> B. Vì ông muốn viết sách văn học.</label>
-                <label><input type="radio" name="c3" value="C" data-correct="true"> C. Vì ở kinh đô ông không tìm được thầy giỏi để học.</label>
-                <label><input type="radio" name="c3" value="D"> D. Vì ông không thích cuộc sống ồn ào ở kinh đô.</label>
+                <label><input type="radio" name="c1" value="A"> A. Xanh biếc, cao lớn, rộng rãi (Từ chỉ đặc điểm)</label>
+                <label><input type="radio" name="c1" value="B" data-correct="true"> B. Sung sướng, nghẹn ngào, bồi hồi (Từ chỉ cảm xúc)</label>
+                <label><input type="radio" name="c1" value="C"> C. Chạy nhảy, nô đùa, ca hát (Từ chỉ hoạt động)</label>
+                <label><input type="radio" name="c1" value="D"> D. Sách vở, bút mực, bảng đen (Từ chỉ sự vật)</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Điền từ còn thiếu vào câu sau: "Không những không lấy tiền, ông còn cho gia đình họ ............., dầu đèn,..."</div>
+            <div class="question-text">Câu 2: Quan sát một người có "ánh mắt sáng lên, miệng cười rạng rỡ", em suy luận họ đang có tâm trạng gì?</div>
             <div class="options">
-                <label><input type="radio" name="c4" value="A" data-correct="true"> A. gạo, củi</label>
-                <label><input type="radio" name="c4" value="B"> B. vàng, bạc</label>
-                <label><input type="radio" name="c4" value="C"> C. quần áo đẹp</label>
-                <label><input type="radio" name="c4" value="D"> D. trâu, bò</label>
+                <label><input type="radio" name="c2" value="A" data-correct="true"> A. Niềm vui sướng và hạnh phúc</label>
+                <label><input type="radio" name="c2" value="B"> B. Nỗi buồn phiền và thất vọng</label>
+                <label><input type="radio" name="c2" value="C"> C. Sự lo âu và bồn chồn</label>
+                <label><input type="radio" name="c2" value="D"> D. Sự giận dữ và bực bội</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Qua câu chuyện chữa bệnh cho con của người thuyền chài, đức tính nào của Hải Thượng Lãn Ông được thể hiện rõ nhất?</div>
+            <div class="question-text">Câu 3: Hành động nào dưới đây gián tiếp thể hiện tình yêu thương với bạn bè?</div>
             <div class="options">
-                <label><input type="radio" name="c5" value="A"> A. Lòng dũng cảm.</label>
-                <label><input type="radio" name="c5" value="B" data-correct="true"> B. Lòng nhân ái, yêu thương con người.</label>
-                <label><input type="radio" name="c5" value="C"> C. Sự chăm chỉ, cần cù.</label>
-                <label><input type="radio" name="c5" value="D"> D. Sự tiết kiệm.</label>
+                <label><input type="radio" name="c3" value="A"> A. Thờ ơ khi thấy bạn bị ngã</label>
+                <label><input type="radio" name="c3" value="B" data-correct="true"> B. Ân cần hỏi han và đỡ bạn dậy</label>
+                <label><input type="radio" name="c3" value="C"> C. Cười đùa khi bạn gặp khó khăn</label>
+                <label><input type="radio" name="c3" value="D"> D. Tranh giành đồ chơi của bạn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Dòng nào dưới đây nêu ĐÚNG đặc điểm của một câu?</div>
+            <div class="question-text">Câu 4: Theo em, vì sao khi viết văn biểu cảm nên sử dụng các giác quan (nghe, nhìn, cảm nhận...)?</div>
             <div class="options">
-                <label><input type="radio" name="c6" value="A"> A. Chữ cái đầu câu không cần viết hoa.</label>
-                <label><input type="radio" name="c6" value="B"> B. Cuối câu không bắt buộc phải có dấu chấm câu.</label>
-                <label><input type="radio" name="c6" value="C" data-correct="true"> C. Diễn đạt một ý trọn vẹn, đầu câu viết hoa, cuối câu có dấu kết thúc.</label>
-                <label><input type="radio" name="c6" value="D"> D. Các từ trong câu có thể sắp xếp lộn xộn, không cần trật tự.</label>
+                <label><input type="radio" name="c4" value="A" data-correct="true"> A. Để cảm xúc hiện lên chân thực, giúp người đọc dễ hình dung và đồng cảm</label>
+                <label><input type="radio" name="c4" value="B"> B. Để bài văn dài hơn và có nhiều chữ hơn</label>
+                <label><input type="radio" name="c4" value="C"> C. Để chứng tỏ mình biết nhiều từ khó</label>
+                <label><input type="radio" name="c4" value="D"> D. Để liệt kê được nhiều sự vật hơn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Dòng nào dưới đây là một CÂU hoàn chỉnh?</div>
+            <div class="question-text">Câu 5: Trong cấu trúc đoạn văn, phần "Triển khai" đóng vai trò quan trọng nhất là gì?</div>
             <div class="options">
-                <label><input type="radio" name="c7" value="A"> A. Giúp đỡ người già</label>
-                <label><input type="radio" name="c7" value="B" data-correct="true"> B. Bà cụ rất cảm động.</label>
-                <label><input type="radio" name="c7" value="C"> C. Nam và bà cụ</label>
-                <label><input type="radio" name="c7" value="D"> D. Đã già yếu</label>
+                <label><input type="radio" name="c5" value="A"> A. Giới thiệu tên của người hoặc vật được nói đến</label>
+                <label><input type="radio" name="c5" value="B" data-correct="true"> B. Kể lại kỷ niệm gắn bó và miêu tả cụ thể các biểu hiện của cảm xúc</label>
+                <label><input type="radio" name="c5" value="C"> C. Chào tạm biệt người đọc để kết thúc bài</label>
+                <label><input type="radio" name="c5" value="D"> D. Nêu lên bài học đạo đức chung chung</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Dòng nào dưới đây các từ ngữ đã được sắp xếp theo trật tự hợp lí để tạo thành câu?</div>
+            <div class="question-text">Câu 6: Câu nói: "Cảm ơn cậu đã luôn lắng nghe mình!" bộc lộ tình cảm gì của người nói?</div>
             <div class="options">
-                <label><input type="radio" name="c8" value="A"> A. Thương người ông ấy lắm.</label>
-                <label><input type="radio" name="c8" value="B" data-correct="true"> B. Ông ấy rất thương người.</label>
-                <label><input type="radio" name="c8" value="C"> C. Người thương ông ấy lắm.</label>
-                <label><input type="radio" name="c8" value="D"> D. Lắm thương người ông ấy.</label>
+                <label><input type="radio" name="c6" value="A" data-correct="true"> A. Sự biết ơn, trân trọng và tin tưởng</label>
+                <label><input type="radio" name="c6" value="B"> B. Sự khách sáo, xa lạ và lạnh lùng</label>
+                <label><input type="radio" name="c6" value="C"> C. Sự hờn dỗi, trách móc</label>
+                <label><input type="radio" name="c6" value="D"> D. Sự hối lỗi, ăn năn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Sắp xếp các từ "cứu người / để / Ông / chữa bệnh" thành câu đúng nhất:</div>
+            <div class="question-text">Câu 7: Trạng thái "háo hức" phù hợp nhất với hoàn cảnh nào sau đây?</div>
             <div class="options">
-                <label><input type="radio" name="c9" value="A" data-correct="true"> A. Ông chữa bệnh để cứu người.</label>
-                <label><input type="radio" name="c9" value="B"> B. Cứu người để ông chữa bệnh.</label>
-                <label><input type="radio" name="c9" value="C"> C. Để cứu người chữa bệnh ông.</label>
-                <label><input type="radio" name="c9" value="D"> D. Ông người cứu để chữa bệnh.</label>
+                <label><input type="radio" name="c7" value="A"> A. Khi bị mất một món đồ yêu thích</label>
+                <label><input type="radio" name="c7" value="B" data-correct="true"> B. Khi mong chờ một chuyến đi chơi hoặc một điều tốt đẹp sắp tới</label>
+                <label><input type="radio" name="c7" value="C"> C. Khi phải làm một việc mình không thích</label>
+                <label><input type="radio" name="c7" value="D"> D. Khi bị ốm phải nằm nhà</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Em muốn biết bạn mình đã khỏi ốm chưa. Em sẽ dùng kiểu câu nào?</div>
+            <div class="question-text">Câu 8: Khi viết "Bàn tay mẹ ram ráp nhưng ấm áp vô cùng", tác giả đã sử dụng giác quan nào để cảm nhận?</div>
             <div class="options">
-                <label><input type="radio" name="c10" value="A"> A. Câu kể</label>
-                <label><input type="radio" name="c10" value="B" data-correct="true"> B. Câu hỏi</label>
-                <label><input type="radio" name="c10" value="C"> C. Câu khiến</label>
-                <label><input type="radio" name="c10" value="D"> D. Câu cảm</label>
+                <label><input type="radio" name="c8" value="A"> A. Thị giác (Dùng mắt nhìn)</label>
+                <label><input type="radio" name="c8" value="B" data-correct="true"> B. Xúc giác (Dùng da thịt để cảm nhận)</label>
+                <label><input type="radio" name="c8" value="C"> C. Thính giác (Dùng tai nghe)</label>
+                <label><input type="radio" name="c8" value="D"> D. Vị giác (Dùng lưỡi nếm)</label>
             </div>
         </div>
 
-        <button id="btn-nop">NỘP BÀI</button>
-        <p id="status-log" style="text-align:center; color:#666; font-size:12px; margin-top:10px;"></p>
+        <div class="question-block">
+            <div class="question-text">Câu 9: Một người "cúi gằm mặt, bước đi chậm chạp, vai buông thõng" thường đang có tâm trạng gì?</div>
+            <div class="options">
+                <label><input type="radio" name="c9" value="A"> A. Đang rất tự tin và hãnh diện</label>
+                <label><input type="radio" name="c9" value="B" data-correct="true"> B. Đang buồn bã, thất vọng hoặc hối lỗi</label>
+                <label><input type="radio" name="c9" value="C"> C. Đang rất vui vẻ và phấn khích</label>
+                <label><input type="radio" name="c9" value="D"> D. Đang vội vàng để đi đâu đó</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 10: Điền từ thích hợp vào chỗ trống: "Em cảm thấy vô cùng ... khi được cô giáo khen ngợi trước lớp."</div>
+            <div class="options">
+                <label><input type="radio" name="c10" value="A" data-correct="true"> A. Hạnh phúc và tự hào</label>
+                <label><input type="radio" name="c10" value="B"> B. Sợ hãi và lo lắng</label>
+                <label><input type="radio" name="c10" value="C"> C. Tức giận và bực bội</label>
+                <label><input type="radio" name="c10" value="D"> D. Buồn phiền và chán nản</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 11 (SGK): Trong đoạn văn mẫu, phần Mở đầu có tác dụng gì?</div>
+            <div class="options">
+                <label><input type="radio" name="c11" value="A"> A. Kể chi tiết về những lần đi chơi chung</label>
+                <label><input type="radio" name="c11" value="B" data-correct="true"> B. Giới thiệu người bạn thân (Nhỏ Thắm) và tình cảm khái quát</label>
+                <label><input type="radio" name="c11" value="C"> C. Nêu cảm nghĩ khi phải chia tay bạn</label>
+                <label><input type="radio" name="c11" value="D"> D. Miêu tả ngoại hình của Thắm</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 12 (SGK): Chi tiết nào thuộc phần "Triển khai" trong đoạn văn về nhỏ Thắm?</div>
+            <div class="options">
+                <label><input type="radio" name="c12" value="A" data-correct="true"> A. Kỷ niệm "cùng lớn lên, cùng đi học" và cảm nhận về "tình bạn ấm áp"</label>
+                <label><input type="radio" name="c12" value="B"> B. Giới thiệu tên tuổi và địa chỉ nhà của Thắm</label>
+                <label><input type="radio" name="c12" value="C"> C. Lời hứa sẽ mãi mãi không bao giờ quên nhau</label>
+                <label><input type="radio" name="c12" value="D"> D. Giới thiệu về gia đình của tác giả</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 13 (SGK): Câu văn nào dưới đây trực tiếp gọi tên tình cảm của tác giả dành cho bạn?</div>
+            <div class="options">
+                <label><input type="radio" name="c13" value="A"> A. Chúng tôi cùng lớn lên bên nhau.</label>
+                <label><input type="radio" name="c13" value="B" data-correct="true"> B. Tình cảm mà tôi cảm nhận được ở nhỏ Thắm là một tình bạn ấm áp và thân thiết.</label>
+                <label><input type="radio" name="c13" value="C"> C. Nhỏ Thắm là cô bạn thân duy nhất của tôi.</label>
+                <label><input type="radio" name="c13" value="D"> D. Ngày ngày chúng tôi cùng đi chung một con đường.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 14 (SGK): Việc tác giả kể lại kỷ niệm "cùng đi chung một con đường đến lớp" có tác dụng gì?</div>
+            <div class="options">
+                <label><input type="radio" name="c14" value="A" data-correct="true"> A. Là dẫn chứng cụ thể để chứng minh cho sự gắn bó thân thiết</label>
+                <label><input type="radio" name="c14" value="B"> B. Để chỉ đường cho người đọc biết đường đến trường</label>
+                <label><input type="radio" name="c14" value="C"> C. Để khoe rằng nhà hai bạn ở gần nhau</label>
+                <label><input type="radio" name="c14" value="D"> D. Để miêu tả phong cảnh con đường đi học</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 15 (SGK): Phần "Kết thúc" của đoạn văn nêu tình cảm thường chứa đựng nội dung gì?</div>
+            <div class="options">
+                <label><input type="radio" name="c15" value="A"> A. Giới thiệu một nhân vật mới xuất hiện</label>
+                <label><input type="radio" name="c15" value="B" data-correct="true"> B. Khẳng định tình cảm bền chặt, không thay đổi dù có xa cách</label>
+                <label><input type="radio" name="c15" value="C"> C. Kể lại sự việc đã xảy ra từ đầu</label>
+                <label><input type="radio" name="c15" value="D"> D. Hỏi ý kiến người đọc về câu chuyện</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 16 (SGK): Theo Ghi nhớ trang 11, một đoạn văn nêu tình cảm, cảm xúc hoàn chỉnh cần có mấy phần?</div>
+            <div class="options">
+                <label><input type="radio" name="c16" value="A"> A. 2 phần (Mở đầu và Kết thúc)</label>
+                <label><input type="radio" name="c16" value="B" data-correct="true"> B. 3 phần (Mở đầu, Triển khai, Kết thúc)</label>
+                <label><input type="radio" name="c16" value="C"> C. 1 phần (Viết liền mạch không phân chia)</label>
+                <label><input type="radio" name="c16" value="D"> D. 4 phần (Thêm phần Phụ lục)</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 17 (SGK): Cụm từ "thân thiết giữa tôi và nhỏ Thắm sẽ mãi mãi không thay đổi" nằm ở phần nào của đoạn văn?</div>
+            <div class="options">
+                <label><input type="radio" name="c17" value="A"> A. Phần Mở đầu</label>
+                <label><input type="radio" name="c17" value="B"> B. Phần Triển khai</label>
+                <label><input type="radio" name="c17" value="C" data-correct="true"> C. Phần Kết thúc</label>
+                <label><input type="radio" name="c17" value="D"> D. Không nằm trong đoạn văn</label>
+            </div>
+        </div>
+
+        <button id="btn-nop">NỘP BÀI KIỂM TRA</button>
     </div>
 
     <script>
-        // Cấu hình Firebase
         const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
-        
-        let db;
-        try {
-            firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-            document.getElementById("status-log").innerText = "✅ Đã kết nối hệ thống chấm điểm.";
-        } catch (e) {
-            document.getElementById("status-log").innerText = "⚠️ Lỗi kết nối: " + e.message;
-        }
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-        // Hiện tên học sinh
-        const studentName = localStorage.getItem("hocSinhLop4A");
-        document.getElementById("student-display").innerText = studentName ? studentName : "Chưa đăng nhập";
+        const studentName = localStorage.getItem("hocSinhLop4A") || "Học sinh";
+        document.getElementById("student-display").innerText = studentName;
 
-        // Đồng hồ
         let seconds = 0;
-        let timerInterval = setInterval(() => {
-            seconds++;
-            let m = Math.floor(seconds / 60).toString().padStart(2, '0');
-            let s = (seconds % 60).toString().padStart(2, '0');
-            document.getElementById("timer").innerText = `${m}:${s}`;
-        }, 1000);
+        setInterval(() => { seconds++; document.getElementById("timer").innerText = new Date(seconds * 1000).toISOString().substr(14, 5); }, 1000);
 
-        // --- BẮT SỰ KIỆN NÚT BẤM (FIX LỖI LIỆT NÚT) ---
-        const btnNop = document.getElementById("btn-nop");
-        if(btnNop) {
-            btnNop.addEventListener("click", xuLyNopBai);
-        }
+        document.getElementById("btn-nop").onclick = async () => {
+            // Logic Bảo mật: Nếu sai câu 18 -> Hủy bài
+            if (!document.getElementById("security-correct").checked) {
+                alert("Xin lỗi, bạn không phải thành viên lớp 4A. Bài làm không được ghi nhận.");
+                window.location.href = "index.html";
+                return;
+            }
 
-        async function xuLyNopBai() {
-            // 1. Hiệu ứng đang xử lý
-            btnNop.disabled = true;
-            btnNop.innerText = "ĐANG CHẤM...";
-            btnNop.style.opacity = "0.7";
-            clearInterval(timerInterval);
-
-            // 2. Chấm điểm
-            const tieuDe = document.getElementById("ten-bai-tap").innerText;
-            const questionBlocks = document.querySelectorAll(".question-block");
-            let score = 0;
-            let total = questionBlocks.length;
-
-            questionBlocks.forEach(block => {
-                const inputs = block.querySelectorAll("input[type='radio']");
-                let isCorrect = false;
-                inputs.forEach(input => {
-                    if (input.checked && input.getAttribute("data-correct") === "true") isCorrect = true;
-                });
-                if (isCorrect) score++;
+            // Chấm điểm 17 câu nội dung
+            let correctCount = 0;
+            for(let i=1; i<=17; i++) {
+                const sel = document.querySelector(`input[name="c${i}"]:checked`);
+                if (sel && sel.getAttribute("data-correct") === "true") correctCount++;
+            }
+            
+            // Tính điểm thang 10
+            const diem = (correctCount / 17) * 10;
+            const diemLamTron = Number(diem.toFixed(1));
+            
+            // Gửi về Firebase
+            await db.collection("KET_QUA_TONG_HOP").add({
+                hoc_sinh: studentName,
+                bai_tap: document.getElementById("ten-bai-tap").innerText,
+                diem: diemLamTron,
+                thoi_gian_lam: seconds,
+                ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
             });
 
-            const diemSo = (total > 0) ? (score / total) * 10 : 0;
-
-            // 3. Gửi Firebase
-            try {
-                if (studentName) {
-                    const q = db.collection("KET_QUA_TONG_HOP").where("hoc_sinh", "==", studentName).where("bai_tap", "==", tieuDe);
-                    const snapshot = await q.get();
-
-                    let isNewRecord = false; 
-                    let oldScore = -1;
-
-                    if (!snapshot.empty) {
-                        const oldDoc = snapshot.docs[0];
-                        oldScore = oldDoc.data().diem;
-                        if (diemSo > oldScore) {
-                            await db.collection("KET_QUA_TONG_HOP").doc(oldDoc.id).set({
-                                hoc_sinh: studentName, bai_tap: tieuDe, diem: diemSo, 
-                                so_cau_dung: score, tong_so_cau: total, 
-                                thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
-                            });
-                            isNewRecord = true;
-                        }
-                    } else {
-                        await db.collection("KET_QUA_TONG_HOP").add({
-                            hoc_sinh: studentName, bai_tap: tieuDe, diem: diemSo, 
-                            so_cau_dung: score, tong_so_cau: total, 
-                            thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                        isNewRecord = true;
-                    }
-
-                    hienThiKetQua(diemSo, score, total, isNewRecord, oldScore);
-                    banPhaoGiay(diemSo);
-                    docLoiChuc(studentName, diemSo);
-                } else {
-                    alert(`Bạn chưa đăng nhập. Điểm: ${diemSo.toFixed(1)}`);
-                    btnNop.disabled = false;
-                    btnNop.innerText = "NỘP BÀI";
-                }
-            } catch (e) {
-                alert("Lỗi gửi điểm: " + e.message);
-                btnNop.disabled = false;
-                btnNop.innerText = "NỘP BÀI LẠI";
-            }
-        }
-
-        function hienThiKetQua(diem, dung, tong, isNewRecord, oldScore) {
-            let msgTitle = isNewRecord || oldScore === -1 ? "✅ NỘP BÀI THÀNH CÔNG!" : `⚠️ CHƯA VƯỢT QUA KỶ LỤC CŨ (${oldScore.toFixed(1)})`;
+            // Hiệu ứng và âm thanh
+            if(diemLamTron >= 5) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             
             const div = document.createElement("div");
-            div.id = "result-popup";
-            div.className = "result-overlay";
-            div.style.display = "flex";
-            div.innerHTML = `
-                <div class="result-box">
-                    <h3>${msgTitle}</h3>
-                    <div class="result-score">${diem.toFixed(1)}</div>
-                    <div class="result-info">Đúng <strong>${dung}/${tong}</strong> câu.</div>
-                    <div class="btn-group-result">
-                        <button class="btn-review" id="btn-review">🔍 Xem lại bài</button>
-                        <button class="btn-continue" onclick="window.location.href='Menu.html'">➜ Làm môn khác</button>
-                    </div>
-                </div>`;
+            div.className = "result-overlay"; div.style.display = "flex";
+            div.innerHTML = `<div class="result-box"><h2>KẾT QUẢ</h2><div class="result-score">${diemLamTron}</div><p>Bạn làm đúng <b>${correctCount}/17</b> câu nội dung.</p><button onclick="window.location.href='Menu.html'">HOÀN THÀNH</button></div>`;
             document.body.appendChild(div);
-            document.getElementById("btn-review").addEventListener("click", xemLaiBai);
-        }
 
-        function xemLaiBai() {
-            document.getElementById("result-popup").style.display = "none";
-            document.getElementById("btn-nop").style.display = "none";
-            document.querySelectorAll("input").forEach(i => i.disabled = true);
-            document.querySelectorAll("input[data-correct='true']").forEach(i => i.parentElement.classList.add("res-correct"));
-            document.querySelectorAll("input:checked:not([data-correct='true'])").forEach(i => i.parentElement.classList.add("res-wrong"));
-            window.scrollTo(0,0);
-            
-            const btn = document.createElement("button");
-            btn.innerText = "⬅ Quay về Menu";
-            btn.style.marginTop = "20px";
-            btn.style.background = "#64748b";
-            btn.style.color = "white";
-            btn.style.padding = "15px";
-            btn.style.border = "none";
-            btn.style.borderRadius = "10px";
-            btn.onclick = () => window.location.href = "Menu.html";
-            document.querySelector(".quiz-container").appendChild(btn);
-        }
-
-        function banPhaoGiay(diem) {
-            if (diem < 5) return;
-            var duration = 2000; var end = Date.now() + duration;
-            (function frame() {
-                confetti({ particleCount: 5, spread: 55, origin: { x: 0 } });
-                confetti({ particleCount: 5, spread: 55, origin: { x: 1 } });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
-        }
-
-        function docLoiChuc(ten, diem) {
             if ('speechSynthesis' in window) {
-                let msg = diem >= 9 ? `Xuất sắc! Chúc mừng ${ten}` : `Bạn ${ten} được ${diem} điểm`;
-                let ut = new SpeechSynthesisUtterance(msg);
-                ut.lang = 'vi-VN';
-                window.speechSynthesis.speak(ut);
+                let loiKhen = diemLamTron >= 8 ? "Thật xuất sắc!" : "Cố gắng hơn nữa nhé!";
+                let msg = new SpeechSynthesisUtterance(`${loiKhen} Bạn ${studentName} được ${diemLamTron} điểm.`);
+                msg.lang = 'vi-VN';
+                window.speechSynthesis.speak(msg);
             }
-        }
+        };
     </script>
 </body>
 </html>
