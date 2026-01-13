@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Công Nghệ 4 - Bài 8: Bộ Lắp Ghép</title>
+    
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -72,165 +73,22 @@
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 2: Hình dạng của "Tấm tam giác" có đặc điểm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="c2" value="A"> A. Hình tròn có lỗ ở giữa</label>
-                <label><input type="radio" name="c2" value="B" data-correct="true"> B. Hình tam giác màu vàng (hoặc xanh) có các lỗ</label>
-                <label><input type="radio" name="c2" value="C"> C. Hình chữ nhật dài</label>
-                <label><input type="radio" name="c2" value="D"> D. Hình chữ U uốn cong</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 3: "Tấm bên ca bin" thường được dùng để lắp bộ phận nào của xe mô hình?</div>
-            <div class="options">
-                <label><input type="radio" name="c3" value="A"> A. Lắp bánh xe</label>
-                <label><input type="radio" name="c3" value="B" data-correct="true"> B. Lắp thành bên của buồng lái (ca bin)</label>
-                <label><input type="radio" name="c3" value="C"> C. Lắp gầm xe</label>
-                <label><input type="radio" name="c3" value="D"> D. Lắp trục quay</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 4: Nhóm "Thanh thẳng" gồm các loại thanh có số lượng lỗ khác nhau. Loại nào dưới đây KHÔNG có trong nhóm này?</div>
-            <div class="options">
-                <label><input type="radio" name="c4" value="A"> A. Thanh thẳng 11 lỗ</label>
-                <label><input type="radio" name="c4" value="B"> B. Thanh thẳng 7 lỗ</label>
-                <label><input type="radio" name="c4" value="C"> C. Thanh thẳng 2 lỗ</label>
-                <label><input type="radio" name="c4" value="D" data-correct="true"> D. Thanh thẳng 35 lỗ</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 5: Chi tiết được uốn cong thành hình chữ U gọi là gì?</div>
-            <div class="options">
-                <label><input type="radio" name="c5" value="A"> A. Thanh chữ L</label>
-                <label><input type="radio" name="c5" value="B" data-correct="true"> B. Thanh chữ U (dài hoặc ngắn)</label>
-                <label><input type="radio" name="c5" value="C"> C. Tấm mặt ca bin</label>
-                <label><input type="radio" name="c5" value="D"> D. Vòng hãm</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 6: Có bao nhiêu chi tiết dạng tấm trong bộ lắp ghép?</div>
-            <div class="options">
-                <label><input type="radio" name="c6" value="A"> A.9 chi tiết</label>
-                <label><input type="radio" name="c6" value="B" data-correct="true"> B. 10 chi tiết</label>
-                <label><input type="radio" name="c6" value="C"> C. 11 chi tiết</label>
-                <label><input type="radio" name="c6" value="D"> D. 12 chi tiết</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 7: Chi tiết nào dưới đây giúp xe mô hình có thể di chuyển được?</div>
-            <div class="options">
-                <label><input type="radio" name="c7" value="A"> A. Tấm lớn</label>
-                <label><input type="radio" name="c7" value="B" data-correct="true"> B. Bánh xe</label>
-                <label><input type="radio" name="c7" value="C"> C. Tua-vít</label>
-                <label><input type="radio" name="c7" value="D"> D. Cờ-lê</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 8: "Bánh đai" (ròng rọc) thường được sử dụng kết hợp với chi tiết nào để truyền chuyển động?</div>
-            <div class="options">
-                <label><input type="radio" name="c8" value="A"> A. Ốc và vít</label>
-                <label><input type="radio" name="c8" value="B" data-correct="true"> B. Dây sợi và Dây đai (dây chun)</label>
-                <label><input type="radio" name="c8" value="C"> C. Thanh chữ U</label>
-                <label><input type="radio" name="c8" value="D"> D. Hộp đựng ốc</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 9: Các loại "Trục" (Trục quay, trục thẳng dài/ngắn) dùng để làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="c9" value="A"> A. Để vặn ốc</label>
-                <label><input type="radio" name="c9" value="B" data-correct="true"> B. Để gắn bánh xe hoặc các chi tiết quay</label>
-                <label><input type="radio" name="c9" value="C"> C. Để làm sàn xe</label>
-                <label><input type="radio" name="c9" value="D"> D. Để đựng dụng cụ</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 10: "Cờ-lê" là dụng cụ dùng để làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="c10" value="A"> A. Để cắt giấy</label>
-                <label><input type="radio" name="c10" value="B" data-correct="true"> B. Để giữ chặt đai ốc (ê-cu) khi vặn</label>
-                <label><input type="radio" name="c10" value="C"> C. Để đóng đinh</label>
-                <label><input type="radio" name="c10" value="D"> D. Để múc nước</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 11: "Tua-vít" được sử dụng để tương tác với chi tiết nào?</div>
-            <div class="options">
-                <label><input type="radio" name="c11" value="A"> A. Vòng hãm</label>
-                <label><input type="radio" name="c11" value="B" data-correct="true"> B. Vít</label>
-                <label><input type="radio" name="c11" value="C"> C. Bánh xe</label>
-                <label><input type="radio" name="c11" value="D"> D. Dây sợi</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 12: Để ghép hai chi tiết có lỗ lại với nhau, ta thường dùng bộ đôi nào?</div>
-            <div class="options">
-                <label><input type="radio" name="c12" value="A"> A. Bánh xe và Trục</label>
-                <label><input type="radio" name="c12" value="B" data-correct="true"> B. Ốc và Vít</label>
-                <label><input type="radio" name="c12" value="C"> C. Cờ-lê và Tua-vít</label>
-                <label><input type="radio" name="c12" value="D"> D. Tấm lớn và Tấm nhỏ</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 13: "Vòng hãm" là chi tiết nhỏ, thường dùng để làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="c13" value="A"> A. Trang trí cho đẹp</label>
-                <label><input type="radio" name="c13" value="B" data-correct="true"> B. Giữ cố định các chi tiết trên trục, không để chúng bị tuột ra</label>
-                <label><input type="radio" name="c13" value="C"> C. Làm bánh xe dự phòng</label>
-                <label><input type="radio" name="c13" value="D"> D. Nối các thanh thẳng lại với nhau</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 14: Hộp đựng ốc vít có nhiều ngăn để làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="c14" value="A"> A. Để đựng nước uống</label>
-                <label><input type="radio" name="c14" value="B" data-correct="true"> B. Phân loại ốc, vít, vòng hãm để tránh bị lẫn lộn và rơi mất</label>
-                <label><input type="radio" name="c14" value="C"> C. Để đựng bánh xe</label>
-                <label><input type="radio" name="c14" value="D"> D. Để làm mô hình nhà</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 15: Chi tiết "Thanh móc" có hình dạng như thế nào?</div>
-            <div class="options">
-                <label><input type="radio" name="c15" value="A"> A. Thẳng tuột như cây thước</label>
-                <label><input type="radio" name="c15" value="B" data-correct="true"> B. Cong ở một đầu giống dấu hỏi (?)</label>
-                <label><input type="radio" name="c15" value="C"> C. Hình tròn như đồng xu</label>
-                <label><input type="radio" name="c15" value="D"> D. Hình vuông kín</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 16: "Đai ốc" (hay còn gọi là ê-cu) thường được vặn vào đâu?</div>
-            <div class="options">
-                <label><input type="radio" name="c16" value="A"> A. Vào thanh thẳng</label>
-                <label><input type="radio" name="c16" value="B" data-correct="true"> B. Vào đuôi của Vít</label>
-                <label><input type="radio" name="c16" value="C"> C. Vào bánh xe</label>
-                <label><input type="radio" name="c16" value="D"> D. Vào tua-vít</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 17: Khi lắp ghép xong mô hình và không dùng nữa, em cần làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="c17" value="A"> A. Vứt lung tung trên sàn nhà</label>
-                <label><input type="radio" name="c17" value="B" data-correct="true"> B. Tháo rời cẩn thận, phân loại và cất gọn gàng vào hộp</label>
-                <label><input type="radio" name="c17" value="C"> C. Để nguyên mô hình mãi mãi</label>
-                <label><input type="radio" name="c17" value="D"> D. Nhờ mẹ dọn hộ</label>
-            </div>
-        </div>
+        <div class="question-block"><div class="question-text">Câu 2: Hình dạng của "Tấm tam giác" có đặc điểm gì?</div><div class="options"><label><input type="radio" name="c2" value="A"> A. Hình tròn có lỗ ở giữa</label><label><input type="radio" name="c2" value="B" data-correct="true"> B. Hình tam giác màu vàng (hoặc xanh) có các lỗ</label><label><input type="radio" name="c2" value="C"> C. Hình chữ nhật dài</label><label><input type="radio" name="c2" value="D"> D. Hình chữ U uốn cong</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 3: "Tấm bên ca bin" thường được dùng để lắp bộ phận nào của xe mô hình?</div><div class="options"><label><input type="radio" name="c3" value="A"> A. Lắp bánh xe</label><label><input type="radio" name="c3" value="B" data-correct="true"> B. Lắp thành bên của buồng lái (ca bin)</label><label><input type="radio" name="c3" value="C"> C. Lắp gầm xe</label><label><input type="radio" name="c3" value="D"> D. Lắp trục quay</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 4: Nhóm "Thanh thẳng" gồm các loại thanh có số lượng lỗ khác nhau. Loại nào dưới đây KHÔNG có trong nhóm này?</div><div class="options"><label><input type="radio" name="c4" value="A"> A. Thanh thẳng 11 lỗ</label><label><input type="radio" name="c4" value="B"> B. Thanh thẳng 7 lỗ</label><label><input type="radio" name="c4" value="C"> C. Thanh thẳng 2 lỗ</label><label><input type="radio" name="c4" value="D" data-correct="true"> D. Thanh thẳng 35 lỗ</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 5: Chi tiết được uốn cong thành hình chữ U gọi là gì?</div><div class="options"><label><input type="radio" name="c5" value="A"> A. Thanh chữ L</label><label><input type="radio" name="c5" value="B" data-correct="true"> B. Thanh chữ U (dài hoặc ngắn)</label><label><input type="radio" name="c5" value="C"> C. Tấm mặt ca bin</label><label><input type="radio" name="c5" value="D"> D. Vòng hãm</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 6: Có bao nhiêu chi tiết dạng tấm trong bộ lắp ghép?</div><div class="options"><label><input type="radio" name="c6" value="A"> A.9 chi tiết</label><label><input type="radio" name="c6" value="B" data-correct="true"> B. 10 chi tiết</label><label><input type="radio" name="c6" value="C"> C. 11 chi tiết</label><label><input type="radio" name="c6" value="D"> D. 12 chi tiết</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 7: Chi tiết nào dưới đây giúp xe mô hình có thể di chuyển được?</div><div class="options"><label><input type="radio" name="c7" value="A"> A. Tấm lớn</label><label><input type="radio" name="c7" value="B" data-correct="true"> B. Bánh xe</label><label><input type="radio" name="c7" value="C"> C. Tua-vít</label><label><input type="radio" name="c7" value="D"> D. Cờ-lê</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 8: "Bánh đai" (ròng rọc) thường được sử dụng kết hợp với chi tiết nào để truyền chuyển động?</div><div class="options"><label><input type="radio" name="c8" value="A"> A. Ốc và vít</label><label><input type="radio" name="c8" value="B" data-correct="true"> B. Dây sợi và Dây đai (dây chun)</label><label><input type="radio" name="c8" value="C"> C. Thanh chữ U</label><label><input type="radio" name="c8" value="D"> D. Hộp đựng ốc</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 9: Các loại "Trục" (Trục quay, trục thẳng dài/ngắn) dùng để làm gì?</div><div class="options"><label><input type="radio" name="c9" value="A"> A. Để vặn ốc</label><label><input type="radio" name="c9" value="B" data-correct="true"> B. Để gắn bánh xe hoặc các chi tiết quay</label><label><input type="radio" name="c9" value="C"> C. Để làm sàn xe</label><label><input type="radio" name="c9" value="D"> D. Để đựng dụng cụ</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 10: "Cờ-lê" là dụng cụ dùng để làm gì?</div><div class="options"><label><input type="radio" name="c10" value="A"> A. Để cắt giấy</label><label><input type="radio" name="c10" value="B" data-correct="true"> B. Để giữ chặt đai ốc (ê-cu) khi vặn</label><label><input type="radio" name="c10" value="C"> C. Để đóng đinh</label><label><input type="radio" name="c10" value="D"> D. Để múc nước</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 11: "Tua-vít" được sử dụng để tương tác với chi tiết nào?</div><div class="options"><label><input type="radio" name="c11" value="A"> A. Vòng hãm</label><label><input type="radio" name="c11" value="B" data-correct="true"> B. Vít</label><label><input type="radio" name="c11" value="C"> C. Bánh xe</label><label><input type="radio" name="c11" value="D"> D. Dây sợi</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 12: Để ghép hai chi tiết có lỗ lại với nhau, ta thường dùng bộ đôi nào?</div><div class="options"><label><input type="radio" name="c12" value="A"> A. Bánh xe và Trục</label><label><input type="radio" name="c12" value="B" data-correct="true"> B. Ốc và Vít</label><label><input type="radio" name="c12" value="C"> C. Cờ-lê và Tua-vít</label><label><input type="radio" name="c12" value="D"> D. Tấm lớn và Tấm nhỏ</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 13: "Vòng hãm" là chi tiết nhỏ, thường dùng để làm gì?</div><div class="options"><label><input type="radio" name="c13" value="A"> A. Trang trí cho đẹp</label><label><input type="radio" name="c13" value="B" data-correct="true"> B. Giữ cố định các chi tiết trên trục, không để chúng bị tuột ra</label><label><input type="radio" name="c13" value="C"> C. Làm bánh xe dự phòng</label><label><input type="radio" name="c13" value="D"> D. Nối các thanh thẳng lại với nhau</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 14: Hộp đựng ốc vít có nhiều ngăn để làm gì?</div><div class="options"><label><input type="radio" name="c14" value="A"> A. Để đựng nước uống</label><label><input type="radio" name="c14" value="B" data-correct="true"> B. Phân loại ốc, vít, vòng hãm để tránh bị lẫn lộn và rơi mất</label><label><input type="radio" name="c14" value="C"> C. Để đựng bánh xe</label><label><input type="radio" name="c14" value="D"> D. Để làm mô hình nhà</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 15: Chi tiết "Thanh móc" có hình dạng như thế nào?</div><div class="options"><label><input type="radio" name="c15" value="A"> A. Thẳng tuột như cây thước</label><label><input type="radio" name="c15" value="B" data-correct="true"> B. Cong ở một đầu giống dấu hỏi (?)</label><label><input type="radio" name="c15" value="C"> C. Hình tròn như đồng xu</label><label><input type="radio" name="c15" value="D"> D. Hình vuông kín</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 16: "Đai ốc" (hay còn gọi là ê-cu) thường được vặn vào đâu?</div><div class="options"><label><input type="radio" name="c16" value="A"> A. Vào thanh thẳng</label><label><input type="radio" name="c16" value="B" data-correct="true"> B. Vào đuôi của Vít</label><label><input type="radio" name="c16" value="C"> C. Vào bánh xe</label><label><input type="radio" name="c16" value="D"> D. Vào tua-vít</label></div></div>
+        <div class="question-block"><div class="question-text">Câu 17: Khi lắp ghép xong mô hình và không dùng nữa, em cần làm gì?</div><div class="options"><label><input type="radio" name="c17" value="A"> A. Vứt lung tung trên sàn nhà</label><label><input type="radio" name="c17" value="B" data-correct="true"> B. Tháo rời cẩn thận, phân loại và cất gọn gàng vào hộp</label><label><input type="radio" name="c17" value="C"> C. Để nguyên mô hình mãi mãi</label><label><input type="radio" name="c17" value="D"> D. Nhờ mẹ dọn hộ</label></div></div>
 
         <button id="btn-nop">NỘP BÀI KIỂM TRA</button>
     </div>
@@ -254,6 +112,10 @@
                 return;
             }
 
+            const btn = document.getElementById("btn-nop");
+            btn.disabled = true;
+            btn.innerText = "ĐANG CHẤM ĐIỂM...";
+
             // CHẤM ĐIỂM
             let correctCount = 0;
             const totalQuestions = 17; // Không tính câu bảo mật
@@ -267,16 +129,28 @@
             
             // LƯU FIREBASE
             try {
-                await db.collection("KET_QUA_TONG_HOP").add({
-                    hoc_sinh: studentName,
-                    bai_tap: document.getElementById("ten-bai-tap").innerText,
-                    diem: diemLamTron,
-                    thoi_gian_lam: seconds,
-                    ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
-                });
+                // Logic lưu điểm cao nhất
+                const q = db.collection("KET_QUA_TONG_HOP").where("hoc_sinh", "==", studentName).where("bai_tap", "==", document.getElementById("ten-bai-tap").innerText);
+                const snapshot = await q.get();
+                if(!snapshot.empty) {
+                    const oldDoc = snapshot.docs[0];
+                    if(diemLamTron > oldDoc.data().diem) {
+                        await db.collection("KET_QUA_TONG_HOP").doc(oldDoc.id).update({
+                            diem: diemLamTron, thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    }
+                } else {
+                    await db.collection("KET_QUA_TONG_HOP").add({
+                        hoc_sinh: studentName,
+                        bai_tap: document.getElementById("ten-bai-tap").innerText,
+                        diem: diemLamTron,
+                        thoi_gian_lam: seconds,
+                        ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
             } catch (e) { console.error("Lỗi lưu:", e); }
 
-            // HIỆN KẾT QUẢ
+            // HIỆN KẾT QUẢ VÀ KIỂM TRA QUYỀN XEM ĐÁP ÁN
             hienThiKetQua(diemLamTron, correctCount, totalQuestions);
             
             if(diemLamTron >= 5) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
@@ -289,11 +163,16 @@
 
         async function hienThiKetQua(diem, dung, tong) {
             // CHECK CẤU HÌNH ADMIN ĐỂ ẨN/HIỆN NÚT XEM LẠI
-            let allowReview = true;
+            let allowReview = false; // Mặc định là KHÔNG cho xem
             try {
                 const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
-                if (configDoc.exists()) allowReview = configDoc.data().xem_dap_an !== false;
-            } catch (e) {}
+                if (configDoc.exists) {
+                    // Nếu giáo viên bật (true) thì mới cho xem
+                    if (configDoc.data().xem_dap_an === true) {
+                        allowReview = true;
+                    }
+                }
+            } catch (e) { console.error("Lỗi đọc cấu hình:", e); }
 
             let btnReviewHtml = allowReview 
                 ? `<button class="btn-review" onclick="xemLaiBai()">🔍 Xem lại bài</button>` 
