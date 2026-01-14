@@ -3,131 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Làm Bài Tập Khoa Học - Lớp 4A</title>
+    <title>Khoa học 4 - Thế Giới Nấm</title>
     
-    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0fdf4; padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; width: 100%; max-width: 750px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #fff; }
+        
+        /* Header Xanh lá đậm cho Khoa học */
+        .header { background: #dcfce7; padding: 15px; border-radius: 12px; border: 2px dashed #15803d; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 0; z-index: 10; }
+        .header h2 { font-size: 0.9rem; margin: 0; color: #166534; text-transform: uppercase; }
+        .timer { font-size: 1.2rem; font-weight: 900; color: #dc2626; }
+        
+        .question-block { background: #fff; border: 2px solid #e2e8f0; padding: 20px; margin-bottom: 18px; border-radius: 12px; transition: 0.2s; }
+        .question-block:hover { border-color: #4ade80; }
+        .security-quest { border: 3px solid #e11d48; background-color: #fff1f2; }
+        
+        .question-text { font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; color: #1e293b; line-height: 1.5; }
+        
+        .options label { display: block; padding: 12px; margin-top: 8px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 1rem; }
+        .options label:hover { background: #dcfce7; border-color: #15803d; font-weight: 500; color: #14532d; }
+        .options input { margin-right: 10px; transform: scale(1.3); }
+
+        #btn-nop { width: 100%; padding: 18px; border: none; border-radius: 12px; font-size: 20px; font-weight: 900; color: white; cursor: pointer; background: linear-gradient(to bottom, #22c55e, #15803d); box-shadow: 0 6px 0 #14532d; transition: all 0.1s; margin-top: 15px; }
+        #btn-nop:active { top: 6px; box-shadow: none; transform: translateY(4px); }
+
+        /* Khung Lời giải */
+        .explain-box { 
+            display: none; margin-top: 15px; padding: 12px; 
+            background-color: #f0fdf4; border-left: 4px solid #15803d; 
+            color: #14532d; font-size: 0.95rem; line-height: 1.5; border-radius: 4px;
+            animation: fadeIn 0.5s;
+        }
+        .explain-box strong { text-transform: uppercase; font-size: 0.8rem; display: block; margin-bottom: 5px; opacity: 0.8; }
+
+        /* Popup */
+        .result-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
+        .result-box { background: white; padding: 40px; width: 90%; max-width: 450px; border-radius: 20px; text-align: center; border-top: 8px solid #15803d; }
+        .result-score { font-size: 5rem; font-weight: 900; color: #15803d; margin: 10px 0; }
+        .res-correct { background-color: #dcfce7 !important; border: 2px solid #22c55e !important; }
+        .res-wrong { background-color: #fee2e2 !important; border: 2px solid #ef4444 !important; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .btn-group-result button { width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; color: white; }
+        .btn-review { background: #f59e0b; } .btn-continue { background: #0284c7; } .btn-finish { background: #64748b; }
+    </style>
 </head>
 <body>
-
     <div class="quiz-container">
-        
-        <div class="menu-top">
-            <a href="Menu.html">⬅ Quay về chọn môn khác</a>
-        </div>
-
+        <div style="margin-bottom:10px"><a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:13px">⬅ Quay về Menu</a></div>
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">KHOA HỌC - BÀI 18: ÔN TẬP THỰC VẬT VÀ ĐỘNG VẬT</h2>
-                
-                <p>Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
+                <h2 id="ten-bai-tap">KHOA HỌC - KHÁM PHÁ THẾ GIỚI NẤM</h2>
+                <p style="margin:5px 0 0 0; font-size:11px">Học sinh: <b id="student-display">...</b></p>
             </div>
-            <div class="timer">⏱ <span id="timer">00:00</span></div>
+            <div class="timer">⏱ <b id="timer">00:00</b></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 1: Theo sơ đồ bài học, yếu tố nào dưới đây <b>Thực vật</b> cần cho sự sống và phát triển?</div>
-            <div class="options">
-                <label><input type="radio" name="c1" value="A"> A. Ánh sáng, nhiệt độ, không khí, thức ăn.</label>
-                <label><input type="radio" name="c1" value="B" data-correct="true"> B. Ánh sáng, nhiệt độ, không khí, nước, chất khoáng.</label>
-                <label><input type="radio" name="c1" value="C"> C. Thịt, cá, trứng, sữa.</label>
-                <label><input type="radio" name="c1" value="D"> D. Chỉ cần nước là đủ.</label>
-            </div>
-        </div>
+        <div class="question-block security-quest"></div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Động vật lấy thức ăn từ đâu?</div>
+            <div class="question-text">Câu 1: Nấm thường thích sống ở môi trường nào nhất?</div>
             <div class="options">
-                <label><input type="radio" name="c2" value="A"> A. Tự tổng hợp từ ánh sáng mặt trời.</label>
-                <label><input type="radio" name="c2" value="B"> B. Hút từ đất như cây.</label>
-                <label><input type="radio" name="c2" value="C" data-correct="true"> C. Lấy từ thực vật hoặc động vật khác.</label>
-                <label><input type="radio" name="c2" value="D"> D. Tổng hợp từ không khí và nước.</label>
+                <label><input type="radio" name="c1" value="A"> A. Nơi khô ráo, nhiều ánh nắng.</label>
+                <label><input type="radio" name="c1" value="B" data-correct="true" data-explain="Nấm ưa thích nơi ẩm ướt. Đó là lý do sau cơn mưa hoặc ở nơi ẩm thấp nấm thường mọc nhiều."> B. Nơi ẩm ướt.</label>
+                <label><input type="radio" name="c1" value="C"> C. Nơi có nhiệt độ rất cao (lò nướng).</label>
+                <label><input type="radio" name="c1" value="D"> D. Dưới đáy sông.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Điểm khác biệt lớn nhất về dinh dưỡng giữa Thực vật và Động vật là gì?</div>
+            <div class="question-text">Câu 2: Hình dạng của nấm như thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="c3" value="A" data-correct="true"> A. Thực vật tự tổng hợp chất dinh dưỡng, Động vật phải kiếm ăn.</label>
-                <label><input type="radio" name="c3" value="B"> B. Thực vật ăn thịt, Động vật ăn cỏ.</label>
-                <label><input type="radio" name="c3" value="C"> C. Thực vật không cần nước, Động vật cần nước.</label>
-                <label><input type="radio" name="c3" value="D"> D. Không có gì khác biệt.</label>
+                <label><input type="radio" name="c2" value="A"> A. Tất cả nấm đều hình tròn.</label>
+                <label><input type="radio" name="c2" value="B"> B. Tất cả nấm đều hình cái ô.</label>
+                <label><input type="radio" name="c2" value="C" data-correct="true" data-explain="Thế giới nấm rất đa dạng: Nấm mũ hình cái ô, mộc nhĩ hình cái tai, nấm kim châm hình sợi..."> C. Rất đa dạng: hình cái ô, cái tai, sợi chỉ...</label>
+                <label><input type="radio" name="c2" value="D"> D. Chỉ có hình vuông.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Thực vật tự tổng hợp chất dinh dưỡng từ những nguồn nào?</div>
+            <div class="question-text">Câu 3: Những loại nấm có màu sắc sặc sỡ (ví dụ đỏ đốm trắng) thường là nấm gì?</div>
             <div class="options">
-                <label><input type="radio" name="c4" value="A"> A. Thức ăn nhanh.</label>
-                <label><input type="radio" name="c4" value="B" data-correct="true"> B. Khí các-bô-nic, nước, các chất khoáng, ánh sáng.</label>
-                <label><input type="radio" name="c4" value="C"> C. Khí ô-xi và đường.</label>
-                <label><input type="radio" name="c4" value="D"> D. Vitamin tổng hợp.</label>
+                <label><input type="radio" name="c3" value="A"> A. Nấm rất ngon.</label>
+                <label><input type="radio" name="c3" value="B" data-correct="true" data-explain="Trong tự nhiên, màu sắc sặc sỡ thường là tín hiệu cảnh báo nguy hiểm. Nấm đỏ đốm trắng thường là nấm độc."> B. Nấm độc.</label>
+                <label><input type="radio" name="c3" value="C"> C. Nấm thuốc bổ.</label>
+                <label><input type="radio" name="c3" value="D"> D. Nấm kim châm.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Cả thực vật và động vật đều cần thực hiện quá trình nào với môi trường để tồn tại?</div>
+            <div class="question-text">Câu 4: Loại nấm nào sau đây thường mọc trên thân gỗ mục?</div>
             <div class="options">
-                <label><input type="radio" name="c5" value="A"> A. Ngủ đông.</label>
-                <label><input type="radio" name="c5" value="B"> B. Săn mồi.</label>
-                <label><input type="radio" name="c5" value="C" data-correct="true"> C. Trao đổi chất.</label>
-                <label><input type="radio" name="c5" value="D"> D. Chạy nhảy.</label>
+                <label><input type="radio" name="c4" value="A" data-correct="true" data-explain="Nấm mộc nhĩ (tai mèo) thường được tìm thấy mọc trên các thân cây gỗ mục."> A. Nấm mộc nhĩ (nấm tai mèo).</label>
+                <label><input type="radio" name="c4" value="B"> B. Nấm kim châm.</label>
+                <label><input type="radio" name="c4" value="C"> C. Nấm mốc.</label>
+                <label><input type="radio" name="c4" value="D"> D. Nấm rơm.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Quan sát Hình 2 (trang 69), tại vị trí D (đặt chậu cây trước cục nóng máy điều hòa), cây sẽ phát triển như thế nào?</div>
+            <div class="question-text">Câu 5: Nấm mốc mọc trên bánh mì để lâu ngày có kích thước như thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="c6" value="A"> A. Phát triển rất tốt vì có gió mát.</label>
-                <label><input type="radio" name="c6" value="B" data-correct="true"> B. Kém phát triển hoặc chết vì quá nóng và mất nước.</label>
-                <label><input type="radio" name="c6" value="C"> C. Bình thường như các cây khác.</label>
-                <label><input type="radio" name="c6" value="D"> D. Cây sẽ ra hoa ngay lập tức.</label>
+                <label><input type="radio" name="c5" value="A"> A. To bằng bàn tay.</label>
+                <label><input type="radio" name="c5" value="B"> B. To bằng cái bát.</label>
+                <label><input type="radio" name="c5" value="C" data-correct="true" data-explain="Nấm mốc có kích thước rất nhỏ, mắt thường chỉ thấy các đốm màu, muốn nhìn rõ sợi nấm cần dùng kính lúp."> C. Rất nhỏ, phải dùng kính lúp mới nhìn rõ.</label>
+                <label><input type="radio" name="c5" value="D"> D. Dài như sợi dây thừng.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Quan sát Hình 2, tại vị trí E (dưới tán cây rậm rạp), cây con có thể gặp khó khăn gì?</div>
+            <div class="question-text">Câu 6: Nấm có nhất thiết phải mọc trên đất không?</div>
             <div class="options">
-                <label><input type="radio" name="c7" value="A" data-correct="true"> A. Thiếu ánh sáng mặt trời để quang hợp.</label>
-                <label><input type="radio" name="c7" value="B"> B. Thiếu nước trầm trọng.</label>
-                <label><input type="radio" name="c7" value="C"> C. Bị quá nhiều nắng chiếu vào.</label>
-                <label><input type="radio" name="c7" value="D"> D. Nhiệt độ quá cao.</label>
+                <label><input type="radio" name="c6" value="A"> A. Có, nấm chỉ mọc được trên đất.</label>
+                <label><input type="radio" name="c6" value="B" data-correct="true" data-explain="Nấm không nhất thiết cần đất. Chúng có thể mọc trên rơm rạ, gỗ mục, thức ăn thừa, thậm chí quần áo ẩm."> B. Không, nấm có thể mọc trên rơm rạ, gỗ, thức ăn...</label>
+                <label><input type="radio" name="c6" value="C"> C. Có, nấm cần đất màu mỡ như cây lúa.</label>
+                <label><input type="radio" name="c6" value="D"> D. Không, nấm chỉ mọc trong nước.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Ở Hình 2, vị trí C (trên nền sỏi đá/bê tông), hạt giống khó nảy mầm và phát triển vì lí do chính nào?</div>
+            <div class="question-text">Câu 7: Để tránh thức ăn bị nấm mốc, chúng ta nên làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="c8" value="A"> A. Thiếu không khí.</label>
-                <label><input type="radio" name="c8" value="B"> B. Thiếu ánh sáng.</label>
-                <label><input type="radio" name="c8" value="C" data-correct="true"> C. Thiếu đất và chất dinh dưỡng, nước khó giữ lại.</label>
-                <label><input type="radio" name="c8" value="D"> D. Có quá nhiều côn trùng.</label>
+                <label><input type="radio" name="c7" value="A"> A. Để thức ăn ở nơi ẩm ướt, nóng bức.</label>
+                <label><input type="radio" name="c7" value="B" data-correct="true" data-explain="Vì nấm mốc ưa ẩm và ấm, nên để tránh mốc ta cần giữ thức ăn khô ráo, thoáng mát hoặc bảo quản lạnh."> B. Giữ thức ăn khô ráo, thoáng mát hoặc bảo quản lạnh.</label>
+                <label><input type="radio" name="c7" value="C"> C. Để thức ăn chung với đồ bị mốc.</label>
+                <label><input type="radio" name="c7" value="D"> D. Tưới nước vào thức ăn.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Trong các vị trí ở Hình 2 (A, B, C, D, E), vị trí nào là lý tưởng nhất để gieo hạt và trồng cây ngoài tự nhiên?</div>
+            <div class="question-text">Câu 8: Loại nấm nào dưới đây có hình dạng giống sợi chỉ?</div>
             <div class="options">
-                <label><input type="radio" name="c9" value="A"> A. Vị trí D (Trước máy lạnh).</label>
-                <label><input type="radio" name="c9" value="B" data-correct="true"> B. Vị trí B (Bãi cỏ, đất tơi xốp, đủ sáng).</label>
-                <label><input type="radio" name="c9" value="C"> C. Vị trí C (Trên nền đá).</label>
-                <label><input type="radio" name="c9" value="D"> D. Vị trí E (Trong bóng tối rậm rạp).</label>
+                <label><input type="radio" name="c8" value="A"> A. Nấm đùi gà.</label>
+                <label><input type="radio" name="c8" value="B" data-correct="true" data-explain="Nấm kim châm có thân nhỏ, dài và mảnh giống như những sợi chỉ (hoặc cái kim)."> B. Nấm kim châm.</label>
+                <label><input type="radio" name="c8" value="C"> C. Nấm hương.</label>
+                <label><input type="radio" name="c8" value="D"> D. Nấm linh chi.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Nếu muốn trồng cây trong nhà (như Hình A), em cần đặt chậu cây ở đâu để cây sống khỏe mạnh?</div>
+            <div class="question-text">Câu 9: Khi thấy một cây nấm lạ trong rừng hoặc vườn, em nên làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="c10" value="A"> A. Đặt trong tủ kín.</label>
-                <label><input type="radio" name="c10" value="B"> B. Đặt dưới gầm giường.</label>
-                <label><input type="radio" name="c10" value="C"> C. Đặt trong phòng tắm không có cửa sổ.</label>
-                <label><input type="radio" name="c10" value="D" data-correct="true"> D. Đặt gần cửa sổ nơi có ánh sáng mặt trời chiếu vào.</label>
+                <label><input type="radio" name="c9" value="A"> A. Hái về nấu ăn ngay.</label>
+                <label><input type="radio" name="c9" value="B"> B. Dùng tay bóp nát nó.</label>
+                <label><input type="radio" name="c9" value="C" data-correct="true" data-explain="An toàn là trên hết! Tuyệt đối không ăn và không chạm vào vì có thể gây ngộ độc chết người."> C. Tuyệt đối không ăn và không chạm vào.</label>
+                <label><input type="radio" name="c9" value="D"> D. Nếm thử xem có ngọt không.</label>
             </div>
         </div>
 
-        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
+        <div class="question-block">
+            <div class="question-text">Câu 10: Vào những ngày trời nồm ẩm, em thường thấy mốc xuất hiện ở đâu?</div>
+            <div class="options">
+                <label><input type="radio" name="c10" value="A"> A. Trên chảo đang nấu ăn.</label>
+                <label><input type="radio" name="c10" value="B"> B. Trong tủ lạnh ngăn đá.</label>
+                <label><input type="radio" name="c10" value="C" data-correct="true" data-explain="Trời nồm ẩm tạo điều kiện thuận lợi cho nấm mốc phát triển ở góc tường, quần áo hoặc giày dép."> C. Ở góc tường, quần áo, giày dép ẩm.</label>
+                <label><input type="radio" name="c10" value="D"> D. Trên ngọn lửa.</label>
+            </div>
+        </div>
+
+        <button id="btn-nop">NỘP BÀI KIỂM TRA</button>
     </div>
 
     <script type="module" src="core.js"></script>
-
 </body>
 </html>
