@@ -1,9 +1,8 @@
-// core.js - PHIÊN BẢN v5 (TOP FEATURE: PHÁO HOA & GIỌNG NÓI)
+// core.js - v7.0 (AUTO LOAD SECURITY QUESTION)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
-// --- 1. TỰ ĐỘNG CÀI ĐẶT PHÁO GIẤY ---
-// (Tự chèn thư viện vào trang web mà không cần sửa file HTML)
+// Auto Confetti
 const confettiScript = document.createElement("script");
 confettiScript.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
 document.head.appendChild(confettiScript);
@@ -12,187 +11,143 @@ const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", auth
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Kiểm tra đăng nhập
+// Check Login
 const studentName = localStorage.getItem("hocSinhLop4A");
-if (!studentName) {
-    alert("Hệ thống chưa nhận diện được học sinh! Vui lòng quay lại điểm danh.");
-    window.location.href = "index.html";
-} else {
-    const display = document.getElementById("student-display");
-    if(display) display.innerText = studentName;
-}
+if (!studentName) { alert("Chưa đăng nhập!"); window.location.href = "index.html"; }
+else { const d = document.getElementById("student-display"); if(d) d.innerText = studentName; }
 
-// Xử lý đồng hồ
+// Timer
 let seconds = 0;
-let timerInterval = setInterval(() => {
-    seconds++;
-    let m = Math.floor(seconds / 60).toString().padStart(2, '0');
-    let s = (seconds % 60).toString().padStart(2, '0');
-    const timer = document.getElementById("timer");
-    if(timer) timer.innerText = `${m}:${s}`;
-}, 1000);
+setInterval(() => { seconds++; let m=Math.floor(seconds/60).toString().padStart(2,'0'); let s=(seconds%60).toString().padStart(2,'0'); const t=document.getElementById("timer"); if(t) t.innerText=`${m}:${s}`; }, 1000);
 
-// --- HÀM NỘP BÀI ---
-window.nopBai = async function() {
-    clearInterval(timerInterval); 
-    const btn = document.getElementById("btn-nop");
-    btn.disabled = true;
-    btn.innerText = "Đang chấm điểm...";
-    btn.style.opacity = "0.7";
-
-    const tieuDe = document.getElementById("ten-bai-tap").innerText;
-    const questionBlocks = document.querySelectorAll(".question-block");
-    let score = 0;
-    let total = questionBlocks.length;
-
-    questionBlocks.forEach(block => {
-        const inputs = block.querySelectorAll("input[type='radio']");
-        let isCorrect = false;
-        inputs.forEach(input => {
-            if (input.checked && input.getAttribute("data-correct") === "true") isCorrect = true;
-        });
-        if (isCorrect) score++;
-    });
-
-    const diemSo = (score / total) * 10;
+// --- TỰ ĐỘNG TẢI CÂU HỎI BẢO MẬT ---
+async function loadSecurityQuestion() {
+    const qBlock = document.querySelector(".security-quest");
+    if (!qBlock) return; // Nếu bài tập không có bảo mật thì bỏ qua
 
     try {
-        // Kiểm tra và lưu điểm (Logic v4)
-        const q = query(collection(db, "KET_QUA_TONG_HOP"), where("hoc_sinh", "==", studentName), where("bai_tap", "==", tieuDe));
-        const querySnapshot = await getDocs(q);
-        let isNewRecord = false; 
-        let oldScore = -1;
-
-        if (!querySnapshot.empty) {
-            const oldDoc = querySnapshot.docs[0];
-            oldScore = oldDoc.data().diem;
-            if (diemSo > oldScore) {
-                await setDoc(doc(db, "KET_QUA_TONG_HOP", oldDoc.id), {
-                    hoc_sinh: studentName, bai_tap: tieuDe, diem: diemSo, so_cau_dung: score, tong_so_cau: total, thoi_gian_lam: seconds, ngay_nop: serverTimestamp()
-                });
-                isNewRecord = true;
-            }
-        } else {
-            await addDoc(collection(db, "KET_QUA_TONG_HOP"), {
-                hoc_sinh: studentName, bai_tap: tieuDe, diem: diemSo, so_cau_dung: score, tong_so_cau: total, thoi_gian_lam: seconds, ngay_nop: serverTimestamp()
+        const docSnap = await getDoc(doc(db, "CAU_HINH", "cau_hoi_bao_mat"));
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            // Render HTML mới đè lên cái cũ
+            let html = `<div class="question-text" style="color:#c2410c">🔒 CÂU HỎI BẢO MẬT: ${data.question}</div><div class="options">`;
+            
+            const labels = ["A", "B", "C", "D"];
+            data.options.forEach((opt, idx) => {
+                const label = labels[idx];
+                // Nếu là đáp án đúng thì gán id="security-correct"
+                const idAttr = label === data.correct ? 'id="security-correct"' : '';
+                html += `<label><input type="radio" name="sec-q" value="${label}" ${idAttr}> ${label}. ${opt}</label>`;
             });
-            isNewRecord = true;
+            html += `</div>`;
+            
+            qBlock.innerHTML = html;
         }
+    } catch (e) {
+        console.error("Lỗi tải câu hỏi bảo mật:", e);
+    }
+}
+loadSecurityQuestion(); // Chạy ngay khi mở trang
 
-        // --- KÍCH HOẠT HIỆU ỨNG (MỚI) ---
-        hienThiKetQua(diemSo, score, total, isNewRecord, oldScore);
-        
-        // 1. Bắn pháo giấy
-        banPhaoGiay(diemSo);
-        
-        // 2. Đọc tên và điểm
-        docLoiChuc(studentName, diemSo);
+// --- LOGIC NỘP BÀI ---
+window.nopBai = async function() {
+    const btn = document.getElementById("btn-nop");
+    
+    // Check bảo mật (Dựa trên ID dynamic vừa tạo)
+    const secCheck = document.getElementById("security-correct");
+    if (secCheck && !secCheck.checked) {
+        alert("⛔ SAI CÂU HỎI BẢO MẬT!\nBạn không phải thành viên lớp 4A hoặc chưa cập nhật thông tin hôm nay.");
+        window.location.href = "index.html";
+        return;
+    }
+
+    btn.disabled = true; btn.innerText = "Đang chấm..."; btn.style.opacity = "0.7";
+
+    const tieuDe = document.getElementById("ten-bai-tap").innerText;
+    let correctCount = 0;
+    
+    // Chỉ chấm các câu hỏi nội dung (không phải security)
+    const allBlocks = document.querySelectorAll(".question-block");
+    const contentBlocks = Array.from(allBlocks).filter(b => !b.classList.contains('security-quest'));
+    
+    contentBlocks.forEach(b => {
+        const sel = b.querySelector("input:checked");
+        if (sel && sel.getAttribute("data-correct") === "true") correctCount++;
+    });
+
+    const diem = contentBlocks.length > 0 ? (correctCount / contentBlocks.length) * 10 : 0;
+    const diemLamTron = Number(diem.toFixed(1));
+
+    try {
+        await addDoc(collection(db, "KET_QUA_TONG_HOP"), {
+            hoc_sinh: studentName, bai_tap: tieuDe, diem: diemLamTron, 
+            so_cau_dung: correctCount, tong_so_cau: contentBlocks.length,
+            thoi_gian_lam: seconds, ngay_nop: serverTimestamp()
+        });
+
+        hienThiKetQua(diemLamTron, correctCount, contentBlocks.length);
+        if(diemLamTron >= 5) banPhaoGiay(diemLamTron);
+        docLoiChuc(studentName, diemLamTron);
 
     } catch (e) {
         alert("Lỗi mạng: " + e.message);
-        btn.disabled = false;
-        btn.innerText = "NỘP BÀI LẠI";
-        timerInterval = setInterval(() => { seconds++; }, 1000); 
+        btn.disabled = false; btn.innerText = "NỘP LẠI";
     }
 };
 
-function hienThiKetQua(diem, dung, tong, isNewRecord, oldScore) {
-    let msgTitle = "", msgColor = "";
-    if (oldScore === -1) { msgTitle = "✅ ĐÃ NỘP BÀI THÀNH CÔNG!"; msgColor = "#16a34a"; }
-    else if (isNewRecord) { msgTitle = "🏆 TUYỆT VỜI! KỶ LỤC MỚI!"; msgColor = "#ea580c"; }
-    else { msgTitle = `⚠️ CHƯA VƯỢT QUA KỶ LỤC CŨ (${oldScore.toFixed(1)})`; msgColor = "#64748b"; }
+async function hienThiKetQua(diem, dung, tong) {
+    let allowReview = true;
+    try {
+        const cfg = await getDoc(doc(db, "CAU_HINH", "trang_thai_mon"));
+        if (cfg.exists()) allowReview = cfg.data().xem_dap_an !== false;
+    } catch(e) {}
+
+    let btnHtml = allowReview 
+        ? `<button class="btn-review" onclick="xemLaiBai()">🔍 Xem lại bài</button>` 
+        : `<button class="btn-finish" style="background:#94a3b8; cursor:not-allowed">🚫 Đã ẩn đáp án</button>`;
 
     const div = document.createElement("div");
     div.id = "result-popup";
     div.className = "result-overlay";
     div.innerHTML = `
         <div class="result-box">
-            <h3 style="color:${msgColor}">${msgTitle}</h3>
+            <h3>KẾT QUẢ</h3>
             <div class="result-score">${diem.toFixed(1)}</div>
-            <div class="result-info">
-                Bạn làm đúng <strong>${dung}/${tong}</strong> câu.<br>
-                Thời gian: <strong>${formatTime(seconds)}</strong>
-            </div>
-            ${!isNewRecord && oldScore !== -1 ? "<p style='color:red; font-size:13px; font-style:italic'>(Kết quả này sẽ không được lưu)</p>" : ""}
+            <p>Đúng <b>${dung}/${tong}</b> câu.</p>
             <div class="btn-group-result">
-                <button class="btn-review" onclick="xemLaiBai()">🔍 Xem lại bài & Đáp án</button>
-                <button class="btn-continue" onclick="window.location.href='Menu.html'">➜ Làm môn khác</button>
-                <button class="btn-finish" onclick="window.location.href='index.html'">✘ Thoát</button>
+                ${btnHtml}
+                <button class="btn-continue" onclick="window.location.href='Menu.html'">➜ Về Menu</button>
             </div>
-        </div>
-    `;
+        </div>`;
     document.body.appendChild(div);
 }
 
-// --- HÀM BẮN PHÁO GIẤY ---
-function banPhaoGiay(diem) {
-    // Chỉ bắn nếu điểm >= 5
-    if (diem < 5) return;
-
-    // Thời gian bắn (Điểm càng cao bắn càng lâu)
-    var duration = (diem >= 9) ? 3000 : 1500; 
-    var end = Date.now() + duration;
-
-    (function frame() {
-        // Hai bên bắn vào giữa
-        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
-
-        if (Date.now() < end) {
-            requestAnimationFrame(frame);
-        }
-    }());
-}
-
-// --- HÀM ĐỌC GIỌNG NÓI ---
-function docLoiChuc(ten, diem) {
-    if ('speechSynthesis' in window) {
-        // Tạo câu nói
-        let loiNoi = "";
-        if (diem >= 9) loiNoi = `Xuất sắc! Chúc mừng bạn ${ten}, bạn đã đạt ${diem} điểm.`;
-        else if (diem >= 7) loiNoi = `Làm tốt lắm! Bạn ${ten} được ${diem} điểm.`;
-        else if (diem >= 5) loiNoi = `Bạn ${ten} đã hoàn thành bài thi với ${diem} điểm.`;
-        else loiNoi = `Cố gắng lần sau nhé ${ten}, bạn được ${diem} điểm.`;
-
-        // Cấu hình giọng đọc
-        let utterance = new SpeechSynthesisUtterance(loiNoi);
-        utterance.lang = 'vi-VN'; // Tiếng Việt
-        utterance.rate = 0.9;     // Tốc độ vừa phải
-        utterance.pitch = 1.1;    // Giọng cao một chút cho vui tai
-
-        // Đọc
-        window.speechSynthesis.speak(utterance);
-    }
-}
-
 window.xemLaiBai = function() {
-    const popup = document.getElementById("result-popup");
-    if(popup) popup.style.display = "none";
-    const btnNop = document.getElementById("btn-nop");
-    if(btnNop) btnNop.style.display = "none";
-
-    const questionBlocks = document.querySelectorAll(".question-block");
-    questionBlocks.forEach(block => {
-        const inputs = block.querySelectorAll("input[type='radio']");
-        inputs.forEach(input => {
-            input.disabled = true;
-            const parentLabel = input.parentElement;
-            if (input.getAttribute("data-correct") === "true") parentLabel.classList.add("res-correct");
-            if (input.checked && input.getAttribute("data-correct") !== "true") parentLabel.classList.add("res-wrong");
+    document.getElementById("result-popup").style.display = "none";
+    document.getElementById("btn-nop").style.display = "none";
+    
+    document.querySelectorAll(".question-block").forEach(b => {
+        if(b.classList.contains("security-quest")) return; // Bỏ qua câu bảo mật
+        
+        const inputs = b.querySelectorAll("input");
+        let explain = "";
+        inputs.forEach(i => {
+            i.disabled = true;
+            if(i.getAttribute("data-correct") === "true") {
+                i.parentElement.classList.add("res-correct");
+                explain = i.getAttribute("data-explain");
+            }
+            if(i.checked && i.getAttribute("data-correct") !== "true") i.parentElement.classList.add("res-wrong");
         });
-    });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    const backBtn = document.createElement("button");
-    backBtn.innerText = "⬅ Quay về chọn môn khác";
-    backBtn.className = "btn-submit";
-    backBtn.style.background = "#64748b";
-    backBtn.style.marginTop = "20px";
-    backBtn.onclick = function() { window.location.href = "Menu.html"; };
-    document.querySelector(".quiz-container").appendChild(backBtn);
-};
 
-function formatTime(sec) {
-    let m = Math.floor(sec / 60).toString().padStart(2, '0');
-    let s = (sec % 60).toString().padStart(2, '0');
-    return `${m}:${s}`;
+        if(explain) {
+            const d = document.createElement("div");
+            d.className = "explain-box"; d.innerHTML = `<strong>💡 GIẢI THÍCH:</strong> ${explain}`; d.style.display="block";
+            b.appendChild(d);
+        }
+    });
+    window.scrollTo(0,0);
 }
+
+function banPhaoGiay(diem) { if (diem < 5) return; var end = Date.now() + 2000; (function frame() { confetti({ particleCount: 5, spread: 55, origin: { x: 0 } }); confetti({ particleCount: 5, spread: 55, origin: { x: 1 } }); if (Date.now() < end) requestAnimationFrame(frame); }()); }
+function docLoiChuc(ten, diem) { if ('speechSynthesis' in window) { let msg = `Chúc mừng ${ten} đạt ${diem} điểm`; let ut = new SpeechSynthesisUtterance(msg); ut.lang = 'vi-VN'; window.speechSynthesis.speak(ut); } }
