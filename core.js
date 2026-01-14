@@ -1,59 +1,65 @@
-// core.js - v7.0 (AUTO LOAD SECURITY QUESTION)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+// core.js - PHIÊN BẢN ỔN ĐỊNH (FIX LỖI LIỆT NÚT)
+// Tự động nhận diện thư viện Firebase từ file HTML
 
-// Auto Confetti
-const confettiScript = document.createElement("script");
-confettiScript.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
-document.head.appendChild(confettiScript);
-
+// 1. CẤU HÌNH KẾT NỐI
 const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
-// Check Login
+// 2. KHỞI TẠO FIREBASE (Dùng biến toàn cục 'firebase' từ thư viện compat)
+if (firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+
+// 3. KIỂM TRA ĐĂNG NHẬP
 const studentName = localStorage.getItem("hocSinhLop4A");
-if (!studentName) { alert("Chưa đăng nhập!"); window.location.href = "index.html"; }
-else { const d = document.getElementById("student-display"); if(d) d.innerText = studentName; }
+if (!studentName) {
+    alert("Hệ thống chưa nhận diện được học sinh! Vui lòng quay lại điểm danh.");
+    window.location.href = "index.html";
+} else {
+    const display = document.getElementById("student-display");
+    if(display) display.innerText = studentName;
+}
 
-// Timer
+// 4. ĐỒNG HỒ ĐẾM GIỜ
 let seconds = 0;
-setInterval(() => { seconds++; let m=Math.floor(seconds/60).toString().padStart(2,'0'); let s=(seconds%60).toString().padStart(2,'0'); const t=document.getElementById("timer"); if(t) t.innerText=`${m}:${s}`; }, 1000);
+let timerInterval = setInterval(() => {
+    seconds++;
+    let m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    let s = (seconds % 60).toString().padStart(2, '0');
+    const timer = document.getElementById("timer");
+    if(timer) timer.innerText = `${m}:${s}`;
+}, 1000);
 
-// --- TỰ ĐỘNG TẢI CÂU HỎI BẢO MẬT ---
+// --- 5. TỰ ĐỘNG TẢI CÂU HỎI BẢO MẬT ---
 async function loadSecurityQuestion() {
     const qBlock = document.querySelector(".security-quest");
-    if (!qBlock) return; // Nếu bài tập không có bảo mật thì bỏ qua
+    if (!qBlock) return; 
 
     try {
-        const docSnap = await getDoc(doc(db, "CAU_HINH", "cau_hoi_bao_mat"));
-        if (docSnap.exists()) {
+        const docSnap = await db.collection("CAU_HINH").doc("cau_hoi_bao_mat").get();
+        if (docSnap.exists) {
             const data = docSnap.data();
-            // Render HTML mới đè lên cái cũ
             let html = `<div class="question-text" style="color:#c2410c">🔒 CÂU HỎI BẢO MẬT: ${data.question}</div><div class="options">`;
-            
             const labels = ["A", "B", "C", "D"];
             data.options.forEach((opt, idx) => {
                 const label = labels[idx];
-                // Nếu là đáp án đúng thì gán id="security-correct"
                 const idAttr = label === data.correct ? 'id="security-correct"' : '';
                 html += `<label><input type="radio" name="sec-q" value="${label}" ${idAttr}> ${label}. ${opt}</label>`;
             });
             html += `</div>`;
-            
             qBlock.innerHTML = html;
         }
-    } catch (e) {
-        console.error("Lỗi tải câu hỏi bảo mật:", e);
-    }
+    } catch (e) { console.error("Lỗi tải câu hỏi bảo mật:", e); }
 }
-loadSecurityQuestion(); // Chạy ngay khi mở trang
+loadSecurityQuestion();
 
-// --- LOGIC NỘP BÀI ---
+// --- 6. HÀM NỘP BÀI (GỌI TỪ HTML) ---
 window.nopBai = async function() {
+    // Ngắt đồng hồ
+    clearInterval(timerInterval);
     const btn = document.getElementById("btn-nop");
-    
-    // Check bảo mật (Dựa trên ID dynamic vừa tạo)
+
+    // Kiểm tra bảo mật
     const secCheck = document.getElementById("security-correct");
     if (secCheck && !secCheck.checked) {
         alert("⛔ SAI CÂU HỎI BẢO MẬT!\nBạn không phải thành viên lớp 4A hoặc chưa cập nhật thông tin hôm nay.");
@@ -66,7 +72,7 @@ window.nopBai = async function() {
     const tieuDe = document.getElementById("ten-bai-tap").innerText;
     let correctCount = 0;
     
-    // Chỉ chấm các câu hỏi nội dung (không phải security)
+    // Lọc câu hỏi nội dung (bỏ câu bảo mật)
     const allBlocks = document.querySelectorAll(".question-block");
     const contentBlocks = Array.from(allBlocks).filter(b => !b.classList.contains('security-quest'));
     
@@ -79,10 +85,11 @@ window.nopBai = async function() {
     const diemLamTron = Number(diem.toFixed(1));
 
     try {
-        await addDoc(collection(db, "KET_QUA_TONG_HOP"), {
+        // Lưu điểm
+        await db.collection("KET_QUA_TONG_HOP").add({
             hoc_sinh: studentName, bai_tap: tieuDe, diem: diemLamTron, 
             so_cau_dung: correctCount, tong_so_cau: contentBlocks.length,
-            thoi_gian_lam: seconds, ngay_nop: serverTimestamp()
+            thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
         });
 
         hienThiKetQua(diemLamTron, correctCount, contentBlocks.length);
@@ -98,8 +105,8 @@ window.nopBai = async function() {
 async function hienThiKetQua(diem, dung, tong) {
     let allowReview = true;
     try {
-        const cfg = await getDoc(doc(db, "CAU_HINH", "trang_thai_mon"));
-        if (cfg.exists()) allowReview = cfg.data().xem_dap_an !== false;
+        const cfg = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
+        if (cfg.exists) allowReview = cfg.data().xem_dap_an !== false;
     } catch(e) {}
 
     let btnHtml = allowReview 
@@ -107,8 +114,7 @@ async function hienThiKetQua(diem, dung, tong) {
         : `<button class="btn-finish" style="background:#94a3b8; cursor:not-allowed">🚫 Đã ẩn đáp án</button>`;
 
     const div = document.createElement("div");
-    div.id = "result-popup";
-    div.className = "result-overlay";
+    div.id = "result-popup"; div.className = "result-overlay";
     div.innerHTML = `
         <div class="result-box">
             <h3>KẾT QUẢ</h3>
@@ -127,7 +133,7 @@ window.xemLaiBai = function() {
     document.getElementById("btn-nop").style.display = "none";
     
     document.querySelectorAll(".question-block").forEach(b => {
-        if(b.classList.contains("security-quest")) return; // Bỏ qua câu bảo mật
+        if(b.classList.contains("security-quest")) return;
         
         const inputs = b.querySelectorAll("input");
         let explain = "";
