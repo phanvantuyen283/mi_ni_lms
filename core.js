@@ -1,216 +1,154 @@
-/* ============================================================
-   CORE.JS - PHIÊN BẢN TOÀN NĂNG v8.0 (FIX DỨT ĐIỂM LỖI LIỆT NÚT)
-   Tự động tương thích với mọi file bài tập HTML
-   ============================================================ */
+/* core.js - PHIÊN BẢN FINAL (KHÔNG DÙNG IMPORT - FIX LỖI LIỆT NÚT) */
 
-// 1. CẤU HÌNH & KẾT NỐI FIREBASE
+// 1. Cấu hình
 const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
 
-// Kiểm tra xem thư viện Firebase trong HTML đã tải chưa
+// 2. Kết nối Firebase (Dùng thư viện toàn cục từ HTML)
 let db;
 if (typeof firebase !== 'undefined') {
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
-    console.log("✅ Core.js: Đã kết nối Firebase thành công!");
+    console.log("✅ Core.js: Kết nối thành công!");
 } else {
-    console.error("❌ LỖI: Không tìm thấy thư viện Firebase trong file HTML.");
-    alert("Lỗi hệ thống: Chưa tải được thư viện Firebase. Vui lòng kiểm tra kết nối mạng!");
+    alert("Lỗi: Không tìm thấy thư viện Firebase. Hãy kiểm tra file HTML!");
 }
 
-// 2. TỰ ĐỘNG NẠP CÁC TIỆN ÍCH (Pháo hoa, Giọng nói)
+// 3. Tự động thêm Pháo hoa nếu thiếu
 if (typeof confetti === 'undefined') {
-    const script = document.createElement('script');
-    script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
-    document.head.appendChild(script);
+    const s = document.createElement('script');
+    s.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
+    document.head.appendChild(s);
 }
 
-// 3. KIỂM TRA ĐĂNG NHẬP & ĐỒNG HỒ
+// 4. Kiểm tra đăng nhập
 const studentName = localStorage.getItem("hocSinhLop4A");
 const display = document.getElementById("student-display");
-if(display) {
-    display.innerText = studentName ? studentName : "Khách (Chưa đăng nhập)";
-}
+if(display) display.innerText = studentName ? studentName : "Khách";
 
+// 5. Đồng hồ
 let seconds = 0;
 setInterval(() => {
     seconds++;
-    const timer = document.getElementById("timer");
-    if(timer) {
-        let m = Math.floor(seconds / 60).toString().padStart(2, '0');
-        let s = (seconds % 60).toString().padStart(2, '0');
-        timer.innerText = `${m}:${s}`;
+    const t = document.getElementById("timer");
+    if(t) {
+        let m = Math.floor(seconds/60).toString().padStart(2,'0');
+        let s = (seconds%60).toString().padStart(2,'0');
+        t.innerText = `${m}:${s}`;
     }
 }, 1000);
 
-// 4. TỰ ĐỘNG TẢI CÂU HỎI BẢO MẬT TỪ ADMIN
+// --- 6. AUTO LOAD BẢO MẬT ---
 async function loadSecurityQuestion() {
     const qBlock = document.querySelector(".security-quest");
     if (!qBlock || !db) return;
-
     try {
-        const docSnap = await db.collection("CAU_HINH").doc("cau_hoi_bao_mat").get();
-        if (docSnap.exists) {
-            const data = docSnap.data();
-            let html = `<div class="question-text" style="color:#c2410c; border-bottom:1px dashed #fca5a5; padding-bottom:5px; margin-bottom:10px;">🔒 CÂU HỎI BẢO MẬT: ${data.question}</div><div class="options">`;
-            const labels = ["A", "B", "C", "D"];
-            data.options.forEach((opt, idx) => {
-                const label = labels[idx];
-                // Gán ID đặc biệt cho đáp án đúng để code kiểm tra
-                const idAttr = label === data.correct ? 'id="security-correct"' : '';
-                html += `<label style="background:#fff1f2"><input type="radio" name="sec-q" value="${label}" ${idAttr}> <b>${label}.</b> ${opt}</label>`;
+        const doc = await db.collection("CAU_HINH").doc("cau_hoi_bao_mat").get();
+        if (doc.exists) {
+            const d = doc.data();
+            let h = `<div class="question-text" style="color:#c2410c">🔒 CÂU HỎI BẢO MẬT: ${d.question}</div><div class="options">`;
+            ["A","B","C","D"].forEach((lbl, i) => {
+                let id = lbl === d.correct ? 'id="security-correct"' : '';
+                h += `<label style="background:#fff1f2"><input type="radio" name="sec" value="${lbl}" ${id}> ${lbl}. ${d.options[i]}</label>`;
             });
-            html += `</div>`;
-            qBlock.innerHTML = html;
+            qBlock.innerHTML = h + `</div>`;
         }
-    } catch (e) { console.log("Lỗi tải câu hỏi bảo mật:", e); }
+    } catch(e) { console.log(e); }
 }
-// Chạy ngay khi file được tải
 loadSecurityQuestion();
 
-// ============================================================
-// 5. HÀM XỬ LÝ CHÍNH (Gán vào window để HTML gọi được)
-// ============================================================
-
+// --- 7. HÀM NỘP BÀI (GẮN VÀO WINDOW ĐỂ HTML GỌI ĐƯỢC) ---
 window.nopBai = async function() {
     const btn = document.getElementById("btn-nop");
     
-    // --- BƯỚC 1: KIỂM TRA BẢO MẬT ---
-    const secCheck = document.getElementById("security-correct");
-    // Nếu có câu hỏi bảo mật mà chưa chọn hoặc chọn sai
-    if (document.querySelector(".security-quest") && (!secCheck || !secCheck.checked)) {
-        alert("⛔ CẢNH BÁO BẢO MẬT!\n\nBạn chưa trả lời đúng 'Câu hỏi bảo mật' ở đầu trang.\nHãy chọn đúng để xác nhận là thành viên lớp 4A nhé!");
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return; // Dừng lại ngay
+    // Check bảo mật
+    const sec = document.getElementById("security-correct");
+    if (document.querySelector(".security-quest") && (!sec || !sec.checked)) {
+        alert("⛔ Sai câu hỏi bảo mật! Vui lòng chọn đúng để nộp bài.");
+        return;
     }
 
-    // --- BƯỚC 2: CHẤM ĐIỂM ---
-    btn.disabled = true; 
-    btn.innerText = "ĐANG CHẤM ĐIỂM..."; 
-    btn.style.opacity = "0.7";
+    btn.disabled = true; btn.innerText = "ĐANG CHẤM..."; btn.style.opacity = "0.7";
 
-    let correctCount = 0;
+    // Chấm điểm
+    let correct = 0;
     const allBlocks = document.querySelectorAll(".question-block");
-    // Lọc bỏ câu bảo mật ra khỏi phần tính điểm
     const contentBlocks = Array.from(allBlocks).filter(b => !b.classList.contains('security-quest'));
     
     contentBlocks.forEach(b => {
         const sel = b.querySelector("input:checked");
-        // Kiểm tra thuộc tính data-correct="true"
-        if (sel && sel.getAttribute("data-correct") === "true") correctCount++;
+        if (sel && sel.getAttribute("data-correct") === "true") correct++;
     });
 
-    const total = contentBlocks.length;
-    const diem = total > 0 ? (correctCount / total) * 10 : 0;
-    const diemLamTron = Number(diem.toFixed(1));
-    const tieuDe = document.getElementById("ten-bai-tap") ? document.getElementById("ten-bai-tap").innerText : "Bài Tập Không Tên";
+    const diem = contentBlocks.length > 0 ? (correct / contentBlocks.length) * 10 : 0;
+    const diemTron = Number(diem.toFixed(1));
+    const tieuDe = document.getElementById("ten-bai-tap").innerText;
 
-    // --- BƯỚC 3: LƯU VÀO FIREBASE ---
+    // Lưu Firebase
     try {
         if(db && studentName) {
             await db.collection("KET_QUA_TONG_HOP").add({
-                hoc_sinh: studentName, 
-                bai_tap: tieuDe, 
-                diem: diemLamTron, 
-                so_cau_dung: correctCount, 
-                tong_so_cau: total,
-                thoi_gian_lam: seconds, 
-                ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
+                hoc_sinh: studentName, bai_tap: tieuDe, diem: diemTron, 
+                so_cau_dung: correct, tong_so_cau: contentBlocks.length,
+                thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
             });
         }
-    } catch (e) {
-        console.error("Lỗi lưu điểm (có thể do mạng):", e);
-    }
+    } catch(e) { console.error(e); }
 
-    // --- BƯỚC 4: HIỂN THỊ KẾT QUẢ ---
-    hienThiKetQua(diemLamTron, correctCount, total);
-    
-    // Hiệu ứng
-    if(diemLamTron >= 5 && typeof confetti !== 'undefined') {
-        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-    }
-    
-    // Giọng nói
+    // Hiện kết quả
+    hienThiKetQua(diemTron, correct, contentBlocks.length);
+    if(diemTron >= 5 && typeof confetti !== 'undefined') confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     if ('speechSynthesis' in window) {
-        let loiChuc = diemLamTron >= 8 ? "Xuất sắc!" : (diemLamTron >= 5 ? "Làm tốt lắm!" : "Cố gắng hơn nhé!");
-        let msg = new SpeechSynthesisUtterance(`${loiChuc} Bạn ${studentName || 'nhỏ'} được ${diemLamTron} điểm.`);
-        msg.lang = 'vi-VN'; 
-        window.speechSynthesis.speak(msg);
+        let msg = new SpeechSynthesisUtterance(`Bạn ${studentName} được ${diemTron} điểm`);
+        msg.lang = 'vi-VN'; window.speechSynthesis.speak(msg);
     }
 };
 
-// Hàm hiện Popup & Check quyền xem đáp án từ Admin
 async function hienThiKetQua(diem, dung, tong) {
-    let allowReview = true; // Mặc định cho xem
-    if(db) {
-        try {
-            const cfg = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
-            if (cfg.exists) allowReview = cfg.data().xem_dap_an !== false;
-        } catch(e) {}
-    }
+    let allow = true;
+    try {
+        const cfg = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
+        if(cfg.exists) allow = cfg.data().xem_dap_an !== false;
+    } catch(e){}
 
-    let btnHtml = allowReview 
-        ? `<button style="background:#f59e0b; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold" onclick="xemLaiBai()">🔍 Xem lại bài & Đáp án</button>` 
-        : `<button style="background:#94a3b8; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:not-allowed" disabled>🚫 Đã ẩn đáp án</button>`;
+    let btnHtml = allow 
+        ? `<button style="background:#f59e0b; color:white; padding:10px; border:none; border-radius:5px; cursor:pointer" onclick="xemLaiBai()">🔍 Xem lại</button>` 
+        : `<button style="background:#ccc; color:white; padding:10px; border:none; border-radius:5px" disabled>🚫 Đã ẩn đáp án</button>`;
 
     const div = document.createElement("div");
     div.id = "result-popup";
-    div.style.position = "fixed"; div.style.top="0"; div.style.left="0"; div.style.width="100%"; div.style.height="100%";
-    div.style.background = "rgba(0,0,0,0.9)"; div.style.display="flex"; div.style.justifyContent="center"; div.style.alignItems="center"; div.style.zIndex="9999";
-    
+    div.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; justify-content:center; align-items:center; z-index:9999";
     div.innerHTML = `
-        <div style="background:white; padding:30px; width:90%; max-width:450px; border-radius:15px; text-align:center; border-top:8px solid #0284c7; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-            <h3 style="margin:0 0 10px 0; color:#0284c7; text-transform:uppercase">KẾT QUẢ BÀI LÀM</h3>
-            <div style="font-size:5rem; font-weight:900; color:#ea580c; margin:10px 0">${diem.toFixed(1)}</div>
-            <p style="font-size:1.1rem; color:#334155;">Đúng <b>${dung}/${tong}</b> câu.</p>
-            <div style="display:flex; gap:10px; justify-content:center; margin-top:20px; flex-direction:column">
+        <div style="background:white; padding:30px; border-radius:15px; text-align:center; width:300px; border-top:5px solid #0284c7">
+            <h2 style="color:#0284c7; margin:0">${diem.toFixed(1)}</h2>
+            <p>Đúng ${dung}/${tong} câu</p>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:15px">
                 ${btnHtml}
-                <button style="background:#0284c7; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold" onclick="window.location.href='Menu.html'">➜ Quay về Menu</button>
+                <button style="background:#0284c7; color:white; padding:10px; border:none; border-radius:5px; cursor:pointer" onclick="window.location.href='Menu.html'">➜ Về Menu</button>
             </div>
         </div>`;
     document.body.appendChild(div);
 }
 
-// Hàm xem lại bài (Hiện màu xanh/đỏ và Lời giải)
 window.xemLaiBai = function() {
-    const popup = document.getElementById("result-popup");
-    if(popup) popup.style.display = "none";
-    document.getElementById("btn-nop").style.display = "none"; // Ẩn nút nộp đi
-    
+    document.getElementById("result-popup").style.display = "none";
+    document.getElementById("btn-nop").style.display = "none";
     document.querySelectorAll(".question-block").forEach(b => {
-        if(b.classList.contains("security-quest")) return; // Bỏ qua câu bảo mật
-        
+        if(b.classList.contains("security-quest")) return;
         const inputs = b.querySelectorAll("input");
-        let explain = "";
-        
+        let exp = "";
         inputs.forEach(i => {
-            i.disabled = true; // Khóa không cho chọn lại
-            
-            // Tô màu đáp án đúng
+            i.disabled = true;
             if(i.getAttribute("data-correct") === "true") {
-                i.parentElement.style.background = "#dcfce7"; 
-                i.parentElement.style.border = "2px solid #22c55e";
-                i.parentElement.style.color = "#15803d";
-                explain = i.getAttribute("data-explain"); // Lấy lời giải
+                i.parentElement.style.background = "#dcfce7";
+                exp = i.getAttribute("data-explain");
             }
-            // Tô màu đáp án sai (nếu học sinh chọn)
-            if(i.checked && i.getAttribute("data-correct") !== "true") {
-                i.parentElement.style.background = "#fee2e2";
-                i.parentElement.style.border = "2px solid #ef4444";
-                i.parentElement.style.color = "#b91c1c";
-            }
+            if(i.checked && i.getAttribute("data-correct") !== "true") i.parentElement.style.background = "#fee2e2";
         });
-
-        // Hiện khung lời giải (nếu có)
-        if(explain) {
+        if(exp) {
             const d = document.createElement("div");
-            d.innerHTML = `<strong>💡 GIẢI THÍCH CHI TIẾT:</strong><br>${explain}`;
-            d.style.marginTop="15px"; d.style.padding="15px"; d.style.background="#fff7ed"; 
-            d.style.color="#c2410c"; d.style.borderRadius="8px"; d.style.fontSize="0.95rem"; d.style.borderLeft="4px solid #ea580c";
-            d.style.lineHeight="1.5";
+            d.innerHTML = `💡 ${exp}`; d.style.cssText = "margin-top:10px; padding:10px; background:#fff7ed; color:#c2410c; font-size:0.9em; border-radius:5px";
             b.appendChild(d);
         }
     });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0,0);
 }
