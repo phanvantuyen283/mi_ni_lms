@@ -15,6 +15,7 @@
         body { font-family: 'Segoe UI', sans-serif; background-color: #fdf2f8; padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; width: 100%; max-width: 750px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #fff; }
         
+        /* Header màu Hồng cho Đạo Đức */
         .header { background: #fce7f3; padding: 15px; border-radius: 12px; border: 2px dashed #db2777; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 0; z-index: 10; }
         .header h2 { font-size: 0.9rem; margin: 0; color: #be185d; text-transform: uppercase; }
         .timer { font-size: 1.2rem; font-weight: 900; color: #dc2626; }
@@ -32,7 +33,7 @@
         #btn-nop { width: 100%; padding: 18px; border: none; border-radius: 12px; font-size: 20px; font-weight: 900; color: white; cursor: pointer; background: linear-gradient(to bottom, #ec4899, #db2777); box-shadow: 0 6px 0 #9d174d; transition: all 0.1s; margin-top: 15px; }
         #btn-nop:active { top: 6px; box-shadow: none; transform: translateY(4px); }
 
-        /* Lời giải */
+        /* Khung Lời giải */
         .explain-box { 
             display: none; margin-top: 15px; padding: 12px; 
             background-color: #fdf2f8; border-left: 4px solid #db2777; 
@@ -41,16 +42,17 @@
         }
         .explain-box strong { text-transform: uppercase; font-size: 0.8rem; display: block; margin-bottom: 5px; opacity: 0.8; }
 
-        /* Popup */
+        /* Popup Kết quả */
         .result-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
         .result-box { background: white; padding: 40px; width: 90%; max-width: 450px; border-radius: 20px; text-align: center; border-top: 8px solid #db2777; }
         .result-score { font-size: 5rem; font-weight: 900; color: #db2777; margin: 10px 0; }
-        .res-correct { background-color: #dcfce7 !important; border: 2px solid #22c55e !important; }
-        .res-wrong { background-color: #fee2e2 !important; border: 2px solid #ef4444 !important; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         .btn-group-result button { width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; color: white; }
         .btn-review { background: #f59e0b; } .btn-continue { background: #0284c7; } .btn-finish { background: #64748b; }
+
+        .res-correct { background-color: #dcfce7 !important; border: 2px solid #22c55e !important; }
+        .res-wrong { background-color: #fee2e2 !important; border: 2px solid #ef4444 !important; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -166,9 +168,150 @@
             </div>
         </div>
 
-        <button id="btn-nop" onclick="nopBai()">NỘP BÀI KIỂM TRA</button>
+        <button id="btn-nop">NỘP BÀI KIỂM TRA</button>
     </div>
 
-    <script src="core.js"></script>
+    <script>
+        // Cấu hình Firebase
+        const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
+        
+        let db;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            console.log("Kết nối DB thành công!");
+        } catch(e) { console.error(e); }
+
+        // Check Login
+        const studentName = localStorage.getItem("hocSinhLop4A") || "Học sinh";
+        document.getElementById("student-display").innerText = studentName;
+
+        // Đồng hồ
+        let seconds = 0;
+        let timerInterval = setInterval(() => {
+            seconds++;
+            let m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            let s = (seconds % 60).toString().padStart(2, '0');
+            document.getElementById("timer").innerText = `${m}:${s}`;
+        }, 1000);
+
+        // Auto Load Security Question
+        async function loadSecQ() {
+            const qBlock = document.querySelector(".security-quest");
+            if(!qBlock) return;
+            try {
+                const snap = await db.collection("CAU_HINH").doc("cau_hoi_bao_mat").get();
+                if(snap.exists) {
+                    const d = snap.data();
+                    let h = `<div class="question-text" style="color:#be185d">🔒 ${d.question}</div><div class="options">`;
+                    const lbls = ["A","B","C","D"];
+                    d.options.forEach((o,i) => {
+                        let id = lbls[i]===d.correct ? 'id="sec-correct"' : '';
+                        h += `<label><input type="radio" name="sec" value="${lbls[i]}" ${id}> ${lbls[i]}. ${o}</label>`;
+                    });
+                    h += `</div>`;
+                    qBlock.innerHTML = h;
+                }
+            } catch(e){}
+        }
+        loadSecQ();
+
+        // Xử lý nút Nộp bài
+        document.getElementById("btn-nop").onclick = async function() {
+            // 1. Check bảo mật
+            const sec = document.getElementById("sec-correct");
+            if(sec && !sec.checked) { 
+                alert("⛔ Sai câu hỏi bảo mật! Vui lòng chọn đúng để nộp bài."); 
+                window.scrollTo(0,0); 
+                return; 
+            }
+
+            // 2. Chấm điểm
+            const btn = document.getElementById("btn-nop");
+            btn.disabled = true; btn.innerText = "ĐANG CHẤM..."; btn.style.opacity = "0.7";
+            clearInterval(timerInterval);
+
+            let correct = 0;
+            const blocks = document.querySelectorAll(".question-block");
+            const contentBlocks = Array.from(blocks).filter(b => !b.classList.contains('security-quest'));
+            
+            contentBlocks.forEach(b => {
+                const sel = b.querySelector("input:checked");
+                if (sel && sel.getAttribute("data-correct") === "true") correct++;
+            });
+
+            const total = contentBlocks.length;
+            const diem = total > 0 ? (correct / total) * 10 : 0;
+            const diemTron = Number(diem.toFixed(1));
+
+            // 3. Lưu vào Firebase
+            try {
+                await db.collection("KET_QUA_TONG_HOP").add({
+                    hoc_sinh: studentName, bai_tap: document.getElementById("ten-bai-tap").innerText,
+                    diem: diemTron, so_cau_dung: correct, tong_so_cau: total,
+                    thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch(e) { console.error(e); }
+
+            // 4. Kiểm tra quyền Xem đáp án
+            let allow = true;
+            try {
+                const cfg = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
+                if(cfg.exists) allow = cfg.data().xem_dap_an !== false;
+            } catch(e){}
+
+            // 5. Hiển thị kết quả
+            const div = document.createElement("div");
+            div.className = "result-overlay"; div.style.display = "flex";
+            
+            let btnHtml = allow 
+                ? `<button class="btn-review" onclick="cheDoXemLai()">🔍 Xem lại bài</button>`
+                : `<button class="btn-finish" disabled style="background:#9ca3af; cursor:not-allowed">🚫 Đã ẩn đáp án</button>`;
+
+            div.innerHTML = `
+                <div class="result-box">
+                    <h2>KẾT QUẢ</h2>
+                    <div class="result-score">${diemTron}</div>
+                    <p>Đúng <b>${correct}/${total}</b> câu.</p>
+                    <div class="btn-group-result">
+                        ${btnHtml}
+                        <button class="btn-continue" onclick="window.location.href='Menu.html'">➜ Về Menu</button>
+                    </div>
+                </div>`;
+            document.body.appendChild(div);
+
+            if(diemTron >= 5) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            if ('speechSynthesis' in window) {
+                let msg = diemTron >= 8 ? `Xuất sắc! Bạn ${studentName} được ${diemTron} điểm.` : `Bạn ${studentName} được ${diemTron} điểm.`;
+                let ut = new SpeechSynthesisUtterance(msg); ut.lang = 'vi-VN'; window.speechSynthesis.speak(ut);
+            }
+        };
+
+        // 6. Chế độ xem lại
+        window.cheDoXemLai = function() {
+            document.querySelector(".result-overlay").style.display = "none";
+            document.getElementById("btn-nop").style.display = "none";
+            
+            document.querySelectorAll(".question-block").forEach(b => {
+                if(b.classList.contains("security-quest")) return;
+                const inps = b.querySelectorAll("input");
+                let exp = "";
+                inps.forEach(i => {
+                    i.disabled = true;
+                    if(i.getAttribute("data-correct") === "true") {
+                        i.parentElement.classList.add("res-correct");
+                        exp = i.getAttribute("data-explain");
+                    }
+                    if(i.checked && i.getAttribute("data-correct") !== "true") i.parentElement.classList.add("res-wrong");
+                });
+                if(exp) {
+                    const d = document.createElement("div");
+                    d.className = "explain-box"; d.innerHTML = `<strong>💡 GIẢI THÍCH:</strong> ${exp}`; d.style.display="block";
+                    b.appendChild(d);
+                }
+            });
+            window.scrollTo(0,0);
+        }
+    </script>
 </body>
 </html>
