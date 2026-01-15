@@ -152,3 +152,45 @@ window.xemLaiBai = function() {
     });
     window.scrollTo(0,0);
 }
+/* ============================================================
+   6. TÍNH NĂNG CHẶN LÀM LẠI (Anti-Cheat Mode)
+   Tự động kiểm tra xem học sinh đã có điểm chưa ngay khi vào trang
+   ============================================================ */
+async function kiemTraQuyenLamBai() {
+    const studentName = localStorage.getItem("hocSinhLop4A");
+    const titleEl = document.getElementById("ten-bai-tap");
+    
+    // Nếu chưa đăng nhập hoặc không tìm thấy tên bài thì bỏ qua
+    if (!studentName || !titleEl) return;
+    
+    const tieuDe = titleEl.innerText;
+
+    try {
+        // 1. Lấy cấu hình từ Admin xem có bật chặn không
+        const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
+        
+        // Nếu Admin ĐANG BẬT chế độ chặn (chan_lam_lai = true)
+        if (configDoc.exists && configDoc.data().chan_lam_lai === true) {
+            
+            // 2. Kiểm tra trên Database xem học sinh này đã có điểm bài này chưa
+            const scoreSnap = await db.collection("KET_QUA_TONG_HOP")
+                .where("hoc_sinh", "==", studentName)
+                .where("bai_tap", "==", tieuDe)
+                .get();
+
+            // 3. Nếu tìm thấy kết quả cũ -> Chặn ngay lập tức
+            if (!scoreSnap.empty) {
+                // Ẩn nội dung đề thi để không nhìn trộm được
+                document.querySelector(".quiz-container").style.display = "none";
+                
+                alert("⛔ BẠN ĐÃ LÀM BÀI NÀY RỒI!\n(Hệ thống đang bật chế độ chỉ được làm 1 lần)");
+                window.location.href = "Menu.html"; // Đẩy về Menu
+            }
+        }
+    } catch (e) {
+        console.error("Lỗi kiểm tra quyền làm bài:", e);
+    }
+}
+
+// Gọi hàm này chạy ngay lập tức khi tải trang
+kiemTraQuyenLamBai();
