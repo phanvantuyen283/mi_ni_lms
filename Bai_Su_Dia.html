@@ -3,242 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sử Địa 4 - Duyên Hải Miền Trung</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>Địa Lí - Thiên Nhiên Miền Trung</title>
+    
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #e1f5fe; padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; width: 100%; max-width: 750px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #fff; }
-        .header { background: #f0f9ff; padding: 15px; border-radius: 12px; border: 2px dashed #0277bd; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 0; z-index: 10; }
-        .header h2 { font-size: 0.9rem; margin: 0; color: #ef6c00; text-transform: uppercase; font-weight: 800; }
-        .timer { font-size: 1.2rem; font-weight: 900; color: #c62828; }
-        .question-block { background: #fff; border: 2px solid #e2e8f0; padding: 20px; margin-bottom: 18px; border-radius: 12px; transition: 0.2s; border-left: 5px solid #0277bd; }
-        .question-block:hover { border-color: #ef6c00; }
-        .security-quest { border: 3px solid #e11d48; background-color: #fff1f2; border-left: 3px solid #e11d48; }
-        .question-text { font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; color: #1e293b; line-height: 1.5; }
-        .options label { display: block; padding: 12px; margin-top: 8px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 1rem; }
-        .options label:hover { background: #e1f5fe; border-color: #0277bd; font-weight: 500; color: #01579b; }
-        .options input { margin-right: 10px; transform: scale(1.3); }
-        #btn-nop { width: 100%; padding: 18px; border: none; border-radius: 12px; font-size: 20px; font-weight: 900; color: white; cursor: pointer; background: linear-gradient(to bottom, #0288d1, #01579b); box-shadow: 0 6px 0 #004c8c; transition: all 0.1s; margin-top: 15px; }
-        #btn-nop:active { top: 6px; box-shadow: none; transform: translateY(4px); }
-        .explain-box { display: none; margin-top: 15px; padding: 12px; background-color: #fff3e0; border-left: 4px solid #ef6c00; color: #d84315; font-size: 0.95rem; line-height: 1.5; border-radius: 4px; animation: fadeIn 0.5s; }
-        .result-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
-        .result-box { background: white; padding: 40px; width: 90%; max-width: 450px; border-radius: 20px; text-align: center; border-top: 8px solid #ef6c00; }
-        .result-score { font-size: 5rem; font-weight: 900; color: #ef6c00; margin: 10px 0; }
-        .btn-group-result button { width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; color: white; }
-        .btn-review { background: #f59e0b; } .btn-continue { background: #0277bd; } .btn-finish { background: #64748b; }
-        .res-correct { background-color: #dcedc8 !important; border: 2px solid #8bc34a !important; }
-        .res-wrong { background-color: #ffcdd2 !important; border: 2px solid #e57373 !important; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    </style>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="quiz-container">
-        <div style="margin-bottom:10px"><a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:13px">⬅ Quay về Menu</a></div>
+        <div style="margin-bottom:15px">
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về Menu</a>
+        </div>
+
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">LỊCH SỬ & ĐỊA LÝ - DUYÊN HẢI MIỀN TRUNG</h2>
-                <p style="margin:5px 0 0 0; font-size:11px">Học sinh: <b id="student-display">...</b></p>
+                <h2 id="ten-bai-tap">ĐỊA LÍ - THIÊN NHIÊN MIỀN TRUNG</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
             </div>
-            <div class="timer">⏱ <b id="timer">00:00</b></div>
+            <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block security-quest"></div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Vùng Duyên hải miền Trung kéo dài từ tỉnh nào đến tỉnh nào?</div>
+            <div class="question-text">Câu 1: Dãy núi nào đâm ngang ra biển, được coi là "bức tường chắn gió" chia cắt khí hậu miền Trung thành hai khu vực khác nhau?</div>
             <div class="options">
-                <label><input type="radio" name="c1" value="A" data-correct="true" data-explain="Bắt đầu từ Thanh Hóa (Bắc) đến Bình Thuận (Nam)."> A. Từ Thanh Hóa đến Bình Thuận</label>
-                <label><input type="radio" name="c1" value="B"> B. Từ Nghệ An đến Cà Mau</label>
-                <label><input type="radio" name="c1" value="C"> C. Từ Hà Giang đến Huế</label>
-                <label><input type="radio" name="c1" value="D"> D. Từ Đà Nẵng đến Kiên Giang</label>
+                <label><input type="radio" name="c1" value="A"> A. Dãy Hoàng Liên Sơn</label>
+                <label><input type="radio" name="c1" value="B" data-correct="true"> B. Dãy Bạch Mã</label>
+                <label><input type="radio" name="c1" value="C"> C. Dãy Trường Sơn Bắc</label>
+                <label><input type="radio" name="c1" value="D"> D. Dãy Ba Vì</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Đặc điểm nổi bật nhất về hình dáng lãnh thổ của vùng Duyên hải miền Trung là gì?</div>
+            <div class="question-text">Câu 2: Do sự chắn gió của dãy Bạch Mã, khí hậu phía Bắc và phía Nam dãy núi này có điểm gì khác biệt vào mùa đông?</div>
             <div class="options">
-                <label><input type="radio" name="c2" value="A"> A. Rộng lớn và bằng phẳng</label>
-                <label><input type="radio" name="c2" value="B" data-correct="true" data-explain="Lãnh thổ hẹp ngang, nơi hẹp nhất ở Quảng Bình chỉ khoảng 50km."> B. Là dải đất hẹp ngang</label>
-                <label><input type="radio" name="c2" value="C"> C. Hình tam giác</label>
-                <label><input type="radio" name="c2" value="D"> D. Cao nguyên xếp tầng</label>
+                <label><input type="radio" name="c2" value="A" data-correct="true"> A. Phía Bắc có mùa đông lạnh, phía Nam nóng quanh năm.</label>
+                <label><input type="radio" name="c2" value="B"> B. Phía Bắc nóng quanh năm, phía Nam có mùa đông lạnh.</label>
+                <label><input type="radio" name="c2" value="C"> C. Cả hai phía đều lạnh buốt như nhau.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Phía Tây của vùng Duyên hải miền Trung tiếp giáp với quốc gia nào?</div>
+            <div class="question-text">Câu 3: Vào mùa hạ, vùng Duyên hải miền Trung thường chịu ảnh hưởng của loại gió nào gây ra thời tiết khô nóng, hạn hán?</div>
             <div class="options">
-                <label><input type="radio" name="c3" value="A"> A. Trung Quốc</label>
-                <label><input type="radio" name="c3" value="B" data-correct="true" data-explain="Phía Tây tựa vào dãy Trường Sơn, giáp với nước Lào và Tây Nguyên."> B. Lào</label>
-                <label><input type="radio" name="c3" value="C"> C. Campuchia</label>
-                <label><input type="radio" name="c3" value="D"> D. Thái Lan</label>
+                <label><input type="radio" name="c3" value="A"> A. Gió mùa Đông Bắc.</label>
+                <label><input type="radio" name="c3" value="B"> B. Gió biển (Gió Đông Nam).</label>
+                <label><input type="radio" name="c3" value="C" data-correct="true"> C. Gió Tây Nam (thường gọi là gió Lào).</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Hai quần đảo xa bờ nào thuộc vùng Duyên hải miền Trung?</div>
+            <div class="question-text">Câu 4: Vào mùa thu - đông, vùng Duyên hải miền Trung thường gặp hiện tượng thiên tai nào?</div>
             <div class="options">
-                <label><input type="radio" name="c4" value="A"> A. Côn Đảo và Phú Quốc</label>
-                <label><input type="radio" name="c4" value="B" data-correct="true" data-explain="Hoàng Sa (Đà Nẵng) và Trường Sa (Khánh Hòa) là 2 quần đảo lớn thuộc miền Trung."> B. Hoàng Sa và Trường Sa</label>
-                <label><input type="radio" name="c4" value="C"> C. Cát Bà và Cô Tô</label>
-                <label><input type="radio" name="c4" value="D"> D. Lý Sơn và Phú Quý</label>
+                <label><input type="radio" name="c4" value="A"> A. Tuyết rơi dày đặc.</label>
+                <label><input type="radio" name="c4" value="B" data-correct="true"> B. Mưa lớn, bão và lũ lụt.</label>
+                <label><input type="radio" name="c4" value="C"> C. Nắng nóng kéo dài, thiếu nước.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Địa hình phía Tây của vùng Duyên hải miền Trung chủ yếu là gì?</div>
+            <div class="question-text">Câu 5: Vì sao sông ngòi ở vùng Duyên hải miền Trung lại có đặc điểm "Ngắn và Dốc"?</div>
             <div class="options">
-                <label><input type="radio" name="c5" value="A"> A. Đồng bằng rộng lớn</label>
-                <label><input type="radio" name="c5" value="B" data-correct="true" data-explain="Phía Tây là địa hình đồi núi gắn liền với dãy Trường Sơn."> B. Đồi núi</label>
-                <label><input type="radio" name="c5" value="C"> C. Biển và đảo</label>
-                <label><input type="radio" name="c5" value="D"> D. Thung lũng</label>
+                <label><input type="radio" name="c5" value="A"> A. Vì lượng mưa ở đây rất ít.</label>
+                <label><input type="radio" name="c5" value="B" data-correct="true"> B. Vì lãnh thổ hẹp ngang, đồi núi ở phía tây nằm rất gần biển ở phía đông.</label>
+                <label><input type="radio" name="c5" value="C"> C. Vì người dân đắp đê ngăn sông.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Đặc điểm nào sau đây mô tả đúng về các đồng bằng ở Duyên hải miền Trung?</div>
+            <div class="question-text">Câu 6: Đặc điểm sông "ngắn và dốc" dẫn đến hậu quả gì khi có mưa lớn?</div>
             <div class="options">
-                <label><input type="radio" name="c6" value="A" data-correct="true" data-explain="Do nhiều nhánh núi đâm ra biển nên đồng bằng nhỏ hẹp và bị chia cắt."> A. Nhỏ, hẹp và bị chia cắt bởi các dãy núi</label>
-                <label><input type="radio" name="c6" value="B"> B. Rộng lớn, bằng phẳng và màu mỡ</label>
-                <label><input type="radio" name="c6" value="C"> C. Nằm ở độ cao trên 1000m</label>
-                <label><input type="radio" name="c6" value="D"> D. Chủ yếu là đất đỏ bazan</label>
+                <label><input type="radio" name="c6" value="A"> A. Nước sông chảy rất chậm, êm đềm.</label>
+                <label><input type="radio" name="c6" value="B" data-correct="true"> B. Nước sông dâng lên rất nhanh, gây lũ lụt, lũ quét ngập lụt diện rộng.</label>
+                <label><input type="radio" name="c6" value="C"> C. Nước sông không bao giờ cạn.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Dạng địa hình nào thường xuất hiện phổ biến ở ven biển miền Trung?</div>
+            <div class="question-text">Câu 7: Quan sát lược đồ (trong sách hoặc trí nhớ), phần lãnh thổ Duyên hải miền Trung trải dài từ tỉnh nào đến tỉnh nào?</div>
             <div class="options">
-                <label><input type="radio" name="c7" value="A"> A. Hang động đá vôi</label>
-                <label><input type="radio" name="c7" value="B" data-correct="true" data-explain="Gió biển tạo nên các cồn cát cao; sông gặp biển tạo thành các đầm phá."> B. Cồn cát và đầm phá</label>
-                <label><input type="radio" name="c7" value="C"> C. Ruộng bậc thang</label>
-                <label><input type="radio" name="c7" value="D"> D. Rừng ngập mặn</label>
+                <label><input type="radio" name="c7" value="A"> A. Từ Hà Giang đến Cà Mau.</label>
+                <label><input type="radio" name="c7" value="B"> B. Từ Hà Nội đến TP. Hồ Chí Minh.</label>
+                <label><input type="radio" name="c7" value="C" data-correct="true"> C. Từ Thanh Hóa đến Bình Thuận.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Dãy núi nào đâm ngang ra biển, chia cắt địa hình và khí hậu miền Trung?</div>
+            <div class="question-text">Câu 8: Ngoài đất liền, vùng Duyên hải miền Trung còn bao gồm 2 quần đảo lớn nào?</div>
             <div class="options">
-                <label><input type="radio" name="c8" value="A"> A. Dãy Hoàng Liên Sơn</label>
-                <label><input type="radio" name="c8" value="B" data-correct="true" data-explain="Dãy Bạch Mã đâm ra biển (đèo Hải Vân) là ranh giới khí hậu Bắc - Nam."> B. Dãy Bạch Mã</label>
-                <label><input type="radio" name="c8" value="C"> C. Dãy Đông Triều</label>
-                <label><input type="radio" name="c8" value="D"> D. Dãy Tam Đảo</label>
+                <label><input type="radio" name="c8" value="A"> A. Côn Đảo và Phú Quốc.</label>
+                <label><input type="radio" name="c8" value="B" data-correct="true"> B. Hoàng Sa và Trường Sa.</label>
+                <label><input type="radio" name="c8" value="C"> C. Cô Tô và Cát Bà.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Phá Tam Giang, vùng đầm phá lớn nhất Đông Nam Á, thuộc tỉnh nào?</div>
+            <div class="question-text">Câu 9: Để hạn chế tác hại của bão lũ và cát bay, người dân miền Trung thường trồng loại cây gì ở ven biển?</div>
             <div class="options">
-                <label><input type="radio" name="c9" value="A"> A. Quảng Bình</label>
-                <label><input type="radio" name="c9" value="B" data-correct="true" data-explain="Phá Tam Giang nổi tiếng nằm ở tỉnh Thừa Thiên Huế."> B. Thừa Thiên Huế</label>
-                <label><input type="radio" name="c9" value="C"> C. Khánh Hòa</label>
-                <label><input type="radio" name="c9" value="D"> D. Bình Thuận</label>
+                <label><input type="radio" name="c9" value="A" data-correct="true"> A. Rừng phi lao (rừng dương) chắn cát.</label>
+                <label><input type="radio" name="c9" value="B"> B. Trồng hoa hồng.</label>
+                <label><input type="radio" name="c9" value="C"> C. Trồng lúa nước.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Dãy núi nào chạy dọc phía Tây của vùng Duyên hải miền Trung?</div>
+            <div class="question-text">Câu 10: Điền từ còn thiếu vào câu ca dao về dãy Bạch Mã: "Bạch Mã hai sườn, kẻ ... người ..."?</div>
             <div class="options">
-                <label><input type="radio" name="c10" value="A" data-correct="true" data-explain="Dãy Trường Sơn hùng vĩ là 'xương sống' chạy dọc biên giới phía Tây."> A. Dãy Trường Sơn</label>
-                <label><input type="radio" name="c10" value="B"> B. Dãy Ba Vì</label>
-                <label><input type="radio" name="c10" value="C"> C. Dãy Ngân Sơn</label>
-                <label><input type="radio" name="c10" value="D"> D. Dãy Sông Gâm</label>
+                <label><input type="radio" name="c10" value="A"> A. kẻ khóc - người cười.</label>
+                <label><input type="radio" name="c10" value="B"> B. kẻ ở - người đi.</label>
+                <label><input type="radio" name="c10" value="C" data-correct="true"> C. kẻ Bắc - người Nam (ý nói sự phân chia khí hậu).</label>
             </div>
         </div>
 
-        <button id="btn-nop">NỘP BÀI KIỂM TRA</button>
+        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
+        <p id="status-log" style="text-align:center; color:#666; font-size:12px; margin-top:10px;"></p>
     </div>
 
-    <script>
-        const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
-        let db;
-        try { firebase.initializeApp(firebaseConfig); db = firebase.firestore(); } catch(e) {}
+    <script src="core.js"></script>
 
-        const studentName = localStorage.getItem("hocSinhLop4A") || "Học sinh";
-        document.getElementById("student-display").innerText = studentName;
-
-        let seconds = 0;
-        let timerInterval = setInterval(() => { seconds++; let m=Math.floor(seconds/60).toString().padStart(2,'0'); let s=(seconds%60).toString().padStart(2,'0'); document.getElementById("timer").innerText=`${m}:${s}`; }, 1000);
-
-        async function loadSecQ() {
-            const qBlock = document.querySelector(".security-quest");
-            try {
-                const snap = await db.collection("CAU_HINH").doc("cau_hoi_bao_mat").get();
-                if(snap.exists) {
-                    const d = snap.data();
-                    let h = `<div class="question-text" style="color:#ef6c00">🔒 ${d.question}</div><div class="options">`;
-                    const lbls = ["A","B","C","D"];
-                    d.options.forEach((o,i) => { let id = lbls[i]===d.correct ? 'id="sec-correct"' : ''; h += `<label><input type="radio" name="sec" value="${lbls[i]}" ${id}> ${lbls[i]}. ${o}</label>`; });
-                    qBlock.innerHTML = h + "</div>";
-                }
-            } catch(e){}
-        }
-        loadSecQ();
-
-        document.getElementById("btn-nop").onclick = async function() {
-            const sec = document.getElementById("sec-correct");
-            if(sec && !sec.checked) { alert("⛔ Sai câu hỏi bảo mật!"); window.scrollTo(0,0); return; }
-
-            const btn = document.getElementById("btn-nop");
-            btn.disabled = true; btn.innerText = "ĐANG CHẤM..."; btn.style.opacity = "0.7";
-            clearInterval(timerInterval);
-
-            let correct = 0;
-            const blocks = document.querySelectorAll(".question-block");
-            const contentBlocks = Array.from(blocks).filter(b => !b.classList.contains('security-quest'));
-            
-            contentBlocks.forEach(b => {
-                const sel = b.querySelector("input:checked");
-                if (sel && sel.getAttribute("data-correct") === "true") correct++;
-            });
-
-            const total = contentBlocks.length;
-            const diem = total > 0 ? (correct / total) * 10 : 0;
-            const diemTron = Number(diem.toFixed(1));
-
-            try {
-                await db.collection("KET_QUA_TONG_HOP").add({
-                    hoc_sinh: studentName, bai_tap: document.getElementById("ten-bai-tap").innerText,
-                    diem: diemTron, so_cau_dung: correct, tong_so_cau: total,
-                    thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            } catch(e) {}
-
-            let allow = true;
-            try { const cfg = await db.collection("CAU_HINH").doc("trang_thai_mon").get(); if(cfg.exists) allow = cfg.data().xem_dap_an !== false; } catch(e){}
-
-            const div = document.createElement("div");
-            div.className = "result-overlay"; div.style.display = "flex";
-            let btnHtml = allow ? `<button class="btn-review" onclick="cheDoXemLai()">🔍 Xem lại bài</button>` : `<button class="btn-finish" disabled style="background:#9ca3af; cursor:not-allowed">🚫 Đã ẩn đáp án</button>`;
-            div.innerHTML = `<div class="result-box"><h2>KẾT QUẢ</h2><div class="result-score">${diemTron}</div><p>Đúng <b>${correct}/${total}</b> câu.</p><div class="btn-group-result">${btnHtml}<button class="btn-continue" onclick="window.location.href='Menu.html'">➜ Về Menu</button></div></div>`;
-            document.body.appendChild(div);
-
-            if(diemTron >= 5) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            if ('speechSynthesis' in window) { let msg = new SpeechSynthesisUtterance(`Bạn ${studentName} được ${diemTron} điểm.`); msg.lang = 'vi-VN'; window.speechSynthesis.speak(msg); }
-        };
-
-        window.cheDoXemLai = function() {
-            document.querySelector(".result-overlay").style.display = "none";
-            document.getElementById("btn-nop").style.display = "none";
-            document.querySelectorAll(".question-block").forEach(b => {
-                if(b.classList.contains("security-quest")) return;
-                const inps = b.querySelectorAll("input");
-                let exp = "";
-                inps.forEach(i => {
-                    i.disabled = true;
-                    if(i.getAttribute("data-correct") === "true") { i.parentElement.classList.add("res-correct"); exp = i.getAttribute("data-explain"); }
-                    if(i.checked && i.getAttribute("data-correct") !== "true") i.parentElement.classList.add("res-wrong");
-                });
-                if(exp) {
-                    const d = document.createElement("div");
-                    d.className = "explain-box"; d.innerHTML = `<strong>💡 GIẢI THÍCH:</strong> ${exp}`; d.style.display="block";
-                    b.appendChild(d);
-                }
-            });
-            window.scrollTo(0,0);
-        }
-    </script>
 </body>
 </html>
