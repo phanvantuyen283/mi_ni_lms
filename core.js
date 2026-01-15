@@ -194,3 +194,54 @@ async function kiemTraQuyenLamBai() {
 
 // Gọi hàm này chạy ngay lập tức khi tải trang
 kiemTraQuyenLamBai();
+/* ============================================================
+   6. TÍNH NĂNG CHẶN LÀM LẠI (PHIÊN BẢN DÒ LỖI)
+   ============================================================ */
+async function kiemTraQuyenLamBai() {
+    const studentName = localStorage.getItem("hocSinhLop4A");
+    const titleEl = document.getElementById("ten-bai-tap");
+    
+    if (!studentName) return; // Chưa đăng nhập thì thôi
+    if (!titleEl) return;
+    
+    const tieuDe = titleEl.innerText; // Lấy tên bài
+
+    try {
+        if (!db) { alert("Lỗi: Chưa kết nối được Database!"); return; }
+
+        // 1. Kiểm tra Cấu hình từ Admin
+        const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
+        const cauHinh = configDoc.exists ? configDoc.data() : null;
+
+        // DEBUG: Thông báo trạng thái Admin
+        if (!cauHinh || cauHinh.chan_lam_lai !== true) {
+            console.log("Admin đang TẮT chế độ chặn làm lại.");
+            return; // Dừng nếu Admin chưa bật
+        }
+
+        // 2. Tìm bài cũ trong Database
+        const scoreSnap = await db.collection("KET_QUA_TONG_HOP")
+            .where("hoc_sinh", "==", studentName)
+            .where("bai_tap", "==", tieuDe) // Tên bài phải khớp 100%
+            .get();
+
+        // 3. Xử lý kết quả
+        if (!scoreSnap.empty) {
+            // Nếu tìm thấy bài cũ -> Chặn ngay
+            document.querySelector(".quiz-container").style.display = "none"; // Giấu đề đi
+            alert(`⛔ CẢNH BÁO: Bạn đã làm bài "${tieuDe}" rồi!\nHệ thống không cho phép làm lại.`);
+            window.location.href = "Menu.html"; 
+        } else {
+            // Nếu chưa thấy bài cũ
+            console.log(`Chưa thấy kết quả cũ của bài: ${tieuDe}`);
+            // alert("Hệ thống kiểm tra: Bạn chưa làm bài này lần nào. Được phép làm."); // Bỏ comment dòng này nếu muốn test
+        }
+
+    } catch (e) {
+        alert("Lỗi kiểm tra hệ thống: " + e.message);
+    }
+}
+
+// Chạy hàm kiểm tra (đợi 1 giây để đảm bảo Firebase đã tải xong)
+setTimeout(kiemTraQuyenLamBai, 1000);
+
