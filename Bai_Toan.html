@@ -3,174 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toán Lớp 4 - Chia số có một chữ số</title>
+    <title>Làm Bài Tập - Lớp 4A</title>
+    <link rel="stylesheet" href="style.css">
     
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0fdf4; padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; width: 100%; max-width: 750px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #fff; }
-        
-        /* Header xanh lá cho Toán */
-        .header { background: #dcfce7; padding: 15px; border-radius: 12px; border: 2px dashed #16a34a; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 0; z-index: 10; }
-        .header h2 { font-size: 0.9rem; margin: 0; color: #15803d; text-transform: uppercase; }
-        .timer { font-size: 1.2rem; font-weight: 900; color: #dc2626; }
-        
-        .question-block { background: #fff; border: 2px solid #e2e8f0; padding: 20px; margin-bottom: 18px; border-radius: 12px; transition: 0.2s; }
-        .question-block:hover { border-color: #4ade80; }
-        
-        .security-quest { border: 3px solid #e11d48; background-color: #fff1f2; }
-        .question-text { font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; color: #1e293b; line-height: 1.5; }
-        
-        .options label { display: block; padding: 12px; margin-top: 8px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 1rem; }
-        .options label:hover { background: #dcfce7; border-color: #16a34a; font-weight: 500; }
-        .options input { margin-right: 10px; transform: scale(1.3); }
-
-        #btn-nop { width: 100%; padding: 18px; border: none; border-radius: 12px; font-size: 20px; font-weight: 900; color: white; cursor: pointer; background: linear-gradient(to bottom, #22c55e, #15803d); box-shadow: 0 6px 0 #14532d; transition: all 0.1s; margin-top: 15px; }
-        #btn-nop:active { top: 6px; box-shadow: none; transform: translateY(4px); }
-
-        /* Lời giải chi tiết */
-        .explain-box { 
-            display: none; margin-top: 15px; padding: 12px; 
-            background-color: #f0fdf4; border-left: 4px solid #16a34a; 
-            color: #14532d; font-size: 0.95rem; line-height: 1.5; border-radius: 4px;
-            animation: fadeIn 0.5s;
-        }
-        .explain-box strong { text-transform: uppercase; font-size: 0.8rem; display: block; margin-bottom: 5px; opacity: 0.8; }
-
-        /* Popup */
-        .result-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
-        .result-box { background: white; padding: 40px; width: 90%; max-width: 450px; border-radius: 20px; text-align: center; border-top: 8px solid #16a34a; }
-        .result-score { font-size: 5rem; font-weight: 900; color: #16a34a; margin: 10px 0; }
-        
-        .btn-group-result button { width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; color: white; }
-        .btn-review { background: #f59e0b; } .btn-continue { background: #0284c7; } .btn-finish { background: #64748b; }
-
-        .res-correct { background-color: #dcfce7 !important; border: 2px solid #22c55e !important; }
-        .res-wrong { background-color: #fee2e2 !important; border: 2px solid #ef4444 !important; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    </style>
 </head>
 <body>
+
     <div class="quiz-container">
-        <div style="margin-bottom:10px"><a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:13px">⬅ Quay về Menu</a></div>
+        <div style="margin-bottom:15px">
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
+        </div>
+
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TOÁN - CHIA SỐ CÓ MỘT CHỮ SỐ</h2>
-                <p style="margin:5px 0 0 0; font-size:11px">Học sinh: <b id="student-display">...</b></p>
+                <h2 id="ten-bai-tap">TOÁN - ÔN TẬP PHÂN SỐ</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display">...</span></p>
             </div>
-            <div class="timer">⏱ <b id="timer">00:00</b></div>
+            <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
-        <div class="question-block security-quest"></div>
-
         <div class="question-block">
-            <div class="question-text">Câu 1: Kết quả của phép chia \( 8426 : 2 \) là bao nhiêu?</div>
+            <div class="question-text">Câu 1: Phân số nào bằng 1/2?</div>
             <div class="options">
-                <label><input type="radio" name="c1" value="A" data-correct="true" data-explain="Ta thực hiện chia lần lượt từ trái sang phải: 8:2=4, 4:2=2, 2:2=1, 6:2=3."> A. 4213</label>
-                <label><input type="radio" name="c1" value="B"> B. 4210</label>
-                <label><input type="radio" name="c1" value="C"> C. 4123</label>
-                <label><input type="radio" name="c1" value="D"> D. 4231</label>
+                <label><input type="radio" name="q1" value="A"> A. 2/5</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. 2/4</label>
+                <label><input type="radio" name="q1" value="C"> C. 3/7</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Trong phép chia cho số có một chữ số, khẳng định nào sau đây là ĐÚNG về số dư?</div>
+            <div class="question-text">Câu 2: Kết quả của 10 + 5 là?</div>
             <div class="options">
-                <label><input type="radio" name="c2" value="A"> A. Số dư luôn phải lớn hơn số chia.</label>
-                <label><input type="radio" name="c2" value="B" data-correct="true" data-explain="Nguyên tắc cơ bản: số dư cuối cùng trong mỗi lượt chia luôn phải nhỏ hơn số chia."> B. Số dư luôn phải nhỏ hơn số chia.</label>
-                <label><input type="radio" name="c2" value="C"> C. Số dư có thể bằng số chia.</label>
-                <label><input type="radio" name="c2" value="D"> D. Số dư luôn luôn bằng 0.</label>
+                <label><input type="radio" name="q2" value="A"> A. 14</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true"> B. 15</label>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 3: Kết quả của phép tính \( 618 : 3 \) là bao nhiêu?</div>
-            <div class="options">
-                <label><input type="radio" name="c3" value="A"> A. 26</label>
-                <label><input type="radio" name="c3" value="B" data-correct="true" data-explain="Chính xác. 6:3=2; hạ 1, 1 chia 3 được 0; hạ 8 được 18, 18:3=6."> B. 206</label>
-                <label><input type="radio" name="c3" value="C"> C. 260</label>
-                <label><input type="radio" name="c3" value="D"> D. 216</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 4: Trong phép chia cho 6, số dư lớn nhất có thể là số mấy?</div>
-            <div class="options">
-                <label><input type="radio" name="c4" value="A"> A. 6</label>
-                <label><input type="radio" name="c4" value="B" data-correct="true" data-explain="Số dư lớn nhất luôn kém số chia 1 đơn vị. Với số chia là 6, số dư lớn nhất là 5."> B. 5</label>
-                <label><input type="radio" name="c4" value="C"> C. 4</label>
-                <label><input type="radio" name="c4" value="D"> D. 1</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 5: Tìm lỗi sai trong phép tính sau: \( 1604 : 4 = 41 \)</div>
-            <div class="options">
-                <label><input type="radio" name="c5" value="A" data-correct="true" data-explain="Đúng. 16 : 4 = 4; hạ 0, 0 : 4 = 0 (viết 0); hạ 4, 4 : 4 = 1. Kết quả đúng là 401."> A. Thương thiếu chữ số 0 ở hàng chục.</label>
-                <label><input type="radio" name="c5" value="B"> B. Tính sai ở hàng trăm (16 : 4 không bằng 4).</label>
-                <label><input type="radio" name="c5" value="C"> C. Tính sai ở hàng đơn vị (4 : 4 không bằng 1).</label>
-                <label><input type="radio" name="c5" value="D"> D. Phép tính này không sai.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 6: Một nhà máy sản xuất được 125 500 sản phẩm trong 5 ngày. Hỏi trung bình mỗi ngày nhà máy sản xuất được bao nhiêu sản phẩm?</div>
-            <div class="options">
-                <label><input type="radio" name="c6" value="A"> A. 25 000 sản phẩm</label>
-                <label><input type="radio" name="c6" value="B" data-correct="true" data-explain="125 500 : 5 = 25 100. (12:5=2 dư 2, hạ 5 thành 25 chia 5 được 5, hạ 5 chia 5 được 1, hai số 0 cuối chia 5 được 0)."> B. 25 100 sản phẩm</label>
-                <label><input type="radio" name="c6" value="C"> C. 2 510 sản phẩm</label>
-                <label><input type="radio" name="c6" value="D"> D. 25 010 sản phẩm</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 7: Điền số thích hợp vào chỗ chấm: \( ... \times 3 = 36 090 \)</div>
-            <div class="options">
-                <label><input type="radio" name="c7" value="A" data-correct="true" data-explain="Muốn tìm thừa số chưa biết, ta lấy tích chia cho thừa số kia. 36 090 : 3 = 12 030."> A. 12 030</label>
-                <label><input type="radio" name="c7" value="B"> B. 12 300</label>
-                <label><input type="radio" name="c7" value="C"> C. 10 230</label>
-                <label><input type="radio" name="c7" value="D"> D. 12 003</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 8: Có 45 học sinh đi tham quan bằng xe taxi. Mỗi xe chở tối đa 4 học sinh. Cần gọi ít nhất bao nhiêu xe?</div>
-            <div class="options">
-                <label><input type="radio" name="c8" value="A"> A. 10 xe</label>
-                <label><input type="radio" name="c8" value="B"> B. 11 xe</label>
-                <label><input type="radio" name="c8" value="C" data-correct="true" data-explain="45 : 4 = 11 (dư 1). Cần 11 xe đầy và thêm 1 xe nữa để chở bạn còn dư. Tổng: 12 xe."> C. 12 xe</label>
-                <label><input type="radio" name="c8" value="D"> D. 13 xe</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 9: Kết quả của phép chia \( 24 024 : 6 \) là?</div>
-            <div class="options">
-                <label><input type="radio" name="c9" value="A"> A. 404</label>
-                <label><input type="radio" name="c9" value="B" data-correct="true" data-explain="24:6=4; hạ 0, 0:6=0; hạ 2, 2:6=0; hạ 4 được 24, 24:6=4. Kết quả: 4004."> B. 4004</label>
-                <label><input type="radio" name="c9" value="C"> C. 4040</label>
-                <label><input type="radio" name="c9" value="D"> D. 4024</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 10: Mẹ mua 2 kg táo hết 90 000 đồng. Hỏi nếu mẹ mua 3 kg táo như thế thì hết bao nhiêu tiền?</div>
-            <div class="options">
-                <label><input type="radio" name="c10" value="A" data-correct="true" data-explain="Giá 1 kg: 90 000 : 2 = 45 000 đ. Giá 3 kg: 45 000 x 3 = 135 000 đ."> A. 135 000 đồng</label>
-                <label><input type="radio" name="c10" value="B"> B. 125 000 đồng</label>
-                <label><input type="radio" name="c10" value="C"> C. 180 000 đồng</label>
-                <label><input type="radio" name="c10" value="D"> D. 45 000 đồng</label>
-            </div>
-        </div>
-
-        <button id="btn-nop">NỘP BÀI KIỂM TRA</button>
+        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
     </div>
 
-    <script type="module" src="core.js"></script>
+    <script src="config.js"></script>
+    <script src="core.js"></script>
+
 </body>
 </html>
