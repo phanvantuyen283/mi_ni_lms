@@ -1,31 +1,32 @@
-/* core.js - PHIÊN BẢN FINAL (KHÔNG DÙNG IMPORT - FIX LỖI LIỆT NÚT) */
+/* core.js - PHIÊN BẢN GIÁM SÁT THỜI GIAN THỰC (ANTI-GAMING) */
 
-// 1. Cấu hình
+// 1. Cấu hình Firebase
 const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
 
-// 2. Kết nối Firebase (Dùng thư viện toàn cục từ HTML)
+// 2. Kết nối Firebase
 let db;
 if (typeof firebase !== 'undefined') {
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
-    console.log("✅ Core.js: Kết nối thành công!");
-} else {
-    alert("Lỗi: Không tìm thấy thư viện Firebase. Hãy kiểm tra file HTML!");
-}
+} else { console.error("Lỗi: Chưa có thư viện Firebase"); }
 
-// 3. Tự động thêm Pháo hoa nếu thiếu
+// 3. Tự động thêm Pháo hoa
 if (typeof confetti === 'undefined') {
     const s = document.createElement('script');
     s.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
     document.head.appendChild(s);
 }
 
-// 4. Kiểm tra đăng nhập
+// --- QUAN TRỌNG: GHI LẠI GIỜ BẮT ĐẦU NGAY KHI MỞ TRANG ---
+const THOI_DIEM_MO_DE = new Date().getTime(); // Lưu dạng số (Timestamp)
+console.log("🕒 Đã ghi nhận thời điểm mở đề:", new Date(THOI_DIEM_MO_DE).toLocaleTimeString());
+
+// 4. Hiển thị tên
 const studentName = localStorage.getItem("hocSinhLop4A");
 const display = document.getElementById("student-display");
 if(display) display.innerText = studentName ? studentName : "Khách";
 
-// 5. Đồng hồ
+// 5. Đồng hồ đếm giờ (Chỉ để hiển thị cho HS vui)
 let seconds = 0;
 setInterval(() => {
     seconds++;
@@ -37,37 +38,13 @@ setInterval(() => {
     }
 }, 1000);
 
-// --- 6. AUTO LOAD BẢO MẬT ---
-async function loadSecurityQuestion() {
-    const qBlock = document.querySelector(".security-quest");
-    if (!qBlock || !db) return;
-    try {
-        const doc = await db.collection("CAU_HINH").doc("cau_hoi_bao_mat").get();
-        if (doc.exists) {
-            const d = doc.data();
-            let h = `<div class="question-text" style="color:#c2410c">🔒 CÂU HỎI BẢO MẬT: ${d.question}</div><div class="options">`;
-            ["A","B","C","D"].forEach((lbl, i) => {
-                let id = lbl === d.correct ? 'id="security-correct"' : '';
-                h += `<label style="background:#fff1f2"><input type="radio" name="sec" value="${lbl}" ${id}> ${lbl}. ${d.options[i]}</label>`;
-            });
-            qBlock.innerHTML = h + `</div>`;
-        }
-    } catch(e) { console.log(e); }
-}
-loadSecurityQuestion();
-
-// --- 7. HÀM NỘP BÀI (GẮN VÀO WINDOW ĐỂ HTML GỌI ĐƯỢC) ---
+// --- 6. HÀM NỘP BÀI (GỬI DỮ LIỆU THỜI GIAN CHI TIẾT) ---
 window.nopBai = async function() {
     const btn = document.getElementById("btn-nop");
-    
-    // Check bảo mật
-    const sec = document.getElementById("security-correct");
-    if (document.querySelector(".security-quest") && (!sec || !sec.checked)) {
-        alert("⛔ Sai câu hỏi bảo mật! Vui lòng chọn đúng để nộp bài.");
-        return;
-    }
+    btn.disabled = true; btn.innerText = "ĐANG LƯU..."; btn.style.opacity = "0.7";
 
-    btn.disabled = true; btn.innerText = "ĐANG CHẤM..."; btn.style.opacity = "0.7";
+    // Lấy thời điểm kết thúc thực tế
+    const THOI_DIEM_NOP = new Date().getTime();
 
     // Chấm điểm
     let correct = 0;
@@ -81,15 +58,26 @@ window.nopBai = async function() {
 
     const diem = contentBlocks.length > 0 ? (correct / contentBlocks.length) * 10 : 0;
     const diemTron = Number(diem.toFixed(1));
-    const tieuDe = document.getElementById("ten-bai-tap").innerText;
+    const tieuDe = document.getElementById("ten-bai-tap") ? document.getElementById("ten-bai-tap").innerText : "Bài tập";
 
-    // Lưu Firebase
+    // Lưu Firebase (THÊM TRƯỜNG CHI TIẾT GIỜ GIẤC)
     try {
         if(db && studentName) {
             await db.collection("KET_QUA_TONG_HOP").add({
-                hoc_sinh: studentName, bai_tap: tieuDe, diem: diemTron, 
-                so_cau_dung: correct, tong_so_cau: contentBlocks.length,
-                thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
+                hoc_sinh: studentName, 
+                bai_tap: tieuDe, 
+                diem: diemTron, 
+                so_cau_dung: correct, 
+                tong_so_cau: contentBlocks.length,
+                
+                // DỮ LIỆU CŨ (Vẫn giữ để tương thích code cũ)
+                thoi_gian_lam: seconds, 
+                ngay_nop: firebase.firestore.FieldValue.serverTimestamp(),
+                
+                // DỮ LIỆU MỚI (Dùng để bắt lỗi chơi game)
+                bat_dau_luc: THOI_DIEM_MO_DE,
+                ket_thuc_luc: THOI_DIEM_NOP,
+                chi_tiet_ngay: new Date().toLocaleDateString('vi-VN')
             });
         }
     } catch(e) { console.error(e); }
@@ -111,19 +99,20 @@ async function hienThiKetQua(diem, dung, tong) {
     } catch(e){}
 
     let btnHtml = allow 
-        ? `<button style="background:#f59e0b; color:white; padding:10px; border:none; border-radius:5px; cursor:pointer" onclick="xemLaiBai()">🔍 Xem lại</button>` 
+        ? `<button class="btn-review" style="background:#f59e0b; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; font-weight:bold" onclick="xemLaiBai()">🔍 XEM LẠI BÀI</button>` 
         : `<button style="background:#ccc; color:white; padding:10px; border:none; border-radius:5px" disabled>🚫 Đã ẩn đáp án</button>`;
 
     const div = document.createElement("div");
     div.id = "result-popup";
-    div.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; justify-content:center; align-items:center; z-index:9999";
+    div.className = "result-overlay"; 
     div.innerHTML = `
-        <div style="background:white; padding:30px; border-radius:15px; text-align:center; width:300px; border-top:5px solid #0284c7">
-            <h2 style="color:#0284c7; margin:0">${diem.toFixed(1)}</h2>
+        <div class="result-box">
+            <h3>KẾT QUẢ</h3>
+            <div class="result-score">${diem.toFixed(1)}</div>
             <p>Đúng ${dung}/${tong} câu</p>
-            <div style="display:flex; gap:10px; justify-content:center; margin-top:15px">
+            <div class="btn-group-result">
                 ${btnHtml}
-                <button style="background:#0284c7; color:white; padding:10px; border:none; border-radius:5px; cursor:pointer" onclick="window.location.href='Menu.html'">➜ Về Menu</button>
+                <button class="btn-finish" style="background:#0284c7; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer" onclick="window.location.href='Menu.html'">🏠 VỀ MENU</button>
             </div>
         </div>`;
     document.body.appendChild(div);
@@ -133,115 +122,37 @@ window.xemLaiBai = function() {
     document.getElementById("result-popup").style.display = "none";
     document.getElementById("btn-nop").style.display = "none";
     document.querySelectorAll(".question-block").forEach(b => {
-        if(b.classList.contains("security-quest")) return;
         const inputs = b.querySelectorAll("input");
         let exp = "";
         inputs.forEach(i => {
             i.disabled = true;
-            if(i.getAttribute("data-correct") === "true") {
-                i.parentElement.style.background = "#dcfce7";
-                exp = i.getAttribute("data-explain");
-            }
-            if(i.checked && i.getAttribute("data-correct") !== "true") i.parentElement.style.background = "#fee2e2";
+            if(i.getAttribute("data-correct") === "true") { i.parentElement.classList.add("res-correct"); exp = i.getAttribute("data-explain"); }
+            if(i.checked && i.getAttribute("data-correct") !== "true") i.parentElement.classList.add("res-wrong");
         });
         if(exp) {
             const d = document.createElement("div");
-            d.innerHTML = `💡 ${exp}`; d.style.cssText = "margin-top:10px; padding:10px; background:#fff7ed; color:#c2410c; font-size:0.9em; border-radius:5px";
+            d.innerHTML = `💡 ${exp}`; d.style.cssText = "margin-top:10px; padding:10px; background:#fff7ed; color:#c2410c; border-radius:8px";
             b.appendChild(d);
         }
     });
-    window.scrollTo(0,0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-/* ============================================================
-   6. TÍNH NĂNG CHẶN LÀM LẠI (Anti-Cheat Mode)
-   Tự động kiểm tra xem học sinh đã có điểm chưa ngay khi vào trang
-   ============================================================ */
+
+// Chặn làm lại (Giữ nguyên)
 async function kiemTraQuyenLamBai() {
     const studentName = localStorage.getItem("hocSinhLop4A");
     const titleEl = document.getElementById("ten-bai-tap");
-    
-    // Nếu chưa đăng nhập hoặc không tìm thấy tên bài thì bỏ qua
     if (!studentName || !titleEl) return;
-    
-    const tieuDe = titleEl.innerText;
-
     try {
-        // 1. Lấy cấu hình từ Admin xem có bật chặn không
+        if (!db) return;
         const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
-        
-        // Nếu Admin ĐANG BẬT chế độ chặn (chan_lam_lai = true)
-        if (configDoc.exists && configDoc.data().chan_lam_lai === true) {
-            
-            // 2. Kiểm tra trên Database xem học sinh này đã có điểm bài này chưa
-            const scoreSnap = await db.collection("KET_QUA_TONG_HOP")
-                .where("hoc_sinh", "==", studentName)
-                .where("bai_tap", "==", tieuDe)
-                .get();
-
-            // 3. Nếu tìm thấy kết quả cũ -> Chặn ngay lập tức
-            if (!scoreSnap.empty) {
-                // Ẩn nội dung đề thi để không nhìn trộm được
-                document.querySelector(".quiz-container").style.display = "none";
-                
-                alert("⛔ BẠN ĐÃ LÀM BÀI NÀY RỒI!\n(Hệ thống đang bật chế độ chỉ được làm 1 lần)");
-                window.location.href = "Menu.html"; // Đẩy về Menu
-            }
-        }
-    } catch (e) {
-        console.error("Lỗi kiểm tra quyền làm bài:", e);
-    }
-}
-
-// Gọi hàm này chạy ngay lập tức khi tải trang
-kiemTraQuyenLamBai();
-/* ============================================================
-   6. TÍNH NĂNG CHẶN LÀM LẠI (PHIÊN BẢN DÒ LỖI)
-   ============================================================ */
-async function kiemTraQuyenLamBai() {
-    const studentName = localStorage.getItem("hocSinhLop4A");
-    const titleEl = document.getElementById("ten-bai-tap");
-    
-    if (!studentName) return; // Chưa đăng nhập thì thôi
-    if (!titleEl) return;
-    
-    const tieuDe = titleEl.innerText; // Lấy tên bài
-
-    try {
-        if (!db) { alert("Lỗi: Chưa kết nối được Database!"); return; }
-
-        // 1. Kiểm tra Cấu hình từ Admin
-        const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
-        const cauHinh = configDoc.exists ? configDoc.data() : null;
-
-        // DEBUG: Thông báo trạng thái Admin
-        if (!cauHinh || cauHinh.chan_lam_lai !== true) {
-            console.log("Admin đang TẮT chế độ chặn làm lại.");
-            return; // Dừng nếu Admin chưa bật
-        }
-
-        // 2. Tìm bài cũ trong Database
-        const scoreSnap = await db.collection("KET_QUA_TONG_HOP")
-            .where("hoc_sinh", "==", studentName)
-            .where("bai_tap", "==", tieuDe) // Tên bài phải khớp 100%
-            .get();
-
-        // 3. Xử lý kết quả
+        if (!configDoc.exists || configDoc.data().chan_lam_lai !== true) return;
+        const scoreSnap = await db.collection("KET_QUA_TONG_HOP").where("hoc_sinh", "==", studentName).where("bai_tap", "==", titleEl.innerText).limit(1).get();
         if (!scoreSnap.empty) {
-            // Nếu tìm thấy bài cũ -> Chặn ngay
-            document.querySelector(".quiz-container").style.display = "none"; // Giấu đề đi
-            alert(`⛔ CẢNH BÁO: Bạn đã làm bài "${tieuDe}" rồi!\nHệ thống không cho phép làm lại.`);
+            document.querySelector(".quiz-container").style.display = "none"; 
+            alert(`⛔ BẠN ĐÃ LÀM BÀI NÀY RỒI!`);
             window.location.href = "Menu.html"; 
-        } else {
-            // Nếu chưa thấy bài cũ
-            console.log(`Chưa thấy kết quả cũ của bài: ${tieuDe}`);
-            // alert("Hệ thống kiểm tra: Bạn chưa làm bài này lần nào. Được phép làm."); // Bỏ comment dòng này nếu muốn test
         }
-
-    } catch (e) {
-        alert("Lỗi kiểm tra hệ thống: " + e.message);
-    }
+    } catch (e) {}
 }
-
-// Chạy hàm kiểm tra (đợi 1 giây để đảm bảo Firebase đã tải xong)
-setTimeout(kiemTraQuyenLamBai, 1000);
-
+setTimeout(kiemTraQuyenLamBai, 1500);

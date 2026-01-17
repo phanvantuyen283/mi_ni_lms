@@ -5,8 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh Sách Môn Học</title>
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        #security-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #f1f5f9; z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .lock-box {
+            background: white; padding: 30px; border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;
+            width: 90%; max-width: 350px; border: 1px solid #cbd5e1;
+        }
+        .lock-input {
+            width: 80%; padding: 12px; margin: 15px 0;
+            border: 2px solid #e2e8f0; border-radius: 8px; font-size: 16px; outline: none;
+            text-align: center; letter-spacing: 2px;
+        }
+        .lock-input:focus { border-color: #0284c7; }
+        .lock-btn {
+            background: #0284c7; color: white; border: none; padding: 12px 30px;
+            border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;
+            box-shadow: 0 4px 0 #0369a1; transition: 0.2s;
+        }
+        .lock-btn:active { transform: translateY(4px); box-shadow: none; }
+        .error-text { color: #ef4444; margin-top: 10px; font-size: 14px; display: none; font-weight: bold;}
+    </style>
 </head>
 <body>
+
+    <div id="security-overlay">
+        <div class="lock-box">
+            <h2 style="color: #0284c7; text-transform: uppercase; margin-top: 0;">🔒 BẢO MẬT</h2>
+            <p style="color: #64748b; margin-bottom: 10px;">Nhập mã khóa để mở Menu</p>
+            <input type="number" id="pass-input" class="lock-input" placeholder="Nhập mã số..." pattern="\d*">
+            <br>
+            <button onclick="checkSecurity()" class="lock-btn">MỞ KHÓA</button>
+            <p id="pass-error" class="error-text">Sai mật khẩu!</p>
+        </div>
+    </div>
+
     <div class="quiz-container">
         <h2 style="color: #0284c7; text-transform: uppercase; margin-bottom: 5px;">Thời Khóa Biểu</h2>
         <p style="color: #64748b; margin-bottom: 20px;">Xin chào, <span id="student-name" style="font-weight:900; color:#ea580c; font-size: 1.2rem">...</span> 👋</p>
@@ -30,6 +68,33 @@
         <button onclick="logout()" style="margin-top: 30px; background: #e2e8f0; color: #64748b; box-shadow: 0 4px 0 #cbd5e1;">⬅ Đăng xuất</button>
     </div>
 
+    <script>
+        // --- CẤU HÌNH MẬT KHẨU TẠI ĐÂY ---
+        const MAT_KHAU_HE_THONG = "123456"; // Anh sửa số này theo ý thích
+
+        function checkSecurity() {
+            const input = document.getElementById("pass-input").value;
+            const overlay = document.getElementById("security-overlay");
+            const errorMsg = document.getElementById("pass-error");
+
+            if (input === MAT_KHAU_HE_THONG) {
+                // Nếu đúng: Ẩn màn hình khóa đi
+                overlay.style.display = "none";
+                // Lưu trạng thái đã mở khóa (để F5 không bị hỏi lại - nếu anh muốn luôn hỏi thì xóa dòng dưới)
+                sessionStorage.setItem("daMoKhoaMenu", "true");
+            } else {
+                // Nếu sai: Hiện lỗi
+                errorMsg.style.display = "block";
+                document.getElementById("pass-input").value = ""; // Xóa ô nhập
+            }
+        }
+
+        // Tự động kiểm tra nếu đã nhập đúng trước đó (tránh hỏi lại khi tải lại trang)
+        if(sessionStorage.getItem("daMoKhoaMenu") === "true") {
+            document.getElementById("security-overlay").style.display = "none";
+        }
+    </script>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
@@ -44,6 +109,8 @@
 
         window.logout = function() {
             localStorage.removeItem("hocSinhLop4A");
+            // Xóa luôn trạng thái mở khóa khi đăng xuất
+            sessionStorage.removeItem("daMoKhoaMenu"); 
             window.location.href = "index.html";
         }
 
