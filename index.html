@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - Lớp 4A</title>
+    <link rel="stylesheet" href="style.css"> <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="login-container"> <div class="login-box">
+            <h2 style="font-size: 1.5rem">🚀 LỚP 4A ONLINE</h2>
+            
+            <select id="student-name">
+                <option value="">-- Chọn tên của bạn --</option>
+            </select>
+            
+            <input type="text" id="access-code" placeholder="NHẬP MÃ BÍ MẬT" autocomplete="off">
+            
+            <button onclick="login()">ĐĂNG NHẬP NGAY</button>
+            <p style="margin-top:20px; color:#94a3b8; font-size:12px">Hệ thống chuyển đổi số giáo dục 4.0</p>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+
+    <script>
+        // Danh sách lớp (Có thể tách ra file riêng nếu muốn)
+        const DANH_SACH_LOP = [ "Vũ Việt Anh", "Vũ Gia Bảo", "Lê Thị Liên Chi", "Bùi Anh Dũng", "Vũ Quốc Duy", "Nguyễn Đăng Dương", "Nguyễn Trí Đại", "Lê Bá Đạt", "Nguyễn Văn Đạt", "Lê Minh Hạnh", "Vũ Ngọc Huyền", "Lê Gia Khánh", "Nguyễn Đăng Kiên", "Vũ Đình Khánh Linh", "Mai Quang Long", "Lê Văn Lộc", "Vũ Anh Minh", "Hoàng Bảo Nam", "Phạm Thị Kim Ngân", "Vũ Thu Ngân", "Vũ Thị Yến Nhi", "Đàm Thị Quỳnh Như", "Phạm Hạnh Gia Phát", "Nguyễn Hoàng Thiên Phúc", "Vũ Quang Phúc", "Nguyễn Nhã Phương", "Nguyễn Thị Quỳnh", "Lê Ngọc Sơn", "Đặng Thị Thanh Tâm", "Vũ Thị Minh Tâm", "Lê Vũ Chí Thành", "Lê Anh Thơ", "Vũ Song Vũ", "--- GIÁO VIÊN TEST ---" ];
+        
+        const sel = document.getElementById("student-name");
+        DANH_SACH_LOP.forEach(n => {
+            let opt = document.createElement("option");
+            opt.value = n; opt.innerText = n; sel.appendChild(opt);
+        });
+
+        async function login() {
+            const name = document.getElementById("student-name").value;
+            const code = document.getElementById("access-code").value.trim().toUpperCase();
+
+            if (!name) return alert("Vui lòng chọn tên!");
+            if (!code) return alert("Vui lòng nhập mã!");
+
+            try {
+                // Biến db đã được khai báo sẵn trong config.js
+                const doc = await db.collection("BAO_MAT").doc("danh_sach_ma").get();
+                if (doc.exists && doc.data()[name] === code) {
+                    localStorage.setItem("hocSinhLop4A", name);
+                    window.location.href = "Menu.html";
+                } else {
+                    alert("❌ Sai mã đăng nhập!");
+                }
+            } catch (e) { alert("Lỗi kết nối: " + e.message); }
+        }
+    </script>
+</body>
+</html>
