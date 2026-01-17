@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIỂM TRA DỮ LIỆU THÔ</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f0f9ff; }
+        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 5px solid #0284c7; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .warn { color: red; font-weight: bold; }
+        .ok { color: green; font-weight: bold; }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <h2>🔍 5 BÀI NỘP GẦN NHẤT CỦA ANH</h2>
+    <div id="result">Đang tải dữ liệu từ kho...</div>
+
+    <script src="config.js"></script>
+
+    <script>
+        // Chờ 1 chút để config load xong
+        setTimeout(() => {
+            if(window.db) {
+                window.db.collection("KET_QUA_TONG_HOP")
+                .orderBy("ngay_nop", "desc") // Lấy mới nhất
+                .limit(5)
+                .get().then(snap => {
+                    let html = "";
+                    if(snap.empty) {
+                        document.getElementById("result").innerHTML = "Kho rỗng! Chưa có bài nào.";
+                        return;
+                    }
+
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        
+                        // Phân tích tên bài xem có hợp lệ không
+                        let status = "";
+                        let rawName = d.bai_tap ? d.bai_tap.toUpperCase() : "KHÔNG CÓ TÊN";
+                        
+                        if(rawName.includes("ĐẠO")) status = `<span class="ok">✅ Đã nhận diện được chữ ĐẠO</span>`;
+                        else if(rawName === "BÀI TẬP") status = `<span class="warn">❌ Lỗi: Mất ID 'ten-bai-tap' trong thẻ H2</span>`;
+                        else status = `<span class="warn">⚠️ Tên bài lạ: "${rawName}"</span>`;
+
+                        html += `<div class="card">
+                            <div><strong>Người nộp:</strong> ${d.hoc_sinh}</div>
+                            <div><strong>Tên lưu trong kho:</strong> <span style="font-size:1.2em; color:#0284c7">"${d.bai_tap}"</span></div>
+                            <div><strong>Kết luận máy tính:</strong> ${status}</div>
+                            <div><strong>Thời gian:</strong> ${d.ngay_nop ? new Date(d.ngay_nop.seconds*1000).toLocaleTimeString() : 'N/A'}</div>
+                        </div>`;
+                    });
+                    document.getElementById("result").innerHTML = html;
+                })
+                .catch(e => document.getElementById("result").innerHTML = "Lỗi đọc kho: " + e.message);
+            } else {
+                document.getElementById("result").innerHTML = "❌ Lỗi: Không tìm thấy config.js (Hoặc config chưa chạy)";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
