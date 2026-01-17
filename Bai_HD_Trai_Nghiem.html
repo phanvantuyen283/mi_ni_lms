@@ -3,131 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Làm Bài Tập HĐTN - Lớp 4A</title>
-    
+    <title>Làm Bài Tập - Lớp 4A</title>
     <link rel="stylesheet" href="style.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
     <div class="quiz-container">
-        
-        <div class="menu-top">
-            <a href="Menu.html">⬅ Quay về chọn môn khác</a>
+        <div style="margin-bottom:15px">
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
         </div>
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">HĐTN - TUẦN 19: NGƯỜI TIÊU DÙNG THÔNG MINH</h2>
-                
-                <p>Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
+                <h2 id="ten-bai-tap">TOÁN - ÔN TẬP PHÂN SỐ</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: "Cần" là những thứ như thế nào trong cuộc sống?</div>
+            <div class="question-text">Câu 1: Phân số nào bằng 1/2?</div>
             <div class="options">
-                <label><input type="radio" name="c1" value="A"> A. Những thứ rất đắt tiền, dùng để khoe với bạn bè.</label>
-                <label><input type="radio" name="c1" value="B" data-correct="true"> B. Những thứ thiết yếu, không thể thiếu để duy trì cuộc sống (như thức ăn, nước uống).</label>
-                <label><input type="radio" name="c1" value="C"> C. Những thứ có thì vui, không có cũng không sao.</label>
-                <label><input type="radio" name="c1" value="D"> D. Những thứ đồ chơi mới nhất.</label>
+                <label><input type="radio" name="q1" value="A"> A. 2/5</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. 2/4</label>
+                <label><input type="radio" name="q1" value="C"> C. 3/7</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: "Muốn" là những thứ như thế nào?</div>
+            <div class="question-text">Câu 2: Kết quả của 10 + 5 là?</div>
             <div class="options">
-                <label><input type="radio" name="c2" value="A"> A. Những thứ bắt buộc phải có để sống.</label>
-                <label><input type="radio" name="c2" value="B"> B. Những thứ thiết yếu như thuốc men khi bị ốm.</label>
-                <label><input type="radio" name="c2" value="C" data-correct="true"> C. Những thứ ta mong muốn có để cuộc sống thú vị hơn, nhưng không có vẫn sống được.</label>
-                <label><input type="radio" name="c2" value="D"> D. Những thứ nhà trường yêu cầu mua.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 3: Trong các món đồ dưới đây (xem hình minh họa bài học), món nào thuộc nhóm "Cần"?</div>
-            <div class="options">
-                <label><input type="radio" name="c3" value="A"> A. Máy bay đồ chơi.</label>
-                <label><input type="radio" name="c3" value="B" data-correct="true"> B. Gạo và Rau củ.</label>
-                <label><input type="radio" name="c3" value="C"> C. Bánh quy đắt tiền.</label>
-                <label><input type="radio" name="c3" value="D"> D. Điện thoại thông minh đời mới.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 4: Khi bị ốm sốt, thứ nào sau đây trở thành nhu cầu "Cần" cấp bách nhất?</div>
-            <div class="options">
-                <label><input type="radio" name="c4" value="A"> A. Truyện tranh.</label>
-                <label><input type="radio" name="c4" value="B"> B. Vé đi xem phim.</label>
-                <label><input type="radio" name="c4" value="C"> C. Quần áo đẹp.</label>
-                <label><input type="radio" name="c4" value="D" data-correct="true"> D. Thuốc chữa bệnh.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 5: Chủ đề của bài học tuần này là gì?</div>
-            <div class="options">
-                <label><input type="radio" name="c5" value="A"> A. Người bán hàng tài ba.</label>
-                <label><input type="radio" name="c5" value="B" data-correct="true"> B. Người tiêu dùng thông minh.</label>
-                <label><input type="radio" name="c5" value="C"> C. Cách kiếm tiền nhanh nhất.</label>
-                <label><input type="radio" name="c5" value="D"> D. Sản xuất hàng hóa.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 6: Vì sao người tiêu dùng thông minh nên ưu tiên mua những thứ "Cần" trước?</div>
-            <div class="options">
-                <label><input type="radio" name="c6" value="A"> A. Vì những thứ đó thường rẻ hơn.</label>
-                <label><input type="radio" name="c6" value="B" data-correct="true"> B. Để đảm bảo sức khỏe và các nhu cầu cơ bản của cuộc sống trước.</label>
-                <label><input type="radio" name="c6" value="C"> C. Vì bố mẹ bắt buộc phải mua.</label>
-                <label><input type="radio" name="c6" value="D"> D. Để không bị người khác chê cười.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 7: Điều gì sẽ xảy ra nếu em dùng hết tiền để mua những thứ em "Muốn" mà quên mua những thứ "Cần"?</div>
-            <div class="options">
-                <label><input type="radio" name="c7" value="A"> A. Em sẽ rất vui vẻ mãi mãi.</label>
-                <label><input type="radio" name="c7" value="B"> B. Em sẽ được khen là người sành điệu.</label>
-                <label><input type="radio" name="c7" value="C" data-correct="true"> C. Em có thể bị thiếu đói, thiếu đồ dùng học tập hoặc gặp khó khăn trong sinh hoạt.</label>
-                <label><input type="radio" name="c7" value="D"> D. Em sẽ trở nên giàu có hơn.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 8: Bạn Lan đi siêu thị. Danh sách nào dưới đây sắp xếp đúng thứ tự ưu tiên của người tiêu dùng thông minh?</div>
-            <div class="options">
-                <label><input type="radio" name="c8" value="A"> A. Đồ chơi lego -> Bánh kẹo -> Gạo -> Nước mắm.</label>
-                <label><input type="radio" name="c8" value="B" data-correct="true"> B. Gạo, thức ăn -> Đồ dùng học tập -> Truyện tranh (nếu còn dư tiền).</label>
-                <label><input type="radio" name="c8" value="C"> C. Váy công chúa -> Giày thể thao -> Sách giáo khoa.</label>
-                <label><input type="radio" name="c8" value="D"> D. Mua bất cứ thứ gì thấy thích.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 9: Tình huống: Em có 50.000 đồng để ăn trưa. Em thấy một cửa hàng bán móc khóa rất đẹp giá 45.000 đồng. Em nên làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="c9" value="A"> A. Nhịn ăn trưa để mua móc khóa vì nó quá đẹp.</label>
-                <label><input type="radio" name="c9" value="B"> B. Vay tiền bạn để mua cả hai.</label>
-                <label><input type="radio" name="c9" value="C" data-correct="true"> C. Mua đồ ăn trưa trước, nếu còn dư tiền mới tính chuyện để dành mua móc khóa sau.</label>
-                <label><input type="radio" name="c9" value="D"> D. Mua móc khóa và xin người lạ đồ ăn.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 10: Siêu thị đang giảm giá mạnh một bộ quần áo mùa đông, nhưng em đã có đủ áo ấm rồi. Hành động nào là "thông minh" nhất?</div>
-            <div class="options">
-                <label><input type="radio" name="c10" value="A"> A. Mua ngay vì rẻ quá, không mua thì phí.</label>
-                <label><input type="radio" name="c10" value="B" data-correct="true"> B. Không mua, vì mình không "Cần" nó, để tiền đó dùng cho việc khác quan trọng hơn.</label>
-                <label><input type="radio" name="c10" value="C"> C. Mua về để đó, bao giờ hỏng áo cũ thì mặc.</label>
-                <label><input type="radio" name="c10" value="D"> D. Mua để tặng bạn bè dù chưa biết ai cần.</label>
+                <label><input type="radio" name="q2" value="A"> A. 14</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true"> B. 15</label>
             </div>
         </div>
 
         <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
     </div>
 
-    <script type="module" src="core.js"></script>
+    <script src="config.js"></script>
+    <script src="core.js"></script>
 
 </body>
 </html>
