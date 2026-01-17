@@ -68,9 +68,10 @@ window.nopBai = async function() {
             });
         }
     } catch(e) { 
-        console.error("Lỗi gửi điểm:", e); 
-        alert("⚠️ Có lỗi kết nối, nhưng điểm đã được chấm hiển thị bên dưới.");
-    }
+    console.error("Lỗi gửi điểm:", e); 
+    alert("LỖI CHI TIẾT:\n" + e.message); // Hiện rõ lỗi gì
+}
+
 
     // c. Hiển thị Popup kết quả
     hienThiPopup(diemTron, correct, contentBlocks.length);
