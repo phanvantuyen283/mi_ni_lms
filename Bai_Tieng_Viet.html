@@ -3,48 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiếng Việt 4 - Củng Cố Kỹ Năng Viết</title>
+    <title>Tiếng Việt 4 - Ông Bụt đã đến</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        .group-header { 
-            color: #c2410c; /* Màu cam đậm */
-            background: #fff7ed; 
-            padding: 12px 15px; 
-            border-radius: 8px; 
-            margin: 25px 0 15px 0; 
-            font-weight: 900; 
-            border-left: 5px solid #f97316; 
-            text-transform: uppercase;
-            font-size: 0.95rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        textarea.essay-input { 
-            width: 100%; 
-            padding: 12px; 
-            border: 2px solid #e2e8f0; 
-            border-radius: 8px; 
-            margin-top: 10px; 
-            font-family: inherit; 
-            font-size: 0.95rem;
-            box-sizing: border-box; 
-            background: #f8fafc;
-            color: #334155;
-            transition: 0.2s;
-            resize: vertical;
-        }
-        textarea.essay-input:focus {
-            background: #fff;
-            border-color: #0ea5e9;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-        }
-    </style>
 </head>
 <body>
 
@@ -55,7 +20,7 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TIẾNG VIỆT 4 - CỦNG CỐ KỸ NĂNG VIẾT</h2>
+                <h2 id="ten-bai-tap">TIẾNG VIỆT 4: ÔNG BỤT ĐÃ ĐẾN</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
@@ -63,142 +28,108 @@
 
         <div class="question-block security-quest"></div>
 
-        <div class="group-header">Phần 1: Khơi gợi vốn từ & Nghệ thuật</div>
-
         <div class="question-block">
-            <div class="question-text">Câu 1: Dòng nào dưới đây gồm các từ ngữ thích hợp nhất để miêu tả vẻ đẹp phẩm chất của người bà?</div>
+            <div class="question-text">Câu 1: Mai đã vô tình làm vỡ vật gì?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Xinh xắn, lộng lẫy, kiêu sa.</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Đúng rồi! 'Hiền từ, phúc hậu, tần tảo' là những từ ngữ truyền thống và chính xác nhất để miêu tả vẻ đẹp tâm hồn của người bà."> B. Hiền từ, phúc hậu, tần tảo, chịu thương chịu khó.</label>
-                <label><input type="radio" name="q1" value="C"> C. Thông minh, nhanh nhẹn, hoạt bát.</label>
-                <label><input type="radio" name="q1" value="D"> D. Nghiêm khắc, lạnh lùng, dứt khoát.</label>
+                <label><input type="radio" name="q1" value="A"> A. Cái bát ăn cơm.</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Mai lóng ngóng làm vỡ chậu hoa lan của ông."> B. Chậu hoa lan.</label>
+                <label><input type="radio" name="q1" value="C"> C. Cửa kính.</label>
+                <label><input type="radio" name="q1" value="D"> D. Bình hoa hồng.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Để câu văn thêm sinh động, em hãy điền từ so sánh thích hợp vào chỗ chấm: "Mái tóc bà bạc trắng như..."</div>
+            <div class="question-text">Câu 2: Khi chậu hoa bị vỡ, tâm trạng của Mai như thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. ...đám mây mùa hạ.</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true" data-explain="Chính xác! 'Tóc bạc như cước, như mây' là hình ảnh so sánh rất đẹp và giàu hình ảnh."> B. ...cước, như mây.</label>
-                <label><input type="radio" name="q2" value="C"> C. ...tờ giấy trắng.</label>
-                <label><input type="radio" name="q2" value="D"> D. ...viên phấn.</label>
+                <label><input type="radio" name="q2" value="A"> A. Vui vẻ, hớn hở.</label>
+                <label><input type="radio" name="q2" value="B"> B. Tức giận, bực bội.</label>
+                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Mai buồn thiu và lo lắng vì sợ ông buồn."> C. Buồn thiu, lo lắng.</label>
+                <label><input type="radio" name="q2" value="D"> D. Bình thản, không quan tâm.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Câu nào sử dụng biện pháp nhân hóa để nói về sự chăm sóc của mẹ?</div>
+            <div class="question-text">Câu 3: Ông nhạc sĩ đã nói gì khi thấy Mai khóc?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Mẹ chăm sóc em rất chu đáo.</label>
-                <label><input type="radio" name="q3" value="B"> B. Bàn tay mẹ như có phép màu làm dịu cơn đau của em.</label>
-                <label><input type="radio" name="q3" value="C" data-correct="true" data-explain="Đúng! Từ 'chạy thoăn thoắt' vốn dùng cho người/vật di chuyển, nay dùng cho ngón tay để tả sự nhanh nhẹn, khéo léo."> C. Những ngón tay gầy guộc của mẹ "chạy" thoăn thoắt trên chiếc áo len đan cho em.</label>
-                <label><input type="radio" name="q3" value="D"> D. Mẹ là người em yêu nhất trên đời.</label>
+                <label><input type="radio" name="q3" value="A"> A. Mắng Mai vì không cẩn thận.</label>
+                <label><input type="radio" name="q3" value="B"> B. Bảo Mai đền tiền chậu hoa.</label>
+                <label><input type="radio" name="q3" value="C" data-correct="true" data-explain="Ông ân cần bảo Mai về nhà đi, để ông dọn dẹp giúp."> C. Bảo Mai về đi, để ông dọn giúp cho.</label>
+                <label><input type="radio" name="q3" value="D"> D. Ông không nói gì và bỏ đi.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4 (Tự luyện): Tìm 2-3 từ láy gợi tả âm thanh hoặc dáng vẻ của người thân mà em yêu quý?</div>
-            <textarea class="essay-input" rows="2" placeholder="Ví dụ: lom khom, dịu dàng, trầm ấm..."></textarea>
-        </div>
-
-        <div class="group-header">Phần 2: Kỹ năng quan sát & Tìm chi tiết</div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 5: Khi quan sát đôi bàn tay của mẹ (hoặc cha/bà), chi tiết nào gợi nhiều cảm xúc về sự vất vả nhất?</div>
+            <div class="question-text">Câu 4: Điều kỳ diệu gì đã xảy ra vào sáng hôm sau?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Bàn tay trắng trẻo, mịn màng.</label>
-                <label><input type="radio" name="q5" value="B"> B. Bàn tay đeo chiếc nhẫn vàng lấp lánh.</label>
-                <label><input type="radio" name="q5" value="C" data-correct="true" data-explain="Chính xác. Những vết chai sần, nứt nẻ là minh chứng rõ nhất cho sự hi sinh, vất vả của người thân dành cho gia đình."> C. Bàn tay thô ráp, chai sần, có những vết nứt nẻ vì sương gió.</label>
+                <label><input type="radio" name="q4" value="A"> A. Chậu hoa lan đã biến mất.</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true" data-explain="Một chậu lan mới tinh đã xuất hiện thay thế cho chậu cũ bị vỡ."> B. Chậu lan đã được thay mới.</label>
+                <label><input type="radio" name="q4" value="C"> C. Ông của Mai đã mua chậu mới.</label>
+                <label><input type="radio" name="q4" value="D"> D. Cây lan tự lành lại.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Hãy nhớ lại một lần em bị ốm hoặc gặp chuyện buồn. Người thân đó đã làm gì?</div>
+            <div class="question-text">Câu 5: "Ông Bụt" trong câu chuyện thực chất là ai?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Mẹ thức suốt đêm chườm khăn, nấu cháo cho em.</label>
-                <label><input type="radio" name="q6" value="B"> B. Bố lặng lẽ ngồi bên cạnh xoa đầu em.</label>
-                <label><input type="radio" name="q6" value="C"> C. Bà kể chuyện cổ tích để em quên đi cơn đau.</label>
-                <label><input type="radio" name="q6" value="D" data-correct="true" data-explain="Tất cả các ý trên đều đúng. Mỗi người thân đều có cách quan tâm riêng biệt và đáng trân trọng."> D. Tất cả các ý trên đều là hành động thể hiện tình yêu thương.</label>
+                <label><input type="radio" name="q5" value="A"> A. Một vị thần tiên.</label>
+                <label><input type="radio" name="q5" value="B"> B. Ông nội của Mai.</label>
+                <label><input type="radio" name="q5" value="C" data-correct="true" data-explain="Chính ông nhạc sĩ tốt bụng đã âm thầm giúp đỡ Mai, giống như ông Bụt trong cổ tích."> C. Ông nhạc sĩ hàng xóm.</label>
+                <label><input type="radio" name="q5" value="D"> D. Bố của Mai.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7 (Tự luyện): Âm thanh nào của người thân khiến em cảm thấy bình yên nhất?</div>
-            <textarea class="essay-input" rows="2" placeholder="Ví dụ: Tiếng ru của bà, tiếng xe máy của bố đi làm về..."></textarea>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 8: Nếu ví người thân đó như một "ngọn lửa", em sẽ giải thích vì sao?</div>
+            <div class="question-text">Câu 6: Từ nào dưới đây là từ láy miêu tả hành động của Mai?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Vì người đó hay nóng giận.</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true" data-explain="Đây là hình ảnh ẩn dụ rất đẹp: Ngọn lửa sưởi ấm (tình thương) và soi sáng (dạy dỗ, dẫn đường) cho con cháu."> B. Vì người đó luôn sưởi ấm và soi sáng cho cuộc đời em.</label>
-                <label><input type="radio" name="q8" value="C"> C. Vì người đó rất thích nấu ăn.</label>
+                <label><input type="radio" name="q6" value="A" data-correct="true" data-explain="'Lóng ngóng' là từ láy, diễn tả sự vụng về, chưa quen tay."> A. Lóng ngóng</label>
+                <label><input type="radio" name="q6" value="B"> B. Chăm chỉ</label>
+                <label><input type="radio" name="q6" value="C"> C. Khéo léo</label>
+                <label><input type="radio" name="q6" value="D"> D. Vui vẻ</label>
             </div>
         </div>
 
-        <div class="group-header">Phần 3: Kỹ năng dựng đoạn & Liên kết</div>
-
         <div class="question-block">
-            <div class="question-text">Câu 9: Câu văn mở đầu (câu chủ đề) cho đoạn văn nêu tình cảm cần đạt yêu cầu gì?</div>
+            <div class="question-text">Câu 7: Câu "Ông Bụt đã đến!" thuộc kiểu câu gì?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Kể lể dài dòng về tiểu sử người đó.</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="Đúng. Mở đoạn cần đi thẳng vào vấn đề: Giới thiệu người đó là ai và cảm xúc bao trùm của em là gì."> B. Giới thiệu trực tiếp người đó là ai và khẳng định tình cảm của em.</label>
-                <label><input type="radio" name="q9" value="C"> C. Miêu tả chi tiết ngoại hình ngay lập tức.</label>
+                <label><input type="radio" name="q7" value="A"> A. Câu hỏi</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Câu này bộc lộ cảm xúc ngạc nhiên, vui sướng của Mai (có dấu chấm than cuối câu)."> B. Câu cảm</label>
+                <label><input type="radio" name="q7" value="C"> C. Câu kể</label>
+                <label><input type="radio" name="q7" value="D"> D. Câu khiến</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Sắp xếp các ý sau để tạo thành một đoạn thân bài hợp lý:<br>
-                (1) Em nhớ nhất là những đêm đông lạnh giá.<br>
-                (2) Mẹ không ngại dậy sớm chuẩn bị nước ấm cho em rửa mặt.<br>
-                (3) Sự chăm sóc tỉ mỉ ấy làm em thấy mình thật hạnh phúc.<br>
-                (4) Tình yêu của mẹ thể hiện qua những việc làm bình dị hàng ngày.
-            </div>
+            <div class="question-text">Câu 8: Từ trái nghĩa với từ "buồn" là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A" data-correct="true" data-explain="Trình tự hợp lý: (4) Câu khái quát -> (1) Bối cảnh -> (2) Hành động cụ thể -> (3) Cảm xúc của em."> A. 4 - 1 - 2 - 3</label>
-                <label><input type="radio" name="q10" value="B"> B. 1 - 2 - 3 - 4</label>
-                <label><input type="radio" name="q10" value="C"> C. 4 - 3 - 2 - 1</label>
+                <label><input type="radio" name="q8" value="A"> A. Khóc</label>
+                <label><input type="radio" name="q8" value="B" data-correct="true" data-explain="Trái nghĩa với buồn là vui."> B. Vui</label>
+                <label><input type="radio" name="q8" value="C"> C. Lo</label>
+                <label><input type="radio" name="q8" value="D"> D. Sợ</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: Để liên kết các câu và bổ sung ý nghĩa tăng tiến, em dùng từ nối nào?</div>
+            <div class="question-text">Câu 9: Trong bài, tiếng nhạc của ông nhạc sĩ được miêu tả như thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. Tuy nhiên, Mặc dù.</label>
-                <label><input type="radio" name="q11" value="B" data-correct="true" data-explain="Chính xác. Các từ 'Ngoài ra', 'Hơn nữa', 'Đặc biệt là' giúp ý sau mạnh hơn ý trước, làm tăng mức độ cảm xúc."> B. Ngoài ra, Hơn nữa, Đặc biệt là.</label>
-                <label><input type="radio" name="q11" value="C"> C. Nhưng, Hoặc.</label>
+                <label><input type="radio" name="q9" value="A"> A. Ồn ào, khó chịu.</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="Tiếng đàn của ông thường ấm áp, vui tươi như chính tính cách nhân hậu của ông."> B. Ấm áp, vui tươi.</label>
+                <label><input type="radio" name="q9" value="C"> C. Buồn bã, thê lương.</label>
+                <label><input type="radio" name="q9" value="D"> D. Dồn dập, sợ hãi.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: Câu kết đoạn ấn tượng thường chứa đựng nội dung gì?</div>
+            <div class="question-text">Câu 10: Qua câu chuyện, em học được đức tính gì?</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Nhắc lại tên người thân.</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true" data-explain="Đúng. Kết bài mở rộng là nói lên lời hứa, mong ước hoặc suy ngẫm sâu sắc để cảm xúc còn đọng lại mãi."> B. Lời hứa, ước mong hoặc một suy nghĩ sâu sắc.</label>
-                <label><input type="radio" name="q12" value="C"> C. Chấm hết bài.</label>
+                <label><input type="radio" name="q10" value="A" data-correct="true" data-explain="Câu chuyện dạy ta lòng nhân ái, biết quan tâm giúp đỡ người khác (như ông nhạc sĩ) và biết hối lỗi (như Mai)."> A. Sự trung thực và lòng nhân ái.</label>
+                <label><input type="radio" name="q10" value="B"> B. Sự dũng cảm.</label>
+                <label><input type="radio" name="q10" value="C"> C. Sự tiết kiệm.</label>
+                <label><input type="radio" name="q10" value="D"> D. Sự chăm chỉ học tập.</label>
             </div>
-        </div>
-
-        <div class="group-header">Phần 4: Mở rộng cảm thụ (Tự luyện)</div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 13 (Thử thách): Thay vì viết "Em rất yêu mẹ", em hãy viết lại 1 câu diễn tả tình yêu đó bằng hành động cụ thể?</div>
-            <textarea class="essay-input" rows="3" placeholder="Gợi ý: Mỗi khi đi học về, được sà vào lòng mẹ..."></textarea>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 14 (Đổi vai): Nếu người thân đọc được đoạn văn của em, em nghĩ họ sẽ cảm thấy thế nào?</div>
-            <textarea class="essay-input" rows="3" placeholder="Em nghĩ mẹ sẽ mỉm cười và nói..."></textarea>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 15 (Liên hệ): Tình cảm của người thân đã giúp em thay đổi điều gì tích cực?</div>
-            <textarea class="essay-input" rows="3" placeholder="Em tự giác học bài hơn, biết giúp đỡ việc nhà..."></textarea>
         </div>
 
         <button id="btn-nop" onclick="nopBai()">NỘP BÀI KIỂM TRA</button>
-        <p style="text-align:center; color:#64748b; font-size:12px; margin-top:10px;">
-            Lưu ý: Hệ thống sẽ chấm điểm phần trắc nghiệm. Các câu hỏi tự luận dùng để rèn luyện trên lớp.
-        </p>
+        <p style="text-align:center; color:#666; font-size:12px; margin-top:10px;">Hệ thống tự động chấm điểm và lưu kết quả.</p>
     </div>
 
     <script src="config.js"></script>
