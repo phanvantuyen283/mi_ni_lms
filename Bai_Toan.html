@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toán 4 - Nhân Chia Số Có Nhiều Chữ Số</title>
+    <title>Toán 4 - Ôn Tập & Tính Chất Kết Hợp</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,7 +20,7 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TOÁN 4: NHÂN CHIA SỐ CÓ NHIỀU CHỮ SỐ</h2>
+                <h2 id="ten-bai-tap">TOÁN 4: NHÂN SỐ CÓ 1 CHỮ SỐ & TÍNH CHẤT KẾT HỢP</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
@@ -29,102 +29,102 @@
         <div class="question-block security-quest"></div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Kết quả của phép nhân <b>48 102 × 5</b> là bao nhiêu?</div>
+            <div class="question-text">Câu 1: Kết quả của phép tính <b>213 × 3</b> là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. 240 500</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Ta tính: <br>5x2=10 viết 0 nhớ 1. <br>5x0=0 nhớ 1 là 1. <br>5x1=5. <br>5x8=40 viết 0 nhớ 4. <br>5x4=20 nhớ 4 là 24. <br>👉 Kết quả: 240 510."> B. 240 510</label>
-                <label><input type="radio" name="q1" value="C"> C. 200 510</label>
-                <label><input type="radio" name="q1" value="D"> D. 240 010</label>
+                <label><input type="radio" name="q1" value="A" data-correct="true" data-explain="Ta nhân lần lượt: 3×3=9, 3×1=3, 3×2=6. Kết quả là 639."> A. 639</label>
+                <label><input type="radio" name="q1" value="B"> B. 629</label>
+                <label><input type="radio" name="q1" value="C"> C. 539</label>
+                <label><input type="radio" name="q1" value="D"> D. 649</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Thực hiện phép chia <b>125 734 : 5</b>. Phép chia này có số dư là bao nhiêu?</div>
+            <div class="question-text">Câu 2: Kết quả của phép tính <b>46 × 5</b> là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Dư 0 (Chia hết)</label>
-                <label><input type="radio" name="q2" value="B"> B. Dư 1</label>
-                <label><input type="radio" name="q2" value="C"> C. Dư 2</label>
-                <label><input type="radio" name="q2" value="D" data-correct="true" data-explain="Mẹo nhanh: Ta thấy chữ số tận cùng là 4. Vì 4 chia 5 bằng 0 dư 4, nên số dư của cả phép chia này là 4."> D. Dư 4</label>
+                <label><input type="radio" name="q2" value="A"> A. 200</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true" data-explain="5×6=30 (viết 0 nhớ 3); 5×4=20 thêm 3 là 23. Kết quả là 230."> B. 230</label>
+                <label><input type="radio" name="q2" value="C"> C. 240</label>
+                <label><input type="radio" name="q2" value="D"> D. 250</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Tìm giá trị của biểu thức: <b>32 024 : 7</b></div>
+            <div class="question-text">Câu 3: Một hộp bút màu có 12 chiếc. Hỏi 6 hộp bút màu như vậy có tất cả bao nhiêu chiếc?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. 4 570 (dư 34)</label>
-                <label><input type="radio" name="q3" value="B" data-correct="true" data-explain="Thực hiện chia lần lượt: <br>32:7=4 (dư 4) <br>Hạ 0, 40:7=5 (dư 5) <br>Hạ 2, 52:7=7 (dư 3) <br>Hạ 4, 34:7=4 (dư 6). <br>👉 Kết quả: 4574 (dư 6)"> B. 4 574 (dư 6)</label>
-                <label><input type="radio" name="q3" value="C"> C. 4 574 (dư 0)</label>
-                <label><input type="radio" name="q3" value="D"> D. 457 (dư 34) - Sai vì quên viết số 0</label>
+                <label><input type="radio" name="q3" value="A"> A. 62 chiếc</label>
+                <label><input type="radio" name="q3" value="B" data-correct="true" data-explain="Lấy số bút trong một hộp nhân với số hộp: 12 × 6 = 72 chiếc."> B. 72 chiếc</label>
+                <label><input type="radio" name="q3" value="C"> C. 78 chiếc</label>
+                <label><input type="radio" name="q3" value="D"> D. 18 chiếc</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Trong phép chia cho số có một chữ số, khẳng định nào sau đây là ĐÚNG?</div>
+            <div class="question-text">Câu 4: Tìm x, biết: <b>x : 4 = 105</b></div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Số dư có thể lớn hơn số chia.</label>
-                <label><input type="radio" name="q4" value="B"> B. Số dư có thể bằng số chia.</label>
-                <label><input type="radio" name="q4" value="C" data-correct="true" data-explain="Ghi nhớ quy tắc: Số dư luôn luôn phải NHỎ HƠN số chia. Nếu số dư bằng hoặc lớn hơn nghĩa là ta đã chia sai."> C. Số dư luôn luôn nhỏ hơn số chia.</label>
-                <label><input type="radio" name="q4" value="D"> D. Trong phép chia không bao giờ có số dư.</label>
+                <label><input type="radio" name="q4" value="A" data-correct="true" data-explain="Muốn tìm số bị chia, ta lấy thương nhân với số chia: 105 × 4 = 420."> A. x = 420</label>
+                <label><input type="radio" name="q4" value="B"> B. x = 402</label>
+                <label><input type="radio" name="q4" value="C"> C. x = 520</label>
+                <label><input type="radio" name="q4" value="D"> D. x = 425</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5 (Bẫy tư duy): Khi thực hiện phép chia, đến lượt hạ một số xuống nhưng số đó vẫn <b>nhỏ hơn số chia</b>, ta phải làm gì trước khi hạ tiếp số sau?</div>
+            <div class="question-text">Câu 5: Giá trị của biểu thức <b>150 × 5</b> là:</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Hạ tiếp số sau xuống ngay.</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true" data-explain="Đây là lỗi sai phổ biến nhất! Khi hạ xuống mà không chia được (nhỏ hơn), phải VIẾT SỐ 0 vào thương rồi mới được hạ tiếp số sau."> B. Viết số 0 vào thương.</label>
-                <label><input type="radio" name="q5" value="C"> C. Dừng phép chia lại và đó là số dư.</label>
-                <label><input type="radio" name="q5" value="D"> D. Mượn thêm 1 đơn vị.</label>
-            </div>
-        </div>
-        
-        <div class="question-block">
-            <div class="question-text">Câu 6: Nếu mỗi ngày nhà máy sản xuất được <b>160 140</b> chiếc khẩu trang, thì trong <b>7 ngày</b> nhà máy sản xuất được bao nhiêu chiếc?</div>
-            <div class="options">
-                <label><input type="radio" name="q6" value="A" data-correct="true" data-explain="Bài toán gấp lên số lần. Ta thực hiện phép nhân: <br>160 140 x 7 = 1 120 980 (chiếc)."> A. 1 120 980 chiếc</label>
-                <label><input type="radio" name="q6" value="B"> B. 1 120 780 chiếc</label>
-                <label><input type="radio" name="q6" value="C"> C. 720 980 chiếc</label>
-                <label><input type="radio" name="q6" value="D"> D. 1 000 000 chiếc</label>
+                <label><input type="radio" name="q5" value="A"> A. 550</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true" data-explain="Nhẩm 15 × 5 = 75, sau đó thêm số 0 vào bên phải ta được 750."> B. 750</label>
+                <label><input type="radio" name="q5" value="C"> C. 650</label>
+                <label><input type="radio" name="q5" value="D"> D. 700</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Tính giá trị của biểu thức: <b>(460 839 + 29 210) × 3</b></div>
+            <div class="question-text">Câu 6: Theo tính chất kết hợp của phép nhân, biểu thức <b>(a × b) × c</b> luôn bằng biểu thức nào?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. 1 470 147</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Bước 1: Tính trong ngoặc trước (460 839 + 29 210 = 490 049). <br>Bước 2: Nhân kết quả đó với 3 (490 049 x 3 = 1 470 147)."> B. 1 470 147</label>
-                <label><input type="radio" name="q7" value="C"> C. 548 469</label>
-                <label><input type="radio" name="q7" value="D"> D. 1 382 517</label>
+                <label><input type="radio" name="q6" value="A"> A. a × (b + c)</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true" data-explain="Công thức tính chất kết hợp: (a × b) × c = a × (b × c). Khi nhân một tích hai số với số thứ ba, ta có thể nhân số thứ nhất với tích của số thứ hai và số thứ ba."> B. a × (b × c)</label>
+                <label><input type="radio" name="q6" value="C"> C. (a × c) + b</label>
+                <label><input type="radio" name="q6" value="D"> D. a : (b × c)</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Cô Lan có <b>150 000 đồng</b>. Sau khi mua 3 kg xoài thì cô còn lại <b>15 000 đồng</b>. Hỏi mỗi ki-lô-gam xoài giá bao nhiêu tiền?</div>
+            <div class="question-text">Câu 7: Để tính nhanh <b>2 × 19 × 50</b>, cách nhóm nào thuận tiện nhất?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. 50 000 đồng</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true" data-explain="Bước 1: Tìm số tiền đã dùng mua xoài (150.000 - 15.000 = 135.000). <br>Bước 2: Tìm giá 1kg (135.000 : 3 = 45.000 đồng)."> B. 45 000 đồng</label>
-                <label><input type="radio" name="q8" value="C"> C. 40 000 đồng</label>
-                <label><input type="radio" name="q8" value="D"> D. 55 000 đồng</label>
+                <label><input type="radio" name="q7" value="A"> A. (2 × 19) × 50</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Nhóm 2 và 50 lại sẽ được số tròn trăm (2 × 50 = 100). Sau đó nhân với 19 rất dễ dàng."> B. (2 × 50) × 19</label>
+                <label><input type="radio" name="q7" value="C"> C. 2 × (19 × 50)</label>
+                <label><input type="radio" name="q7" value="D"> D. Tính từ trái sang phải</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9 (Tìm lỗi sai): Bạn Rô-bốt thực hiện phép chia <b>135 612 : 6</b> và ra kết quả là <b>2 262</b>. Theo em, Rô-bốt đã làm sai ở đâu?</div>
+            <div class="question-text">Câu 8: Biểu thức nào có giá trị BẰNG với <b>4 × 5 × 7</b>?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Rô-bốt tính đúng, không sai.</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="Kết quả đúng phải là 22 602. <br>Rô-bốt đã sai khi hạ số 1 xuống (1 < 6) nhưng quên viết số 0 vào thương mà hạ tiếp số 2."> B. Rô-bốt quên viết số 0 ở thương khi hạ số 1 xuống nhưng không chia được.</label>
-                <label><input type="radio" name="q9" value="C"> C. Rô-bốt chia sai bảng cửu chương.</label>
-                <label><input type="radio" name="q9" value="D"> D. Rô-bốt trừ sai số dư.</label>
+                <label><input type="radio" name="q8" value="A"> A. 9 × 7</label>
+                <label><input type="radio" name="q8" value="B" data-correct="true" data-explain="Vì 4 × 5 = 20, nên 4 × 5 × 7 chính là 20 × 7."> B. 20 × 7</label>
+                <label><input type="radio" name="q8" value="C"> C. 4 × 12</label>
+                <label><input type="radio" name="q8" value="D"> D. 4 × 30</label>
             </div>
         </div>
-        
+
         <div class="question-block">
-            <div class="question-text">Câu 10 (Toán đố vui): Nếu 5 con kiến khiêng được 1 hạt gạo, thì để khiêng được <b>125 730</b> hạt gạo trong một lần, cần bao nhiêu con kiến?</div>
+            <div class="question-text">Câu 9: Có 5 xe tải, mỗi xe chở 2 thùng hàng, mỗi thùng nặng 400kg. Phép tính tìm tổng khối lượng nhanh nhất?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A" data-correct="true" data-explain="Bài toán yêu cầu gấp lên 5 lần. Ta lấy 125 730 x 5 = 628 650 con kiến."> A. 628 650 con kiến</label>
-                <label><input type="radio" name="q10" value="B"> B. 25 146 con kiến</label>
-                <label><input type="radio" name="q10" value="C"> C. 600 000 con kiến</label>
-                <label><input type="radio" name="q10" value="D"> D. 125 735 con kiến</label>
+                <label><input type="radio" name="q9" value="A" data-correct="true" data-explain="Tính tổng số thùng hàng trước (5 × 2 = 10 thùng), sau đó nhân với khối lượng (10 × 400 = 4000kg). Cách này tính nhẩm nhanh hơn."> A. (5 × 2) × 400</label>
+                <label><input type="radio" name="q9" value="B"> B. 5 × (2 + 400)</label>
+                <label><input type="radio" name="q9" value="C"> C. 5 × 400 : 2</label>
+                <label><input type="radio" name="q9" value="D"> D. 2 × (5 + 400)</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 10: Tính nhanh giá trị của biểu thức: <b>4 × 36 × 25</b></div>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A"> A. 360</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="Sử dụng tính chất giao hoán và kết hợp: (4 × 25) × 36 = 100 × 36 = 3600."> B. 3600</label>
+                <label><input type="radio" name="q10" value="C"> C. 3500</label>
+                <label><input type="radio" name="q10" value="D"> D. 1000</label>
             </div>
         </div>
 
