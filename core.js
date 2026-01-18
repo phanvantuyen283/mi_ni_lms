@@ -1,4 +1,4 @@
-/* core.js - PHIÊN BẢN ỔN ĐỊNH (FINAL) */
+/* core.js - PHIÊN BẢN CHUẨN (ĐÃ FIX LỖI NGOẶC) */
 
 // 1. Cấu hình & Kết nối
 const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
@@ -33,11 +33,11 @@ setInterval(() => {
     }
 }, 1000);
 
-// --- 5. HÀM NỘP BÀI (QUAN TRỌNG) ---
+// --- 5. HÀM NỘP BÀI ---
 window.nopBai = async function() {
     // Kiểm tra an toàn
-    if (!window.db && typeof db !== 'undefined') window.db = db; // Backup
-    if (!window.db) { alert("⛔ LỖI MẤT KẾT NỐI!\nHãy tải lại trang (F5) rồi nộp lại."); return; }
+    if (!window.db && typeof db !== 'undefined') window.db = db;
+    if (!window.db) { alert("⛔ LỖI MẤT KẾT NỐI!\nBiến 'db' chưa được khởi tạo. Hãy tải lại trang (F5)."); return; }
     if (!studentName) { alert("⚠️ Chưa đăng nhập!"); return; }
 
     const btn = document.getElementById("btn-nop");
@@ -106,7 +106,7 @@ window.xemLaiBai = function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// --- 7. CHỐNG GIAN LẬN (ĐÃ FIX LỖI) ---
+// --- 7. CHỐNG GIAN LẬN ---
 async function kiemTraQuyenLamBai() {
     const hs = localStorage.getItem("hocSinhLop4A");
     const titleEl = document.getElementById("ten-bai-tap");
