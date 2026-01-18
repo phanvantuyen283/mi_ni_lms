@@ -1,30 +1,27 @@
-/* core.js - PHIÊN BẢN CHẨN ĐOÁN LỖI (DEBUG) */
+/* core.js - PHIÊN BẢN ỔN ĐỊNH (FINAL) */
 
-// 1. Cấu hình
+// 1. Cấu hình & Kết nối
 const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
 
-// 2. Kết nối (Có kiểm tra kỹ)
-let db;
-if (typeof firebase !== 'undefined') {
+// Tự động kết nối nếu config.js chưa chạy
+if (typeof firebase !== 'undefined' && !window.db) {
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
-    console.log("✅ Core: Đã tìm thấy Firebase");
-} else {
-    console.error("❌ Core: KHÔNG THẤY FIREBASE!");
+    window.db = firebase.firestore();
+    console.log("✅ Core: Đã tự kết nối Firebase");
 }
+
+// 2. Biến toàn cục
+const THOI_DIEM_MO_DE = new Date().getTime();
+const studentName = localStorage.getItem("hocSinhLop4A");
+const display = document.getElementById("student-display");
+if(display) display.innerText = studentName ? studentName : "Khách";
 
 // 3. Pháo hoa
 if (typeof confetti === 'undefined') {
     const s = document.createElement('script'); s.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"; document.head.appendChild(s);
 }
 
-// 4. Các biến toàn cục
-const THOI_DIEM_MO_DE = new Date().getTime();
-const studentName = localStorage.getItem("hocSinhLop4A");
-const display = document.getElementById("student-display");
-if(display) display.innerText = studentName ? studentName : "Khách";
-
-// 5. Đồng hồ
+// 4. Đồng hồ
 let seconds = 0;
 setInterval(() => {
     seconds++;
@@ -36,26 +33,17 @@ setInterval(() => {
     }
 }, 1000);
 
-// --- 6. HÀM NỘP BÀI (CÓ BÁO LỖI) ---
+// --- 5. HÀM NỘP BÀI (QUAN TRỌNG) ---
 window.nopBai = async function() {
-    // A. KIỂM TRA KẾT NỐI TRƯỚC KHI CHẤM
-    if (typeof firebase === 'undefined') {
-        alert("⛔ LỖI NGHIÊM TRỌNG: Trình duyệt không tải được Thư viện Firebase!\n\nNguyên nhân: Thiếu 2 dòng script ở đầu file HTML hoặc mạng chặn.\nHãy kiểm tra lại phần <head> của file bài tập.");
-        return;
-    }
-    if (!db) {
-        alert("⛔ LỖI KẾT NỐI: Biến 'db' chưa được khởi tạo.\n\nHãy thử tải lại trang (F5) và nộp lại.");
-        return;
-    }
-    if (!studentName) {
-        alert("⚠️ Bạn chưa đăng nhập! Hãy quay lại trang chủ.");
-        return;
-    }
+    // Kiểm tra an toàn
+    if (!window.db && typeof db !== 'undefined') window.db = db; // Backup
+    if (!window.db) { alert("⛔ LỖI MẤT KẾT NỐI!\nHãy tải lại trang (F5) rồi nộp lại."); return; }
+    if (!studentName) { alert("⚠️ Chưa đăng nhập!"); return; }
 
     const btn = document.getElementById("btn-nop");
-    btn.disabled = true; btn.innerText = "ĐANG GỬI...";
+    btn.disabled = true; btn.innerText = "ĐANG CHẤM...";
 
-    // B. CHẤM ĐIỂM
+    // Chấm điểm
     let correct = 0;
     const allBlocks = document.querySelectorAll(".question-block");
     const contentBlocks = Array.from(allBlocks).filter(b => !b.classList.contains('security-quest'));
@@ -64,44 +52,33 @@ window.nopBai = async function() {
         if (sel && sel.getAttribute("data-correct") === "true") correct++;
     });
     const diem = contentBlocks.length > 0 ? (correct / contentBlocks.length) * 10 : 0;
-    const diemTron = Number(diem.toFixed(1));
-    
-    // Lấy tiêu đề chuẩn (Sửa lỗi mất ID)
-    const h2 = document.getElementById("ten-bai-tap");
-    const tieuDe = h2 ? h2.innerText : "BÀI TẬP KHÔNG TÊN (Mất ID h2)";
+    const tieuDe = document.getElementById("ten-bai-tap") ? document.getElementById("ten-bai-tap").innerText : "Bài tập";
 
-    // C. GỬI ĐIỂM (CÓ BÁO LỖI CHI TIẾT)
+    // Gửi về Firebase
     try {
-        await db.collection("KET_QUA_TONG_HOP").add({
-            hoc_sinh: studentName, 
-            bai_tap: tieuDe, 
-            diem: diemTron, 
-            so_cau_dung: correct, 
-            tong_so_cau: contentBlocks.length,
-            thoi_gian_lam: seconds, 
-            ngay_nop: firebase.firestore.FieldValue.serverTimestamp(),
-            bat_dau_luc: THOI_DIEM_MO_DE,
-            ket_thuc_luc: new Date().getTime(),
-            chi_tiet_ngay: new Date().toLocaleDateString('vi-VN')
+        await window.db.collection("KET_QUA_TONG_HOP").add({
+            hoc_sinh: studentName, bai_tap: tieuDe, diem: Number(diem.toFixed(1)), 
+            so_cau_dung: correct, tong_so_cau: contentBlocks.length,
+            thoi_gian_lam: seconds, ngay_nop: firebase.firestore.FieldValue.serverTimestamp(),
+            bat_dau_luc: THOI_DIEM_MO_DE, ket_thuc_luc: new Date().getTime()
         });
-
-        // Chỉ khi gửi thành công mới hiện Popup này
-        hienThiKetQua(diemTron, correct, contentBlocks.length);
-        if(diemTron >= 5 && typeof confetti !== 'undefined') confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        
+        // Thành công
+        hienThiKetQua(diem, correct, contentBlocks.length);
+        if(diem >= 5 && typeof confetti !== 'undefined') confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         btn.innerText = "ĐÃ NỘP XONG";
         
-    } catch(e) { 
-        alert("🔥 LỖI GỬI ĐIỂM VỀ KHO:\n" + e.message + "\n\n(Hãy chụp ảnh lỗi này gửi cho kỹ thuật)");
-        btn.disabled = false; 
-        btn.innerText = "NỘP LẠI";
+    } catch(e) {
+        alert("🔥 Lỗi gửi điểm: " + e.message);
+        btn.disabled = false; btn.innerText = "NỘP LẠI";
     }
 };
 
-// ... Các hàm hiển thị Popup giữ nguyên ...
+// --- 6. HIỂN THỊ KẾT QUẢ ---
 async function hienThiKetQua(diem, dung, tong) {
     let allow = true;
     try {
-        const cfg = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
+        const cfg = await window.db.collection("CAU_HINH").doc("trang_thai_mon").get();
         if(cfg.exists) allow = cfg.data().xem_dap_an !== false;
     } catch(e){}
 
@@ -110,19 +87,8 @@ async function hienThiKetQua(diem, dung, tong) {
         : `<button style="background:#ccc; color:white; padding:10px; border:none; border-radius:5px" disabled>🚫 Đã ẩn đáp án</button>`;
 
     const div = document.createElement("div");
-    div.id = "result-popup";
-    div.className = "result-overlay"; 
-    div.style.display = "flex";
-    div.innerHTML = `
-        <div class="result-box">
-            <h3>✅ NỘP THÀNH CÔNG!</h3>
-            <div class="result-score">${diem.toFixed(1)}</div>
-            <p>Đúng ${dung}/${tong} câu</p>
-            <div class="btn-group-result">
-                ${btnHtml}
-                <button class="btn-finish" style="background:#0284c7; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer" onclick="window.location.href='Menu.html'">🏠 VỀ MENU</button>
-            </div>
-        </div>`;
+    div.id = "result-popup"; div.className = "result-overlay"; div.style.display = "flex";
+    div.innerHTML = `<div class="result-box"><h3>KẾT QUẢ</h3><div class="result-score">${diem.toFixed(1)}</div><p>Đúng ${dung}/${tong} câu</p><div class="btn-group-result">${btnHtml}<button class="btn-finish" style="background:#0284c7; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer" onclick="window.location.href='Menu.html'">🏠 VỀ MENU</button></div></div>`;
     document.body.appendChild(div);
 }
 
@@ -139,3 +105,21 @@ window.xemLaiBai = function() {
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// --- 7. CHỐNG GIAN LẬN (ĐÃ FIX LỖI) ---
+async function kiemTraQuyenLamBai() {
+    const hs = localStorage.getItem("hocSinhLop4A");
+    const titleEl = document.getElementById("ten-bai-tap");
+    if (!hs || !titleEl || !window.db) return;
+    try {
+        const cfg = await window.db.collection("CAU_HINH").doc("trang_thai_mon").get();
+        if (!cfg.exists || cfg.data().chan_lam_lai !== true) return;
+        
+        const snap = await window.db.collection("KET_QUA_TONG_HOP").where("hoc_sinh", "==", hs).where("bai_tap", "==", titleEl.innerText).limit(1).get();
+        if (!snap.empty) {
+            document.querySelector(".quiz-container").innerHTML = "<h2 style='text-align:center;color:red'>⛔ BẠN ĐÃ LÀM BÀI NÀY RỒI!</h2><button onclick=\"location.href='Menu.html'\" style='width:100%;padding:15px;background:#0284c7;color:white;border:none;border-radius:10px'>VỀ MENU</button>";
+        }
+    } catch (e) {}
+}
+// Chạy kiểm tra sau 1.5 giây
+setTimeout(kiemTraQuyenLamBai, 1500);
