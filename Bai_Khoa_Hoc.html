@@ -3,45 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Làm Bài Tập - Lớp 4A</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Khoa Học 4 - Khám Phá Thế Giới Nấm</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="quiz-container">
         <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về Menu</a>
         </div>
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap"> KHOA HỌC </h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display">...</span></p>
+                <h2 id="ten-bai-tap">KHOA HỌC 4: NẤM - ÍCH LỢI & TÁC HẠI</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
+        <div class="question-block security-quest"></div>
+
         <div class="question-block">
-            <div class="question-text">Câu 1: Phân số nào bằng 1/2?</div>
+            <div class="question-text">💧 Câu 1: Nấm thường phát triển mạnh nhất trong điều kiện môi trường nào?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. 2/5</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. 2/4</label>
-                <label><input type="radio" name="q1" value="C"> C. 3/7</label>
+                <label><input type="radio" name="q1" value="A"> A. Khô ráo và có ánh nắng gay gắt.</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Nấm ưa thích nơi ẩm ướt, ấm áp và thường mọc ở nơi râm mát. Đó là lý do sau mưa rào nấm mọc rất nhiều."> B. Ẩm ướt, ấm áp.</label>
+                <label><input type="radio" name="q1" value="C"> C. Lạnh giá và đóng băng.</label>
+                <label><input type="radio" name="q1" value="D"> D. Ngập hoàn toàn trong nước sâu.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Kết quả của 10 + 5 là?</div>
+            <div class="question-text">🍄 Câu 2: Nấm khác với cây xanh ở điểm cơ bản nào?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. 14</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true"> B. 15</label>
+                <label><input type="radio" name="q2" value="A"> A. Nấm không có rễ, thân, lá và diệp lục.</label>
+                <label><input type="radio" name="q2" value="B"> B. Nấm cũng có hoa và quả như cây xanh.</label>
+                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Khác với cây xanh (có lá, rễ, diệp lục để quang hợp), nấm không có các bộ phận này và sống bằng cách hấp thụ chất dinh dưỡng có sẵn."> C. Nấm không có diệp lục, không tự tổng hợp được chất dinh dưỡng từ ánh sáng.</label>
+                <label><input type="radio" name="q2" value="D"> D. Nấm chỉ sống được dưới nước.</label>
             </div>
         </div>
 
-        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
+        <div class="question-block">
+            <div class="question-text">🍞 Câu 3: Vật nào dưới đây dễ bị nấm mốc tấn công nhất?</div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. Cục đá cuội rửa sạch.</label>
+                <label><input type="radio" name="q3" value="B"> B. Thanh sắt phơi nắng.</label>
+                <label><input type="radio" name="q3" value="C" data-correct="true" data-explain="Nấm mốc cần chất dinh dưỡng từ thực phẩm (tinh bột, đường...) và độ ẩm để phát triển."> C. Miếng bánh mì để lâu ngày ngoài không khí.</label>
+                <label><input type="radio" name="q3" value="D"> D. Chai nước khoáng đóng nắp kín.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">🍲 Câu 4: Nhóm nấm nào sau đây gồm toàn các loại <b>nấm ăn được</b>?</div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. Nấm độc đỏ, nấm rơm, nấm hương.</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true" data-explain="Nấm rơm, mộc nhĩ (nấm mèo), nấm hương là những loại nấm quen thuộc, giàu dinh dưỡng dùng làm thức ăn."> B. Nấm rơm, mộc nhĩ, nấm hương.</label>
+                <label><input type="radio" name="q4" value="C"> C. Nấm lim xanh, nấm mốc, nấm mối.</label>
+                <label><input type="radio" name="q4" value="D"> D. Nấm men, nấm độc tán trắng.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">💊 Câu 5: Loài nấm nào sau đây nổi tiếng được dùng làm thuốc (dược liệu) bồi bổ sức khỏe?</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. Nấm mốc xanh.</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true" data-explain="Nấm linh chi là một loại dược liệu quý giúp tăng cường hệ miễn dịch và sức khỏe."> B. Nấm linh chi.</label>
+                <label><input type="radio" name="q5" value="C"> C. Nấm độc đỏ.</label>
+                <label><input type="radio" name="q5" value="D"> D. Nấm rơm.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">🥖 Câu 6: Nấm men thường được ứng dụng để làm gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A"> A. Làm bàn ghế, đồ thủ công.</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true" data-explain="Người ta dùng men nở (nấm men) để ủ bột làm bánh mì giúp bánh nở xốp, hoặc dùng để làm rượu, bia."> B. Làm bánh mì nở xốp, làm rượu bia.</label>
+                <label><input type="radio" name="q6" value="C"> C. Làm thuốc trừ sâu.</label>
+                <label><input type="radio" name="q6" value="D"> D. Làm sạch quần áo.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">🛑 Câu 7: Dấu hiệu nào thường thấy ở các loài <b>nấm độc</b> trong tự nhiên?</div>
+            <div class="options">
+                <label><input type="radio" name="q7" value="A"> A. Có màu nâu xám xịt, hình dáng bình thường.</label>
+                <label><input type="radio" name="q7" value="B"> B. Mọc trên rơm rạ.</label>
+                <label><input type="radio" name="q7" value="C" data-correct="true" data-explain="Nấm độc thường có màu sắc sặc sỡ (đỏ, cam, đốm trắng...), có vòng cổ hoặc bao gốc lạ mắt để cảnh báo nguy hiểm."> C. Có màu sắc sặc sỡ, đẹp mắt, có đốm lạ.</label>
+                <label><input type="radio" name="q7" value="D"> D. Có mùi thơm như kẹo.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">⚠️ Câu 8: Khi gặp nấm lạ trong rừng, hành động nào là AN TOÀN nhất?</div>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A"> A. Hái về nấu thử xem có ngon không.</label>
+                <label><input type="radio" name="q8" value="B"> B. Cầm lên ngửi rồi vứt đi.</label>
+                <label><input type="radio" name="q8" value="C" data-correct="true" data-explain="Tuyệt đối không chạm vào, không hái, không nếm thử nấm lạ vì nấm độc có thể gây chết người rất nhanh."> C. Tuyệt đối không chạm vào, không hái, không ăn.</label>
+                <label><input type="radio" name="q8" value="D"> D. Cho các con vật ăn thử trước.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">🥛 Câu 9: Nếu thấy hộp sữa chua hoặc bánh mì đã bị mốc một chút, em xử lý thế nào?</div>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A" data-correct="true" data-explain="Chân nấm và độc tố của nấm mốc đã ngấm sâu vào thực phẩm dù mắt thường không thấy. Cần vứt bỏ toàn bộ để tránh ngộ độc."> A. Vứt bỏ cả hộp/miếng vào thùng rác.</label>
+                <label><input type="radio" name="q9" value="B"> B. Gạt bỏ phần mốc rồi ăn phần còn lại.</label>
+                <label><input type="radio" name="q9" value="C"> C. Đun sôi lên cho chết mốc rồi ăn.</label>
+                <label><input type="radio" name="q9" value="D"> D. Cho vào tủ lạnh để nấm ngừng phát triển rồi ăn.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">❄️ Câu 10: Biện pháp nào dưới đây giúp ngăn chặn nấm mốc phát triển trên thực phẩm?</div>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A"> A. Để thực phẩm ở nơi nóng ẩm.</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="Nấm mốc cần độ ẩm để sống. Vì vậy, phơi khô, sấy khô, ướp muối (làm mất nước) hoặc để lạnh là cách bảo quản tốt."> B. Phơi khô, sấy khô, ướp muối hoặc để trong tủ lạnh.</label>
+                <label><input type="radio" name="q10" value="C"> C. Tưới nước vào thực phẩm hàng ngày.</label>
+                <label><input type="radio" name="q10" value="D"> D. Để thực phẩm lẫn lộn với đồ đã bị mốc.</label>
+            </div>
+        </div>
+
+        <button id="btn-nop" onclick="nopBai()">NỘP BÀI KIỂM TRA</button>
+        <p style="text-align:center; color:#666; font-size:12px; margin-top:10px;">Hệ thống tự động chấm điểm và lưu kết quả.</p>
     </div>
 
     <script src="config.js"></script>
