@@ -3,137 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiếng Việt 4 - Ông Bụt đã đến</title>
-    
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <link rel="stylesheet" href="style.css">
+    <title>Phiếu Bài Tập: Thám Tử Cảm Xúc</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            background-color: #e8f4f8;
+            color: #2980b9;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 30px;
+            border-left: 5px solid #3498db;
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #d35400;
+        }
+        .question-text {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .options label:hover {
+            background-color: #f0f0f0;
+        }
+        details {
+            margin-top: 10px;
+            padding: 8px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 4px;
+            color: #856404;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+        summary {
+            font-weight: bold;
+            outline: none;
+        }
+        .essay-box {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+        .btn-check {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #27ae60;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn-check:hover {
+            background-color: #219150;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            display: none;
+        }
+        .correct { color: #27ae60; }
+        .incorrect { color: #c0392b; }
+    </style>
 </head>
 <body>
 
-    <div class="quiz-container">
-        <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về Menu</a>
+<div class="container">
+    <h1>PHIẾU BÀI TẬP: THÁM TỬ CẢM XÚC</h1>
+    <p style="text-align: center; font-style: italic;">Mục tiêu: Tìm ra các "manh mối" (từ ngữ, hành động) cho thấy tình cảm của nhân vật trong truyện <strong>Ông Bụt đã đến</strong>.</p>
+
+    <h2>PHẦN 1: BÉ MAI - TỪ YÊU THÍCH ĐẾN VỠ ÒA HẠNH PHÚC</h2>
+
+    <div class="question-block" id="q1-block">
+        <div class="question-title">Câu 1: "Yêu" không chỉ là nói bằng lời</div>
+        <p class="question-text">Tác giả không viết "Mai rất yêu hoa lan", mà tác giả đã để Mai làm những hành động nào để thể hiện tình yêu đó?</p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="A"> A. Tưới nước và bắt sâu cho cây mỗi ngày.</label>
+            <label><input type="radio" name="q1" value="B"> B. Ngắm nghía mãi, hồi hộp chờ hoa nở, nâng niu và ve vuốt cánh hoa.</label>
+            <label><input type="radio" name="q1" value="C"> C. Khoe với bạn bè về chậu hoa đẹp trước cửa.</label>
+            <label><input type="radio" name="q1" value="D"> D. Vẽ tranh về chậu hoa lan.</label>
         </div>
-
-        <div class="header">
-            <div class="info">
-                <h2 id="ten-bai-tap">TIẾNG VIỆT 4: ÔNG BỤT ĐÃ ĐẾN</h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
-            </div>
-            <div class="timer">⏱ <span id="timer">00:00</span></div>
-        </div>
-
-        <div class="question-block security-quest"></div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 1: Mai đã vô tình làm vỡ vật gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Cái bát ăn cơm.</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Mai lóng ngóng làm vỡ chậu hoa lan của ông."> B. Chậu hoa lan.</label>
-                <label><input type="radio" name="q1" value="C"> C. Cửa kính.</label>
-                <label><input type="radio" name="q1" value="D"> D. Bình hoa hồng.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 2: Khi chậu hoa bị vỡ, tâm trạng của Mai như thế nào?</div>
-            <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Vui vẻ, hớn hở.</label>
-                <label><input type="radio" name="q2" value="B"> B. Tức giận, bực bội.</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Mai buồn thiu và lo lắng vì sợ ông buồn."> C. Buồn thiu, lo lắng.</label>
-                <label><input type="radio" name="q2" value="D"> D. Bình thản, không quan tâm.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 3: Ông nhạc sĩ đã nói gì khi thấy Mai khóc?</div>
-            <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Mắng Mai vì không cẩn thận.</label>
-                <label><input type="radio" name="q3" value="B"> B. Bảo Mai đền tiền chậu hoa.</label>
-                <label><input type="radio" name="q3" value="C" data-correct="true" data-explain="Ông ân cần bảo Mai về nhà đi, để ông dọn dẹp giúp."> C. Bảo Mai về đi, để ông dọn giúp cho.</label>
-                <label><input type="radio" name="q3" value="D"> D. Ông không nói gì và bỏ đi.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 4: Điều kỳ diệu gì đã xảy ra vào sáng hôm sau?</div>
-            <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Chậu hoa lan đã biến mất.</label>
-                <label><input type="radio" name="q4" value="B" data-correct="true" data-explain="Một chậu lan mới tinh đã xuất hiện thay thế cho chậu cũ bị vỡ."> B. Chậu lan đã được thay mới.</label>
-                <label><input type="radio" name="q4" value="C"> C. Ông của Mai đã mua chậu mới.</label>
-                <label><input type="radio" name="q4" value="D"> D. Cây lan tự lành lại.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 5: "Ông Bụt" trong câu chuyện thực chất là ai?</div>
-            <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Một vị thần tiên.</label>
-                <label><input type="radio" name="q5" value="B"> B. Ông nội của Mai.</label>
-                <label><input type="radio" name="q5" value="C" data-correct="true" data-explain="Chính ông nhạc sĩ tốt bụng đã âm thầm giúp đỡ Mai, giống như ông Bụt trong cổ tích."> C. Ông nhạc sĩ hàng xóm.</label>
-                <label><input type="radio" name="q5" value="D"> D. Bố của Mai.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 6: Từ nào dưới đây là từ láy miêu tả hành động của Mai?</div>
-            <div class="options">
-                <label><input type="radio" name="q6" value="A" data-correct="true" data-explain="'Lóng ngóng' là từ láy, diễn tả sự vụng về, chưa quen tay."> A. Lóng ngóng</label>
-                <label><input type="radio" name="q6" value="B"> B. Chăm chỉ</label>
-                <label><input type="radio" name="q6" value="C"> C. Khéo léo</label>
-                <label><input type="radio" name="q6" value="D"> D. Vui vẻ</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 7: Câu "Ông Bụt đã đến!" thuộc kiểu câu gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Câu hỏi</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Câu này bộc lộ cảm xúc ngạc nhiên, vui sướng của Mai (có dấu chấm than cuối câu)."> B. Câu cảm</label>
-                <label><input type="radio" name="q7" value="C"> C. Câu kể</label>
-                <label><input type="radio" name="q7" value="D"> D. Câu khiến</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 8: Từ trái nghĩa với từ "buồn" là gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Khóc</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true" data-explain="Trái nghĩa với buồn là vui."> B. Vui</label>
-                <label><input type="radio" name="q8" value="C"> C. Lo</label>
-                <label><input type="radio" name="q8" value="D"> D. Sợ</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 9: Trong bài, tiếng nhạc của ông nhạc sĩ được miêu tả như thế nào?</div>
-            <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Ồn ào, khó chịu.</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="Tiếng đàn của ông thường ấm áp, vui tươi như chính tính cách nhân hậu của ông."> B. Ấm áp, vui tươi.</label>
-                <label><input type="radio" name="q9" value="C"> C. Buồn bã, thê lương.</label>
-                <label><input type="radio" name="q9" value="D"> D. Dồn dập, sợ hãi.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 10: Qua câu chuyện, em học được đức tính gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q10" value="A" data-correct="true" data-explain="Câu chuyện dạy ta lòng nhân ái, biết quan tâm giúp đỡ người khác (như ông nhạc sĩ) và biết hối lỗi (như Mai)."> A. Sự trung thực và lòng nhân ái.</label>
-                <label><input type="radio" name="q10" value="B"> B. Sự dũng cảm.</label>
-                <label><input type="radio" name="q10" value="C"> C. Sự tiết kiệm.</label>
-                <label><input type="radio" name="q10" value="D"> D. Sự chăm chỉ học tập.</label>
-            </div>
-        </div>
-
-        <button id="btn-nop" onclick="nopBai()">NỘP BÀI KIỂM TRA</button>
-        <p style="text-align:center; color:#666; font-size:12px; margin-top:10px;">Hệ thống tự động chấm điểm và lưu kết quả.</p>
+        <details>
+            <summary>💡 Gợi ý (Bấm để xem)</summary>
+            Hãy tìm những động từ chỉ sự chăm sóc nhẹ nhàng, âu yếm trong bài đọc.
+        </details>
+        <div class="feedback" id="q1-feedback"></div>
     </div>
 
-    <script src="config.js"></script>
-    <script src="core.js"></script>
+    <div class="question-block" id="q2-block">
+        <div class="question-title">Câu 2: Cơ thể "lên tiếng"</div>
+        <p class="question-text">Khi lỡ tay làm gãy cành hoa và nghe tiếng mẹ thảng thốt gọi, cơ thể Mai đã phản ứng như thế nào để thể hiện sự <strong>sợ hãi</strong>?</p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="A"> A. Mặt Mai đỏ bừng lên.</label>
+            <label><input type="radio" name="q2" value="B"> B. Chân tay Mai run rẩy.</label>
+            <label><input type="radio" name="q2" value="C"> C. Trống ngực Mai đập dồn.</label>
+            <label><input type="radio" name="q2" value="D"> D. Mai đứng im như tượng.</label>
+        </div>
+        <details>
+            <summary>💡 Gợi ý (Bấm để xem)</summary>
+            Cảm xúc mạnh thường làm tim chúng ta đập nhanh hơn bình thường.
+        </details>
+        <div class="feedback" id="q2-feedback"></div>
+    </div>
+
+    <div class="question-block" id="q3-block">
+        <div class="question-title">Câu 3: Suy nghĩ thầm kín</div>
+        <p class="question-text">Khi đứng trước cửa nhà ông nhạc sĩ để xin lỗi, chi tiết nào cho thấy Mai vừa <strong>hối hận</strong> nhưng cũng rất <strong>ngây thơ</strong>?</p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="A"> A. Mai khóc to để ông nhạc sĩ nghe thấy.</label>
+            <label><input type="radio" name="q3" value="B"> B. Mai định bỏ chạy vì quá sợ.</label>
+            <label><input type="radio" name="q3" value="C"> C. Mai ước giá có một phép màu để cành hoa liền lại.</label>
+            <label><input type="radio" name="q3" value="D"> D. Mai nghĩ cách mua đền ông một chậu hoa khác.</label>
+        </div>
+        <details>
+            <summary>💡 Gợi ý (Bấm để xem)</summary>
+            Đôi khi suy nghĩ ước muốn trong đầu nói lên tính cách trẻ con rõ nhất.
+        </details>
+        <div class="feedback" id="q3-feedback"></div>
+    </div>
+
+    <div class="question-block" id="q4-block">
+        <div class="question-title">Câu 4: Lời cầu cứu ngây thơ</div>
+        <p class="question-text">Câu nói thì thầm nào của Mai cho thấy cô bé rất tin vào những điều tốt đẹp, ngay cả khi đang lo sợ tột độ?</p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="A"> A. "Mẹ ơi, cứu con!"</label>
+            <label><input type="radio" name="q4" value="B"> B. "Ông nhạc sĩ ơi, tha lỗi cho cháu!"</label>
+            <label><input type="radio" name="q4" value="C"> C. "Ông Bụt ơi, cứu con!".</label>
+            <label><input type="radio" name="q4" value="D"> D. "Lần sau con sẽ không thế nữa."</label>
+        </div>
+        <details>
+            <summary>💡 Gợi ý (Bấm để xem)</summary>
+            Mai đã gọi tên một nhân vật phép thuật thường giúp đỡ người tốt trong truyện cổ tích.
+        </details>
+        <div class="feedback" id="q4-feedback"></div>
+    </div>
+
+    <div class="question-block" id="q5-block">
+        <div class="question-title">Câu 5: Cảm xúc bùng nổ</div>
+        <p class="question-text">Sáng hôm sau, khi nhìn thấy chậu lan mới, cảm xúc của Mai đã thay đổi từ lo lắng sang trạng thái nào?</p>
+        <div class="options">
+            <label><input type="radio" name="q5" value="A"> A. Bình thản và nhẹ nhõm.</label>
+            <label><input type="radio" name="q5" value="B"> B. Vô cùng ngạc nhiên và sung sướng.</label>
+            <label><input type="radio" name="q5" value="C"> C. Hơi bất ngờ và vui vui.</label>
+            <label><input type="radio" name="q5" value="D"> D. Nghi ngờ và tò mò.</label>
+        </div>
+        <details>
+            <summary>💡 Gợi ý (Bấm để xem)</summary>
+            Hãy tìm các từ chỉ mức độ cao nhất của niềm vui trong bài.
+        </details>
+        <div class="feedback" id="q5-feedback"></div>
+    </div>
+
+    <h2>PHẦN 2: ÔNG NHẠC SĨ - CẢM XÚC QUA VIỆC LÀM</h2>
+
+    <div class="question-block" id="q6-block">
+        <div class="question-title">Câu 6: Sự lắng nghe thấu cảm</div>
+        <p class="question-text">Ông nhạc sĩ không xuất hiện trực tiếp, nhưng ông đã làm gì để hiểu được nỗi lòng của Mai?</p>
+        <div class="options">
+            <label><input type="radio" name="q6" value="A"> A. Ông đứng nhìn Mai qua cửa sổ.</label>
+            <label><input type="radio" name="q6" value="B"> B. Ông tình cờ nhìn thấy những giọt nước mắt và nghe được lời thì thầm của Mai.</label>
+            <label><input type="radio" name="q6" value="C"> C. Ông hỏi mẹ của Mai về sự việc.</label>
+            <label><input type="radio" name="q6" value="D"> D. Ông xem camera trước cửa nhà.</label>
+        </div>
+        <div class="feedback" id="q6-feedback"></div>
+    </div>
+
+    <div class="question-block" id="q7-block">
+        <div class="question-title">Câu 7: Hành động thay lời nói</div>
+        <p class="question-text">Hành động nào của ông nhạc sĩ thể hiện sự <strong>bao dung</strong> và <strong>nhân hậu</strong> giống như một ông Bụt?</p>
+        <div class="options">
+            <label><input type="radio" name="q7" value="A"> A. Mở cửa ra và xoa đầu Mai.</label>
+            <label><input type="radio" name="q7" value="B"> B. Viết một bản nhạc tặng Mai.</label>
+            <label><input type="radio" name="q7" value="C"> C. Âm thầm mua một chậu lan mới thay cho chậu cũ.</label>
+            <label><input type="radio" name="q7" value="D"> D. Nói với mẹ Mai rằng không sao đâu.</label>
+        </div>
+        <div class="feedback" id="q7-feedback"></div>
+    </div>
+
+    <div class="question-block" id="q8-block">
+        <div class="question-title">Câu 8: Tiếng lòng qua tiếng đàn</div>
+        <p class="question-text">Tác giả miêu tả tiếng đàn của ông nhạc sĩ như thế nào để thể hiện niềm vui của ông khi giúp được cô bé?</p>
+        <div class="options">
+            <label><input type="radio" name="q8" value="A"> A. Giai điệu trầm buồn, sâu lắng.</label>
+            <label><input type="radio" name="q8" value="B"> B. Giai điệu rộn ràng như lễ hội.</label>
+            <label><input type="radio" name="q8" value="C"> C. Giai điệu tươi vui như tiếng cười trong veo của cô bé.</label>
+            <label><input type="radio" name="q8" value="D"> D. Giai điệu êm ái như lời ru.</label>
+        </div>
+        <div class="feedback" id="q8-feedback"></div>
+    </div>
+
+    <h2>PHẦN TỔNG KẾT</h2>
+    <div class="question-block">
+        <div class="question-title">Câu hỏi suy ngẫm</div>
+        <p class="question-text">Qua các câu trắc nghiệm trên, em thấy để viết một đoạn văn tả tình cảm hay, ngoài việc dùng các từ chỉ cảm xúc (vui, buồn, sợ...), chúng ta nên kết hợp tả thêm những gì?</p>
+        <textarea class="essay-box" placeholder="Em hãy viết câu trả lời của mình vào đây..."></textarea>
+        <details>
+            <summary>💡 Gợi ý trả lời (Bấm để xem sau khi viết)</summary>
+            Chúng ta nên tả thêm: Hành động cụ thể, biểu hiện của cơ thể (tim đập, mặt đỏ...), và những suy nghĩ thầm kín trong đầu nhân vật.
+        </details>
+    </div>
+
+    <button class="btn-check" onclick="checkAnswers()">Kiểm tra kết quả</button>
+
+</div>
+
+<script>
+    function checkAnswers() {
+        // Đáp án đúng
+        const answers = {
+            q1: 'B',
+            q2: 'C',
+            q3: 'C',
+            q4: 'C',
+            q5: 'B',
+            q6: 'B',
+            q7: 'C',
+            q8: 'C'
+        };
+
+        let score = 0;
+        let total = 8;
+
+        for (let q in answers) {
+            const selected = document.querySelector(`input[name="${q}"]:checked`);
+            const feedback = document.getElementById(`${q}-feedback`);
+            feedback.style.display = 'block';
+
+            if (selected) {
+                if (selected.value === answers[q]) {
+                    feedback.textContent = "✅ Chính xác!";
+                    feedback.className = "feedback correct";
+                    score++;
+                } else {
+                    feedback.textContent = `❌ Chưa đúng. Đáp án đúng là ${answers[q]}.`;
+                    feedback.className = "feedback incorrect";
+                }
+            } else {
+                feedback.textContent = "⚠️ Em chưa chọn đáp án.";
+                feedback.className = "feedback incorrect";
+            }
+        }
+        
+        alert(`Em đã trả lời đúng ${score}/${total} câu trắc nghiệm!`);
+    }
+</script>
 
 </body>
 </html>
