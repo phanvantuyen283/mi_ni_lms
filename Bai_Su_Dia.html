@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* CSS bổ sung riêng cho bài này nếu cần */
-        body { background-color: #f0fdf4; } /* Nền hơi xanh lá nhẹ cho môn Địa */
+        /* CSS bổ sung riêng cho bài này */
+        body { background-color: #f0fdf4; } 
         .header { border-color: #16a34a; }
         .header h2 { color: #15803d; }
         #btn-nop { background: linear-gradient(to bottom, #22c55e, #16a34a); box-shadow: 0 6px 0 #14532d; }
@@ -31,10 +31,6 @@
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#15803d">Đang tải...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">--:--</span></div>
-        </div>
-
-        <div class="question-block security-quest">
-            <div class="question-text" style="color:#c2410c;">🔒 Đang tải câu hỏi bảo mật...</div>
         </div>
 
         <div class="question-block">
@@ -192,35 +188,26 @@
     </div>
 
     <script>
-        // Cấu hình kết nối Firebase (Giữ nguyên từ hệ thống cũ để đồng bộ)
         const firebaseConfig = { apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo", authDomain: "baikiemtracuoiki.firebaseapp.com", projectId: "baikiemtracuoiki", storageBucket: "baikiemtracuoiki.firebasestorage.app", messagingSenderId: "953819948776", appId: "1:953819948776:web:4e9a017a6c5fc10ed28b5d" };
         if (typeof firebase !== 'undefined' && !firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
 
-        // Logic đếm giờ & kiểm tra môn học (rút gọn để phối hợp với core.js)
         async function initPage() {
-            // Xác định môn học để kiểm tra lịch thi
-            let monKey = "sudia"; // Mặc định cho bài này
-
+            let monKey = "sudia"; 
             const db = firebase.firestore();
             try {
-                // Kiểm tra trạng thái môn học
                 const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
                 if (configDoc.exists && configDoc.data()[monKey] === false) {
                     alert("⛔ BÀI THI ĐANG ĐÓNG!");
                     window.location.href = "Menu.html";
                 }
-                
-                // Set thời gian làm bài (Nếu có cấu hình)
                 const timeDoc = await db.collection("CAU_HINH").doc("thoi_gian_lam_bai").get();
                 if(timeDoc.exists && timeDoc.data()[monKey] > 0) {
-                     // Nếu có giới hạn thời gian, core.js sẽ tự xử lý biến countdown nếu ta gán nó vào window
                      window.serverTimeLimit = timeDoc.data()[monKey] * 60; 
                 }
             } catch (e) { console.log(e); }
         }
-        
         initPage();
     </script>
     
