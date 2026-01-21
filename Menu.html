@@ -3,69 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh Sách Môn Học</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Danh Sách Môn Học - Lớp 4A</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-</head>
-<body>
-    <div class="quiz-container">
-        <h2 style="color: #0284c7; margin-bottom: 5px;">THỜI KHÓA BIỂU</h2>
-        <p style="color: #64748b; margin-bottom: 20px;">Xin chào, <span id="student-name" style="font-weight:900; color:#ea580c; font-size: 1.2rem">...</span> 👋</p>
-        
-        <div id="loading" style="color:#0284c7; font-weight:bold; margin:20px;">⏳ Đang tải bài học hôm nay...</div>
-
-        <div class="menu-grid" id="menu-grid" style="display: none;">
-            <a href="Bai_Toan.html" class="subject-card" id="btn-toan"><span style="font-size: 2rem;">📐</span><br>TOÁN</a>
-            <a href="Bai_Tieng_Viet.html" class="subject-card" id="btn-tv"><span style="font-size: 2rem;">📖</span><br>TIẾNG VIỆT</a>
-            <a href="Bai_Su_Dia.html" class="subject-card" id="btn-sudia"><span style="font-size: 2rem;">🌍</span><br>SỬ - ĐỊA</a>
-            <a href="Bai_Khoa_Hoc.html" class="subject-card" id="btn-khoa"><span style="font-size: 2rem;">⚗️</span><br>KHOA HỌC</a>
-            <a href="Bai_Dao_Duc.html" class="subject-card" id="btn-daoduc"><span style="font-size: 2rem;">💖</span><br>ĐẠO ĐỨC</a>
-            <a href="Bai_Cong_Nghe.html" class="subject-card" id="btn-congnghe"><span style="font-size: 2rem;">🛠</span><br>CÔNG NGHỆ</a>
-            <a href="Bai_My_Thuat.html" class="subject-card" id="btn-mythuat"><span style="font-size: 2rem;">🎨</span><br>MỸ THUẬT</a>
-            <a href="Bai_HD_Trai_Nghiem.html" class="subject-card" id="btn-hdtnghiem"><span style="font-size: 2rem;">🌱</span><br>TRẢI NGHIỆM</a>
-        </div>
-
-        <button onclick="logout()" style="margin-top: 30px; background: #e2e8f0; color: #64748b; box-shadow: 0 4px 0 #cbd5e1;">⬅ Đăng xuất</button>
-    </div>
-
+    
     <script src="config.js"></script>
 
-    <script>
-        const name = localStorage.getItem("hocSinhLop4A");
-        if(name) document.getElementById("student-name").innerText = name;
-        else window.location.href = "index.html";
+    <link rel="stylesheet" href="style.css">
 
-        window.logout = function() {
-            localStorage.removeItem("hocSinhLop4A");
-            window.location.href = "index.html";
+    <style>
+        /* CSS bổ sung cho trạng thái môn học */
+        .disabled-card {
+            opacity: 0.5;
+            pointer-events: none; /* Không cho bấm */
+            filter: grayscale(100%); /* Chuyển sang đen trắng */
+            position: relative;
+        }
+        .disabled-card::after {
+            content: "ĐANG ĐÓNG";
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            color: #ef4444;
+            font-weight: 900;
+            font-size: 1.5rem;
+            border: 4px solid #ef4444;
+            padding: 5px 10px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.8);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h2 style="color: #0284c7; text-transform: uppercase; margin-bottom: 5px; border-bottom: 2px dashed #bae6fd; padding-bottom: 10px;">
+            📅 THỜI KHÓA BIỂU
+        </h2>
+        
+        <p style="color: #64748b; margin-bottom: 20px; font-size: 1.1rem;">
+            Xin chào, <span id="student-name" style="font-weight:900; color:#ea580c; font-size: 1.3rem">...</span> 👋
+        </p>
+        
+        <div id="loading" style="color:#0284c7; font-weight:bold; margin:30px; font-size:1.1rem">
+            ⏳ Đang tải danh sách môn...
+        </div>
+
+        <div class="menu-grid" id="menu-grid" style="display: none;">
+            
+            <a href="Bai_Toan.html" class="subject-card" id="btn-toan">
+                <span style="font-size: 2.5rem;">📐</span><br>TOÁN
+            </a>
+            
+            <a href="Bai_Tieng_Viet.html" class="subject-card" id="btn-tv">
+                <span style="font-size: 2.5rem;">📖</span><br>TIẾNG VIỆT
+            </a>
+            
+            <a href="Bai_Su_Dia.html" class="subject-card" id="btn-sudia">
+                <span style="font-size: 2.5rem;">🌍</span><br>SỬ - ĐỊA
+            </a>
+            
+            <a href="Bai_Khoa_Hoc.html" class="subject-card" id="btn-khoa">
+                <span style="font-size: 2.5rem;">⚗️</span><br>KHOA HỌC
+            </a>
+
+            <a href="Bai_Dao_Duc.html" class="subject-card" id="btn-daoduc">
+                <span style="font-size: 2.5rem;">💖</span><br>ĐẠO ĐỨC
+            </a>
+            
+            <a href="Bai_Cong_Nghe.html" class="subject-card" id="btn-congnghe">
+                <span style="font-size: 2.5rem;">🛠</span><br>CÔNG NGHỆ
+            </a>
+            
+            <a href="Bai_My_Thuat.html" class="subject-card" id="btn-mythuat">
+                <span style="font-size: 2.5rem;">🎨</span><br>MỸ THUẬT
+            </a>
+            
+            <a href="Bai_HD_Trai_Nghiem.html" class="subject-card" id="btn-hdtnghiem">
+                <span style="font-size: 2.5rem;">🌱</span><br>TRẢI NGHIỆM
+            </a>
+
+        </div>
+
+        <div style="margin-top: 30px; display: flex; gap: 10px; flex-direction: column;">
+            <button onclick="window.location.href='Bang_tong_hop_diem.html'" style="background: #f59e0b; box-shadow: 0 4px 0 #b45309;">
+                🏆 Xem Bảng Thành Tích
+            </button>
+
+            <button onclick="logout()" style="background: #94a3b8; box-shadow: 0 4px 0 #64748b;">
+                ⬅ Đăng xuất
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. KIỂM TRA ĐĂNG NHẬP ---
+        const name = localStorage.getItem("hocSinhLop4A");
+        if(name) {
+            document.getElementById("student-name").innerText = name;
+        } else {
+            // Chưa đăng nhập thì đá về trang chủ
+            window.location.href = "index.html"; 
         }
 
-        async function checkMonHoc() {
-            try {
-                // db đã có từ config.js
-                const docSnap = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
-                document.getElementById("loading").style.display = "none";
-                document.getElementById("menu-grid").style.display = "grid";
-
-                if (docSnap.exists) {
-                    const data = docSnap.data();
-                    // Ẩn hiện các nút dựa trên config
-                    const mapBtn = {
-                        toan: "btn-toan", tv: "btn-tv", sudia: "btn-sudia", khoa: "btn-khoa",
-                        daoduc: "btn-daoduc", congnghe: "btn-congnghe", mythuat: "btn-mythuat", hdtnghiem: "btn-hdtnghiem"
-                    };
-                    for (const [key, btnId] of Object.entries(mapBtn)) {
-                        if (data[key] === false) document.getElementById(btnId).style.display = "none";
-                    }
-                }
-            } catch (e) {
-                console.error("Lỗi:", e);
-                document.getElementById("loading").innerText = "Lỗi tải dữ liệu. Hãy tải lại trang.";
+        // --- 2. HÀM ĐĂNG XUẤT ---
+        window.logout = function() {
+            if(confirm("Bạn có muốn đăng xuất không?")) {
+                localStorage.removeItem("hocSinhLop4A");
+                window.location.href = "index.html";
             }
         }
-        checkMonHoc();
+
+        // --- 3. KẾT NỐI & TẢI TRẠNG THÁI MÔN ---
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Kiểm tra thư viện và config
+            if (typeof firebase !== 'undefined' && typeof CONFIG !== 'undefined') {
+                if (!firebase.apps.length) firebase.initializeApp(CONFIG.firebase);
+                const db = firebase.firestore();
+
+                try {
+                    // Lấy cấu hình từ Firebase (Collection CAU_HINH, Doc trang_thai_mon)
+                    const docSnap = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
+                    
+                    // Ẩn loading, hiện menu
+                    document.getElementById("loading").style.display = "none";
+                    document.getElementById("menu-grid").style.display = "grid";
+
+                    if (docSnap.exists) {
+                        const data = docSnap.data();
+                        
+                        // Hàm xử lý từng nút môn học
+                        const updateButton = (btnId, keyData) => {
+                            const btn = document.getElementById(btnId);
+                            if (btn) {
+                                // Nếu trong database là false (Tắt)
+                                if (data[keyData] === false) {
+                                    btn.classList.add("disabled-card"); // Thêm class làm mờ
+                                    btn.href = "javascript:void(0)"; // Vô hiệu hóa link
+                                }
+                            }
+                        };
+
+                        // Ánh xạ ID nút với Key trong database
+                        updateButton("btn-toan", "toan");
+                        updateButton("btn-tv", "tv");
+                        updateButton("btn-sudia", "sudia");
+                        updateButton("btn-khoa", "khoa");
+                        updateButton("btn-daoduc", "daoduc");
+                        updateButton("btn-congnghe", "congnghe");
+                        updateButton("btn-mythuat", "mythuat");
+                        updateButton("btn-hdtnghiem", "hdtnghiem");
+                    }
+                } catch (e) {
+                    console.error("Lỗi tải menu:", e);
+                    document.getElementById("loading").innerText = "⚠️ Lỗi kết nối! Vui lòng tải lại trang.";
+                    document.getElementById("loading").style.color = "red";
+                }
+            } else {
+                alert("Thiếu file config.js hoặc thư viện Firebase!");
+            }
+        });
     </script>
 </body>
 </html>
