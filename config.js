@@ -1,4 +1,8 @@
-/* config.js - Cấu hình hệ thống */
+/* ============================================================
+   CONFIG.JS - CẤU HÌNH HỆ THỐNG MINI LMS V4.0
+   Nhiệm vụ: Chứa thông tin kết nối Firebase dùng chung
+   ============================================================ */
+
 const CONFIG = {
     firebase: {
         apiKey: "AIzaSyA77lLi_JCLIdR535KEfg3S0_Ge2EorPMo",
