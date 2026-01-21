@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toán Lớp 4: Nhân chia với 10, 100, 1000...</title>
+    <title>Toán Lớp 4 - Ôn Tập Tiết 1</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -14,16 +14,22 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Tùy biến giao diện riêng cho môn TOÁN (Màu Xanh Dương) */
+        /* Tùy biến giao diện cho Toán */
         body { background-color: #f0f9ff; } 
         .header { border-color: #0284c7; background: #e0f2fe; }
         .header h2 { color: #0369a1; }
         .question-block:hover { border-color: #38bdf8; }
-        .options label:hover { background: #f0f9ff; border-color: #0284c7; color: #0284c7; }
+        .section-title {
+            color: #0369a1;
+            font-weight: 900;
+            margin: 25px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #bae6fd;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
         #btn-nop { background: linear-gradient(to bottom, #0ea5e9, #0284c7); box-shadow: 0 6px 0 #075985; }
-        
-        /* Tô đậm các số trong câu hỏi toán cho dễ nhìn */
-        .question-text b { color: #0369a1; font-family: 'Segoe UI', sans-serif; }
+        .question-text b { color: #0284c7; }
     </style>
 </head>
 <body>
@@ -35,129 +41,213 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TOÁN LỚP 4 - NHÂN, CHIA VỚI 10, 100, 1000...</h2>
+                <h2 id="ten-bai-tap">TOÁN LỚP 4 - ÔN TẬP TIẾT 1: NHÂN, CHIA VỚI 10, 100, 1000</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0369a1">Đang tải...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">--:--</span></div>
         </div>
 
+        <div class="section-title">PHẦN 1: NHÂN VỚI 10, 100, 1000</div>
+
         <div class="question-block">
-            <div class="question-text">Câu 1: Kết quả của phép tính <b>36 &times; 10</b> là?</div>
+            <div class="question-text">Câu 1: <b>54 &times; 10 = ?</b></div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. 36</label>
-                <label><input type="radio" name="q1" value="B"> B. 306</label>
-                <label><input type="radio" name="q1" value="C" data-correct="true" data-explain="Khi nhân một số với 10, ta chỉ việc thêm một chữ số 0 vào bên phải số đó (36 thành 360)."> C. 360</label>
-                <label><input type="radio" name="q1" value="D"> D. 3600</label>
+                <label><input type="radio" name="q1" value="A"> A. 504</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Nhân với 10 ta thêm một chữ số 0 vào bên phải: 54 thêm 0 thành 540."> B. 540</label>
+                <label><input type="radio" name="q1" value="C"> C. 5400</label>
+                <label><input type="radio" name="q1" value="D"> D. 54</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Muốn chia một số tròn chục, tròn trăm cho <b>100</b> ta làm thế nào?</div>
+            <div class="question-text">Câu 2: <b>123 &times; 100 = ?</b></div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Bớt đi 1 chữ số 0 ở bên phải số đó.</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true" data-explain="Chia cho 100 (số có 2 chữ số 0) thì ta bớt đi 2 chữ số 0 ở bên phải số đó."> B. Bớt đi 2 chữ số 0 ở bên phải số đó.</label>
-                <label><input type="radio" name="q2" value="C"> C. Thêm 2 chữ số 0 vào bên phải số đó.</label>
-                <label><input type="radio" name="q2" value="D"> D. Bớt đi 3 chữ số 0 ở bên phải số đó.</label>
+                <label><input type="radio" name="q2" value="A" data-correct="true" data-explain="Nhân với 100 ta thêm hai chữ số 0 vào bên phải: 123 thêm 00 thành 12 300."> A. 12 300</label>
+                <label><input type="radio" name="q2" value="B"> B. 1 230</label>
+                <label><input type="radio" name="q2" value="C"> C. 123 000</label>
+                <label><input type="radio" name="q2" value="D"> D. 10 230</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Tìm x biết: <b>x &times; 100 = 57.000</b></div>
+            <div class="question-text">Câu 3: Kết quả của phép tính <b>8 &times; 1000</b> là:</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. 57</label>
-                <label><input type="radio" name="q3" value="B" data-correct="true" data-explain="Muốn tìm thừa số chưa biết, ta lấy tích chia cho thừa số đã biết: 57.000 : 100 = 570 (bớt 2 số 0)."> B. 570</label>
-                <label><input type="radio" name="q3" value="C"> C. 5.700</label>
-                <label><input type="radio" name="q3" value="D"> D. 570.000</label>
+                <label><input type="radio" name="q3" value="A"> A. 800</label>
+                <label><input type="radio" name="q3" value="B"> B. 80</label>
+                <label><input type="radio" name="q3" value="C"> C. 80 000</label>
+                <label><input type="radio" name="q3" value="D" data-correct="true" data-explain="Nhân với 1000 ta thêm ba chữ số 0 vào bên phải: 8 thêm 000 thành 8 000."> D. 8 000</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Kết quả của phép tính <b>378.000 : 1.000</b> là?</div>
+            <div class="question-text">Câu 4: <b>205 &times; 10 = ?</b></div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A" data-correct="true" data-explain="Chia cho 1.000, ta bỏ bớt 3 chữ số 0 ở tận cùng bên phải: 378.000 thành 378."> A. 378</label>
-                <label><input type="radio" name="q4" value="B"> B. 3.780</label>
-                <label><input type="radio" name="q4" value="C"> C. 37</label>
-                <label><input type="radio" name="q4" value="D"> D. 378.000.000</label>
+                <label><input type="radio" name="q4" value="A"> A. 2500</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true" data-explain="205 thêm một số 0 vào bên phải là 2050."> B. 2050</label>
+                <label><input type="radio" name="q4" value="C"> C. 2005</label>
+                <label><input type="radio" name="q4" value="D"> D. 250</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Điền số thích hợp: <b>500 kg = ... tạ</b>?</div>
+            <div class="question-text">Câu 5: Số nào điền vào chỗ chấm: <b>... &times; 100 = 4500</b></div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. 50</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true" data-explain="1 tạ = 100 kg. Vậy 500 kg : 100 = 5 tạ."> B. 5</label>
-                <label><input type="radio" name="q5" value="C"> C. 5.000</label>
-                <label><input type="radio" name="q5" value="D"> D. 0,5</label>
+                <label><input type="radio" name="q5" value="A"> A. 450</label>
+                <label><input type="radio" name="q5" value="B"> B. 4</label>
+                <label><input type="radio" name="q5" value="C" data-correct="true" data-explain="Muốn tìm thừa số chưa biết ta lấy tích chia cho thừa số đã biết: 4500 : 100 = 45."> C. 45</label>
+                <label><input type="radio" name="q5" value="D"> D. 54</label>
+            </div>
+        </div>
+
+        <div class="section-title">PHẦN 2: CHIA CHO 10, 100, 1000</div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 6: <b>360 : 10 = ?</b></div>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A" data-correct="true" data-explain="Chia cho 10 ta bớt đi một chữ số 0 ở bên phải: 360 bớt 0 còn 36."> A. 36</label>
+                <label><input type="radio" name="q6" value="B"> B. 3600</label>
+                <label><input type="radio" name="q6" value="C"> C. 3</label>
+                <label><input type="radio" name="q6" value="D"> D. 60</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: <b>8 tấn = ... kg</b>?</div>
+            <div class="question-text">Câu 7: <b>5400 : 100 = ?</b></div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. 80</label>
-                <label><input type="radio" name="q6" value="B"> B. 800</label>
-                <label><input type="radio" name="q6" value="C" data-correct="true" data-explain="1 tấn = 1.000 kg. Ta nhân 8 với 1.000 (thêm 3 số 0) thành 8.000 kg."> C. 8.000</label>
-                <label><input type="radio" name="q6" value="D"> D. 80.000</label>
+                <label><input type="radio" name="q7" value="A"> A. 540</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Chia cho 100 ta bớt đi hai chữ số 0: 5400 bớt 00 còn 54."> B. 54</label>
+                <label><input type="radio" name="q7" value="C"> C. 5</label>
+                <label><input type="radio" name="q7" value="D"> D. 50</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Rô-bốt chạy 10 vòng quanh sân vận động. Mỗi vòng dài 375 m. Hỏi Rô-bốt chạy được bao nhiêu mét?</div>
+            <div class="question-text">Câu 8: <b>72 000 : 1000 = ?</b></div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. 375 m</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Quãng đường Rô-bốt chạy là: 375 x 10 = 3.750 (m)."> B. 3.750 m</label>
-                <label><input type="radio" name="q7" value="C"> C. 37.500 m</label>
-                <label><input type="radio" name="q7" value="D"> D. 385 m</label>
+                <label><input type="radio" name="q8" value="A"> A. 720</label>
+                <label><input type="radio" name="q8" value="B"> B. 7200</label>
+                <label><input type="radio" name="q8" value="C"> C. 70</label>
+                <label><input type="radio" name="q8" value="D" data-correct="true" data-explain="Chia cho 1000 ta bớt đi ba chữ số 0: 72 000 bớt 000 còn 72."> D. 72</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Tính bằng cách thuận tiện nhất: <b>2.136 &times; 5 &times; 2</b></div>
+            <div class="question-text">Câu 9: Tìm x biết: <b>x &times; 10 = 560</b></div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A" data-correct="true" data-explain="Ta nhóm (5 x 2) = 10. Sau đó lấy 2.136 x 10 = 21.360."> A. 21.360</label>
-                <label><input type="radio" name="q8" value="B"> B. 2.136</label>
-                <label><input type="radio" name="q8" value="C"> C. 10.680</label>
-                <label><input type="radio" name="q8" value="D"> D. 42.720</label>
+                <label><input type="radio" name="q9" value="A"> A. 5600</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="x = 560 : 10 = 56."> B. 56</label>
+                <label><input type="radio" name="q9" value="C"> C. 65</label>
+                <label><input type="radio" name="q9" value="D"> D. 5</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Một hội trường có 10 hàng ghế, xếp đều ở 2 bên lối đi. Mỗi bên lối đi có 8 chỗ ngồi. Hỏi hội trường có tất cả bao nhiêu chỗ ngồi?</div>
+            <div class="question-text">Câu 10: Điền số thích hợp: <b>... : 100 = 80</b></div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. 80 chỗ</label>
-                <label><input type="radio" name="q9" value="B"> B. 100 chỗ</label>
-                <label><input type="radio" name="q9" value="C"> C. 18 chỗ</label>
-                <label><input type="radio" name="q9" value="D" data-correct="true" data-explain="Mỗi hàng có 2 bên, mỗi bên 8 ghế, vậy 1 hàng có 8 x 2 = 16 ghế.<br>10 hàng có: 16 x 10 = 160 ghế."> D. 160 chỗ</label>
+                <label><input type="radio" name="q10" value="A"> A. 800</label>
+                <label><input type="radio" name="q10" value="B"> B. 8</label>
+                <label><input type="radio" name="q10" value="C" data-correct="true" data-explain="Muốn tìm số bị chia, ta lấy thương nhân với số chia: 80 x 100 = 8000."> C. 8000</label>
+                <label><input type="radio" name="q10" value="D"> D. 80 000</label>
+            </div>
+        </div>
+
+        <div class="section-title">PHẦN 3: ĐÚNG/SAI VÀ SO SÁNH</div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 11: Phép tính <b>32 &times; 10 = 3200</b>. Đúng hay Sai?</div>
+            <div class="options">
+                <label><input type="radio" name="q11" value="A"> A. Đúng</label>
+                <label><input type="radio" name="q11" value="B" data-correct="true" data-explain="Sai. Vì 32 x 10 = 320 (chỉ thêm 1 số 0)."> B. Sai</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Đoàn tàu chở hàng từ toa 16 đến toa 25. Biết mỗi toa chở 12 tấn hàng. Tổng khối lượng hàng là bao nhiêu?</div>
+            <div class="question-text">Câu 12: So sánh: <b>40 &times; 10 ... 400</b></div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. 108 tấn</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="Số lượng toa tàu là: (25 - 16) + 1 = 10 toa (không phải 9 toa).<br>Tổng khối lượng: 10 x 12 = 120 tấn."> B. 120 tấn</label>
-                <label><input type="radio" name="q10" value="C"> C. 100 tấn</label>
-                <label><input type="radio" name="q10" value="D"> D. 118 tấn</label>
+                <label><input type="radio" name="q12" value="A"> A. ></label>
+                <label><input type="radio" name="q12" value="B"> B. <</label>
+                <label><input type="radio" name="q12" value="C" data-correct="true" data-explain="40 x 10 = 400. Vậy 400 = 400."> C. =</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: Trên đoạn đường dài 500m, cứ 10m có một cột đèn. Biết cả hai đầu đoạn đường đều có cột đèn. Hỏi có bao nhiêu cột đèn?</div>
+            <div class="question-text">Câu 13: So sánh: <b>500 : 10 ... 500 : 100</b></div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. 50 cột</label>
-                <label><input type="radio" name="q11" value="B" data-correct="true" data-explain="Số khoảng cách là 500 : 10 = 50 khoảng.<br>Vì trồng cả 2 đầu nên: Số cột = Số khoảng + 1 = 50 + 1 = 51 cột."> B. 51 cột</label>
-                <label><input type="radio" name="q11" value="C"> C. 49 cột</label>
-                <label><input type="radio" name="q11" value="D"> D. 60 cột</label>
+                <label><input type="radio" name="q13" value="A" data-correct="true" data-explain="500 : 10 = 50.<br>500 : 100 = 5.<br>Vì 50 > 5 nên điền dấu >."> A. ></label>
+                <label><input type="radio" name="q13" value="B"> B. <</label>
+                <label><input type="radio" name="q13" value="C"> C. =</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: Tìm số chia trong phép tính: <b>320 : ... = 10</b></div>
+            <div class="question-text">Câu 14: Chọn phép tính có kết quả lớn nhất:</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A" data-correct="true" data-explain="Muốn tìm số chia, ta lấy Số bị chia chia cho Thương: 320 : 10 = 32."> A. 32</label>
-                <label><input type="radio" name="q12" value="B"> B. 3.200</label>
-                <label><input type="radio" name="q12" value="C"> C. 320</label>
-                <label><input type="radio" name="q12" value="D"> D. 310</label>
+                <label><input type="radio" name="q14" value="A"> A. 5 x 1000 (= 5000)</label>
+                <label><input type="radio" name="q14" value="B"> B. 52 x 100 (= 5200)</label>
+                <label><input type="radio" name="q14" value="C" data-correct="true" data-explain="600 x 10 = 6000 (Lớn nhất)"> C. 600 x 10 (= 6000)</label>
+                <label><input type="radio" name="q14" value="D"> D. 8000 : 10 (= 800)</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 15: Số "Ba trăm linh năm nghìn" khi chia cho 1000 sẽ còn lại:</div>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A" data-correct="true" data-explain="Ba trăm linh năm nghìn là 305 000.<br>Khi chia 1000, ta bớt 3 số 0 còn lại 305."> A. 305</label>
+                <label><input type="radio" name="q15" value="B"> B. 3005</label>
+                <label><input type="radio" name="q15" value="C"> C. 35</label>
+                <label><input type="radio" name="q15" value="D"> D. 350</label>
+            </div>
+        </div>
+
+        <div class="section-title">PHẦN 4: TOÁN CÓ LỜI VĂN</div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 16: Một gói kẹo có 10 chiếc. Hỏi 15 gói kẹo như vậy có bao nhiêu chiếc?</div>
+            <div class="options">
+                <label><input type="radio" name="q16" value="A"> A. 25 chiếc</label>
+                <label><input type="radio" name="q16" value="B" data-correct="true" data-explain="Số kẹo là: 15 x 10 = 150 (chiếc)."> B. 150 chiếc</label>
+                <label><input type="radio" name="q16" value="C"> C. 1500 chiếc</label>
+                <label><input type="radio" name="q16" value="D"> D. 105 chiếc</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 17: Bác An mua 100 viên gạch để lát sân. Mỗi viên gạch giá 12 000 đồng. Hỏi bác An phải trả bao nhiêu tiền? [attachment_0](attachment)</div>
+            <div class="options">
+                <label><input type="radio" name="q17" value="A"> A. 120 000 đồng</label>
+                <label><input type="radio" name="q17" value="B"> B. 12 000 000 đồng</label>
+                <label><input type="radio" name="q17" value="C" data-correct="true" data-explain="Số tiền là: 12 000 x 100 = 1 200 000 (đồng). (Thêm 2 số 0 vào sau 12 000)."> C. 1 200 000 đồng</label>
+                <label><input type="radio" name="q17" value="D"> D. 1 200 đồng</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 18: Rô-bốt chạy 10 vòng quanh sân. Biết mỗi vòng dài 400 m. Tổng quãng đường Rô-bốt chạy là:</div>
+            <div class="options">
+                <label><input type="radio" name="q18" value="A"> A. 40 m</label>
+                <label><input type="radio" name="q18" value="B" data-correct="true" data-explain="Tổng quãng đường: 400 x 10 = 4000 (m)."> B. 4000 m</label>
+                <label><input type="radio" name="q18" value="C"> C. 40 000 m</label>
+                <label><input type="radio" name="q18" value="D"> D. 400 m</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 19: Một đội xe có 10 xe tải, mỗi xe chở được 5 tấn hàng. Hỏi cả đội chở được bao nhiêu ki-lô-gam hàng? [attachment_1](attachment)</div>
+            <div class="options">
+                <label><input type="radio" name="q19" value="A"> A. 50 kg</label>
+                <label><input type="radio" name="q19" value="B"> B. 500 kg</label>
+                <label><input type="radio" name="q19" value="C" data-correct="true" data-explain="Cả đội chở được: 5 x 10 = 50 (tấn).<br>Đổi: 50 tấn = 50 000 kg."> C. 50 000 kg</label>
+                <label><input type="radio" name="q19" value="D"> D. 5000 kg</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 20: Tính giá trị biểu thức: <b>135 &times; 100 + 500</b></div>
+            <div class="options">
+                <label><input type="radio" name="q20" value="A"> A. 13 550</label>
+                <label><input type="radio" name="q20" value="B"> B. 18 500</label>
+                <label><input type="radio" name="q20" value="C" data-correct="true" data-explain="Bước 1: 135 x 100 = 13 500.<br>Bước 2: 13 500 + 500 = 14 000."> C. 14 000</label>
+                <label><input type="radio" name="q20" value="D"> D. 63 500</label>
             </div>
         </div>
 
