@@ -3,54 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập - Lớp 4A</title>
-    <link rel="stylesheet" href="style.css"> <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <title>Đăng Nhập - Lớp 4A Online</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-</head>
-<body>
-    <div class="login-container"> <div class="login-box">
-            <h2 style="font-size: 1.5rem">🚀 LỚP 4A ONLINE</h2>
-            
-            <select id="student-name">
-                <option value="">-- Chọn tên của bạn --</option>
-            </select>
-            
-            <input type="text" id="access-code" placeholder="NHẬP MÃ BÍ MẬT" autocomplete="off">
-            
-            <button onclick="login()">ĐĂNG NHẬP NGAY</button>
-            <p style="margin-top:20px; color:#94a3b8; font-size:12px">Hệ thống chuyển đổi số giáo dục 4.0</p>
-        </div>
-    </div>
-
+    
     <script src="config.js"></script>
 
-    <script>
-        // Danh sách lớp (Có thể tách ra file riêng nếu muốn)
-        const DANH_SACH_LOP = [ "Vũ Việt Anh", "Vũ Gia Bảo", "Lê Thị Liên Chi", "Bùi Anh Dũng", "Vũ Quốc Duy", "Nguyễn Đăng Dương", "Nguyễn Trí Đại", "Lê Bá Đạt", "Nguyễn Văn Đạt", "Lê Minh Hạnh", "Vũ Ngọc Huyền", "Lê Gia Khánh", "Nguyễn Đăng Kiên", "Vũ Đình Khánh Linh", "Mai Quang Long", "Lê Văn Lộc", "Vũ Anh Minh", "Hoàng Bảo Nam", "Phạm Thị Kim Ngân", "Vũ Thu Ngân", "Vũ Thị Yến Nhi", "Đàm Thị Quỳnh Như", "Phạm Hạnh Gia Phát", "Nguyễn Hoàng Thiên Phúc", "Vũ Quang Phúc", "Nguyễn Nhã Phương", "Nguyễn Thị Quỳnh", "Lê Ngọc Sơn", "Đặng Thị Thanh Tâm", "Vũ Thị Minh Tâm", "Lê Vũ Chí Thành", "Lê Anh Thơ", "Vũ Song Vũ", "--- GIÁO VIÊN TEST ---" ];
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* CSS bổ sung riêng cho trang Login để xử lý phần Câu hỏi bảo mật ẩn/hiện */
+        #security-section {
+            display: none; /* Mặc định ẩn */
+            background: #fff1f2;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px dashed #f43f5e;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .sec-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #be123c;
+            margin-bottom: 8px;
+            display: block;
+        }
+        #security-answer {
+            border-color: #f43f5e;
+            color: #be123c;
+        }
+        #security-answer::placeholder { color: #fda4af; }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2 style="font-size: 1.5rem; text-transform: uppercase; margin-bottom: 20px;">
+            🚀 LỚP 4A ONLINE
+        </h2>
         
-        const sel = document.getElementById("student-name");
-        DANH_SACH_LOP.forEach(n => {
+        <select id="student-name">
+            <option value="">-- Đang tải danh sách... --</option>
+        </select>
+        
+        <input type="text" id="access-code" placeholder="NHẬP MÃ BÍ MẬT (6 KÝ TỰ)" autocomplete="off">
+        
+        <div id="security-section">
+            <span class="sec-label">🔒 CÂU HỎI BẢO MẬT:</span>
+            <p id="sec-question-text" style="margin: 0 0 10px 0; font-size:14px; color:#333">...</p>
+            <input type="text" id="security-answer" placeholder="Nhập câu trả lời..." autocomplete="off">
+        </div>
+
+        <button onclick="handleLogin()" id="btn-login">ĐĂNG NHẬP NGAY</button>
+        
+        <p class="footer">Hệ thống kiểm tra & đánh giá năng lực V4.0</p>
+    </div>
+
+    <script>
+        // --- 1. KHỞI TẠO HỆ THỐNG ---
+        // Kiểm tra xem config.js đã được nạp chưa
+        if (typeof CONFIG === 'undefined') {
+            alert("Lỗi: Không tìm thấy file config.js! Vui lòng kiểm tra lại thư mục.");
+        } else {
+            // Khởi tạo Firebase riêng cho trang này (Không dùng Core.js)
+            if (!firebase.apps.length) {
+                firebase.initializeApp(CONFIG.firebase);
+            }
+            var db = firebase.firestore();
+        }
+
+        // --- 2. DANH SÁCH HỌC SINH ---
+        const DANH_SACH_LOP = [
+            "Vũ Việt Anh", "Vũ Gia Bảo", "Lê Thị Liên Chi", "Bùi Anh Dũng", "Vũ Quốc Duy", 
+            "Nguyễn Đăng Dương", "Nguyễn Trí Đại", "Lê Bá Đạt", "Nguyễn Văn Đạt", "Lê Minh Hạnh", 
+            "Vũ Ngọc Huyền", "Lê Gia Khánh", "Nguyễn Đăng Kiên", "Vũ Đình Khánh Linh", "Mai Quang Long", 
+            "Lê Văn Lộc", "Vũ Anh Minh", "Hoàng Bảo Nam", "Phạm Thị Kim Ngân", "Vũ Thu Ngân", 
+            "Vũ Thị Yến Nhi", "Đàm Thị Quỳnh Như", "Phạm Hạnh Gia Phát", "Nguyễn Hoàng Thiên Phúc", 
+            "Vũ Quang Phúc", "Nguyễn Nhã Phương", "Nguyễn Thị Quỳnh", "Lê Ngọc Sơn", "Đặng Thị Thanh Tâm", 
+            "Vũ Thị Minh Tâm", "Lê Vũ Chí Thành", "Lê Anh Thơ", "Vũ Song Vũ", "--- GIÁO VIÊN TEST ---"
+        ];
+
+        // Nạp danh sách vào thẻ Select
+        const selectBox = document.getElementById("student-name");
+        selectBox.innerHTML = '<option value="">-- Chọn tên của bạn --</option>';
+        DANH_SACH_LOP.forEach(name => {
             let opt = document.createElement("option");
-            opt.value = n; opt.innerText = n; sel.appendChild(opt);
+            opt.value = name;
+            opt.innerText = name;
+            selectBox.appendChild(opt);
         });
 
-        async function login() {
+        // Biến lưu đáp án bảo mật (nếu có)
+        let serverSecAnswer = "";
+
+        // --- 3. KIỂM TRA CẤU HÌNH BẢO MẬT TỪ SERVER ---
+        async function checkSecurityConfig() {
+            try {
+                const doc = await db.collection("BAO_MAT").doc("cau_hoi_ngay").get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    // Nếu có câu hỏi và câu hỏi không rỗng
+                    if (data.question && data.question.trim() !== "") {
+                        document.getElementById("security-section").style.display = "block";
+                        document.getElementById("sec-question-text").innerText = data.question;
+                        serverSecAnswer = data.answer ? data.answer.trim().toLowerCase() : "";
+                    }
+                }
+            } catch (e) {
+                console.log("Không tải được cấu hình bảo mật:", e);
+            }
+        }
+        // Chạy ngay khi tải trang
+        checkSecurityConfig();
+
+        // --- 4. XỬ LÝ ĐĂNG NHẬP ---
+        async function handleLogin() {
             const name = document.getElementById("student-name").value;
             const code = document.getElementById("access-code").value.trim().toUpperCase();
+            const userSecAns = document.getElementById("security-answer").value.trim().toLowerCase();
+            const btn = document.getElementById("btn-login");
 
-            if (!name) return alert("Vui lòng chọn tên!");
-            if (!code) return alert("Vui lòng nhập mã!");
+            // Validate cơ bản
+            if (!name) return alert("Vui lòng chọn tên của bạn!");
+            if (!code) return alert("Vui lòng nhập mã bí mật!");
+
+            // Kiểm tra câu hỏi bảo mật (Nếu hệ thống yêu cầu)
+            if (serverSecAnswer !== "") {
+                if (!userSecAns) return alert("Vui lòng trả lời câu hỏi bảo mật!");
+                if (userSecAns !== serverSecAnswer) {
+                    return alert("❌ Câu trả lời bảo mật KHÔNG ĐÚNG!");
+                }
+            }
+
+            // Bắt đầu kiểm tra mã
+            btn.innerText = "ĐANG KIỂM TRA...";
+            btn.disabled = true;
 
             try {
-                // Biến db đã được khai báo sẵn trong config.js
                 const doc = await db.collection("BAO_MAT").doc("danh_sach_ma").get();
-                if (doc.exists && doc.data()[name] === code) {
-                    localStorage.setItem("hocSinhLop4A", name);
-                    window.location.href = "Menu.html";
+                if (doc.exists) {
+                    const listCodes = doc.data();
+                    const validCode = listCodes[name];
+
+                    // Logic so sánh mã: Đúng mã HOẶC là Giáo viên dùng mã vạn năng 123456
+                    if (validCode === code || (name.includes("GIÁO VIÊN") && code === "123456")) {
+                        // Đăng nhập thành công
+                        localStorage.setItem("hocSinhLop4A", name);
+                        window.location.href = "Menu.html";
+                    } else {
+                        alert("❌ MÃ ĐĂNG NHẬP KHÔNG ĐÚNG!\nVui lòng kiểm tra lại hoặc hỏi giáo viên.");
+                        btn.innerText = "ĐĂNG NHẬP NGAY";
+                        btn.disabled = false;
+                    }
                 } else {
-                    alert("❌ Sai mã đăng nhập!");
+                    alert("⚠️ Hệ thống chưa kích hoạt danh sách mã. Vui lòng liên hệ giáo viên.");
+                    btn.innerText = "ĐĂNG NHẬP NGAY";
+                    btn.disabled = false;
                 }
-            } catch (e) { alert("Lỗi kết nối: " + e.message); }
+            } catch (e) {
+                console.error(e);
+                alert("Lỗi kết nối mạng: " + e.message);
+                btn.innerText = "ĐĂNG NHẬP NGAY";
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
