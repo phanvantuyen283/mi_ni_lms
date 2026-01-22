@@ -3,290 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phiếu Bài Tập: Thám Tử Cảm Xúc</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-        h2 {
-            background-color: #e8f4f8;
-            color: #2980b9;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-top: 30px;
-            border-left: 5px solid #3498db;
-        }
-        .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        .question-title {
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 10px;
-            color: #d35400;
-        }
-        .question-text {
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-        .options label {
-            display: block;
-            margin-bottom: 8px;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 4px;
-        }
-        .options label:hover {
-            background-color: #f0f0f0;
-        }
-        details {
-            margin-top: 10px;
-            padding: 8px;
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            border-radius: 4px;
-            color: #856404;
-            font-size: 0.9em;
-            cursor: pointer;
-        }
-        summary {
-            font-weight: bold;
-            outline: none;
-        }
-        .essay-box {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: inherit;
-        }
-        .btn-check {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: #27ae60;
-            color: white;
-            text-align: center;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .btn-check:hover {
-            background-color: #219150;
-        }
-        .feedback {
-            margin-top: 10px;
-            font-weight: bold;
-            display: none;
-        }
-        .correct { color: #27ae60; }
-        .incorrect { color: #c0392b; }
-    </style>
+    <title>Tiếng Việt - Quả Ngọt Cuối Mùa</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>PHIẾU BÀI TẬP: THÁM TỬ CẢM XÚC</h1>
-    <p style="text-align: center; font-style: italic;">Mục tiêu: Tìm ra các "manh mối" (từ ngữ, hành động) cho thấy tình cảm của nhân vật trong truyện <strong>Ông Bụt đã đến</strong>.</p>
-
-    <h2>PHẦN 1: BÉ MAI - TỪ YÊU THÍCH ĐẾN VỠ ÒA HẠNH PHÚC</h2>
-
-    <div class="question-block" id="q1-block">
-        <div class="question-title">Câu 1: "Yêu" không chỉ là nói bằng lời</div>
-        <p class="question-text">Tác giả không viết "Mai rất yêu hoa lan", mà tác giả đã để Mai làm những hành động nào để thể hiện tình yêu đó?</p>
-        <div class="options">
-            <label><input type="radio" name="q1" value="A"> A. Tưới nước và bắt sâu cho cây mỗi ngày.</label>
-            <label><input type="radio" name="q1" value="B"> B. Ngắm nghía mãi, hồi hộp chờ hoa nở, nâng niu và ve vuốt cánh hoa.</label>
-            <label><input type="radio" name="q1" value="C"> C. Khoe với bạn bè về chậu hoa đẹp trước cửa.</label>
-            <label><input type="radio" name="q1" value="D"> D. Vẽ tranh về chậu hoa lan.</label>
+    <div class="quiz-container">
+        <div style="margin-bottom:15px">
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về Menu</a>
         </div>
-        <details>
-            <summary>💡 Gợi ý (Bấm để xem)</summary>
-            Hãy tìm những động từ chỉ sự chăm sóc nhẹ nhàng, âu yếm trong bài đọc.
-        </details>
-        <div class="feedback" id="q1-feedback"></div>
-    </div>
 
-    <div class="question-block" id="q2-block">
-        <div class="question-title">Câu 2: Cơ thể "lên tiếng"</div>
-        <p class="question-text">Khi lỡ tay làm gãy cành hoa và nghe tiếng mẹ thảng thốt gọi, cơ thể Mai đã phản ứng như thế nào để thể hiện sự <strong>sợ hãi</strong>?</p>
-        <div class="options">
-            <label><input type="radio" name="q2" value="A"> A. Mặt Mai đỏ bừng lên.</label>
-            <label><input type="radio" name="q2" value="B"> B. Chân tay Mai run rẩy.</label>
-            <label><input type="radio" name="q2" value="C"> C. Trống ngực Mai đập dồn.</label>
-            <label><input type="radio" name="q2" value="D"> D. Mai đứng im như tượng.</label>
+        <div class="header">
+            <div class="info">
+                <h2 id="ten-bai-tap">TIẾNG VIỆT - QUẢ NGỌT CUỐI MÙA</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
+            </div>
+            <div class="timer">⏱ <span id="timer">--:--</span></div>
         </div>
-        <details>
-            <summary>💡 Gợi ý (Bấm để xem)</summary>
-            Cảm xúc mạnh thường làm tim chúng ta đập nhanh hơn bình thường.
-        </details>
-        <div class="feedback" id="q2-feedback"></div>
-    </div>
 
-    <div class="question-block" id="q3-block">
-        <div class="question-title">Câu 3: Suy nghĩ thầm kín</div>
-        <p class="question-text">Khi đứng trước cửa nhà ông nhạc sĩ để xin lỗi, chi tiết nào cho thấy Mai vừa <strong>hối hận</strong> nhưng cũng rất <strong>ngây thơ</strong>?</p>
-        <div class="options">
-            <label><input type="radio" name="q3" value="A"> A. Mai khóc to để ông nhạc sĩ nghe thấy.</label>
-            <label><input type="radio" name="q3" value="B"> B. Mai định bỏ chạy vì quá sợ.</label>
-            <label><input type="radio" name="q3" value="C"> C. Mai ước giá có một phép màu để cành hoa liền lại.</label>
-            <label><input type="radio" name="q3" value="D"> D. Mai nghĩ cách mua đền ông một chậu hoa khác.</label>
+        <div class="question-block security-quest">
+            <div style="padding:20px; text-align:center; color:#999">⏳ Đang tải câu hỏi bảo mật...</div>
         </div>
-        <details>
-            <summary>💡 Gợi ý (Bấm để xem)</summary>
-            Đôi khi suy nghĩ ước muốn trong đầu nói lên tính cách trẻ con rõ nhất.
-        </details>
-        <div class="feedback" id="q3-feedback"></div>
+
+        <div id="quiz-content"></div>
+
+        <button id="btn-nop" onclick="nopBai()">NỘP BÀI KIỂM TRA</button>
+        <p style="text-align:center; font-size:12px; color:#94a3b8; margin-top:10px">Hệ thống tự động lưu điểm và xếp hạng.</p>
     </div>
 
-    <div class="question-block" id="q4-block">
-        <div class="question-title">Câu 4: Lời cầu cứu ngây thơ</div>
-        <p class="question-text">Câu nói thì thầm nào của Mai cho thấy cô bé rất tin vào những điều tốt đẹp, ngay cả khi đang lo sợ tột độ?</p>
-        <div class="options">
-            <label><input type="radio" name="q4" value="A"> A. "Mẹ ơi, cứu con!"</label>
-            <label><input type="radio" name="q4" value="B"> B. "Ông nhạc sĩ ơi, tha lỗi cho cháu!"</label>
-            <label><input type="radio" name="q4" value="C"> C. "Ông Bụt ơi, cứu con!".</label>
-            <label><input type="radio" name="q4" value="D"> D. "Lần sau con sẽ không thế nữa."</label>
-        </div>
-        <details>
-            <summary>💡 Gợi ý (Bấm để xem)</summary>
-            Mai đã gọi tên một nhân vật phép thuật thường giúp đỡ người tốt trong truyện cổ tích.
-        </details>
-        <div class="feedback" id="q4-feedback"></div>
-    </div>
-
-    <div class="question-block" id="q5-block">
-        <div class="question-title">Câu 5: Cảm xúc bùng nổ</div>
-        <p class="question-text">Sáng hôm sau, khi nhìn thấy chậu lan mới, cảm xúc của Mai đã thay đổi từ lo lắng sang trạng thái nào?</p>
-        <div class="options">
-            <label><input type="radio" name="q5" value="A"> A. Bình thản và nhẹ nhõm.</label>
-            <label><input type="radio" name="q5" value="B"> B. Vô cùng ngạc nhiên và sung sướng.</label>
-            <label><input type="radio" name="q5" value="C"> C. Hơi bất ngờ và vui vui.</label>
-            <label><input type="radio" name="q5" value="D"> D. Nghi ngờ và tò mò.</label>
-        </div>
-        <details>
-            <summary>💡 Gợi ý (Bấm để xem)</summary>
-            Hãy tìm các từ chỉ mức độ cao nhất của niềm vui trong bài.
-        </details>
-        <div class="feedback" id="q5-feedback"></div>
-    </div>
-
-    <h2>PHẦN 2: ÔNG NHẠC SĨ - CẢM XÚC QUA VIỆC LÀM</h2>
-
-    <div class="question-block" id="q6-block">
-        <div class="question-title">Câu 6: Sự lắng nghe thấu cảm</div>
-        <p class="question-text">Ông nhạc sĩ không xuất hiện trực tiếp, nhưng ông đã làm gì để hiểu được nỗi lòng của Mai?</p>
-        <div class="options">
-            <label><input type="radio" name="q6" value="A"> A. Ông đứng nhìn Mai qua cửa sổ.</label>
-            <label><input type="radio" name="q6" value="B"> B. Ông tình cờ nhìn thấy những giọt nước mắt và nghe được lời thì thầm của Mai.</label>
-            <label><input type="radio" name="q6" value="C"> C. Ông hỏi mẹ của Mai về sự việc.</label>
-            <label><input type="radio" name="q6" value="D"> D. Ông xem camera trước cửa nhà.</label>
-        </div>
-        <div class="feedback" id="q6-feedback"></div>
-    </div>
-
-    <div class="question-block" id="q7-block">
-        <div class="question-title">Câu 7: Hành động thay lời nói</div>
-        <p class="question-text">Hành động nào của ông nhạc sĩ thể hiện sự <strong>bao dung</strong> và <strong>nhân hậu</strong> giống như một ông Bụt?</p>
-        <div class="options">
-            <label><input type="radio" name="q7" value="A"> A. Mở cửa ra và xoa đầu Mai.</label>
-            <label><input type="radio" name="q7" value="B"> B. Viết một bản nhạc tặng Mai.</label>
-            <label><input type="radio" name="q7" value="C"> C. Âm thầm mua một chậu lan mới thay cho chậu cũ.</label>
-            <label><input type="radio" name="q7" value="D"> D. Nói với mẹ Mai rằng không sao đâu.</label>
-        </div>
-        <div class="feedback" id="q7-feedback"></div>
-    </div>
-
-    <div class="question-block" id="q8-block">
-        <div class="question-title">Câu 8: Tiếng lòng qua tiếng đàn</div>
-        <p class="question-text">Tác giả miêu tả tiếng đàn của ông nhạc sĩ như thế nào để thể hiện niềm vui của ông khi giúp được cô bé?</p>
-        <div class="options">
-            <label><input type="radio" name="q8" value="A"> A. Giai điệu trầm buồn, sâu lắng.</label>
-            <label><input type="radio" name="q8" value="B"> B. Giai điệu rộn ràng như lễ hội.</label>
-            <label><input type="radio" name="q8" value="C"> C. Giai điệu tươi vui như tiếng cười trong veo của cô bé.</label>
-            <label><input type="radio" name="q8" value="D"> D. Giai điệu êm ái như lời ru.</label>
-        </div>
-        <div class="feedback" id="q8-feedback"></div>
-    </div>
-
-    <h2>PHẦN TỔNG KẾT</h2>
-    <div class="question-block">
-        <div class="question-title">Câu hỏi suy ngẫm</div>
-        <p class="question-text">Qua các câu trắc nghiệm trên, em thấy để viết một đoạn văn tả tình cảm hay, ngoài việc dùng các từ chỉ cảm xúc (vui, buồn, sợ...), chúng ta nên kết hợp tả thêm những gì?</p>
-        <textarea class="essay-box" placeholder="Em hãy viết câu trả lời của mình vào đây..."></textarea>
-        <details>
-            <summary>💡 Gợi ý trả lời (Bấm để xem sau khi viết)</summary>
-            Chúng ta nên tả thêm: Hành động cụ thể, biểu hiện của cơ thể (tim đập, mặt đỏ...), và những suy nghĩ thầm kín trong đầu nhân vật.
-        </details>
-    </div>
-
-    <button class="btn-check" onclick="checkAnswers()">Kiểm tra kết quả</button>
-
-</div>
-
-<script>
-    function checkAnswers() {
-        // Đáp án đúng
-        const answers = {
-            q1: 'B',
-            q2: 'C',
-            q3: 'C',
-            q4: 'C',
-            q5: 'B',
-            q6: 'B',
-            q7: 'C',
-            q8: 'C'
-        };
-
-        let score = 0;
-        let total = 8;
-
-        for (let q in answers) {
-            const selected = document.querySelector(`input[name="${q}"]:checked`);
-            const feedback = document.getElementById(`${q}-feedback`);
-            feedback.style.display = 'block';
-
-            if (selected) {
-                if (selected.value === answers[q]) {
-                    feedback.textContent = "✅ Chính xác!";
-                    feedback.className = "feedback correct";
-                    score++;
-                } else {
-                    feedback.textContent = `❌ Chưa đúng. Đáp án đúng là ${answers[q]}.`;
-                    feedback.className = "feedback incorrect";
-                }
-            } else {
-                feedback.textContent = "⚠️ Em chưa chọn đáp án.";
-                feedback.className = "feedback incorrect";
+    <script>
+        // Dữ liệu câu hỏi gốc của bạn (Đã được chuẩn hóa)
+        const quizData = [
+            {
+                q: 1, text: "Trong bài thơ 'Quả ngọt cuối mùa', loại quả nào được nhắc đến?",
+                hint: "Gợi ý: Đọc khổ thơ đầu tiên: 'Trong vòm lá mới chồi non...'",
+                options: [
+                    { text: "Quả bưởi", correct: false },
+                    { text: "Quả cam", correct: true, explain: "Chính xác! Câu thơ 'Chùm cam bà giữ vẫn còn đung đưa' cho biết đó là quả cam." },
+                    { text: "Quả xoài", correct: false },
+                    { text: "Quả ổi", correct: false }
+                ]
+            },
+            {
+                q: 2, text: "Cụm từ 'rét cứa như dao' trong bài thơ gợi tả điều gì?",
+                hint: "Gợi ý: Đây là một hình ảnh so sánh để miêu tả cái lạnh.",
+                options: [
+                    { text: "Thời tiết rất nóng bức", correct: false },
+                    { text: "Con dao rất sắc bén", correct: false },
+                    { text: "Trời lạnh buốt, cắt da cắt thịt", correct: true, explain: "Đúng rồi! Hình ảnh so sánh cái rét như dao cứa thể hiện mức độ lạnh khắc nghiệt." },
+                    { text: "Bà đang dùng dao gọt quả", correct: false }
+                ]
+            },
+            {
+                q: 3, text: "Vì sao bà lại 'Nom Đoài rồi lại ngắm Đông'?",
+                hint: "Gợi ý: Hãy nhớ đến câu thơ 'Bể lo sương táp, bề phòng chim ăn'.",
+                options: [
+                    { text: "Bà đang tập thể dục buổi sáng", correct: false },
+                    { text: "Bà lo lắng sương gió và chim chóc làm hỏng quả", correct: true, explain: "Chính xác! Bà quan sát tứ phía vì lo 'sương táp' và 'chim ăn'." },
+                    { text: "Bà đang ngắm cảnh đẹp của mùa xuân", correct: false },
+                    { text: "Bà đang chờ con cháu về thăm", correct: false }
+                ]
+            },
+            {
+                q: 4, text: "Trong hai câu thơ cuối bài: 'Bà như quả ngọt chín rồi...', tác giả so sánh bà với hình ảnh nào?",
+                hint: "Gợi ý: Tìm từ so sánh 'như' trong hai câu thơ cuối.",
+                options: [
+                    { text: "Vòm lá mới", correct: false },
+                    { text: "Chồi non", correct: false },
+                    { text: "Quả ngọt chín", correct: true, explain: "Đúng! Tác giả so sánh bà với quả ngọt để ca ngợi tấm lòng thơm thảo, đúc kết qua thời gian." },
+                    { text: "Chim chào mào", correct: false }
+                ]
+            },
+            {
+                q: 5, text: "Từ ngữ nào dưới đây diễn tả ngoại hình già nua của người bà?",
+                hint: "Gợi ý: Tìm cụm từ nói về 'tóc' và 'da' của bà ở khổ thơ thứ 3.",
+                options: [
+                    { text: "Tóc sương da mồi", correct: true, explain: "Chính xác! 'Tóc sương' là tóc bạc trắng, 'da mồi' là da có đốm đồi mồi của người già." },
+                    { text: "Chuyên cần toả hương", correct: false },
+                    { text: "Tươi lòng vàng", correct: false },
+                    { text: "Mải mê góp mật", correct: false }
+                ]
+            },
+            {
+                q: 6, text: "Hai thành phần chính của câu là gì?",
+                hint: "Gợi ý: Thành phần trả lời cho câu hỏi Ai/Cái gì? và Làm gì/Thế nào?",
+                options: [
+                    { text: "Danh từ và Động từ", correct: false },
+                    { text: "Chủ ngữ và Vị ngữ", correct: true, explain: "Đúng! Một câu kể hoàn chỉnh thường có nòng cốt là Chủ ngữ và Vị ngữ." },
+                    { text: "Mở bài và Kết bài", correct: false },
+                    { text: "Từ chỉ sự vật và Từ chỉ hoạt động", correct: false }
+                ]
+            },
+            {
+                q: 7, text: "Xác định CHỦ NGỮ trong câu: 'Quả vàng nằm giữa cành xuân.'",
+                hint: "Gợi ý: Đặt câu hỏi: 'Cái gì' nằm giữa cành xuân?",
+                options: [
+                    { text: "Quả vàng", correct: true, explain: "Chính xác! 'Quả vàng' là sự vật được nói đến, trả lời cho câu hỏi 'Cái gì?'." },
+                    { text: "nằm giữa", correct: false },
+                    { text: "cành xuân", correct: false },
+                    { text: "nằm giữa cành xuân", correct: false }
+                ]
+            },
+            {
+                q: 8, text: "Xác định VỊ NGỮ trong câu: 'Bà em chống gậy ra vườn trông cây.'",
+                hint: "Gợi ý: Đặt câu hỏi: Bà em 'làm gì'?",
+                options: [
+                    { text: "Bà em", correct: false },
+                    { text: "chống gậy ra vườn trông cây", correct: true, explain: "Đúng! Cụm từ này chỉ hoạt động của bà, trả lời cho câu hỏi 'Làm gì?'." },
+                    { text: "trông cây", correct: false },
+                    { text: "ra vườn", correct: false }
+                ]
+            },
+            {
+                q: 9, text: "Câu 'Chùm cam này rất ngọt.' thuộc mẫu câu nào?",
+                hint: "Gợi ý: Vị ngữ 'rất ngọt' chỉ hoạt động hay đặc điểm?",
+                options: [
+                    { text: "Ai làm gì?", correct: false },
+                    { text: "Ai thế nào?", correct: true, explain: "Chính xác! 'rất ngọt' là từ chỉ đặc điểm, tính chất -> Mẫu Ai thế nào?" },
+                    { text: "Ai là gì?", correct: false },
+                    { text: "Ở đâu làm gì?", correct: false }
+                ]
+            },
+            {
+                q: 10, text: "Trong câu 'Những chú chim chào mào đang hót líu lo', bộ phận nào là Chủ ngữ?",
+                hint: "Gợi ý: Tìm cụm từ trả lời cho câu hỏi: 'Con gì' đang hót líu lo?",
+                options: [
+                    { text: "Những chú chim", correct: false },
+                    { text: "chào mào", correct: false },
+                    { text: "Những chú chim chào mào", correct: true, explain: "Đúng! Phải lấy đầy đủ cụm danh từ làm chủ ngữ." },
+                    { text: "đang hót líu lo", correct: false }
+                ]
+            },
+            {
+                q: 11, text: "Điền Vị ngữ thích hợp: 'Người bà hiền hậu ...'",
+                hint: "Gợi ý: Chọn cụm từ chỉ hoạt động của người bà.",
+                options: [
+                    { text: "trên bầu trời xanh", correct: false },
+                    { text: "đang kể chuyện cổ tích cho em nghe", correct: true, explain: "Chính xác! Tạo thành câu hoàn chỉnh theo mẫu Ai làm gì?" },
+                    { text: "những quả ngọt", correct: false },
+                    { text: "ngoài vườn", correct: false }
+                ]
+            },
+            {
+                q: 12, text: "Câu nào dưới đây có Vị ngữ trả lời cho câu hỏi 'Làm gì?'?",
+                hint: "Gợi ý: Tìm câu văn miêu tả hoạt động chân tay.",
+                options: [
+                    { text: "Bà em là giáo viên về hưu.", correct: false },
+                    { text: "Mái tóc bà bạc phơ.", correct: false },
+                    { text: "Bà đang tưới nước cho luống rau.", correct: true, explain: "Đúng! 'tưới nước' là hoạt động cụ thể -> Trả lời câu hỏi Làm gì?" },
+                    { text: "Khu vườn của bà rất rộng.", correct: false }
+                ]
+            },
+            {
+                q: 13, text: "Khi viết đoạn văn nêu tình cảm về nhân vật, phần Mở đầu cần làm gì?",
+                hint: "Gợi ý: Trước khi nói về tình cảm, phải cho biết nhân vật đó là ai.",
+                options: [
+                    { text: "Kể lại toàn bộ câu chuyện", correct: false },
+                    { text: "Giới thiệu tên nhân vật và tên bài đọc", correct: true, explain: "Đúng! Cần giới thiệu để người đọc biết em đang viết về ai, trong bài nào." },
+                    { text: "Nêu bài học rút ra", correct: false },
+                    { text: "Miêu tả chi tiết ngoại hình", correct: false }
+                ]
+            },
+            {
+                q: 14, text: "Để viết về bà trong 'Quả ngọt cuối mùa', em dùng từ ngữ chỉ cảm xúc nào?",
+                hint: "Gợi ý: Nghĩ đến tình cảm cháu khi thấy bà chăm sóc chùm cam.",
+                options: [
+                    { text: "Sợ hãi, lo lắng", correct: false },
+                    { text: "Kính trọng, yêu thương, biết ơn", correct: true, explain: "Chính xác! Đây là những từ ngữ phù hợp nhất để nói về tình cảm cháu dành cho bà." },
+                    { text: "Tức giận, ghen tị", correct: false },
+                    { text: "Ngạc nhiên, lạ lẫm", correct: false }
+                ]
+            },
+            {
+                q: 15, text: "Trong phần Triển khai (Thân đoạn), em nên viết những gì?",
+                hint: "Gợi ý: Em ấn tượng điều gì và em thấy thế nào?",
+                options: [
+                    { text: "Chép lại nguyên văn bài thơ", correct: false },
+                    { text: "Liệt kê tên tất cả các nhân vật khác", correct: false },
+                    { text: "Nêu đặc điểm ấn tượng và cảm xúc của em", correct: true, explain: "Đúng! Cần chọn chi tiết tiêu biểu (ví dụ: bà che chở chùm cam) và nêu suy nghĩ về chi tiết đó." },
+                    { text: "Chỉ viết lời chào tạm biệt", correct: false }
+                ]
+            },
+            {
+                q: 16, text: "Dòng nào dưới đây là câu văn thể hiện cảm xúc trực tiếp?",
+                hint: "Gợi ý: Tìm câu có chứa từ: yêu, thương, mến, phục...",
+                options: [
+                    { text: "Bà có mái tóc bạc phơ.", correct: false },
+                    { text: "Em rất thương và kính phục tấm lòng của bà.", correct: true, explain: "Chính xác! Câu này bộc lộ trực tiếp tình cảm qua từ 'thương', 'kính phục'." },
+                    { text: "Bà chống gậy ra vườn.", correct: false },
+                    { text: "Tháng Giêng trời rét như cắt.", correct: false }
+                ]
+            },
+            {
+                q: 17, text: "Chi tiết 'Bà giữ chùm cam qua mùa đông rét mướt' gợi suy nghĩ gì?",
+                hint: "Gợi ý: Hành động chịu lạnh vì người khác thể hiện đức tính gì?",
+                options: [
+                    { text: "Bà rất thích ăn cam", correct: false },
+                    { text: "Bà muốn bán cam lấy tiền", correct: false },
+                    { text: "Bà giàu đức hi sinh và yêu thương con cháu", correct: true, explain: "Đúng! Bà chịu đựng cái rét để giữ phần ngon nhất cho cháu -> Đức hi sinh cao cả." },
+                    { text: "Bà không muốn hái quả sớm", correct: false }
+                ]
+            },
+            {
+                q: 18, text: "Câu kết đoạn văn thường có nội dung gì?",
+                hint: "Gợi ý: Câu chốt lại cảm xúc cuối cùng.",
+                options: [
+                    { text: "Giới thiệu tên bài thơ", correct: false },
+                    { text: "Khẳng định lại tình cảm hoặc liên hệ bản thân", correct: true, explain: "Chính xác! Thường là lời hứa chăm ngoan hoặc khẳng định tình yêu thương mãi mãi." },
+                    { text: "Tả chi tiết quả cam", correct: false },
+                    { text: "Kể về các loài chim", correct: false }
+                ]
             }
+        ];
+
+        // Hàm render HTML từ dữ liệu (Chạy ngay khi tải trang)
+        function renderQuizToHTML() {
+            const container = document.getElementById("quiz-content");
+            let html = "";
+
+            quizData.forEach(item => {
+                let optionsHtml = "";
+                item.options.forEach((opt, index) => {
+                    // Tạo ID duy nhất cho mỗi input để label hoạt động tốt
+                    const inputName = `q${item.q}`;
+                    const isCorrect = opt.correct ? 'data-correct="true"' : '';
+                    const explainAttr = opt.correct ? `data-explain="${opt.explain}"` : '';
+                    
+                    optionsHtml += `
+                        <label>
+                            <input type="radio" name="${inputName}" value="${index}" ${isCorrect} ${explainAttr}> 
+                            ${String.fromCharCode(65 + index)}. ${opt.text}
+                        </label>
+                    `;
+                });
+
+                html += `
+                    <div class="question-block">
+                        <div class="question-text">Câu ${item.q}: ${item.text}</div>
+                        ${item.hint ? `<div style="font-size:13px; color:#64748b; font-style:italic; margin-bottom:10px">${item.hint}</div>` : ''}
+                        <div class="options">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
         }
-        
-        alert(`Em đã trả lời đúng ${score}/${total} câu trắc nghiệm!`);
-    }
-</script>
+
+        // Chạy hàm render
+        renderQuizToHTML();
+    </script>
+
+    <script src="core.js"></script>
+    <script src="config.js></script>
 
 </body>
 </html>
