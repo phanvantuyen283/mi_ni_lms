@@ -3,274 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiếng Việt Lớp 4 - Tuần 20</title>
+    <title>Toán Lớp 4 - Nhân Chia Với Số Có 1 Chữ Số</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <script src="config.js"></script>
+    
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Tùy biến nhẹ cho môn Tiếng Việt */
-        body { background-color: #f0fdf4; } /* Nền hơi xanh lá nhẹ cho văn học */
-        .header { border-color: #15803d; background: #dcfce7; }
-        .header h2 { color: #166534; }
-        .section-title {
-            color: #166534;
-            border-bottom: 2px solid #86efac;
-        }
-        .question-text b { color: #15803d; }
-        /* Nút nộp bài màu xanh lá */
-        #btn-nop { background: linear-gradient(to bottom, #22c55e, #15803d); box-shadow: 0 6px 0 #14532d; }
+        /* Tùy biến nhẹ cho môn Toán */
+        body { background-color: #f0f9ff; } 
+        .header { border-color: #0284c7; background: #e0f2fe; }
+        .header h2 { color: #0369a1; }
+        .question-text b { color: #0284c7; font-family: 'Courier New', Courier, monospace; font-size: 1.1em; background: #e0f2fe; padding: 2px 5px; border-radius: 4px; }
+        #btn-nop { background: linear-gradient(to bottom, #0ea5e9, #0284c7); box-shadow: 0 6px 0 #075985; }
     </style>
 </head>
 <body>
 
     <div class="quiz-container">
         <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về chọn môn khác</a>
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về Menu</a>
         </div>
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TIẾNG VIỆT LỚP 4 - TUẦN 20: ÔNG BỤT ĐÃ ĐẾN - QUẢ NGỌT CUỐI MÙA</h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#15803d">Đang tải...</span></p>
+                <h2 id="ten-bai-tap">TOÁN LỚP 4: NHÂN, CHIA SỐ CÓ NHIỀU CHỮ SỐ VỚI SỐ CÓ 1 CHỮ SỐ</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0369a1">Đang tải...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">--:--</span></div>
         </div>
 
-        <div class="section-title">PHẦN 1: ĐỌC HIỂU VĂN BẢN</div>
+        <div class="question-block security-quest" style="display:none"></div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Trong câu chuyện "Ông Bụt đã đến", tại sao cô bé Mai lại vô tình làm gãy cành hoa lan?</div>
+            <div class="question-text">Câu 1: Kết quả của phép nhân <b>30 000 × 3</b> là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Do Mai mải chơi đùa, chạy nhảy quanh chậu hoa.</label>
-                <label><input type="radio" name="q1" value="B"> B. Do Mai muốn ngắt hoa để tặng mẹ.</label>
-                <label><input type="radio" name="q1" value="C" data-correct="true" data-explain="Chi tiết trong bài đọc nêu rõ Mai sà tới nâng niu, ve vuốt cánh hoa và chỉ một chút sơ ý làm gãy cành."> C. Do Mai mải mê ngắm nghía và nâng niu nhành hoa nên sơ ý.</label>
-                <label><input type="radio" name="q1" value="D"> D. Do có một cơn gió mạnh thổi qua làm gãy cành hoa.</label>
+                <label><input type="radio" name="q1" value="A"> A. 9 000</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Ta nhẩm: 3 chục nghìn nhân 3 bằng 9 chục nghìn (90 000)."> B. 90 000</label>
+                <label><input type="radio" name="q1" value="C"> C. 60 000</label>
+                <label><input type="radio" name="q1" value="D"> D. 900 000</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Ai là "Ông Bụt" thực sự trong câu chuyện "Ông Bụt đã đến"?</div>
+            <div class="question-text">Câu 2: Trong phép nhân <b>160 140 × 7</b>, khi thực hiện nhân <b>7 × 4 = 28</b>, ta viết 8 và nhớ mấy?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Một ông tiên hiện ra từ đám mây.</label>
-                <label><input type="radio" name="q2" value="B"> B. Người mẹ của Mai.</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Ông nhạc sĩ đã nghe thấy lời xin lỗi và tiếng khóc của Mai nên lặng lẽ mua chậu hoa mới thay thế."> C. Ông nhạc sĩ chủ nhà.</label>
-                <label><input type="radio" name="q2" value="D"> D. Cô bé Mai.</label>
+                <label><input type="radio" name="q2" value="A"> A. Nhớ 1</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true" data-explain="7 x 4 = 28, viết 8 và nhớ 2 sang hàng chục."> B. Nhớ 2</label>
+                <label><input type="radio" name="q2" value="C"> C. Nhớ 4</label>
+                <label><input type="radio" name="q2" value="D"> D. Không nhớ</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Vì sao ông nhạc sĩ lại quyết định thay chậu hoa mới cho Mai?</div>
+            <div class="question-text">Câu 3: Kết quả của phép tính <b>105 104 × 6</b> là:</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Vì ông muốn bán chậu hoa cho mẹ của Mai.</label>
-                <label><input type="radio" name="q3" value="B" data-correct="true" data-explain="Sự hối lỗi chân thành và tâm hồn trong sáng của Mai đã khiến ông nhạc sĩ cảm động."> B. Vì ông tình cờ thấy những giọt nước mắt và nghe được lời thì thầm xin lỗi của Mai.</label>
-                <label><input type="radio" name="q3" value="C"> C. Vì ông không thích chậu hoa cũ nữa.</label>
-                <label><input type="radio" name="q3" value="D"> D. Vì ông là một người rất giàu có và muốn khoe khoang.</label>
+                <label><input type="radio" name="q3" value="A" data-correct="true" data-explain="105 104 x 6 = 630 624. Lưu ý khi nhân với số 0 và cộng số nhớ."> A. 630 624</label>
+                <label><input type="radio" name="q3" value="B"> B. 603 624</label>
+                <label><input type="radio" name="q3" value="C"> C. 630 604</label>
+                <label><input type="radio" name="q3" value="D"> D. 600 624</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Trong bài thơ "Quả ngọt cuối mùa", người bà đã dành dụm điều gì cho con cháu?</div>
+            <div class="question-text">Câu 4: Tìm lỗi sai trong phép chia sau: <b>35 005 : 5 = 71</b>?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Những câu chuyện cổ tích.</label>
-                <label><input type="radio" name="q4" value="B"> B. Chùm cam (quả ngọt) đầu mùa.</label>
-                <label><input type="radio" name="q4" value="C" data-correct="true" data-explain="Bà giữ chùm cam đến tận cuối mùa để chờ con cháu về, thể hiện tình thương yêu chắt chiu."> C. Chùm cam (quả ngọt) cuối mùa.</label>
-                <label><input type="radio" name="q4" value="D"> D. Những chiếc áo ấm mùa đông.</label>
+                <label><input type="radio" name="q4" value="A"> A. Phép chia đúng, không có lỗi sai.</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true" data-explain="Sai ở bước hạ 0. Khi hạ 0 xuống, 0 chia 5 được 0, phải viết 0 vào thương rồi mới hạ tiếp 0. Kết quả đúng là 7001."> B. Quên viết chữ số 0 vào thương ở các lần chia tiếp theo.</label>
+                <label><input type="radio" name="q4" value="C"> C. Tính sai bảng cửu chương (35 chia 5 không bằng 7).</label>
+                <label><input type="radio" name="q4" value="D"> D. Số dư lớn hơn số chia.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Câu thơ "Giêng, Hai rét cứa như dao" sử dụng biện pháp nghệ thuật gì?</div>
+            <div class="question-text">Câu 5: Khi chia một số cho 6, số dư lớn nhất có thể là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Nhân hóa.</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true" data-explain="Tác giả so sánh cái rét với dao cứa (từ so sánh: 'như') để nhấn mạnh sự khắc nghiệt."> B. So sánh.</label>
-                <label><input type="radio" name="q5" value="C"> C. Ẩn dụ.</label>
-                <label><input type="radio" name="q5" value="D"> D. Điệp từ.</label>
+                <label><input type="radio" name="q5" value="A"> A. 6</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true" data-explain="Trong phép chia có dư, số dư bao giờ cũng nhỏ hơn số chia. Nhỏ hơn 6 và lớn nhất là 5."> B. 5</label>
+                <label><input type="radio" name="q5" value="C"> C. 1</label>
+                <label><input type="radio" name="q5" value="D"> D. 0</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Hình ảnh "Bà như quả ngọt chín rồi" muốn nói lên điều gì?</div>
+            <div class="question-text">Câu 6: Phép tính <b>40 819 × 5</b> có kết quả là:</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Bà có làn da hồng hào như quả chín.</label>
-                <label><input type="radio" name="q6" value="B"> B. Bà rất thích ăn các loại quả ngọt.</label>
-                <label><input type="radio" name="q6" value="C" data-correct="true" data-explain="Hình ảnh so sánh này ca ngợi phẩm chất cao quý và sự hy sinh trọn vẹn của bà."> C. Tuổi già của bà và tình yêu thương, đức độ kết tinh như trái ngọt dâng cho đời.</label>
-                <label><input type="radio" name="q6" value="D"> D. Bà trồng được rất nhiều quả ngọt trong vườn.</label>
-            </div>
-        </div>
-
-        <div class="section-title">PHẦN 2: LUYỆN TỪ VÀ CÂU</div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 7: Dòng nào dưới đây nêu đúng hai thành phần chính của câu?</div>
-            <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Chủ ngữ và Trạng ngữ.</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Câu thường gồm 2 thành phần chính là Chủ ngữ (chỉ đối tượng) và Vị ngữ (chỉ hoạt động/đặc điểm/giới thiệu)."> B. Chủ ngữ và Vị ngữ.</label>
-                <label><input type="radio" name="q7" value="C"> C. Vị ngữ và Tính từ.</label>
-                <label><input type="radio" name="q7" value="D"> D. Danh từ và Động từ.</label>
+                <label><input type="radio" name="q6" value="A" data-correct="true" data-explain="40 819 x 5 = 204 095."> A. 204 095</label>
+                <label><input type="radio" name="q6" value="B"> B. 200 095</label>
+                <label><input type="radio" name="q6" value="C"> C. 240 095</label>
+                <label><input type="radio" name="q6" value="D"> D. 204 055</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Chủ ngữ trong câu thường trả lời cho những câu hỏi nào?</div>
+            <div class="question-text">Câu 7: Một nhà máy sản xuất được 125 730 chiếc khẩu trang và đóng vào các hộp, mỗi hộp 5 chiếc. Hỏi đóng được bao nhiêu hộp?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Làm gì, Như thế nào, Là gì?</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true" data-explain="Chủ ngữ chỉ sự vật (người, vật, hiện tượng) nên trả lời cho câu hỏi Ai/Cái gì/Con gì."> B. Ai, Cái gì, Con gì?</label>
-                <label><input type="radio" name="q8" value="C"> C. Ở đâu, Khi nào, Bao giờ?</label>
-                <label><input type="radio" name="q8" value="D"> D. Vì sao, Để làm gì?</label>
+                <label><input type="radio" name="q7" value="A" data-correct="true" data-explain="Số hộp đóng được là: 125 730 : 5 = 25 146 (hộp)."> A. 25 146 hộp</label>
+                <label><input type="radio" name="q7" value="B"> B. 25 140 hộp</label>
+                <label><input type="radio" name="q7" value="C"> C. 251 460 hộp</label>
+                <label><input type="radio" name="q7" value="D"> D. 25 046 hộp</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Xác định Chủ ngữ trong câu: "Ông nhạc sĩ đang viết nhạc."</div>
+            <div class="question-text">Câu 8: Tính giá trị biểu thức: <b>10 000 + 4230 × 2</b></div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A" data-correct="true" data-explain="'Ông nhạc sĩ' trả lời cho câu hỏi 'Ai đang viết nhạc?'."> A. Ông nhạc sĩ</label>
-                <label><input type="radio" name="q9" value="B"> B. đang viết nhạc</label>
-                <label><input type="radio" name="q9" value="C"> C. nhạc</label>
-                <label><input type="radio" name="q9" value="D"> D. Ông</label>
+                <label><input type="radio" name="q8" value="A"> A. 28 460</label>
+                <label><input type="radio" name="q8" value="B" data-correct="true" data-explain="Nhân chia trước, cộng trừ sau:<br>4230 x 2 = 8460<br>10 000 + 8460 = 18 460."> B. 18 460</label>
+                <label><input type="radio" name="q8" value="C"> C. 8 460</label>
+                <label><input type="radio" name="q8" value="D"> D. 14 232</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Xác định Vị ngữ trong câu: "Chùm cam bà giữ vẫn còn đung đưa."</div>
+            <div class="question-text">Câu 9: Bạn Nam thực hiện phép chia: <b>32 024 : 7 = 457 (dư 34)</b>. Nhận xét nào đúng?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Chùm cam</label>
-                <label><input type="radio" name="q10" value="B"> B. Chùm cam bà giữ</label>
-                <label><input type="radio" name="q10" value="C" data-correct="true" data-explain="'vẫn còn đung đưa' nêu trạng thái của sự vật, trả lời cho câu hỏi 'Thế nào?'."> C. vẫn còn đung đưa</label>
-                <label><input type="radio" name="q10" value="D"> D. bà giữ</label>
+                <label><input type="radio" name="q9" value="A"> A. Bạn Nam làm đúng.</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="Sai. Số dư là 34 vẫn lớn hơn số chia là 7, nghĩa là phép chia chưa hoàn thành hoặc đã sai ở bước trước."> B. Bạn Nam sai vì số dư (34) lớn hơn số chia (7).</label>
+                <label><input type="radio" name="q9" value="C"> C. Bạn Nam sai vì thương phải là 5000.</label>
+                <label><input type="radio" name="q9" value="D"> D. Bạn Nam sai vì phép chia này không có dư.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: Trong câu "Mai là một cô bé rất yêu hoa", Vị ngữ trả lời cho câu hỏi nào?</div>
+            <div class="question-text">Câu 10: Mua 3 kg xoài hết 45 000 đồng. Hỏi mua 5 kg xoài như thế hết bao nhiêu tiền?</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. Làm gì?</label>
-                <label><input type="radio" name="q11" value="B"> B. Thế nào?</label>
-                <label><input type="radio" name="q11" value="C" data-correct="true" data-explain="Vị ngữ có từ 'là' dùng để giới thiệu hoặc nhận xét về chủ ngữ (Mẫu câu Ai là gì?)."> C. Là gì (là ai)?</label>
-                <label><input type="radio" name="q11" value="D"> D. Ở đâu?</label>
+                <label><input type="radio" name="q10" value="A"> A. 15 000 đồng</label>
+                <label><input type="radio" name="q10" value="B"> B. 60 000 đồng</label>
+                <label><input type="radio" name="q10" value="C" data-correct="true" data-explain="Giá 1 kg xoài là: 45 000 : 3 = 15 000 (đồng).<br>Giá 5 kg xoài là: 15 000 x 5 = 75 000 (đồng)."> C. 75 000 đồng</label>
+                <label><input type="radio" name="q10" value="D"> D. 90 000 đồng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: Điền chủ ngữ thích hợp vào chỗ trống: "... hót líu lo trên cành cây."</div>
+            <div class="question-text">Câu 11: Số thích hợp để điền vào dấu hỏi chấm: <b>? : 3 = 21 400</b></div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Chú mèo</label>
-                <label><input type="radio" name="q12" value="B"> B. Bông hoa</label>
-                <label><input type="radio" name="q12" value="C" data-correct="true" data-explain="Chim sơn ca là loài vật có khả năng 'hót'."> C. Chú chim sơn ca</label>
-                <label><input type="radio" name="q12" value="D"> D. Ông mặt trời</label>
+                <label><input type="radio" name="q11" value="A"> A. 7 133</label>
+                <label><input type="radio" name="q11" value="B" data-correct="true" data-explain="Muốn tìm số bị chia, ta lấy Thương nhân với Số chia:<br>21 400 x 3 = 64 200."> B. 64 200</label>
+                <label><input type="radio" name="q11" value="C"> C. 63 200</label>
+                <label><input type="radio" name="q11" value="D"> D. 64 000</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 17: Câu nào dưới đây có chủ ngữ chỉ "hiện tượng tự nhiên"?</div>
+            <div class="question-text">Câu 12: Thực hiện phép tính: <b>42 235 : 2</b>. Kết quả là:</div>
             <div class="options">
-                <label><input type="radio" name="q17" value="A"> A. Đàn chim én bay lượn.</label>
-                <label><input type="radio" name="q17" value="B" data-correct="true" data-explain="'Những cơn mưa rào' là hiện tượng tự nhiên. Các đáp án khác chỉ con vật, người, đồ vật."> B. Những cơn mưa rào mùa hạ đã đến.</label>
-                <label><input type="radio" name="q17" value="C"> C. Bà em đang đan len.</label>
-                <label><input type="radio" name="q17" value="D"> D. Chiếc xe đạp chạy rất nhanh.</label>
-            </div>
-        </div>
-        
-        <div class="question-block">
-            <div class="question-text">Câu 18: Từ nào đồng nghĩa với từ "trông" trong câu thơ "Nghe tiếng chào mào chống gậy ra trông"?</div>
-            <div class="options">
-                <label><input type="radio" name="q18" value="A"> A. Nghe</label>
-                <label><input type="radio" name="q18" value="B" data-correct="true" data-explain="Trong ngữ cảnh này, 'trông' có nghĩa là nhìn, quan sát ra xa."> B. Nhìn</label>
-                <label><input type="radio" name="q18" value="C"> C. Chạy</label>
-                <label><input type="radio" name="q18" value="D"> D. Nói</label>
+                <label><input type="radio" name="q12" value="A" data-correct="true" data-explain="42 235 : 2 = 21 117 (dư 1)."> A. 21 117 (dư 1)</label>
+                <label><input type="radio" name="q12" value="B"> B. 21 117</label>
+                <label><input type="radio" name="q12" value="C"> C. 21 112 (dư 1)</label>
+                <label><input type="radio" name="q12" value="D"> D. 20 117 (dư 1)</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 19: Câu nào dưới đây sử dụng đúng mẫu câu "Ai là gì"?</div>
+            <div class="question-text">Câu 13: Một xe tải chở được 15 250 kg hàng. Hỏi 3 xe tải như vậy chở được bao nhiêu ki-lô-gam hàng?</div>
             <div class="options">
-                <label><input type="radio" name="q19" value="A"> A. Mẹ em đang nấu cơm.</label>
-                <label><input type="radio" name="q19" value="B"> B. Con mèo mướp rất lười biếng.</label>
-                <label><input type="radio" name="q19" value="C" data-correct="true" data-explain="Vị ngữ 'là măng non...' dùng để định nghĩa/nhận xét về thiếu nhi (Chủ ngữ)."> C. Thiếu nhi là măng non của đất nước.</label>
-                <label><input type="radio" name="q19" value="D"> D. Bông hoa hồng tỏa hương thơm ngát.</label>
-            </div>
-        </div>
-
-        <div class="section-title">PHẦN 3: TẬP LÀM VĂN (BIỂU CẢM)</div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 13: Khi tìm ý cho đoạn văn nêu tình cảm, cảm xúc về một nhân vật văn học, em KHÔNG cần thực hiện bước nào?</div>
-            <div class="options">
-                <label><input type="radio" name="q13" value="A"> A. Giới thiệu nhân vật.</label>
-                <label><input type="radio" name="q13" value="B"> B. Nêu những điều em ấn tượng về nhân vật.</label>
-                <label><input type="radio" name="q13" value="C" data-correct="true" data-explain="Văn biểu cảm tập trung vào 'cảm xúc' và ấn tượng, không sa đà vào việc kể lể lại toàn bộ câu chuyện."> C. Kể lại toàn bộ cốt truyện từ đầu đến cuối.</label>
-                <label><input type="radio" name="q13" value="D"> D. Nêu cảm xúc của em về nhân vật.</label>
+                <label><input type="radio" name="q13" value="A" data-correct="true" data-explain="Số hàng chở được là: 15 250 x 3 = 45 750 (kg)."> A. 45 750 kg</label>
+                <label><input type="radio" name="q13" value="B"> B. 35 750 kg</label>
+                <label><input type="radio" name="q13" value="C"> C. 45 650 kg</label>
+                <label><input type="radio" name="q13" value="D"> D. 5 083 kg</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 14: Phần "Mở đầu" của đoạn văn nêu tình cảm, cảm xúc về nhân vật cần có nội dung gì?</div>
+            <div class="question-text">Câu 14: Có 125 040 viên thuốc được đóng vào các vỉ, mỗi vỉ 6 viên. Hỏi đóng được bao nhiêu vỉ thuốc?</div>
             <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. Kể chi tiết ngoại hình của nhân vật.</label>
-                <label><input type="radio" name="q14" value="B" data-correct="true" data-explain="Cần giới thiệu nhân vật đó là ai, trong tác phẩm nào trước khi đi sâu vào chi tiết."> B. Giới thiệu nhân vật và nêu ý kiến khái quát/cảm xúc ban đầu.</label>
-                <label><input type="radio" name="q14" value="C"> C. Liên hệ bản thân em sẽ làm gì.</label>
-                <label><input type="radio" name="q14" value="D"> D. Trình bày suy nghĩ của người thân về nhân vật.</label>
+                <label><input type="radio" name="q14" value="A"> A. 2 840 vỉ</label>
+                <label><input type="radio" name="q14" value="B" data-correct="true" data-explain="Số vỉ thuốc là: 125 040 : 6 = 20 840 (vỉ). (Lưu ý 5 không chia được 6 phải viết 0)."> B. 20 840 vỉ</label>
+                <label><input type="radio" name="q14" value="C"> C. 2 084 vỉ</label>
+                <label><input type="radio" name="q14" value="D"> D. 28 040 vỉ</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 15: Từ ngữ nào phù hợp để bộc lộ cảm xúc về nhân vật "Ông nhạc sĩ" trong bài "Ông Bụt đã đến"?</div>
+            <div class="question-text">Câu 15: Biểu thức nào dưới đây có giá trị lớn nhất?</div>
             <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. Sợ hãi, lo lắng.</label>
-                <label><input type="radio" name="q15" value="B" data-correct="true" data-explain="Ông nhạc sĩ là người nhân hậu, bao dung, xứng đáng với sự ngưỡng mộ và kính trọng."> B. Ngưỡng mộ, kính trọng, biết ơn.</label>
-                <label><input type="radio" name="q15" value="C"> C. Tức giận, khó chịu.</label>
-                <label><input type="radio" name="q15" value="D"> D. Thất vọng, chán nản.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 16: Trong phần "Kết thúc" của đoạn văn biểu cảm, em nên viết gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q16" value="A"> A. Giới thiệu tên tác giả của câu chuyện.</label>
-                <label><input type="radio" name="q16" value="B"> B. Liệt kê các hành động của nhân vật.</label>
-                <label><input type="radio" name="q16" value="C" data-correct="true" data-explain="Kết bài là lúc gói lại cảm xúc và mở rộng ý nghĩa (liên hệ bản thân)."> C. Khẳng định lại tình cảm và rút ra bài học hoặc liên hệ bản thân.</label>
-                <label><input type="radio" name="q16" value="D"> D. Miêu tả lại ngoại hình nhân vật một lần nữa.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 20: Nếu viết đoạn văn về nhân vật "Người bà" trong bài thơ "Quả ngọt cuối mùa", chi tiết nào đắt giá nhất để thể hiện đức hy sinh?</div>
-            <div class="options">
-                <label><input type="radio" name="q20" value="A"> A. Bà chống gậy đi ra sân.</label>
-                <label><input type="radio" name="q20" value="B"> B. Bà có mái tóc bạc phơ.</label>
-                <label><input type="radio" name="q20" value="C" data-correct="true" data-explain="Chi tiết này thể hiện rõ nhất sự chắt chiu, nhịn ăn nhịn mặc để dành điều tốt nhất cho con cháu."> C. Chùm cam bà giữ, dành tận cuối mùa để chờ con, phần cháu.</label>
-                <label><input type="radio" name="q20" value="D"> D. Nhà bà có trồng cây cam.</label>
+                <label><input type="radio" name="q15" value="A"> A. 11 000 × 4 (= 44 000)</label>
+                <label><input type="radio" name="q15" value="B" data-correct="true" data-explain="Ta có:<br>A = 44 000<br>B = 45 000<br>C = 40 000<br>D = 40 000.<br>Vậy B lớn nhất."> B. 15 000 × 3 (= 45 000)</label>
+                <label><input type="radio" name="q15" value="C"> C. 20 000 × 2 (= 40 000)</label>
+                <label><input type="radio" name="q15" value="D"> D. 80 000 : 2 (= 40 000)</label>
             </div>
         </div>
 
         <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
-        <p id="status-log" style="text-align:center; color:#666; font-size:12px; margin-top:10px;"></p>
+        <p style="text-align:center; color:#666; font-size:12px; margin-top:10px;">Hệ thống tự động lưu kết quả vào Học bạ điện tử.</p>
     </div>
 
     <script>
         async function initPage() {
-            // Thay đổi khóa môn học thành "tv" để khớp với database và menu
-            let monKey = "tv"; 
+            // Vẫn dùng khóa 'toan' để kế thừa cấu hình Mở/Đóng và Thời gian làm bài của môn Toán
+            let monKey = "toan"; 
             
-            // Đảm bảo Firebase đã load từ config.js
+            // Đảm bảo Firebase load xong
             if (typeof db === 'undefined' && typeof firebase !== 'undefined') {
                 var db = firebase.firestore();
             }
 
             try {
-                // Kiểm tra trạng thái môn học
+                // Check trạng thái môn
                 const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
-                // Logic: Nếu database có set false thì đóng, còn không có (undefined) hoặc true thì vẫn mở
                 if (configDoc.exists && configDoc.data()[monKey] === false) {
                     alert("⛔ BÀI THI ĐANG ĐÓNG!");
                     window.location.href = "Menu.html";
                 }
                 
-                // Kiểm tra thời gian làm bài
+                // Lấy thời gian làm bài
                 const timeDoc = await db.collection("CAU_HINH").doc("thoi_gian_lam_bai").get();
                 if(timeDoc.exists && timeDoc.data()[monKey] > 0) {
                      window.serverTimeLimit = timeDoc.data()[monKey] * 60; 
@@ -278,12 +219,11 @@
             } catch (e) { console.log("Lỗi tải cấu hình:", e); }
         }
         
-        // Đợi 0.5s để config.js kịp chạy
+        // Chờ 0.5s để config.js kịp chạy
         setTimeout(initPage, 500);
     </script>
     
     <script src="core.js"></script>
-    <script src="config.js"></script>
 
 </body>
 </html>
