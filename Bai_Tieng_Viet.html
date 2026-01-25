@@ -3,261 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiếng Việt 4 - Luyện từ và câu & TLV</title>
-    
+    <title>Tiếng Việt 4 - Ôn Tập Câu</title>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
-    <script src="config.js"></script>
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* Tùy biến giao diện cho môn Tiếng Việt */
-        body { background-color: #f0fdf4; font-family: 'Segoe UI', sans-serif; }
-        .header { 
-            border-color: #15803d; 
-            background: #dcfce7; 
-            padding: 20px; 
-            border-bottom: 3px solid; 
-            border-radius: 8px 8px 0 0; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-        }
-        .header h2 { color: #166534; margin: 0; font-size: 1.2rem; }
-        .section-title {
-            color: #166534;
-            border-bottom: 2px solid #86efac;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            padding-bottom: 5px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-        }
-        .quiz-container { max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .question-block { margin-bottom: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; border-left: 4px solid #15803d; }
-        .question-text { font-weight: 600; margin-bottom: 10px; color: #334155; }
-        .options label { display: block; margin-bottom: 8px; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s; }
-        .options label:hover { background: #e2e8f0; }
-        
-        /* Nut nop bai xanh la */
-        #btn-nop { 
-            background: linear-gradient(to bottom, #22c55e, #15803d); 
-            box-shadow: 0 4px 0 #14532d; 
-            color: white; border: none; padding: 12px 25px; 
-            border-radius: 5px; font-weight: bold; cursor: pointer; 
-            display: block; margin: 20px auto; width: 200px;
-            transition: all 0.2s;
-        }
-        #btn-nop:active { transform: translateY(4px); box-shadow: none; }
-    </script>
 </head>
 <body>
 
     <div class="quiz-container">
-        <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về danh sách bài học</a>
+        <div class="menu-top">
+            <a href="Menu.html">⬅ Quay về Menu</a>
         </div>
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap"> Tiếng Việt: CẤU TẠO CÂU & VĂN BIỂU CẢM</h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#15803d">Đang tải...</span></p>
+                <h2 id="ten-bai-tap">TIẾNG VIỆT 4 - ÔN TẬP CÂU & TỪ</h2>
+                <p style="margin:5px 0 0 0; font-size:13px; color:#64748b">
+                    Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span>
+                </p>
             </div>
-            <div class="timer" style="font-weight:bold; color:#d97706">⏱ <span id="timer">--:--</span></div>
+            <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
-        <div class="section-title">PHẦN 1: LUYỆN TỪ VÀ CÂU (CHỦ NGỮ - VỊ NGỮ)</div>
+        <div class="question-block security-quest"></div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Câu kể thường gồm hai thành phần chính nào?</div>
+            <div class="question-text">Câu 1: Câu "Ôi, bông hoa này đẹp quá!" thuộc kiểu câu gì?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Trạng ngữ và Vị ngữ</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Một câu kể hoàn chỉnh thường được cấu tạo bởi hai bộ phận chính là Chủ ngữ và Vị ngữ."> B. Chủ ngữ và Vị ngữ</label>
-                <label><input type="radio" name="q1" value="C"> C. Danh từ và Động từ</label>
-                <label><input type="radio" name="q1" value="D"> D. Chủ ngữ và Tính từ</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 2: Chủ ngữ trong câu kể "Ai làm gì?" thường trả lời cho câu hỏi nào?</div>
-            <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Là gì?</label>
-                <label><input type="radio" name="q2" value="B"> B. Làm gì?</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Chủ ngữ chỉ sự vật (người, vật) thực hiện hoạt động nên trả lời cho câu hỏi Ai, Cái gì, Con gì."> C. Ai, Cái gì, Con gì?</label>
-                <label><input type="radio" name="q2" value="D"> D. Thế nào?</label>
+                <label><input type="radio" name="q1" value="A"> A. Câu kể</label>
+                <label><input type="radio" name="q1" value="B"> B. Câu hỏi</label>
+                <label><input type="radio" name="q1" value="C" data-correct="true" data-explain="Câu bộc lộ cảm xúc (Ôi... quá!) và kết thúc bằng dấu chấm than là Câu cảm."> C. Câu cảm</label>
+                <label><input type="radio" name="q1" value="D"> D. Câu khiến</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Vị ngữ trong câu "Đàn chim én đang bay lượn trên bầu trời" là bộ phận nào?</div>
+            <div class="question-text">Câu 2: Để yêu cầu bạn giữ trật tự trong giờ học, em sẽ dùng câu nào?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Đàn chim én</label>
-                <label><input type="radio" name="q3" value="B" data-correct="true" data-explain="Bộ phận này nêu hoạt động của đàn chim, trả lời cho câu hỏi 'Làm gì?'."> B. đang bay lượn trên bầu trời</label>
-                <label><input type="radio" name="q3" value="C"> C. trên bầu trời</label>
-                <label><input type="radio" name="q3" value="D"> D. bay lượn</label>
+                <label><input type="radio" name="q2" value="A"> A. Cậu đang làm gì thế?</label>
+                <label><input type="radio" name="q2" value="B"> B. Lớp mình trật tự quá.</label>
+                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Câu dùng để nêu yêu cầu, đề nghị là Câu khiến."> C. Cậu hãy giữ trật tự đi!</label>
+                <label><input type="radio" name="q2" value="D"> D. Cậu có thể giữ trật tự không?</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Tìm Chủ ngữ trong câu: "Dưới gốc cây, mấy chú gà con đang bới đất tìm giun."</div>
+            <div class="question-text">Câu 3: Dấu hiệu nào giúp em nhận biết "Câu hỏi"?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Dưới gốc cây</label>
-                <label><input type="radio" name="q4" value="B" data-correct="true" data-explain="Đây là sự vật thực hiện hành động 'bới đất', trả lời cho câu hỏi 'Con gì?'."> B. mấy chú gà con</label>
-                <label><input type="radio" name="q4" value="C"> C. đang bới đất</label>
-                <label><input type="radio" name="q4" value="D"> D. tìm giun</label>
+                <label><input type="radio" name="q3" value="A" data-correct="true" data-explain="Câu hỏi dùng để hỏi về điều chưa biết, thường có các từ nghi vấn (ai, gì, nào, sao...) và kết thúc bằng dấu chấm hỏi."> A. Có từ nghi vấn (ai, gì, nào...) và kết thúc bằng dấu chấm hỏi (?)</label>
+                <label><input type="radio" name="q3" value="B"> B. Có từ cầu khiến (hãy, đi, thôi...) và kết thúc bằng dấu chấm than (!)</label>
+                <label><input type="radio" name="q3" value="C"> C. Dùng để kể tả và kết thúc bằng dấu chấm (.)</label>
+                <label><input type="radio" name="q3" value="D"> D. Dùng để bộc lộ cảm xúc</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Trong câu "Mái tóc bà em bạc phơ.", Vị ngữ trả lời cho câu hỏi nào?</div>
+            <div class="question-text">Câu 4: Câu nào dưới đây là "Câu kể"?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Làm gì?</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true" data-explain="'Bạc phơ' là từ chỉ đặc điểm/trạng thái của mái tóc, nên trả lời cho câu hỏi 'Thế nào?'."> B. Thế nào?</label>
-                <label><input type="radio" name="q5" value="C"> C. Là gì?</label>
-                <label><input type="radio" name="q5" value="D"> D. Ở đâu?</label>
+                <label><input type="radio" name="q4" value="A"> A. Sao bầu trời hôm nay xanh thế?</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true" data-explain="Đây là câu dùng để kể lại sự việc diễn ra (đàn chim bay về tổ)."> B. Đàn chim đang bay về tổ tránh rét.</label>
+                <label><input type="radio" name="q4" value="C"> C. Chị cho em mượn quyển sách này nhé!</label>
+                <label><input type="radio" name="q4" value="D"> D. Chao ôi, món ăn này ngon tuyệt!</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Dòng nào dưới đây nêu đúng cấu tạo của câu: "Hà Nội là thủ đô của nước Việt Nam."?</div>
+            <div class="question-text">Câu 5: Câu "Chích bông là một người bạn nhỏ của bà con nông dân." thuộc kiểu câu kể nào?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A" data-correct="true" data-explain="Đây là câu kể 'Ai là gì?'. Chủ ngữ trả lời 'Cái gì?', Vị ngữ bắt đầu bằng từ 'là'."> A. Chủ ngữ: Hà Nội; Vị ngữ: là thủ đô của nước Việt Nam.</label>
-                <label><input type="radio" name="q6" value="B"> B. Chủ ngữ: Hà Nội là; Vị ngữ: thủ đô của nước Việt Nam.</label>
-                <label><input type="radio" name="q6" value="C"> C. Chủ ngữ: Hà Nội là thủ đô; Vị ngữ: của nước Việt Nam.</label>
-                <label><input type="radio" name="q6" value="D"> D. Chủ ngữ: Hà Nội; Vị ngữ: thủ đô của nước Việt Nam.</label>
+                <label><input type="radio" name="q5" value="A"> A. Ai làm gì?</label>
+                <label><input type="radio" name="q5" value="B"> B. Ai thế nào?</label>
+                <label><input type="radio" name="q5" value="C" data-correct="true" data-explain="Câu có mẫu '... là ...' dùng để giới thiệu hoặc nhận định là kiểu câu 'Ai là gì?'."> C. Ai là gì?</label>
+                <label><input type="radio" name="q5" value="D"> D. Ai ở đâu?</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Chủ ngữ trong câu nào dưới đây chỉ "sự vật được miêu tả" (Kiểu câu Ai thế nào)?</div>
+            <div class="question-text">Câu 6: Câu nào dưới đây thuộc kiểu câu "Ai làm gì?"</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Bác nông dân đang cày ruộng.</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Câu này miêu tả đặc điểm (hương thơm) của sự vật (hoa hồng)."> B. Những đóa hoa hồng tỏa hương thơm ngát.</label>
-                <label><input type="radio" name="q7" value="C"> C. Con mèo đang ngủ trên ghế.</label>
-                <label><input type="radio" name="q7" value="D"> D. Em là học sinh lớp 4.</label>
+                <label><input type="radio" name="q6" value="A"> A. Mái tóc của bà bạc trắng như cước.</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true" data-explain="Câu nêu hoạt động của sự vật (Mẹ - đang nấu cơm) là kiểu câu 'Ai làm gì?'."> B. Mẹ em đang nấu cơm dưới bếp.</label>
+                <label><input type="radio" name="q6" value="C"> C. Bạn Lan là lớp trưởng lớp em.</label>
+                <label><input type="radio" name="q6" value="D"> D. Bầu trời cao và xanh thẳm.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Điền Vị ngữ thích hợp vào chỗ trống để tạo thành câu kể "Ai làm gì?": "Vào giờ ra chơi, các bạn học sinh ..."</div>
+            <div class="question-text">Câu 7: Xác định kiểu câu của câu sau: "Chú mèo mướp lười biếng nằm sưởi nắng." (Lưu ý: Nhấn mạnh vào đặc điểm hay hoạt động chính?)</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. rất vui vẻ.</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true" data-explain="'Ùa ra', 'đá cầu', 'nhảy dây' là các từ chỉ hoạt động cụ thể."> B. ùa ra sân trường đá cầu, nhảy dây.</label>
-                <label><input type="radio" name="q8" value="C"> C. là những người bạn thân thiết.</label>
-                <label><input type="radio" name="q8" value="D"> D. thật ngoan ngoãn.</label>
+                <label><input type="radio" name="q7" value="A" data-correct="true" data-explain="Mặc dù có từ 'lười biếng' (đặc điểm) nhưng nòng cốt câu là hoạt động 'nằm sưởi nắng'. Tuy nhiên ở lớp 4, nếu câu tập trung miêu tả hoạt động thì là 'Ai làm gì'. Đáp án này là Ai làm gì."> A. Ai làm gì?</label>
+                <label><input type="radio" name="q7" value="B"> B. Ai thế nào?</label>
+                <label><input type="radio" name="q7" value="C"> C. Ai là gì?</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Xác định từ loại của Chủ ngữ trong câu: "Chăm chỉ là đức tính tốt của học sinh."</div>
+            <div class="question-text">Câu 8: Câu "Những đóa hoa phượng đỏ rực cả một góc trời." thuộc kiểu câu gì?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Danh từ</label>
-                <label><input type="radio" name="q9" value="B"> B. Động từ</label>
-                <label><input type="radio" name="q9" value="C" data-correct="true" data-explain="Trong trường hợp này, tính từ 'Chăm chỉ' đóng vai trò làm Chủ ngữ để chỉ một đức tính."> C. Tính từ</label>
-                <label><input type="radio" name="q9" value="D"> D. Đại từ</label>
+                <label><input type="radio" name="q8" value="A"> A. Ai làm gì?</label>
+                <label><input type="radio" name="q8" value="B" data-correct="true" data-explain="Câu miêu tả đặc điểm, tính chất, trạng thái của sự vật (đỏ rực) là kiểu câu 'Ai thế nào?'."> B. Ai thế nào?</label>
+                <label><input type="radio" name="q8" value="C"> C. Ai là gì?</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Câu nào dưới đây có bộ phận Vị ngữ là cụm động từ?</div>
+            <div class="question-text">Câu 9: Trong câu: "Dưới bóng tre xanh, đàn trâu đang gặm cỏ.", bộ phận nào là Chủ ngữ?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Bầu trời trong xanh vời vợi.</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="'đang nấu cơm trong bếp' là cụm động từ (động từ chính: nấu)."> B. Mẹ em đang nấu cơm trong bếp.</label>
-                <label><input type="radio" name="q10" value="C"> C. Chiếc thước kẻ này bằng nhựa.</label>
-                <label><input type="radio" name="q10" value="D"> D. Bạn Lan rất thông minh.</label>
-            </div>
-        </div>
-
-        <div class="section-title">PHẦN 2: TẬP LÀM VĂN (BIỂU CẢM)</div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 11: Mục đích chính của việc viết đoạn văn biểu cảm về một người thân là gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. Kể lại một câu chuyện cười về người đó.</label>
-                <label><input type="radio" name="q11" value="B"> B. Miêu tả chi tiết ngoại hình, quần áo của người đó.</label>
-                <label><input type="radio" name="q11" value="C" data-correct="true" data-explain="Văn biểu cảm tập trung vào việc thể hiện thái độ, tình cảm (yêu thương, kính trọng, biết ơn...)."> C. Bày tỏ tình cảm, cảm xúc chân thành đối với người đó.</label>
-                <label><input type="radio" name="q11" value="D"> D. Giới thiệu tiểu sử và năm sinh của người đó.</label>
+                <label><input type="radio" name="q9" value="A"> A. Dưới bóng tre xanh</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="'Đàn trâu' là sự vật thực hiện hoạt động 'gặm cỏ'. Trả lời cho câu hỏi 'Con gì?'."> B. Đàn trâu</label>
+                <label><input type="radio" name="q9" value="C"> C. Đang gặm cỏ</label>
+                <label><input type="radio" name="q9" value="D"> D. Tre xanh</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: Khi viết đoạn văn nêu tình cảm với người thân, em nên dùng những từ ngữ nào để thể hiện cảm xúc?</div>
+            <div class="question-text">Câu 10: Vị ngữ trong câu "Tiếng suối chảy rì rầm như tiếng hát." là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Cao lớn, gầy guộc, đen nhánh.</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true" data-explain="Đây là các từ ngữ chỉ trạng thái cảm xúc, tình cảm."> B. Yêu quý, kính trọng, biết ơn, nhớ thương.</label>
-                <label><input type="radio" name="q12" value="C"> C. Chạy nhảy, đi đứng, ăn uống.</label>
-                <label><input type="radio" name="q12" value="D"> D. Hôm qua, hôm nay, ngày mai.</label>
+                <label><input type="radio" name="q10" value="A"> A. Tiếng suối</label>
+                <label><input type="radio" name="q10" value="B"> B. Tiếng suối chảy</label>
+                <label><input type="radio" name="q10" value="C" data-correct="true" data-explain="Vị ngữ nêu đặc điểm/hoạt động của chủ ngữ. Trả lời cho câu hỏi 'Thế nào?'. Vị ngữ là: chảy rì rầm như tiếng hát."> C. chảy rì rầm như tiếng hát</label>
+                <label><input type="radio" name="q10" value="D"> D. như tiếng hát</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 13: Phần mở đầu của đoạn văn biểu cảm về nhân vật văn học thường có nội dung gì?</div>
+            <div class="question-text">Câu 11: Chủ ngữ trong câu kể "Ai là gì?" thường trả lời cho câu hỏi nào?</div>
             <div class="options">
-                <label><input type="radio" name="q13" value="A"> A. Liên hệ bản thân em sẽ làm gì.</label>
-                <label><input type="radio" name="q13" value="B" data-correct="true" data-explain="Cần cho người đọc biết em đang định nói về ai và cảm xúc ban đầu là gì."> B. Giới thiệu nhân vật và ấn tượng chung của em về nhân vật đó.</label>
-                <label><input type="radio" name="q13" value="C"> C. Kể lại chi tiết cái chết của nhân vật.</label>
-                <label><input type="radio" name="q13" value="D"> D. Miêu tả phong cảnh nơi nhân vật sống.</label>
+                <label><input type="radio" name="q11" value="A"> A. Làm gì?</label>
+                <label><input type="radio" name="q11" value="B"> B. Thế nào?</label>
+                <label><input type="radio" name="q11" value="C" data-correct="true" data-explain="Chủ ngữ chỉ sự vật được giới thiệu, nhận định, trả lời cho câu hỏi: Ai? Cái gì? Con gì?"> C. Ai? Cái gì? Con gì?</label>
+                <label><input type="radio" name="q11" value="D"> D. Là gì?</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 14: Dòng nào dưới đây là câu văn bộc lộ cảm xúc (không phải câu kể sự việc)?</div>
+            <div class="question-text">Câu 12: Điền vị ngữ thích hợp vào chỗ chấm để tạo thành câu "Ai làm gì": "Các bạn học sinh .........."</div>
             <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. Bà em năm nay đã sáu mươi tuổi.</label>
-                <label><input type="radio" name="q14" value="B"> B. Mỗi sáng, bà đều dậy sớm tập thể dục.</label>
-                <label><input type="radio" name="q14" value="C" data-correct="true" data-explain="Sử dụng từ cảm thán 'Chao ôi', 'biết mấy' và từ chỉ tình cảm 'thương' để bộc lộ cảm xúc trực tiếp."> C. Chao ôi, em thương bà biết mấy khi thấy đôi bàn tay chai sần ấy!</label>
-                <label><input type="radio" name="q14" value="D"> D. Bà thường kể chuyện cổ tích cho em nghe.</label>
+                <label><input type="radio" name="q12" value="A"> A. rất chăm ngoan.</label>
+                <label><input type="radio" name="q12" value="B"> B. là những búp măng non.</label>
+                <label><input type="radio" name="q12" value="C" data-correct="true" data-explain="'đang làm bài kiểm tra' là hoạt động, phù hợp với kiểu câu Ai làm gì. Các đáp án còn lại là Ai thế nào và Ai là gì."> C. đang làm bài kiểm tra.</label>
+                <label><input type="radio" name="q12" value="D"> D. thông minh và lanh lợi.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 15: Câu kết đoạn của bài văn biểu cảm về người thân thường dùng để làm gì?</div>
+            <div class="question-text">Câu 13: Khi viết đoạn văn nêu tình cảm, cảm xúc về một người thân, câu mở đoạn thường dùng để làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. Giới thiệu tên người thân.</label>
-                <label><input type="radio" name="q15" value="B"> B. Kể về một kỷ niệm hồi nhỏ.</label>
-                <label><input type="radio" name="q15" value="C" data-correct="true" data-explain="Kết đoạn là lúc gói ghém lại cảm xúc và hướng tới tương lai (lời hứa, mong ước)."> C. Khẳng định lại tình cảm và nêu lời hứa hoặc mong ước của em.</label>
-                <label><input type="radio" name="q15" value="D"> D. Tả chi tiết khuôn mặt của người thân.</label>
+                <label><input type="radio" name="q13" value="A"> A. Kể chi tiết về ngoại hình của người đó.</label>
+                <label><input type="radio" name="q13" value="B" data-correct="true" data-explain="Câu mở đoạn cần giới thiệu người đó là ai và nêu ấn tượng/cảm xúc chung bao trùm của em với người đó."> B. Giới thiệu người thân và nêu cảm xúc chung của em về người đó.</label>
+                <label><input type="radio" name="q13" value="C"> C. Kể lại một kỉ niệm cụ thể.</label>
+                <label><input type="radio" name="q13" value="D"> D. Nêu mong ước của em.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 14: Những từ ngữ nào dưới đây thường được dùng để bộc lộ cảm xúc về nhân vật văn học?</div>
+            <div class="options">
+                <label><input type="radio" name="q14" value="A"> A. Cao lớn, vạm vỡ, trắng trẻo.</label>
+                <label><input type="radio" name="q14" value="B"> B. Chạy nhảy, vui chơi, học tập.</label>
+                <label><input type="radio" name="q14" value="C" data-correct="true" data-explain="Đây là các từ chỉ tình cảm, thái độ của người viết đối với nhân vật."> C. Khâm phục, yêu quý, ngưỡng mộ, xúc động.</label>
+                <label><input type="radio" name="q14" value="D"> D. Xanh biếc, đỏ thắm, vàng tươi.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 15: Phần kết đoạn của đoạn văn nêu tình cảm, cảm xúc nên viết gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A" data-correct="true" data-explain="Phần kết đoạn nhằm khẳng định lại tình cảm và liên hệ bản thân (lời hứa, mong ước)."> A. Khẳng định lại tình cảm hoặc nêu mong ước, lời hứa của bản thân.</label>
+                <label><input type="radio" name="q15" value="B"> B. Tả lại khuôn mặt của người đó.</label>
+                <label><input type="radio" name="q15" value="C"> C. Kể về công việc hàng ngày của người đó.</label>
+                <label><input type="radio" name="q15" value="D"> D. Liệt kê các sở thích của người đó.</label>
             </div>
         </div>
 
         <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
-        <p id="status-log" style="text-align:center; color:#666; font-size:12px; margin-top:10px;"></p>
-    </div>
+        <p style="text-align: center; margin-top: 10px; font-size: 12px; color: #94a3b8;">Hệ thống tự động lưu điểm và xếp hạng</p>
 
-    <script>
-        async function initPage() {
-            // Key cho môn Tiếng Việt. 
-            // Nếu muốn tách riêng bài này, hãy đổi "tv" thành "tv_on_tap" trong database và dòng dưới đây.
-            let monKey = "tv"; 
-            
-            if (typeof db === 'undefined' && typeof firebase !== 'undefined') {
-                var db = firebase.firestore();
-            }
-            try {
-                // Kiểm tra trạng thái môn học (đóng/mở)
-                const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
-                if (configDoc.exists && configDoc.data()[monKey] === false) {
-                    alert("⛔ BÀI THI ĐANG ĐÓNG!");
-                    window.location.href = "Menu.html";
-                }
-                
-                // Lấy thời gian làm bài
-                const timeDoc = await db.collection("CAU_HINH").doc("thoi_gian_lam_bai").get();
-                if(timeDoc.exists && timeDoc.data()[monKey] > 0) {
-                     window.serverTimeLimit = timeDoc.data()[monKey] * 60; 
-                }
-            } catch (e) { console.log("Lỗi tải cấu hình:", e); }
-        }
-        
-        // Gọi hàm khởi tạo sau khi load trang
-        setTimeout(initPage, 500);
-    </script>
-    
-    <script src="core.js"></script>
+    </div>
     <script src="config.js"></script>
+
+    <script src="core.js"></script>
 
 </body>
 </html>
