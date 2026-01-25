@@ -3,226 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khoa Học 4 - Đặc điểm của Nấm</title>
-    
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
-    <script src="config.js"></script>
-    
-    <link rel="stylesheet" href="style.css">
-    
+    <title>Trắc nghiệm Khoa học Lớp 4 - Bài 20</title>
     <style>
-        /* Tùy biến giao diện riêng cho môn Khoa Học */
-        body { background-color: #f0fdf4; } 
-        .header { border-color: #16a34a; background: #dcfce7; }
-        .header h2 { color: #15803d; }
-        .question-block:hover { border-color: #22c55e; }
-        .options label:hover { background: #f0fdf4; border-color: #16a34a; color: #15803d; }
-        #btn-nop { background: linear-gradient(to bottom, #22c55e, #15803d); box-shadow: 0 6px 0 #14532d; }
+        :root {
+            --primary-color: #4CAF50; /* Màu xanh lá chủ đạo của bài Nấm */
+            --secondary-color: #ff9800;
+            --bg-color: #f4f9f4;
+            --text-color: #333;
+            --wrong-color: #f44336;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .sub-title {
+            color: #666;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .question-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .options label {
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .options label:hover {
+            background: #e8f5e9;
+            border-color: var(--primary-color);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        /* Styles for results */
+        .correct-answer {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .wrong-answer {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result-summary {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+            color: var(--secondary-color);
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div class="quiz-container">
-        <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về chọn môn khác</a>
-        </div>
+<div class="container">
+    <header>
+        <h1>ÔN TẬP: NẤM ĂN VÀ NẤM MEN</h1>
+        <div class="sub-title">Khoa học Lớp 4 - Bài 20</div>
+        <p><em>Em hãy chọn đáp án đúng nhất cho các câu hỏi dưới đây.</em></p>
+    </header>
 
-        <div class="header">
-            <div class="info">
-                <h2 id="ten-bai-tap">KHOA HỌC 4 - BÀI: ĐẶC ĐIỂM TỰ NHIÊN CỦA NẤM</h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#15803d">Đang tải...</span></p>
-            </div>
-            <div class="timer">⏱ <span id="timer">--:--</span></div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 1: Nấm có hình dạng như thế nào?</div>
+    <form id="quiz-form">
+        <div class="question-card" id="q1">
+            <div class="question-title">Câu 1: Các bộ phận chính thường thấy của một cây nấm mũ là gì?</div>
+            [attachment_0](attachment)
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Chỉ có hình giống cái ô</label>
-                <label><input type="radio" name="q1" value="B"> B. Chỉ có hình sợi dài</label>
-                <label><input type="radio" name="q1" value="C" data-correct="true" data-explain="💡 Gợi ý: Hãy nhớ lại hình ảnh của nấm hương, mộc nhĩ và nấm kim châm.<br>✅ Giải thích: Nấm trong tự nhiên có rất nhiều hình dạng phong phú khác nhau: hình mũ, hình tai, hình sợi..."> C. Rất đa dạng: hình cái ô, hình cái tai, hình sợi...</label>
-                <label><input type="radio" name="q1" value="D"> D. Hình tròn như quả trứng</label>
+                <label><input type="radio" name="q1" value="A"> A. Rễ, thân, lá</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Mũ nấm, thân nấm, chân nấm</label>
+                <label><input type="radio" name="q1" value="C"> C. Mũ nấm, cành nấm, lá nấm</label>
+                <label><input type="radio" name="q1" value="D"> D. Hoa, quả, hạt</label>
             </div>
+            <div class="explanation">Giải thích: Dựa vào hình quan sát (Hình 10 SGK), nấm mũ gồm 3 phần chính là Mũ, Thân và Chân nấm.</div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 2: Môi trường sống ưa thích của nấm thường là nơi như thế nào?</div>
+        <div class="question-card" id="q2">
+            <div class="question-title">Câu 2: Loại nấm nào sau đây thường được dùng làm thức ăn?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Nơi khô ráo và nhiều ánh nắng</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true" data-explain="✅ Giải thích: Độ ẩm là điều kiện quan trọng nhất để nấm phát triển (rơm rạ mục, gỗ mục, đất ẩm)."> B. Nơi ẩm ướt như rơm rạ mục, gỗ mục, đất ẩm</label>
-                <label><input type="radio" name="q2" value="C"> C. Dưới mặt nước sâu</label>
-                <label><input type="radio" name="q2" value="D"> D. Trên sa mạc nóng bỏng</label>
+                <label><input type="radio" name="q2" value="A"> A. Nấm mốc</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true"> B. Nấm rơm</label>
+                <label><input type="radio" name="q2" value="C"> C. Nấm lạ trong rừng</label>
+                <label><input type="radio" name="q2" value="D"> D. Nấm mọc ở tường nhà</label>
             </div>
+            <div class="explanation">Giải thích: Nấm rơm là loại nấm lành tính, giàu dinh dưỡng. Tuyệt đối không ăn nấm lạ hoặc nấm mốc.</div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 3: Loại nấm nào sau đây có hình dạng giống như "cái tai"? </div>
+        <div class="question-card" id="q3">
+            <div class="question-title">Câu 3: Môi trường sống ưa thích của các loại nấm là ở đâu?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Nấm hương</label>
-                <label><input type="radio" name="q3" value="B"> B. Nấm rơm</label>
-                <label><input type="radio" name="q3" value="C" data-correct="true" data-explain="✅ Giải thích: Tên gọi khác của mộc nhĩ là nấm tai mèo vì hình dáng giống vành tai."> C. Mộc nhĩ (Nấm tai mèo)</label>
-                <label><input type="radio" name="q3" value="D"> D. Nấm kim châm</label>
+                <label><input type="radio" name="q3" value="A"> A. Nơi khô ráo, nắng gắt</label>
+                <label><input type="radio" name="q3" value="B" data-correct="true"> B. Nơi ẩm ướt (đất ẩm, rơm rạ mục, gỗ mục)</label>
+                <label><input type="radio" name="q3" value="C"> C. Dưới mặt nước sâu</label>
+                <label><input type="radio" name="q3" value="D"> D. Trên ngọn cây cao</label>
             </div>
+            <div class="explanation">Giải thích: Nấm phát triển tốt nhất ở những nơi có độ ẩm cao và giàu chất hữu cơ như rơm rạ, gỗ mục.</div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 4: Nấm hương có đặc điểm gì nổi bật về mùi?</div>
-            <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Có mùi hôi khó chịu</label>
-                <label><input type="radio" name="q4" value="B"> B. Không có mùi gì</label>
-                <label><input type="radio" name="q4" value="C" data-correct="true" data-explain="✅ Giải thích: Mùi thơm đặc trưng là đặc điểm giúp nhận biết và tạo nên giá trị của nấm hương."> C. Có mùi thơm đặc trưng</label>
-                <label><input type="radio" name="q4" value="D"> D. Có mùi chua</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 5: Màu sắc của các loại nấm trong tự nhiên như thế nào?</div>
-            <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Chỉ có màu nâu</label>
-                <label><input type="radio" name="q5" value="B"> B. Chỉ có màu trắng</label>
-                <label><input type="radio" name="q5" value="C" data-correct="true" data-explain="✅ Giải thích: Thế giới nấm có muôn vàn màu sắc khác nhau (đỏ, vàng, nâu, trắng...)."> C. Rất phong phú: nâu, trắng, vàng, đỏ...</label>
-                <label><input type="radio" name="q5" value="D"> D. Chỉ có màu xanh lá cây</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 6: Nấm kim châm có hình dạng như thế nào? </div>
-            <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. To, tròn như quả bóng</label>
-                <label><input type="radio" name="q6" value="B"> B. Mỏng và dẹt như tờ giấy</label>
-                <label><input type="radio" name="q6" value="C" data-correct="true" data-explain="✅ Giải thích: Thân nhỏ dài, mũ nấm nhỏ, mọc thành chùm là đặc điểm của nấm kim châm."> C. Thân nhỏ dài, mũ nấm nhỏ, mọc thành chùm</label>
-                <label><input type="radio" name="q6" value="D"> D. Hình cái bát úp ngược</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 7: Nấm men thường được sử dụng để làm gì? </div>
-            <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Làm rau xào trực tiếp</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="✅ Giải thích: Nấm men có tác dụng lên men, giúp bột bánh mì/bánh bao nở xốp."> B. Làm bánh mì, bánh bao, ủ men rượu</label>
-                <label><input type="radio" name="q7" value="C"> C. Làm đồ trang trí trong nhà</label>
-                <label><input type="radio" name="q7" value="D"> D. Làm thuốc trừ sâu</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 8: Khi gặp một loại nấm lạ trong rừng với màu sắc sặc sỡ, em nên làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Hái về nấu ăn thử</label>
-                <label><input type="radio" name="q8" value="B"> B. Cầm chơi nhưng không ăn</label>
-                <label><input type="radio" name="q8" value="C" data-correct="true" data-explain="✅ Giải thích: Nấm sặc sỡ thường là nấm độc. Tuyệt đối không hái, không ăn và tránh xa."> C. Tuyệt đối không hái, không ăn và tránh xa</label>
-                <label><input type="radio" name="q8" value="D"> D. Mang về trồng trong vườn</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 9: Nấm rơm thường được trồng ở đâu?</div>
-            <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Trên ngọn cây cao</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="✅ Giải thích: Đúng như tên gọi, nấm rơm phát triển tốt trên rơm rạ ủ mục."> B. Trên rơm rạ mục</label>
-                <label><input type="radio" name="q9" value="C"> C. Trong nước biển</label>
-                <label><input type="radio" name="q9" value="D"> D. Trên đá cứng khô</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 10: Loại nấm nào sau đây được coi là một vị thuốc quý? </div>
-            <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Nấm mốc đen</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="✅ Giải thích: Nấm linh chi là dược liệu quý giúp tăng cường sức khỏe."> B. Nấm linh chi</label>
-                <label><input type="radio" name="q10" value="C"> C. Nấm men làm bánh</label>
-                <label><input type="radio" name="q10" value="D"> D. Nấm rơm</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 11: Nấm ăn cung cấp chất dinh dưỡng gì cho cơ thể?</div>
-            <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. Chỉ cung cấp nước</label>
-                <label><input type="radio" name="q11" value="B"> B. Chất béo và đường là chính</label>
-                <label><input type="radio" name="q11" value="C" data-correct="true" data-explain="✅ Giải thích: Nấm rất giàu chất đạm, chất xơ, vi-ta-min và khoáng chất (được ví như thịt thực vật)."> C. Chất đạm, chất xơ, vi-ta-min và khoáng chất</label>
-                <label><input type="radio" name="q11" value="D"> D. Không có chất dinh dưỡng gì</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 12: Để nấm men hoạt động tốt khi làm bánh mì, người ta cần dùng nước như thế nào?</div>
-            <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Nước sôi sùng sục</label>
-                <label><input type="radio" name="q12" value="B"> B. Nước đá lạnh</label>
-                <label><input type="radio" name="q12" value="C" data-correct="true" data-explain="✅ Giải thích: Nước ấm giúp kích thích nấm men hoạt động và sinh trưởng tốt nhất (Nóng quá nấm chết, lạnh quá nấm ngủ)."> C. Nước ấm</label>
-                <label><input type="radio" name="q12" value="D"> D. Không cần dùng nước</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 13: Nấm đùi gà có hình dáng giống cái gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q13" value="A" data-correct="true" data-explain="✅ Giải thích: Thân nấm to, trắng, mũ nấm nâu trông giống cái đùi gà luộc."> A. Giống cái đùi gà luộc</label>
-                <label><input type="radio" name="q13" value="B"> B. Giống cái thìa</label>
-                <label><input type="radio" name="q13" value="C"> C. Giống sợi chỉ</label>
-                <label><input type="radio" name="q13" value="D"> D. Giống bông hoa hồng</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 14: Bộ phận nào của nấm mũ thường xòe ra như cái ô?</div>
-            <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. Chân nấm</label>
-                <label><input type="radio" name="q14" value="B"> B. Thân nấm</label>
-                <label><input type="radio" name="q14" value="C" data-correct="true" data-explain="✅ Giải thích: Mũ nấm là phần trên cùng, xòe rộng như chiếc ô."> C. Mũ nấm</label>
-                <label><input type="radio" name="q14" value="D"> D. Rễ nấm</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 15: Nấm sò (nấm bào ngư) thường có màu gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. Màu đỏ rực</label>
-                <label><input type="radio" name="q15" value="B" data-correct="true" data-explain="✅ Giải thích: Nấm sò thường có màu trắng hoặc xám nâu đặc trưng (giống vỏ sò)."> B. Màu trắng hoặc xám nâu</label>
-                <label><input type="radio" name="q15" value="C"> C. Màu xanh dương</label>
-                <label><input type="radio" name="q15" value="D"> D. Màu tím than</label>
-            </div>
-        </div>
-
-        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
-        <p id="status-log" style="text-align:center; color:#666; font-size:12px; margin-top:10px;"></p>
-    </div>
-
-    <script>
-        async function initPage() {
-            let monKey = "khoa"; // Khóa môn Khoa học
+        <div class="question-card" id="q4">
+            <div class="question-title">Câu 4: Nấm mộc nhĩ (nấm tai mèo) thường có đặc điểm gì?</div>
             
-            // Đảm bảo Firebase đã load từ config.js
-            if (typeof db === 'undefined' && typeof firebase !== 'undefined') {
-                var db = firebase.firestore();
-            }
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. Màu trắng, hình cái ô</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Màu nâu sẫm, hình giống cái tai</label>
+                <label><input type="radio" name="q4" value="C"> C. Màu vàng, hình sợi dài</label>
+                <label><input type="radio" name="q4" value="D"> D. Màu đỏ, có đốm trắng</label>
+            </div>
+            <div class="explanation">Giải thích: Mộc nhĩ có màu nâu sẫm và hình dáng cong cong giống cái tai người hoặc tai mèo.</div>
+        </div>
 
-            try {
-                // Kiểm tra xem môn học có bị khóa không
-                const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
-                if (configDoc.exists && configDoc.data()[monKey] === false) {
-                    alert("⛔ BÀI THI ĐANG ĐÓNG!");
-                    window.location.href = "Menu.html";
+        <div class="question-card" id="q5">
+            <div class="question-title">Câu 5: Thành phần nào giúp bột mì nở ra và làm bánh tơi xốp?</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. Đường</label>
+                <label><input type="radio" name="q5" value="B"> B. Muối</label>
+                <label><input type="radio" name="q5" value="C" data-correct="true"> C. Men nở (nấm men)</label>
+                <label><input type="radio" name="q5" value="D"> D. Nước lạnh</label>
+            </div>
+            <div class="explanation">Giải thích: Nấm men sinh ra khí trong quá trình ủ, bọt khí này bị giữ lại làm bột phồng lên.</div>
+        </div>
+
+        <div class="question-card" id="q6">
+            <div class="question-title">Câu 6: Bước nào quan trọng để men hoạt động làm nở bánh mì?</div>
+            
+            <div class="options">
+                <label><input type="radio" name="q6" value="A"> A. Nướng ngay lập tức</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Ủ bột (bằng khăn ẩm)</label>
+                <label><input type="radio" name="q6" value="C"> C. Phơi nắng to</label>
+                <label><input type="radio" name="q6" value="D"> D. Cho vào ngăn đá</label>
+            </div>
+            <div class="explanation">Giải thích: Cần thời gian ủ bột để men có thời gian "ăn" đường và sinh khí làm nở bánh.</div>
+        </div>
+
+        <div class="question-card" id="q7">
+            <div class="question-title">Câu 7: Loại nấm nào sau đây được coi là dược liệu quý?</div>
+            
+            <div class="options">
+                <label><input type="radio" name="q7" value="A"> A. Nấm rơm</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true"> B. Nấm linh chi</label>
+                <label><input type="radio" name="q7" value="C"> C. Nấm sò</label>
+                <label><input type="radio" name="q7" value="D"> D. Nấm mốc</label>
+            </div>
+            <div class="explanation">Giải thích: Nấm linh chi (và đông trùng hạ thảo) có dược tính cao, dùng để bồi bổ sức khỏe.</div>
+        </div>
+
+        <div class="question-card" id="q8">
+            <div class="question-title">Câu 8: Khi thấy thực phẩm bị mốc xanh, mốc đen, em nên làm gì?</div>
+            
+            <div class="options">
+                <label><input type="radio" name="q8" value="A"> A. Cắt bỏ phần mốc rồi ăn tiếp</label>
+                <label><input type="radio" name="q8" value="B"> B. Rửa sạch rồi nấu lại</label>
+                <label><input type="radio" name="q8" value="C" data-correct="true"> C. Bỏ đi, tuyệt đối không ăn</label>
+                <label><input type="radio" name="q8" value="D"> D. Cho vật nuôi ăn</label>
+            </div>
+            <div class="explanation">Giải thích: Chân nấm mốc và độc tố có thể đã lan sâu vào thực phẩm, ăn vào rất nguy hiểm.</div>
+        </div>
+
+        <div class="question-card" id="q9">
+            <div class="question-title">Câu 9: Nấm kim châm có đặc điểm hình dạng nào?</div>
+            [attachment_1](attachment)
+            <div class="options">
+                <label><input type="radio" name="q9" value="A"> A. Thân to, mập</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true"> B. Thân nhỏ, dài như cái kim</label>
+                <label><input type="radio" name="q9" value="C"> C. Hình cái tai</label>
+                <label><input type="radio" name="q9" value="D"> D. Hình tròn như quả trứng</label>
+            </div>
+            <div class="explanation">Giải thích: Đúng như tên gọi, nấm kim châm có thân rất mảnh và dài.</div>
+        </div>
+
+        <div class="question-card" id="q10">
+            <div class="question-title">Câu 10: Để kích hoạt men nở, nên dùng loại nước nào?</div>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A"> A. Nước sôi sùng sục</label>
+                <label><input type="radio" name="q10" value="B"> B. Nước đá lạnh</label>
+                <label><input type="radio" name="q10" value="C" data-correct="true"> C. Nước ấm</label>
+                <label><input type="radio" name="q10" value="D"> D. Dầu ăn</label>
+            </div>
+            <div class="explanation">Giải thích: Nước ấm (khoảng 35-40 độ C) giúp men hoạt động tốt nhất. Nước sôi làm chết men, nước lạnh làm men ngủ.</div>
+        </div>
+
+        <div class="question-card" id="q11">
+            <div class="question-title">Câu 11: Giá trị dinh dưỡng chủ yếu của nấm ăn là gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q11" value="A"> A. Nhiều chất béo</label>
+                <label><input type="radio" name="q11" value="B" data-correct="true"> B. Nhiều vi-ta-min, chất xơ, chất đạm</label>
+                <label><input type="radio" name="q11" value="C"> C. Nhiều đường ngọt</label>
+                <label><input type="radio" name="q11" value="D"> D. Không có chất dinh dưỡng</label>
+            </div>
+            <div class="explanation">Giải thích: Nấm được ví như "thịt sạch" vì chứa nhiều đạm thực vật và vitamin.</div>
+        </div>
+
+        <div class="question-card" id="q12">
+            <div class="question-title">Câu 12: Tại sao gọi là nấm đùi gà?</div>
+            [attachment_2](attachment)
+            <div class="options">
+                <label><input type="radio" name="q12" value="A"> A. Vị giống thịt gà</label>
+                <label><input type="radio" name="q12" value="B"> B. Làm từ thịt gà</label>
+                <label><input type="radio" name="q12" value="C" data-correct="true"> C. Thân to, trắng, giống cái đùi gà</label>
+                <label><input type="radio" name="q12" value="D"> D. Gà thích ăn nấm này</label>
+            </div>
+            <div class="explanation">Giải thích: Tên gọi xuất phát từ hình dáng mập mạp, trắng trẻo của thân nấm.</div>
+        </div>
+
+        <div class="question-card" id="q13">
+            <div class="question-title">Câu 13: Đâu là nhóm gồm toàn các loại nấm ăn được?</div>
+            <div class="options">
+                <label><input type="radio" name="q13" value="A"> A. Nấm rơm, nấm linh chi, nấm mốc xanh</label>
+                <label><input type="radio" name="q13" value="B" data-correct="true"> B. Nấm hương, nấm sò, nấm đùi gà</label>
+                <label><input type="radio" name="q13" value="C"> C. Nấm kim châm, nấm lạ sặc sỡ</label>
+                <label><input type="radio" name="q13" value="D"> D. Nấm men, nấm mốc, nấm rơm</label>
+            </div>
+            <div class="explanation">Giải thích: Phương án B gồm các loại nấm phổ biến và an toàn. Các nhóm khác đều chứa nấm mốc hoặc nấm lạ.</div>
+        </div>
+
+        <div class="question-card" id="q14">
+            <div class="question-title">Câu 14: Tại sao người ta thường phơi khô nấm hương, mộc nhĩ?</div>
+            
+            <div class="options">
+                <label><input type="radio" name="q14" value="A" data-correct="true"> A. Để bảo quản lâu, tránh bị hỏng</label>
+                <label><input type="radio" name="q14" value="B"> B. Để làm mất chất dinh dưỡng</label>
+                <label><input type="radio" name="q14" value="C"> C. Để nấm cứng như đá</label>
+                <label><input type="radio" name="q14" value="D"> D. Để đổi màu nấm</label>
+            </div>
+            <div class="explanation">Giải thích: Loại bỏ nước giúp vi khuẩn và nấm mốc không phát triển được, giúp để dành nấm được cả năm.</div>
+        </div>
+
+        <div class="question-card" id="q15">
+            <div class="question-title">Câu 15: Nấm hương (nấm đông cô) có đặc điểm nổi bật gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A"> A. Màu trắng tinh, không mùi</label>
+                <label><input type="radio" name="q15" value="B" data-correct="true"> B. Mũ màu nâu, mùi rất thơm</label>
+                <label><input type="radio" name="q15" value="C"> C. Thân rất dài, mũ bé tí</label>
+                <label><input type="radio" name="q15" value="D"> D. Sống dưới nước</label>
+            </div>
+            <div class="explanation">Giải thích: Mùi thơm đặc trưng là lí do nấm hương được dùng trong nhiều món canh, hầm, xào.</div>
+        </div>
+
+        <div class="controls">
+            <button type="button" onclick="checkAnswers()">Xem kết quả</button>
+            <button type="button" onclick="location.reload()" style="background-color: #607d8b; margin-left: 10px;">Làm lại</button>
+        </div>
+
+        <div id="result-summary"></div>
+    </form>
+</div>
+
+<script>
+    function checkAnswers() {
+        let score = 0;
+        const totalQuestions = 15;
+        const questions = document.querySelectorAll('.question-card');
+
+        questions.forEach(card => {
+            const inputs = card.querySelectorAll('input[type="radio"]');
+            const explanation = card.querySelector('.explanation');
+            let answered = false;
+            let correctInput = null;
+
+            // Reset styles
+            card.querySelectorAll('label').forEach(lbl => {
+                lbl.classList.remove('correct-answer', 'wrong-answer');
+            });
+
+            inputs.forEach(input => {
+                if (input.dataset.correct === "true") {
+                    correctInput = input;
                 }
                 
-                // Kiểm tra thời gian làm bài
-                const timeDoc = await db.collection("CAU_HINH").doc("thoi_gian_lam_bai").get();
-                if(timeDoc.exists && timeDoc.data()[monKey] > 0) {
-                     window.serverTimeLimit = timeDoc.data()[monKey] * 60; 
+                if (input.checked) {
+                    answered = true;
+                    if (input.dataset.correct === "true") {
+                        score++;
+                        input.parentElement.classList.add('correct-answer');
+                    } else {
+                        input.parentElement.classList.add('wrong-answer');
+                    }
                 }
-            } catch (e) { console.log("Lỗi tải cấu hình:", e); }
-        }
+            });
+
+            // Highlight correct answer if wrong or skipped
+            if (correctInput) {
+                 // Luôn hiện đáp án đúng để học sinh đối chiếu
+                correctInput.parentElement.classList.add('correct-answer');
+            }
+
+            // Show explanation
+            explanation.style.display = 'block';
+        });
+
+        // Show score
+        const resultDiv = document.getElementById('result-summary');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `Em đã trả lời đúng ${score}/${totalQuestions} câu!`;
         
-        // Đợi 0.5s để config.js kịp chạy xong
-        setTimeout(initPage, 500);
-    </script>
-    
-    <script src="core.js"></script>
-    <script src="config></script>
-    
+        if(score === totalQuestions) {
+            resultDiv.innerHTML += "<br>🎉 Xuất sắc! Em là một nhà khoa học nhí tài ba!";
+        } else if (score >= 10) {
+            resultDiv.innerHTML += "<br>👏 Làm tốt lắm! Em đã nắm vững bài học.";
+        } else {
+            resultDiv.innerHTML += "<br>💪 Cố lên! Em hãy xem lại các câu sai nhé.";
+        }
+
+        // Scroll to bottom
+        resultDiv.scrollIntoView({behavior: "smooth"});
+    }
+</script>
+
 </body>
 </html>
