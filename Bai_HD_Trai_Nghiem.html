@@ -3,41 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Làm Bài Tập - Lớp 4A</title>
-    <link rel="stylesheet" href="style.css">
+    <title>HĐTN 4: Vẻ Đẹp Quê Hương</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* CSS Tags mức độ - Đồng bộ giao diện */
+        .level-tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+            display: inline-block;
+        }
+        .nb { background-color: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+        .th { background-color: #ffedd5; color: #9a3412; border: 1px solid #fdba74; }
+        .vd { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    </style>
 </head>
 <body>
 
     <div class="quiz-container">
         <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; display:flex; align-items:center; gap:5px;">
+                ⬅ Quay về Menu Môn Học
+            </a>
         </div>
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap"> Hoạt động trải nghiệm</h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display">...</span></p>
+                <h2 id="ten-bai-tap">HĐTN - VẺ ĐẸP QUÊ HƯƠNG</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
+                <p style="font-size:12px; color:#64748b; font-style:italic">⚡ Thời gian làm bài: 15 phút</p>
             </div>
-            <div class="timer">⏱ <span id="timer">00:00</span></div>
+            <div class="timer">⏱ <span id="timer">15:00</span></div>
+        </div>
+
+        <script>
+            window.serverTimeLimit = 900; 
+        </script>
+
+        <div class="question-block">
+            <div class="question-text">Câu 1: <span class="level-tag nb">Nhận biết</span><br>Để giữ gìn vẻ đẹp của các cảnh quan thiên nhiên, hành động nào dưới đây là ĐÚNG nhất?</div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. Khắc tên mình lên vách đá hoặc thân cây để làm kỉ niệm.</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Chúng ta cần bảo vệ cảnh quan bằng cách giữ vệ sinh chung, trồng cây và không phá hoại môi trường. Hành động khắc tên hay hái hoa là phá hoại cảnh quan."> B. Giữ gìn vệ sinh, không vứt rác bừa bãi và trồng thêm cây xanh.</label>
+                <label><input type="radio" name="q1" value="C"> C. Hái hoa, bẻ cành mang về nhà cắm.</label>
+                <label><input type="radio" name="q1" value="D"> D. Vứt vỏ chai nhựa xuống suối cho trôi đi.</label>
+            </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Phân số nào bằng 1/2?</div>
+            <div class="question-text">Câu 2: <span class="level-tag nb">Nhận biết</span><br>Hình ảnh "Ruộng bậc thang" chín vàng thường là đặc trưng của vùng địa hình nào ở nước ta?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. 2/5</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. 2/4</label>
-                <label><input type="radio" name="q1" value="C"> C. 3/7</label>
+                <label><input type="radio" name="q2" value="A" data-correct="true" data-explain="Ruộng bậc thang là phương thức canh tác lúa nước đặc trưng ở vùng núi cao (như Tây Bắc) để chống xói mòn và giữ nước."> A. Vùng núi cao (Tây Bắc).</label>
+                <label><input type="radio" name="q2" value="B"> B. Vùng biển đảo.</label>
+                <label><input type="radio" name="q2" value="C"> C. Vùng thành phố lớn.</label>
+                <label><input type="radio" name="q2" value="D"> D. Vùng sông nước miền Tây.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Kết quả của 10 + 5 là?</div>
+            <div class="question-text">Câu 3: <span class="level-tag th">Thông hiểu</span><br>Trong hoạt động "Phóng viên nhí", mục đích chính của việc phỏng vấn bạn cùng bàn về bức tranh là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. 14</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true"> B. 15</label>
+                <label><input type="radio" name="q3" value="A"> A. Để xem ai vẽ đẹp hơn.</label>
+                <label><input type="radio" name="q3" value="B" data-correct="true" data-explain="Mục đích của hoạt động trải nghiệm là chia sẻ cảm xúc, lan tỏa niềm tự hào về quê hương chứ không phải để so sánh hơn thua."> B. Để chia sẻ cảm xúc, niềm tự hào và giới thiệu vẻ đẹp của cảnh quan đó.</label>
+                <label><input type="radio" name="q3" value="C"> C. Để mua lại bức tranh của bạn.</label>
+                <label><input type="radio" name="q3" value="D"> D. Để bắt lỗi sai trong bức tranh của bạn.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 4: <span class="level-tag th">Thông hiểu</span><br>Câu thành ngữ nào được cô giáo nhắc đến để nói về sự giàu đẹp, trù phú của thiên nhiên nước ta?</div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. Đất lành chim đậu.</label>
+                <label><input type="radio" name="q4" value="B"> B. Non xanh nước biếc.</label>
+                <label><input type="radio" name="q4" value="C" data-correct="true" data-explain="'Rừng vàng biển bạc' là thành ngữ ca ngợi sự giàu có, quý giá của tài nguyên thiên nhiên Việt Nam."> C. Rừng vàng biển bạc.</label>
+                <label><input type="radio" name="q4" value="D"> D. Thẳng cánh cò bay.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 5: <span class="level-tag nb">Nhận biết</span><br>Trong hoạt động Khởi động "Du lịch qua màn ảnh nhỏ", bài hát nào đã được lồng ghép vào video?</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. Trái đất này là của chúng mình.</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true" data-explain="Bài hát 'Việt Nam quê hương tôi' thường được dùng để giới thiệu vẻ đẹp đất nước trong các hoạt động trải nghiệm."> B. Việt Nam quê hương tôi.</label>
+                <label><input type="radio" name="q5" value="C"> C. Em yêu trường em.</label>
+                <label><input type="radio" name="q5" value="D"> D. Quốc ca Việt Nam.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 6: <span class="level-tag nb">Nhận biết</span><br>Cô giáo (hoặc thầy giáo) đã đóng vai nhân vật nào để dẫn dắt cả lớp đi thăm các vùng miền?</div>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A"> A. Bác tài xế.</label>
+                <label><input type="radio" name="q6" value="B"> B. Phi công.</label>
+                <label><input type="radio" name="q6" value="C" data-correct="true" data-explain="Giáo viên đóng vai Hướng dẫn viên du lịch để giới thiệu sinh động các địa danh cho học sinh."> C. Hướng dẫn viên du lịch.</label>
+                <label><input type="radio" name="q6" value="D"> D. Nhiếp ảnh gia.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 7: <span class="level-tag nb">Nhận biết</span><br>Đâu là tên của một cảnh đẹp nổi tiếng thuộc vùng Biển đảo?</div>
+            <div class="options">
+                <label><input type="radio" name="q7" value="A"> A. Đỉnh núi Fansipan.</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Vịnh Hạ Long là di sản thiên nhiên thế giới nổi tiếng với hàng nghìn đảo đá lớn nhỏ, thuộc vùng biển đảo Quảng Ninh."> B. Vịnh Hạ Long.</label>
+                <label><input type="radio" name="q7" value="C"> C. Hồ Hoàn Kiếm.</label>
+                <label><input type="radio" name="q7" value="D"> D. Rừng Cúc Phương.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 8: <span class="level-tag vd">Vận dụng</span><br>Học sinh cần chuẩn bị đồ dùng gì quan trọng nhất cho tiết học này (theo dặn dò từ tiết trước)?</div>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A"> A. Máy tính bảng.</label>
+                <label><input type="radio" name="q8" value="B"> B. Đất nặn.</label>
+                <label><input type="radio" name="q8" value="C" data-correct="true" data-explain="Để tham gia chia sẻ, học sinh cần sưu tầm và mang theo tranh ảnh về cảnh đẹp quê hương."> C. Tranh ảnh về cảnh đẹp quê hương đã sưu tầm.</label>
+                <label><input type="radio" name="q8" value="D"> D. Kính lúp.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 9: <span class="level-tag th">Thông hiểu</span><br>Từ ngữ nào dưới đây thể hiện đúng nhất cảm xúc cần có khi ngắm nhìn vẻ đẹp của đất nước?</div>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A"> A. Sợ hãi.</label>
+                <label><input type="radio" name="q9" value="B"> B. Tức giận.</label>
+                <label><input type="radio" name="q9" value="C" data-correct="true" data-explain="Trước vẻ đẹp hùng vĩ và thơ mộng của quê hương, chúng ta cảm thấy yêu quý và tự hào."> C. Tự hào và yêu quý.</label>
+                <label><input type="radio" name="q9" value="D"> D. Buồn chán.</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 10: <span class="level-tag vd">Vận dụng</span><br>Cuối giờ, cô giáo dặn các bạn về nhà làm gì với bức tranh mình thích nhất?</div>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A"> A. Cất kỹ vào tủ không cho ai xem.</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="Việc dán vào 'Cuốn sổ tay trải nghiệm' giúp các em lưu giữ kỉ niệm và cảm xúc về bài học lâu hơn."> B. Dán vào 'Cuốn sổ tay trải nghiệm' và viết lời giới thiệu.</label>
+                <label><input type="radio" name="q10" value="C"> C. Mang đi bán lấy tiền.</label>
+                <label><input type="radio" name="q10" value="D"> D. Xé nhỏ để làm tranh xé dán.</label>
             </div>
         </div>
 
