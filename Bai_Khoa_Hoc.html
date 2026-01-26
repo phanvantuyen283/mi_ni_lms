@@ -3,399 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc nghiệm Khoa học Lớp 4 - Bài 20</title>
+    <title>Bài Tập Trắc Nghiệm - Khoa Học 4</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
     <style>
-        :root {
-            --primary-color: #4CAF50; /* Màu xanh lá chủ đạo của bài Nấm */
-            --secondary-color: #ff9800;
-            --bg-color: #f4f9f4;
-            --text-color: #333;
-            --wrong-color: #f44336;
+        /* CSS cho thẻ mức độ nhận thức */
+        .level-tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+            display: inline-block;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 20px;
-        }
-
-        h1 {
-            color: var(--primary-color);
-            margin: 0;
-        }
-
-        .sub-title {
-            color: #666;
-            font-size: 1.1em;
-            margin-top: 10px;
-        }
-
-        .question-card {
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: transform 0.2s;
-        }
-
-        .question-card:hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .question-title {
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-
-        .options label {
-            display: block;
-            padding: 10px 15px;
-            margin-bottom: 8px;
-            background: #f9f9f9;
-            border-radius: 5px;
-            cursor: pointer;
-            border: 1px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .options label:hover {
-            background: #e8f5e9;
-            border-color: var(--primary-color);
-        }
-
-        .options input[type="radio"] {
-            margin-right: 10px;
-        }
-
-        /* Styles for results */
-        .correct-answer {
-            background-color: #d4edda !important;
-            border-color: #c3e6cb !important;
-            color: #155724;
-            font-weight: bold;
-        }
-
-        .wrong-answer {
-            background-color: #f8d7da !important;
-            border-color: #f5c6cb !important;
-            color: #721c24;
-        }
-
-        .explanation {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
-            font-size: 0.95em;
-            color: #856404;
-        }
-
-        .controls {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1em;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        #result-summary {
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-top: 20px;
-            color: var(--secondary-color);
-            display: none;
-        }
+        .nb { background-color: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; } /* Nhận biết */
+        .th { background-color: #ffedd5; color: #9a3412; border: 1px solid #fdba74; } /* Thông hiểu */
+        .vd { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; } /* Vận dụng */
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>ÔN TẬP: NẤM ĂN VÀ NẤM MEN</h1>
-        <div class="sub-title">Khoa học Lớp 4 - Bài 20</div>
-        <p><em>Em hãy chọn đáp án đúng nhất cho các câu hỏi dưới đây.</em></p>
-    </header>
+    <div class="quiz-container">
+        <div style="margin-bottom:15px">
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; display:flex; align-items:center; gap:5px;">
+                ⬅ Quay về Menu Môn Học
+            </a>
+        </div>
 
-    <form id="quiz-form">
-        <div class="question-card" id="q1">
-            <div class="question-title">Câu 1: Các bộ phận chính thường thấy của một cây nấm mũ là gì?</div>
-            [attachment_0](attachment)
-            <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Rễ, thân, lá</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Mũ nấm, thân nấm, chân nấm</label>
-                <label><input type="radio" name="q1" value="C"> C. Mũ nấm, cành nấm, lá nấm</label>
-                <label><input type="radio" name="q1" value="D"> D. Hoa, quả, hạt</label>
+        <div class="header">
+            <div class="info">
+                <h2 id="ten-bai-tap">KHOA HỌC 4 - BÀI: NẤM MEN</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
+                <p style="font-size:12px; color:#64748b; font-style:italic">⚡ Thời gian làm bài: 15 phút</p>
             </div>
-            <div class="explanation">Giải thích: Dựa vào hình quan sát (Hình 10 SGK), nấm mũ gồm 3 phần chính là Mũ, Thân và Chân nấm.</div>
+            <div class="timer">⏱ <span id="timer">15:00</span></div>
         </div>
 
-        <div class="question-card" id="q2">
-            <div class="question-title">Câu 2: Loại nấm nào sau đây thường được dùng làm thức ăn?</div>
+        <script>
+            window.serverTimeLimit = 900; 
+        </script>
+
+        <div class="question-block">
+            <div class="question-text">Câu 1: <span class="level-tag nb">Nhận biết</span><br>Tại sao trong quy trình làm bánh mì, người ta lại cho đường vào hòa tan cùng với nấm men?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Nấm mốc</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true"> B. Nấm rơm</label>
-                <label><input type="radio" name="q2" value="C"> C. Nấm lạ trong rừng</label>
-                <label><input type="radio" name="q2" value="D"> D. Nấm mọc ở tường nhà</label>
+                <label><input type="radio" name="q1" value="A"> A. Để làm cho bánh có vị ngọt đậm.</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Nấm men là một sinh vật sống, chúng cần thức ăn để sinh trưởng và hoạt động. Đường chính là nguồn thức ăn yêu thích giúp men hoạt động mạnh."> B. Để cung cấp thức ăn giúp nấm men hoạt động mạnh hơn.</label>
+                <label><input type="radio" name="q1" value="C"> C. Để nấm men chết đi và tạo mùi thơm.</label>
+                <label><input type="radio" name="q1" value="D"> D. Đường giúp làm chín bột nhanh hơn.</label>
             </div>
-            <div class="explanation">Giải thích: Nấm rơm là loại nấm lành tính, giàu dinh dưỡng. Tuyệt đối không ăn nấm lạ hoặc nấm mốc.</div>
         </div>
 
-        <div class="question-card" id="q3">
-            <div class="question-title">Câu 3: Môi trường sống ưa thích của các loại nấm là ở đâu?</div>
+        <div class="question-block">
+            <div class="question-text">Câu 2: <span class="level-tag th">Thông hiểu</span><br>Vì sao khi cắt đôi chiếc bánh mì hoặc bánh bao, em thường thấy bên trong ruột bánh có rất nhiều lỗ nhỏ li ti?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Nơi khô ráo, nắng gắt</label>
-                <label><input type="radio" name="q3" value="B" data-correct="true"> B. Nơi ẩm ướt (đất ẩm, rơm rạ mục, gỗ mục)</label>
-                <label><input type="radio" name="q3" value="C"> C. Dưới mặt nước sâu</label>
-                <label><input type="radio" name="q3" value="D"> D. Trên ngọn cây cao</label>
+                <label><input type="radio" name="q2" value="A"> A. Do người làm bánh dùng kim châm vào.</label>
+                <label><input type="radio" name="q2" value="B"> B. Do bột mì tự nứt ra khi nướng.</label>
+                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Khi nấm men 'ăn' đường, chúng thải ra khí các-bô-níc (CO2). Khí này bị giữ lại trong bột tạo thành các bọt khí, khi nướng lên tạo thành các lỗ nhỏ xốp."> C. Do nấm men sinh ra khí trong quá trình ủ bột tạo thành các bọt khí.</label>
+                <label><input type="radio" name="q2" value="D"> D. Do nước bốc hơi tạo thành lỗ thủng.</label>
             </div>
-            <div class="explanation">Giải thích: Nấm phát triển tốt nhất ở những nơi có độ ẩm cao và giàu chất hữu cơ như rơm rạ, gỗ mục.</div>
         </div>
 
-        <div class="question-card" id="q4">
-            <div class="question-title">Câu 4: Nấm mộc nhĩ (nấm tai mèo) thường có đặc điểm gì?</div>
-            
+        <div class="question-block">
+            <div class="question-text">Câu 3: <span class="level-tag vd">Vận dụng</span><br>Trong thí nghiệm kích hoạt men, nếu em sử dụng nước sôi 100 độ C để hòa men thì điều gì sẽ xảy ra?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Màu trắng, hình cái ô</label>
-                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Màu nâu sẫm, hình giống cái tai</label>
-                <label><input type="radio" name="q4" value="C"> C. Màu vàng, hình sợi dài</label>
-                <label><input type="radio" name="q4" value="D"> D. Màu đỏ, có đốm trắng</label>
+                <label><input type="radio" name="q3" value="A" data-correct="true" data-explain="Nấm men là sinh vật sống. Nước sôi 100 độ C quá nóng sẽ làm nấm men bị chết ngay lập tức, do đó bột sẽ không thể nở được."> A. Nấm men sẽ bị chết và bột không thể nở được.</label>
+                <label><input type="radio" name="q3" value="B"> B. Nấm men sẽ hoạt động cực kỳ mạnh mẽ và nhanh chóng.</label>
+                <label><input type="radio" name="q3" value="C"> C. Bột sẽ nở to gấp 10 lần bình thường.</label>
+                <label><input type="radio" name="q3" value="D"> D. Nước sôi giúp bánh chín ngay lập tức.</label>
             </div>
-            <div class="explanation">Giải thích: Mộc nhĩ có màu nâu sẫm và hình dáng cong cong giống cái tai người hoặc tai mèo.</div>
         </div>
 
-        <div class="question-card" id="q5">
-            <div class="question-title">Câu 5: Thành phần nào giúp bột mì nở ra và làm bánh tơi xốp?</div>
+        <div class="question-block">
+            <div class="question-text">Câu 4: <span class="level-tag vd">Vận dụng</span><br>Nếu một bạn học sinh làm đúng quy trình nhưng quên không cho nấm men vào bột, sản phẩm bánh mì sau khi nướng sẽ như thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Đường</label>
-                <label><input type="radio" name="q5" value="B"> B. Muối</label>
-                <label><input type="radio" name="q5" value="C" data-correct="true"> C. Men nở (nấm men)</label>
-                <label><input type="radio" name="q5" value="D"> D. Nước lạnh</label>
+                <label><input type="radio" name="q4" value="A"> A. Bánh vẫn nở to và xốp nhưng không thơm.</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true" data-explain="Không có men thì không có khí được sinh ra để làm phồng bột. Kết quả là khối bột đặc, cứng và chai lì."> B. Bánh sẽ bị cứng, chai, không nở và ăn không ngon.</label>
+                <label><input type="radio" name="q4" value="C"> C. Bánh sẽ mềm nhũn như cháo.</label>
+                <label><input type="radio" name="q4" value="D"> D. Bánh sẽ có màu đen.</label>
             </div>
-            <div class="explanation">Giải thích: Nấm men sinh ra khí trong quá trình ủ, bọt khí này bị giữ lại làm bột phồng lên.</div>
         </div>
 
-        <div class="question-card" id="q6">
-            <div class="question-title">Câu 6: Bước nào quan trọng để men hoạt động làm nở bánh mì?</div>
-            
+        <div class="question-block">
+            <div class="question-text">Câu 5: <span class="level-tag th">Thông hiểu</span><br>Dấu hiệu rõ nhất để phân biệt bát bột ĐÃ Ủ và bát bột CHƯA Ủ sau 40 phút là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Nướng ngay lập tức</label>
-                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Ủ bột (bằng khăn ẩm)</label>
-                <label><input type="radio" name="q6" value="C"> C. Phơi nắng to</label>
-                <label><input type="radio" name="q6" value="D"> D. Cho vào ngăn đá</label>
+                <label><input type="radio" name="q5" value="A"> A. Bát bột đã ủ có màu xanh lá cây.</label>
+                <label><input type="radio" name="q5" value="B"> B. Bát bột đã ủ bị khô cứng lại như đá.</label>
+                <label><input type="radio" name="q5" value="C" data-correct="true" data-explain="Sau khi ủ, nấm men hoạt động sinh khí làm khối bột phồng to lên (thường gấp đôi kích thước ban đầu) và kết cấu trở nên xốp mềm."> C. Bát bột đã ủ nở phồng lên (gấp đôi), ấn vào thấy mềm xốp.</label>
+                <label><input type="radio" name="q5" value="D"> D. Bát bột đã ủ tan chảy thành nước.</label>
             </div>
-            <div class="explanation">Giải thích: Cần thời gian ủ bột để men có thời gian "ăn" đường và sinh khí làm nở bánh.</div>
         </div>
 
-        <div class="question-card" id="q7">
-            <div class="question-title">Câu 7: Loại nấm nào sau đây được coi là dược liệu quý?</div>
-            
+        <div class="question-block">
+            <div class="question-text">Câu 6: <span class="level-tag nb">Nhận biết</span><br>Vai trò chính của nấm men trong làm bánh là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Nấm rơm</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true"> B. Nấm linh chi</label>
-                <label><input type="radio" name="q7" value="C"> C. Nấm sò</label>
-                <label><input type="radio" name="q7" value="D"> D. Nấm mốc</label>
+                <label><input type="radio" name="q6" value="A" data-correct="true" data-explain="Vai trò quan trọng nhất của men là tạo độ xốp, nở cho bánh."> A. Làm cho bánh nở xốp.</label>
+                <label><input type="radio" name="q6" value="B"> B. Làm cho bánh có màu đỏ.</label>
+                <label><input type="radio" name="q6" value="C"> C. Làm cho bánh cứng lại để dễ cầm.</label>
+                <label><input type="radio" name="q6" value="D"> D. Làm cho bánh mặn hơn.</label>
             </div>
-            <div class="explanation">Giải thích: Nấm linh chi (và đông trùng hạ thảo) có dược tính cao, dùng để bồi bổ sức khỏe.</div>
         </div>
 
-        <div class="question-card" id="q8">
-            <div class="question-title">Câu 8: Khi thấy thực phẩm bị mốc xanh, mốc đen, em nên làm gì?</div>
-            
+        <div class="question-block">
+            <div class="question-text">Câu 7: <span class="level-tag nb">Nhận biết</span><br>Ngoài bánh mì, nấm men còn được sử dụng để sản xuất những sản phẩm nào dưới đây?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Cắt bỏ phần mốc rồi ăn tiếp</label>
-                <label><input type="radio" name="q8" value="B"> B. Rửa sạch rồi nấu lại</label>
-                <label><input type="radio" name="q8" value="C" data-correct="true"> C. Bỏ đi, tuyệt đối không ăn</label>
-                <label><input type="radio" name="q8" value="D"> D. Cho vật nuôi ăn</label>
+                <label><input type="radio" name="q7" value="A"> A. Kẹo dẻo, thạch rau câu.</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Nấm men còn được dùng trong công nghệ lên men thực phẩm như làm bánh bao, sản xuất bia, rượu, cồn..."> B. Bánh bao, bia, rượu.</label>
+                <label><input type="radio" name="q7" value="C"> C. Nước ngọt có ga, kem.</label>
+                <label><input type="radio" name="q7" value="D"> D. Đậu phụ, nước mắm.</label>
             </div>
-            <div class="explanation">Giải thích: Chân nấm mốc và độc tố có thể đã lan sâu vào thực phẩm, ăn vào rất nguy hiểm.</div>
         </div>
 
-        <div class="question-card" id="q9">
-            <div class="question-title">Câu 9: Nấm kim châm có đặc điểm hình dạng nào?</div>
-            [attachment_1](attachment)
+        <div class="question-block">
+            <div class="question-text">Câu 8: <span class="level-tag nb">Nhận biết</span><br>Nhiệt độ nước thích hợp nhất để kích hoạt nấm men hoạt động tốt là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Thân to, mập</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true"> B. Thân nhỏ, dài như cái kim</label>
-                <label><input type="radio" name="q9" value="C"> C. Hình cái tai</label>
-                <label><input type="radio" name="q9" value="D"> D. Hình tròn như quả trứng</label>
+                <label><input type="radio" name="q8" value="A"> A. Nước lạnh ngắt (nước đá).</label>
+                <label><input type="radio" name="q8" value="B"> B. Nước sôi sùng sục (100 độ C).</label>
+                <label><input type="radio" name="q8" value="C" data-correct="true" data-explain="Nước ấm khoảng 35-40 độ C (như nước tắm em bé) là môi trường lý tưởng nhất. Nước quá nóng làm chết men, nước quá lạnh làm men ngủ đông."> C. Nước ấm (khoảng 35 - 40 độ C).</label>
+                <label><input type="radio" name="q8" value="D"> D. Nước lọc ở nhiệt độ phòng nào cũng được.</label>
             </div>
-            <div class="explanation">Giải thích: Đúng như tên gọi, nấm kim châm có thân rất mảnh và dài.</div>
         </div>
 
-        <div class="question-card" id="q10">
-            <div class="question-title">Câu 10: Để kích hoạt men nở, nên dùng loại nước nào?</div>
+        <div class="question-block">
+            <div class="question-text">Câu 9: <span class="level-tag nb">Nhận biết</span><br>Khi trộn men, đường và nước ấm, hiện tượng gì xuất hiện sau 2-3 phút chứng tỏ men đang hoạt động?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Nước sôi sùng sục</label>
-                <label><input type="radio" name="q10" value="B"> B. Nước đá lạnh</label>
-                <label><input type="radio" name="q10" value="C" data-correct="true"> C. Nước ấm</label>
-                <label><input type="radio" name="q10" value="D"> D. Dầu ăn</label>
+                <label><input type="radio" name="q9" value="A" data-correct="true" data-explain="Men 'ăn' đường và sinh ra khí, làm xuất hiện lớp bọt khí sủi lên bề mặt giống như gạch cua."> A. Sủi bọt khí lên bề mặt.</label>
+                <label><input type="radio" name="q9" value="B"> B. Hỗn hợp đông cứng lại.</label>
+                <label><input type="radio" name="q9" value="C"> C. Hỗn hợp đổi sang màu tím.</label>
+                <label><input type="radio" name="q9" value="D"> D. Không có hiện tượng gì xảy ra.</label>
             </div>
-            <div class="explanation">Giải thích: Nước ấm (khoảng 35-40 độ C) giúp men hoạt động tốt nhất. Nước sôi làm chết men, nước lạnh làm men ngủ.</div>
         </div>
 
-        <div class="question-card" id="q11">
-            <div class="question-title">Câu 11: Giá trị dinh dưỡng chủ yếu của nấm ăn là gì?</div>
+        <div class="question-block">
+            <div class="question-text">Câu 10: <span class="level-tag nb">Nhận biết</span><br>Trong bài học, cô giáo đã ví von Nấm men là nhân vật nào?</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. Nhiều chất béo</label>
-                <label><input type="radio" name="q11" value="B" data-correct="true"> B. Nhiều vi-ta-min, chất xơ, chất đạm</label>
-                <label><input type="radio" name="q11" value="C"> C. Nhiều đường ngọt</label>
-                <label><input type="radio" name="q11" value="D"> D. Không có chất dinh dưỡng</label>
+                <label><input type="radio" name="q10" value="A"> A. Chú ong chăm chỉ.</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="Nấm men được ví là 'Người thợ tí hon' vì tuy nhỏ bé không nhìn thấy bằng mắt thường nhưng lại làm việc rất chăm chỉ để giúp bánh nở phồng."> B. Người thợ tí hon.</label>
+                <label><input type="radio" name="q10" value="C"> C. Bác sĩ tài ba.</label>
+                <label><input type="radio" name="q10" value="D"> D. Ảo thuật gia đại tài.</label>
             </div>
-            <div class="explanation">Giải thích: Nấm được ví như "thịt sạch" vì chứa nhiều đạm thực vật và vitamin.</div>
         </div>
 
-        <div class="question-card" id="q12">
-            <div class="question-title">Câu 12: Tại sao gọi là nấm đùi gà?</div>
-            [attachment_2](attachment)
+        <div class="question-block">
+            <div class="question-text">Câu 11: <span class="level-tag nb">Nhận biết</span><br>Theo giáo án, thời gian ủ bột cần thiết để bột nở đạt chuẩn thường là khoảng bao lâu?</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Vị giống thịt gà</label>
-                <label><input type="radio" name="q12" value="B"> B. Làm từ thịt gà</label>
-                <label><input type="radio" name="q12" value="C" data-correct="true"> C. Thân to, trắng, giống cái đùi gà</label>
-                <label><input type="radio" name="q12" value="D"> D. Gà thích ăn nấm này</label>
+                <label><input type="radio" name="q11" value="A"> A. 1 - 2 phút.</label>
+                <label><input type="radio" name="q11" value="B"> B. 5 - 10 phút.</label>
+                <label><input type="radio" name="q11" value="C" data-correct="true" data-explain="Cần khoảng 30-40 phút để nấm men có đủ thời gian sinh khí và làm nở bột."> C. 30 - 40 phút.</label>
+                <label><input type="radio" name="q11" value="D"> D. 1 ngày đêm.</label>
             </div>
-            <div class="explanation">Giải thích: Tên gọi xuất phát từ hình dáng mập mạp, trắng trẻo của thân nấm.</div>
         </div>
 
-        <div class="question-card" id="q13">
-            <div class="question-title">Câu 13: Đâu là nhóm gồm toàn các loại nấm ăn được?</div>
+        <div class="question-block">
+            <div class="question-text">Câu 12: <span class="level-tag th">Thông hiểu</span><br>Trong quy trình làm bánh mì, nấm men thường được cho vào ở bước nào?</div>
             <div class="options">
-                <label><input type="radio" name="q13" value="A"> A. Nấm rơm, nấm linh chi, nấm mốc xanh</label>
-                <label><input type="radio" name="q13" value="B" data-correct="true"> B. Nấm hương, nấm sò, nấm đùi gà</label>
-                <label><input type="radio" name="q13" value="C"> C. Nấm kim châm, nấm lạ sặc sỡ</label>
-                <label><input type="radio" name="q13" value="D"> D. Nấm men, nấm mốc, nấm rơm</label>
+                <label><input type="radio" name="q12" value="A"> A. Cho vào cuối cùng khi bánh đã nướng chín.</label>
+                <label><input type="radio" name="q12" value="B" data-correct="true" data-explain="Nấm men cần được kích hoạt và trộn đều với bột ngay từ đầu để có thời gian hoạt động trong suốt quá trình nhào và ủ."> B. Trộn cùng nước ấm và đường ngay ở bước đầu tiên.</label>
+                <label><input type="radio" name="q12" value="C"> C. Rắc lên mặt bánh trước khi ăn.</label>
+                <label><input type="radio" name="q12" value="D"> D. Cho vào khi đang nướng trong lò.</label>
             </div>
-            <div class="explanation">Giải thích: Phương án B gồm các loại nấm phổ biến và an toàn. Các nhóm khác đều chứa nấm mốc hoặc nấm lạ.</div>
         </div>
 
-        <div class="question-card" id="q14">
-            <div class="question-title">Câu 14: Tại sao người ta thường phơi khô nấm hương, mộc nhĩ?</div>
-            
+        <div class="question-block">
+            <div class="question-text">Câu 13: <span class="level-tag nb">Nhận biết</span><br>Ruột bánh mì thường có màu gì?</div>
             <div class="options">
-                <label><input type="radio" name="q14" value="A" data-correct="true"> A. Để bảo quản lâu, tránh bị hỏng</label>
-                <label><input type="radio" name="q14" value="B"> B. Để làm mất chất dinh dưỡng</label>
-                <label><input type="radio" name="q14" value="C"> C. Để nấm cứng như đá</label>
-                <label><input type="radio" name="q14" value="D"> D. Để đổi màu nấm</label>
+                <label><input type="radio" name="q13" value="A" data-correct="true" data-explain="Ruột bánh mì làm từ bột mì thông thường sẽ có màu trắng hoặc hơi ngà vàng."> A. Màu trắng (hoặc hơi ngà).</label>
+                <label><input type="radio" name="q13" value="B"> B. Màu xanh dương.</label>
+                <label><input type="radio" name="q13" value="C"> C. Màu đen tuyền.</label>
+                <label><input type="radio" name="q13" value="D"> D. Màu tím than.</label>
             </div>
-            <div class="explanation">Giải thích: Loại bỏ nước giúp vi khuẩn và nấm mốc không phát triển được, giúp để dành nấm được cả năm.</div>
         </div>
 
-        <div class="question-card" id="q15">
-            <div class="question-title">Câu 15: Nấm hương (nấm đông cô) có đặc điểm nổi bật gì?</div>
+        <div class="question-block">
+            <div class="question-text">Câu 14: <span class="level-tag vd">Vận dụng</span><br>Nếu dùng nước đá lạnh để hòa men thì điều gì xảy ra?</div>
             <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. Màu trắng tinh, không mùi</label>
-                <label><input type="radio" name="q15" value="B" data-correct="true"> B. Mũ màu nâu, mùi rất thơm</label>
-                <label><input type="radio" name="q15" value="C"> C. Thân rất dài, mũ bé tí</label>
-                <label><input type="radio" name="q15" value="D"> D. Sống dưới nước</label>
+                <label><input type="radio" name="q14" value="A"> A. Men sẽ chết ngay lập tức.</label>
+                <label><input type="radio" name="q14" value="B"> B. Men hoạt động rất nhanh.</label>
+                <label><input type="radio" name="q14" value="C" data-correct="true" data-explain="Nước lạnh không làm chết men nhưng sẽ làm men 'ngủ đông' (bị tê liệt), hoạt động rất yếu hoặc không hoạt động, khiến bánh lâu nở hoặc không nở."> C. Men sẽ "ngủ đông", hoạt động rất yếu hoặc không hoạt động.</label>
+                <label><input type="radio" name="q14" value="D"> D. Men sẽ biến thành đường.</label>
             </div>
-            <div class="explanation">Giải thích: Mùi thơm đặc trưng là lí do nấm hương được dùng trong nhiều món canh, hầm, xào.</div>
         </div>
 
-        <div class="controls">
-            <button type="button" onclick="checkAnswers()">Xem kết quả</button>
-            <button type="button" onclick="location.reload()" style="background-color: #607d8b; margin-left: 10px;">Làm lại</button>
+        <div class="question-block">
+            <div class="question-text">Câu 15: <span class="level-tag vd">Vận dụng</span><br>Khi thực hành làm thí nghiệm hoặc làm bánh, học sinh cần có phẩm chất nào?</div>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A"> A. Lười biếng, không dọn dẹp.</label>
+                <label><input type="radio" name="q15" value="B"> B. Gian dối kết quả.</label>
+                <label><input type="radio" name="q15" value="C" data-correct="true" data-explain="Khoa học cần sự trung thực (ghi chép đúng hiện tượng), chăm chỉ (làm đúng quy trình) và giữ vệ sinh (nhất là với thực phẩm)."> C. Chăm chỉ, trung thực và giữ vệ sinh.</label>
+                <label><input type="radio" name="q15" value="D"> D. Nghịch ngợm, ném bột vào bạn.</label>
+            </div>
         </div>
 
-        <div id="result-summary"></div>
-    </form>
-</div>
+        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
+    </div>
 
-<script>
-    function checkAnswers() {
-        let score = 0;
-        const totalQuestions = 15;
-        const questions = document.querySelectorAll('.question-card');
-
-        questions.forEach(card => {
-            const inputs = card.querySelectorAll('input[type="radio"]');
-            const explanation = card.querySelector('.explanation');
-            let answered = false;
-            let correctInput = null;
-
-            // Reset styles
-            card.querySelectorAll('label').forEach(lbl => {
-                lbl.classList.remove('correct-answer', 'wrong-answer');
-            });
-
-            inputs.forEach(input => {
-                if (input.dataset.correct === "true") {
-                    correctInput = input;
-                }
-                
-                if (input.checked) {
-                    answered = true;
-                    if (input.dataset.correct === "true") {
-                        score++;
-                        input.parentElement.classList.add('correct-answer');
-                    } else {
-                        input.parentElement.classList.add('wrong-answer');
-                    }
-                }
-            });
-
-            // Highlight correct answer if wrong or skipped
-            if (correctInput) {
-                 // Luôn hiện đáp án đúng để học sinh đối chiếu
-                correctInput.parentElement.classList.add('correct-answer');
-            }
-
-            // Show explanation
-            explanation.style.display = 'block';
-        });
-
-        // Show score
-        const resultDiv = document.getElementById('result-summary');
-        resultDiv.style.display = 'block';
-        resultDiv.innerHTML = `Em đã trả lời đúng ${score}/${totalQuestions} câu!`;
-        
-        if(score === totalQuestions) {
-            resultDiv.innerHTML += "<br>🎉 Xuất sắc! Em là một nhà khoa học nhí tài ba!";
-        } else if (score >= 10) {
-            resultDiv.innerHTML += "<br>👏 Làm tốt lắm! Em đã nắm vững bài học.";
-        } else {
-            resultDiv.innerHTML += "<br>💪 Cố lên! Em hãy xem lại các câu sai nhé.";
-        }
-
-        // Scroll to bottom
-        resultDiv.scrollIntoView({behavior: "smooth"});
-    }
-</script>
     <script src="config.js"></script>
-    <Script src="core.js"></script>
+    <script src="core.js"></script>
+
 </body>
 </html>
