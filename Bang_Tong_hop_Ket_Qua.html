@@ -13,7 +13,7 @@
     <script src="config.js"></script>
 
     <style>
-        /* GIAO DIỆN RIÊNG CHO DASHBOARD (Khác với style.css của bài thi) */
+        /* CSS DÀNH RIÊNG CHO DASHBOARD */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f1f5f9; padding: 20px; font-size: 13px; color:#334155; margin: 0; }
         .container { max-width: 100%; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         
@@ -27,9 +27,9 @@
 
         button { padding: 10px 15px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; color: white; display: flex; align-items: center; gap: 5px; font-size: 13px; text-transform: uppercase; transition: 0.2s; box-shadow: 0 2px 0 rgba(0,0,0,0.1); }
         button:active { transform: translateY(2px); box-shadow: none; }
-        .btn-back { background: #64748b; }
-        .btn-refresh { background: #0284c7; }
-        .btn-excel { background: #16a34a; }
+        .btn-back { background: #64748b; } .btn-back:hover { background: #475569; }
+        .btn-refresh { background: #0284c7; } .btn-refresh:hover { background: #0369a1; }
+        .btn-excel { background: #16a34a; } .btn-excel:hover { background: #15803d; }
         
         /* BẢNG DỮ LIỆU */
         .table-wrapper { overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 8px; max-height: 75vh; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); }
@@ -107,7 +107,6 @@
 
 <script>
     // --- 1. KHỞI TẠO HỆ THỐNG AN TOÀN ---
-    // Kiểm tra xem config.js đã được load chưa để tránh lỗi màn hình trắng
     if (typeof CONFIG === 'undefined') {
         alert("❌ LỖI: Không tìm thấy file config.js. Vui lòng kiểm tra lại hệ thống.");
     } else {
@@ -117,11 +116,11 @@
         var db = firebase.firestore();
     }
 
-    // Danh sách lớp đồng bộ với Index.html
+    // --- 2. DANH SÁCH HỌC SINH (Đồng bộ với Quan_Tri.html) ---
     const DANH_SACH_LOP = [
         "Vũ Việt Anh", "Vũ Gia Bảo", "Lê Thị Liên Chi", "Bùi Anh Dũng", "Vũ Quốc Duy", 
-        "Nguyễn Đăng Dương", "Nguyễn Trí Đại", "Lê Bá Đạt", "Nguyễn Văn Đạt", "Lê Minh Hạnh", "Phan Minh Quang",
-        "Vũ Ngọc Huyền", "Lê Gia Khánh", "Nguyễn Đăng Kiên", "Vũ Đình Khánh Linh", "Mai Quang Long", 
+        "Nguyễn Đăng Dương", "Nguyễn Trí Đại", "Lê Bá Đạt", "Nguyễn Văn Đạt", "Lê Minh Hạnh", 
+        "Vũ Ngọc Huyền", "Lê Gia Khánh", "Nguyễn Đăng Kiên", "Vũ Đình Khánh Linh","Phan Minh Quang", "Mai Quang Long", 
         "Lê Văn Lộc", "Vũ Anh Minh", "Hoàng Bảo Nam", "Phạm Thị Kim Ngân", "Vũ Thu Ngân", 
         "Vũ Thị Yến Nhi", "Đàm Thị Quỳnh Như", "Phạm Hạnh Gia Phát", "Nguyễn Hoàng Thiên Phúc", 
         "Vũ Quang Phúc", "Nguyễn Nhã Phương", "Nguyễn Thị Quỳnh", "Lê Ngọc Sơn", "Đặng Thị Thanh Tâm", 
@@ -134,11 +133,11 @@
     let configMon = { toan: true, tv: true, sudia: true, khoa: true, daoduc: true, congnghe: true, mythuat: true, hdtnghiem: true }; 
     let bangDiem = {};
 
-    // --- 2. LOGIC PHÂN LOẠI MÔN HỌC ---
+    // --- 3. LOGIC PHÂN LOẠI MÔN HỌC ---
     function phanLoaiMon(tieuDe) {
         if(!tieuDe) return null;
         let t = tieuDe.toUpperCase();
-        // Logic khớp với tên bài trong Menu.html
+        // Logic khớp với tên file HTML trong Menu
         if (t.includes("TRẢI NGHIỆM") || t.includes("HĐTN")) return "hdtnghiem";
         if (t.includes("TOÁN")) return "toan";
         if (t.includes("TIẾNG VIỆT") || t.includes("TV")) return "tv";
@@ -150,16 +149,16 @@
         return null;
     }
 
-    // --- 3. HÀM XỬ LÝ DỮ LIỆU ---
+    // --- 4. HÀM XỬ LÝ DỮ LIỆU CHÍNH ---
     async function startApp() {
-        if (!db) return; // Nếu chưa kết nối DB thì dừng
+        if (!db) return;
 
         try {
             // Bước A: Tải cấu hình ẩn/hiện môn từ Server
             const configDoc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
             if (configDoc.exists) configMon = configDoc.data();
 
-            // Bước B: Ẩn các cột môn học không cần thiết trên giao diện
+            // Bước B: Ẩn các cột môn học bị tắt bởi Giáo viên
             let reqCount = 0;
             document.querySelectorAll(".col-mon").forEach(th => {
                 const id = th.getAttribute("data-id");
@@ -171,7 +170,7 @@
                 }
             });
 
-            // Bước C: Tạo bộ khung dữ liệu rỗng cho toàn bộ danh sách lớp
+            // Bước C: Tạo khung dữ liệu rỗng cho toàn bộ lớp
             DANH_SACH_LOP.forEach(ten => {
                 bangDiem[ten] = {
                     name: ten, 
@@ -187,16 +186,16 @@
                 const d = doc.data();
                 const tenHS = d.hoc_sinh;
                 
-                // Chỉ xử lý nếu học sinh có trong danh sách lớp (tránh rác dữ liệu)
+                // Chỉ xử lý nếu tên học sinh có trong danh sách lớp
                 if (bangDiem[tenHS]) {
                     const mon = phanLoaiMon(d.bai_tap);
                     if (mon && configMon[mon]) {
-                        // Tính toán thời gian làm bài
+                        // Tính toán thời gian
                         const endTime = d.ngay_nop ? new Date(d.ngay_nop.seconds * 1000) : new Date();
                         const duration = d.thoi_gian_lam || 0; 
                         const startTime = new Date(endTime.getTime() - duration * 1000); 
                         
-                        // Lưu điểm cao nhất (nếu làm nhiều lần) hoặc lưu lần mới nhất - Ở đây lưu đè lần mới nhất
+                        // Lưu điểm (Ghi đè nếu làm lại nhiều lần - lấy bài mới nhất)
                         bangDiem[tenHS][mon] = {
                             score: d.diem,
                             timeStr: `${formatTime(startTime)} - ${formatTime(endTime)}`
@@ -205,7 +204,7 @@
                 }
             });
 
-            // Bước E: Tính tổng điểm và số bài đã làm
+            // Bước E: Tính tổng điểm và tiến độ
             Object.values(bangDiem).forEach(hs => {
                 LIST_MON.forEach(m => {
                     if(configMon[m] && hs[m]) {
@@ -230,11 +229,11 @@
         return d.toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit', hour12:false}); 
     }
 
-    // --- 4. HÀM HIỂN THỊ BẢNG (RENDER) ---
+    // --- 5. HÀM RENDER BẢNG ---
     function renderTable() {
         let arr = Object.values(bangDiem);
         
-        // Sắp xếp: Ưu tiên người làm nhiều bài nhất lên đầu -> Sau đó đến điểm cao
+        // Sắp xếp: Ai làm nhiều bài nhất lên đầu -> Nếu bằng thì ai điểm cao hơn lên đầu
         arr.sort((a, b) => (b.count - a.count) || (b.totalScore - a.totalScore));
 
         const tbody = document.getElementById("table-body");
@@ -242,21 +241,22 @@
 
         arr.forEach((hs, i) => {
             // Logic Xếp loại
-            let loai = "CHT"; // Chưa hoàn thành
             let badgeClass = "rank-cht";
             let label = "Chưa xong";
 
-            if (hs.count >= hs.req) {
-                // Tìm điểm thấp nhất để xếp loại
+            if (hs.count >= hs.req && hs.req > 0) {
+                // Tìm điểm thấp nhất
                 let min = 10;
                 LIST_MON.forEach(m => {
                     if(configMon[m] && hs[m]) { if(hs[m].score < min) min = hs[m].score; }
                 });
 
-                if(min >= 9) { loai = "XS"; badgeClass = "rank-xs"; label = "Xuất Sắc"; }
-                else if(min >= 7) { loai = "TOT"; badgeClass = "rank-tot"; label = "Tốt"; }
-                else if(min >= 5) { loai = "HT"; badgeClass = "rank-ht"; label = "Hoàn thành"; }
-                else { label = "Cần cố gắng"; } // Trường hợp hiếm (làm đủ nhưng điểm thấp)
+                if(min >= 9) { badgeClass = "rank-xs"; label = "Xuất Sắc"; }
+                else if(min >= 7) { badgeClass = "rank-tot"; label = "Tốt"; }
+                else if(min >= 5) { badgeClass = "rank-ht"; label = "Hoàn thành"; }
+                else { label = "Cần cố gắng"; }
+            } else {
+                label = `Thiếu ${hs.req - hs.count} bài`;
             }
 
             // Tạo HTML các ô điểm
@@ -276,7 +276,7 @@
                 }
             });
 
-            // Màu sắc cho cột tổng điểm
+            // Màu sắc cột tổng
             let progressColor = hs.count >= hs.req ? "#059669" : "#dc2626";
 
             let row = `<tr>
@@ -291,7 +291,7 @@
         });
     }
 
-    // --- 5. TÌM KIẾM ---
+    // --- 6. TÌM KIẾM ---
     window.filterTable = function() {
         const txt = document.getElementById("search-box").value.toUpperCase();
         const rows = document.getElementById("table-body").getElementsByTagName("tr");
@@ -303,17 +303,17 @@
         }
     }
 
-    // --- 6. XUẤT EXCEL CHUYÊN NGHIỆP ---
+    // --- 7. XUẤT EXCEL ---
     window.exportExcel = function() {
         if(!confirm("Bạn có muốn tải xuống bảng dữ liệu này không?")) return;
 
         let tableClone = document.getElementById("score-table").cloneNode(true);
         let rows = tableClone.getElementsByTagName("tr");
         
-        // Gộp điểm và thời gian vào một ô để dễ đọc trong Excel
+        // Gộp điểm và thời gian vào một ô để dễ đọc
         for(let r=1; r<rows.length; r++) { 
             let cells = rows[r].getElementsByTagName("td");
-            // Duyệt qua các cột môn học (Bỏ STT, Tên và 3 cột cuối)
+            // Duyệt qua các cột môn (bỏ STT, Tên và 3 cột cuối)
             for(let c=2; c<cells.length-3; c++) { 
                 let scoreEl = cells[c].querySelector(".score-val");
                 let timeEl = cells[c].querySelector(".time-range");
