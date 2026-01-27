@@ -3,204 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn Tập Tổng Hợp: Tiếng Việt 4</title>
+    <title>Ôn tập: Viết đoạn văn nêu tình cảm, cảm xúc (12 Câu)</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* NÂNG CẤP: Giao diện thẻ mức độ đẹp hơn */
-        .level-tag {
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 12px; /* Bo tròn hình viên thuốc */
-            margin-left: 8px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            vertical-align: middle;
-            display: inline-block;
-        }
-        /* Màu sắc phân cấp rõ ràng */
-        .nb { background-color: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; } /* Xanh dương đậm */
-        .th { background-color: #ffedd5; color: #9a3412; border: 1px solid #fdba74; } /* Cam đậm */
-        .vd { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; } /* Xanh lá đậm */
-    </style>
 </head>
 <body>
 
     <div class="quiz-container">
         <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; display:flex; align-items:center; gap:5px;">
-                ⬅ Quay về Menu Môn Học
-            </a>
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
         </div>
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">Tiễng Việt_ Thứ 2</h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
-                <p style="font-size:12px; color:#64748b; font-style:italic">⚡ Thời gian làm bài: 20 phút</p>
+                <h2 id="ten-bai-tap">TIẾNG VIỆT 4 - VIẾT ĐOẠN VĂN CẢM XÚC</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
-            <div class="timer" id="timer-box">⏱ <span id="timer">20:00</span></div>
+            <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
-        <script>
-            window.serverTimeLimit = 1200; 
-        </script>
-
         <div class="question-block">
-            <div class="question-text">Câu 1: <span class="level-tag nb">Nhận biết</span><br>Trong bài đọc, cụm từ "đá răng mèo" dùng để miêu tả loại địa hình nào?</div>
+            <div class="question-text">Câu 1: Yêu cầu chính của bài học viết đoạn văn này là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Đường đất bằng phẳng, dễ đi.</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Đá răng mèo là cụm từ chỉ những tảng đá nhọn, sắc, gồ ghề lởm chởm, thường thấy ở các vùng núi cao hiểm trở."> B. Đá nhọn, sắc, thường có ở vùng núi cao.</label>
-                <label><input type="radio" name="q1" value="C"> C. Những viên đá cuội tròn bên suối.</label>
-                <label><input type="radio" name="q1" value="D"> D. Đường trải nhựa thẳng tắp.</label>
+                <label><input type="radio" name="q1" value="A"> A. Kể lại toàn bộ câu chuyện đã đọc.</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Nêu tình cảm, cảm xúc về một nhân vật trong văn học.</label>
+                <label><input type="radio" name="q1" value="C"> C. Tả ngoại hình của một người thân trong gia đình.</label>
+                <label><input type="radio" name="q1" value="D"> D. Viết bản kiểm điểm cá nhân.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: <span class="level-tag nb">Nhận biết</span><br>Khi phát hiện người bị nạn, cậu bé đã chạy đến đâu để báo tin?</div>
+            <div class="question-text">Câu 2: Theo yêu cầu cần đạt, độ dài của đoạn văn nên vào khoảng bao nhiêu câu?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Trạm y tế xã.</label>
-                <label><input type="radio" name="q2" value="B"> B. Ủy ban nhân dân.</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Trong câu chuyện, cậu bé đã nhanh trí chạy ngay đến đồn biên phòng gần đó để nhờ các chú bộ đội giúp đỡ."> C. Đồn biên phòng.</label>
-                <label><input type="radio" name="q2" value="D"> D. Nhà trưởng thôn.</label>
+                <label><input type="radio" name="q2" value="A"> A. 1-2 câu.</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true"> B. 4-6 câu.</label>
+                <label><input type="radio" name="q2" value="C"> C. 10-15 câu.</label>
+                <label><input type="radio" name="q2" value="D"> D. Càng dài càng tốt.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: <span class="level-tag nb">Nhận biết</span><br>Để tìm chủ ngữ chỉ <strong>người</strong> trong câu, ta dùng từ hỏi nào?</div>
+            <div class="question-text">Câu 3: Cấu trúc của đoạn văn nêu tình cảm, cảm xúc gồm mấy phần chính?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Cái gì?</label>
-                <label><input type="radio" name="q3" value="B"> B. Con gì?</label>
-                <label><input type="radio" name="q3" value="C" data-correct="true" data-explain="Để tìm chủ ngữ chỉ người, ta dùng câu hỏi 'Ai?'. (Ví dụ: Ai đang học bài? -> Học sinh)."> C. Ai?</label>
-                <label><input type="radio" name="q3" value="D"> D. Thế nào?</label>
+                <label><input type="radio" name="q3" value="A"> A. 2 phần (Mở đầu, Kết thúc).</label>
+                <label><input type="radio" name="q3" value="B" data-correct="true"> B. 3 phần (Mở đầu, Triển khai, Kết thúc).</label>
+                <label><input type="radio" name="q3" value="C"> C. 1 phần duy nhất.</label>
+                <label><input type="radio" name="q3" value="D"> D. 4 phần (Mở bài, Thân bài, Luận điểm, Kết bài).</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: <span class="level-tag nb">Nhận biết</span><br>Trong câu: "Chú bộ đội đang tuần tra biên giới", chủ ngữ là cụm từ nào?</div>
+            <div class="question-text">Câu 4: Phần "Mở đầu" của đoạn văn cần giới thiệu thông tin gì?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A" data-correct="true" data-explain="Đặt câu hỏi: Ai đang tuần tra biên giới? -> Trả lời: Chú bộ đội. Vậy 'Chú bộ đội' là chủ ngữ."> A. Chú bộ đội</label>
-                <label><input type="radio" name="q4" value="B"> B. Đang tuần tra</label>
-                <label><input type="radio" name="q4" value="C"> C. Biên giới</label>
-                <label><input type="radio" name="q4" value="D"> D. Tuần tra biên giới</label>
+                <label><input type="radio" name="q4" value="A" data-correct="true"> A. Tên nhân vật và tên tác phẩm/câu chuyện.</label>
+                <label><input type="radio" name="q4" value="B"> B. Kể lại chi tiết hành động của nhân vật.</label>
+                <label><input type="radio" name="q4" value="C"> C. Nêu bài học kinh nghiệm.</label>
+                <label><input type="radio" name="q4" value="D"> D. Lời chào và lời cảm ơn.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: <span class="level-tag nb">Nhận biết</span><br>Từ "nhá nhem" trong bài đọc chỉ khoảng thời gian nào trong ngày?</div>
+            <div class="question-text">Câu 5: Khi viết phần "Triển khai", để tránh lỗi kể lể dài dòng, em cần làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Buổi trưa nắng gắt.</label>
-                <label><input type="radio" name="q5" value="B"> B. Buổi sáng sớm tinh mơ.</label>
-                <label><input type="radio" name="q5" value="C" data-correct="true" data-explain="'Nhá nhem' là từ láy chỉ khoảng thời gian chập choạng tối, tranh tối tranh sáng, lúc mặt trời vừa lặn."> C. Lúc chập choạng tối, tranh tối tranh sáng.</label>
-                <label><input type="radio" name="q5" value="D"> D. Giữa đêm khuya thanh vắng.</label>
+                <label><input type="radio" name="q5" value="A"> A. Chép lại nguyên văn lời thoại của nhân vật.</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true"> B. Chọn 1-2 đặc điểm nổi bật và nêu cảm xúc tương ứng.</label>
+                <label><input type="radio" name="q5" value="C"> C. Kể lại toàn bộ diễn biến câu chuyện từ đầu đến cuối.</label>
+                <label><input type="radio" name="q5" value="D"> D. Liệt kê tên tất cả các nhân vật phụ.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: <span class="level-tag nb">Nhận biết</span><br>Trong câu "Con chim hót líu lo", chủ ngữ "Con chim" trả lời cho câu hỏi nào?</div>
+            <div class="question-text">Câu 6: Đâu là những cụm từ "dẫn dắt" phù hợp để nối các ý trong đoạn văn?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Ai?</label>
-                <label><input type="radio" name="q6" value="B" data-correct="true" data-explain="Vì 'Con chim' là danh từ chỉ con vật, nên nó trả lời cho câu hỏi 'Con gì?'."> B. Con gì?</label>
-                <label><input type="radio" name="q6" value="C"> C. Cái gì?</label>
-                <label><input type="radio" name="q6" value="D"> D. Làm gì?</label>
+                <label><input type="radio" name="q6" value="A"> A. "Ngày xửa ngày xưa...", "Một hôm nọ..."</label>
+                <label><input type="radio" name="q6" value="B"> B. "Em xin hứa...", "Em cam đoan..."</label>
+                <label><input type="radio" name="q6" value="C" data-correct="true"> C. "Em rất thích...", "Điều làm em nhớ nhất là...", "Qua nhân vật này..."</label>
+                <label><input type="radio" name="q6" value="D"> D. "Thưa thầy cô...", "Kính gửi..."</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: <span class="level-tag nb">Nhận biết</span><br>Câu nào dưới đây có chủ ngữ chỉ <strong>hiện tượng tự nhiên</strong>?</div>
+            <div class="question-text">Câu 7: Dòng nào dưới đây chứa các từ chỉ cảm xúc phù hợp với một nhân vật tốt bụng, dũng cảm (như Thạch Sanh)?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Em bé đang ngủ.</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Chủ ngữ là 'Mưa'. Mưa là một hiện tượng tự nhiên (trả lời cho câu hỏi 'Cái gì?')."> B. Mưa rơi tí tách ngoài hiên.</label>
-                <label><input type="radio" name="q7" value="C"> C. Chú mèo sưởi nắng.</label>
-                <label><input type="radio" name="q7" value="D"> D. Cô giáo đang giảng bài.</label>
+                <label><input type="radio" name="q7" value="A"> A. Sợ hãi, căm ghét, xa lánh.</label>
+                <label><input type="radio" name="q7" value="B"> B. Buồn bã, thất vọng, chán chường.</label>
+                <label><input type="radio" name="q7" value="C" data-correct="true"> C. Yêu mến, khâm phục, ngưỡng mộ, trân trọng.</label>
+                <label><input type="radio" name="q7" value="D"> D. Nghi ngờ, đố kỵ, ghen tỵ.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: <span class="level-tag th">Thông hiểu</span><br>Vì sao cậu bé trong bài đọc đặt tên tờ báo tường là "Trăng Rằm yêu thương"?</div>
+            <div class="question-text">Câu 8: Đối với những nhân vật phản diện, độc ác (như Sói già, Mụ phù thủy), cảm xúc của em thường là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Vì cậu bé sinh vào đêm trăng rằm.</label>
-                <label><input type="radio" name="q8" value="B"> B. Vì tờ báo tường vẽ hình ông trăng rất đẹp.</label>
-                <label><input type="radio" name="q8" value="C" data-correct="true" data-explain="Cậu bé đặt tên như vậy để ghi nhớ kỷ niệm cứu người vào đêm trăng rằm, và lan tỏa tình yêu thương, sự giúp đỡ đến mọi người."> C. Vì muốn lan tỏa tình yêu thương và kỉ niệm về việc tốt mình đã làm.</label>
-                <label><input type="radio" name="q8" value="D"> D. Vì thầy giáo yêu cầu đặt tên như vậy.</label>
+                <label><input type="radio" name="q8" value="A" data-correct="true"> A. Không đồng tình, ghét, sợ hãi.</label>
+                <label><input type="radio" name="q8" value="B"> B. Ngưỡng mộ, muốn học tập theo.</label>
+                <label><input type="radio" name="q8" value="C"> C. Vui vẻ, hào hứng, phấn khởi.</label>
+                <label><input type="radio" name="q8" value="D"> D. Kính trọng, biết ơn.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: <span class="level-tag th">Thông hiểu</span><br>Xác định chủ ngữ trong câu sau: "Dưới ánh đèn pha, chiếc xe máy nằm ngổn ngang."</div>
+            <div class="question-text">Câu 9: Khi tự đọc soát bài viết của mình, em cần kiểm tra những tiêu chí nào?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Dưới ánh đèn pha</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="Cái gì nằm ngổn ngang? -> Chiếc xe máy. ('Dưới ánh đèn pha' chỉ là trạng ngữ chỉ nơi chốn)."> B. Chiếc xe máy</label>
-                <label><input type="radio" name="q9" value="C"> C. Nằm ngổn ngang</label>
-                <label><input type="radio" name="q9" value="D"> D. Ánh đèn pha</label>
+                <label><input type="radio" name="q9" value="A"> A. Chỉ cần đếm số lượng câu.</label>
+                <label><input type="radio" name="q9" value="B"> B. Chỉ xem chữ viết có đẹp không.</label>
+                <label><input type="radio" name="q9" value="C" data-correct="true"> C. Bố cục, Cảm xúc (từ ngữ), Dùng từ đặt câu và Chính tả.</label>
+                <label><input type="radio" name="q9" value="D"> D. Xem đã vẽ hình minh họa chưa.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: <span class="level-tag th">Thông hiểu</span><br>Dựa vào nội dung bài đọc, hãy chọn chủ ngữ thích hợp điền vào chỗ trống: "... đã nhanh chóng theo cậu bé đến hiện trường."</div>
+            <div class="question-text">Câu 10: Trong hoạt động trao đổi nhóm, nếu thấy câu văn của bạn hay, em sẽ vẽ ký hiệu gì vào bên cạnh?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Bố mẹ cậu bé</label>
-                <label><input type="radio" name="q10" value="B"> B. Các bạn học sinh</label>
-                <label><input type="radio" name="q10" value="C"> C. Một người đi đường</label>
-                <label><input type="radio" name="q10" value="D" data-correct="true" data-explain="Theo nội dung truyện, sau khi nghe cậu bé báo tin, các chú bộ đội biên phòng đã lập tức đi cứu người."> D. Các chú bộ đội biên phòng</label>
+                <label><input type="radio" name="q10" value="A"> A. Dấu gạch chéo (X).</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true"> B. Biểu tượng "mặt cười".</label>
+                <label><input type="radio" name="q10" value="C"> C. Dấu hỏi chấm (?).</label>
+                <label><input type="radio" name="q10" value="D"> D. Dấu trừ (-).</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: <span class="level-tag th">Thông hiểu</span><br>Chủ ngữ "Tiếng tim đập thình thịch" trong câu văn miêu tả tâm trạng cậu bé trả lời cho câu hỏi nào?</div>
+            <div class="question-text">Câu 11: Nếu em đọc thấy bài của bạn có chỗ chưa hiểu, em nên làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A" data-correct="true" data-explain="'Tiếng tim đập' là danh từ chỉ sự vật/hiện tượng, nên nó trả lời cho câu hỏi 'Cái gì?'."> A. Cái gì?</label>
-                <label><input type="radio" name="q11" value="B"> B. Ai?</label>
-                <label><input type="radio" name="q11" value="C"> C. Con gì?</label>
-                <label><input type="radio" name="q11" value="D"> D. Ở đâu?</label>
+                <label><input type="radio" name="q11" value="A"> A. Gạch bỏ câu đó đi.</label>
+                <label><input type="radio" name="q11" value="B"> B. Viết lại bài hộ bạn.</label>
+                <label><input type="radio" name="q11" value="C" data-correct="true"> C. Vẽ "dấu hỏi chấm" bên cạnh để hỏi lại bạn.</label>
+                <label><input type="radio" name="q11" value="D"> D. Chê bài của bạn trước lớp.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: <span class="level-tag th">Thông hiểu</span><br>Nội dung chính của bài "Tờ báo tường của tôi" là gì?</div>
+            <div class="question-text">Câu 12: Hoạt động vận dụng cuối bài gợi ý em làm gì để thể hiện tình cảm với người thân nhân ngày 8/3?</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Hướng dẫn cách làm báo tường đẹp.</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true" data-explain="Bài đọc ca ngợi hành động dũng cảm, nhanh trí cứu người gặp nạn của bạn nhỏ và các chú bộ đội."> B. Ca ngợi sự dũng cảm, nhanh trí cứu người của bạn nhỏ vùng cao.</label>
-                <label><input type="radio" name="q12" value="C"> C. Kể về cuộc sống của các chú bộ đội biên phòng.</label>
-                <label><input type="radio" name="q12" value="D"> D. Miêu tả vẻ đẹp của đêm trăng rằm.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 13: <span class="level-tag vd">Vận dụng</span><br>Nếu muốn đặt một câu kể lại hành động của cậu bé trong truyện có sử dụng cấu trúc "Chủ ngữ (Ai) + Vị ngữ", em sẽ chọn câu nào?</div>
-            <div class="options">
-                <label><input type="radio" name="q13" value="A"> A. Trời tối đen như mực.</label>
-                <label><input type="radio" name="q13" value="B"> B. Tiếng kêu cứu vọng lại từ xa.</label>
-                <label><input type="radio" name="q13" value="C" data-correct="true" data-explain="Câu này có 'Cậu bé dũng cảm' là Chủ ngữ (Ai), 'chạy băng qua...' là Vị ngữ chỉ hoạt động."> C. Cậu bé dũng cảm chạy băng qua đoạn đường đá lởm chởm.</label>
-                <label><input type="radio" name="q13" value="D"> D. Con đường núi thật hiểm trở.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 14: <span class="level-tag vd">Vận dụng</span><br>Tình huống: Em thấy một bạn nhỏ bị ngã xe đạp rất đau ở đoạn đường vắng (giống tình huống trong truyện). Em <strong>KHÔNG</strong> nên làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. Hô to để tìm người lớn xung quanh giúp đỡ.</label>
-                <label><input type="radio" name="q14" value="B"> B. Gọi điện thoại cho người thân hoặc số 115 (nếu có điện thoại).</label>
-                <label><input type="radio" name="q14" value="C" data-correct="true" data-explain="Bỏ mặc người bị nạn là hành động vô cảm và không nên làm. Ta cần tìm mọi cách trong khả năng để giúp đỡ."> C. Bỏ đi thật nhanh vì sợ bị liên lụy.</label>
-                <label><input type="radio" name="q14" value="D"> D. Chạy đến nhà dân gần nhất để nhờ giúp đỡ.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 15: <span class="level-tag vd">Vận dụng</span><br>Hãy ghép chủ ngữ ở cột A với vị ngữ ở cột B để tạo thành câu văn hợp lý miêu tả sự vật:<br>
-            A: "Những hòn đá răng mèo..." <br>
-            B: "... nhọn hoắt, đâm vào chân đau điếng."</div>
-            <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. Đây là câu có chủ ngữ chỉ người.</label>
-                <label><input type="radio" name="q15" value="B" data-correct="true" data-explain="Chủ ngữ 'Những hòn đá răng mèo' là sự vật, nên trả lời cho câu hỏi 'Cái gì?'."> B. Đây là câu có chủ ngữ chỉ vật (Cái gì).</label>
-                <label><input type="radio" name="q15" value="C"> C. Đây là câu có chủ ngữ chỉ con vật (Con gì).</label>
-                <label><input type="radio" name="q15" value="D"> D. Câu này không có chủ ngữ.</label>
+                <label><input type="radio" name="q12" value="A" data-correct="true"> A. Làm thiệp và viết lời yêu thương tặng mẹ/bà/cô giáo.</label>
+                <label><input type="radio" name="q12" value="B"> B. Kể lại câu chuyện Tấm Cám cho mẹ nghe.</label>
+                <label><input type="radio" name="q12" value="C"> C. Mua một món đồ chơi mới.</label>
+                <label><input type="radio" name="q12" value="D"> D. Viết một bài thơ dài 100 câu.</label>
             </div>
         </div>
 
