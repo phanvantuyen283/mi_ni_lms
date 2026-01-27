@@ -1,6 +1,6 @@
 /* ============================================================
-   CORE.JS - TRÁI TIM HỆ THỐNG MINI LMS V4.0
-   Nhiệm vụ: Chấm điểm, Đếm giờ, Lưu trữ, Bảo mật
+   CORE.JS - TRÁI TIM HỆ THỐNG MINI LMS V4.0 (UPDATED)
+   Nhiệm vụ: Chấm điểm, Đếm giờ, Lưu trữ, Bảo mật, CHẶN LÀM LẠI
    ============================================================ */
 
 // --- 1. KHỞI TẠO BIẾN TOÀN CỤC ---
@@ -12,7 +12,6 @@ let totalSeconds = 0;
 let securityCorrectAnswer = null; // Lưu đáp án bảo mật từ server
 
 // --- 2. KẾT NỐI FIREBASE AN TOÀN ---
-// Đoạn này đảm bảo dù file config lỗi thì trang web không bị trắng xóa
 try {
     if (typeof CONFIG === 'undefined') {
         console.error("❌ LỖI: Thiếu file config.js. Hệ thống sẽ chạy ở chế độ Offline.");
@@ -30,7 +29,7 @@ try {
     console.error("⚠️ Cảnh báo: Không kết nối được Firebase.", e);
 }
 
-// --- 3. KHI TRANG WEB TẢI XONG ---
+// --- 3. KHI TRANG WEB TẢI XONG (MAIN LOGIC) ---
 document.addEventListener("DOMContentLoaded", async () => {
     // 3.1. Hiển thị tên học sinh
     const display = document.getElementById("student-display");
@@ -38,31 +37,62 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // 3.2. Cảnh báo nếu chưa đăng nhập
     if (studentName === "Khách") {
-        // Tạo một thông báo nhỏ góc màn hình thay vì alert khó chịu
         console.warn("⚠️ Đang truy cập với tư cách Khách.");
     }
 
-    // 3.3. Tải câu hỏi bảo mật (Nếu có)
+    // --- [MỚI] 3.3. KIỂM TRA CHẾ ĐỘ: CẤM LÀM LẠI BÀI ---
+    if (db && studentName !== "Khách") {
+        try {
+            // A. Lấy cấu hình chung xem có cho làm lại không
+            const configDoc = await db.collection("CAU_HINH").doc("cau_hinh_chung").get();
+            // Mặc định là TRUE (cho làm) nếu chưa cài đặt
+            const allowRetake = configDoc.exists ? configDoc.data().cho_phep_lam_lai : true;
+
+            // B. Nếu KHÔNG cho phép làm lại -> Kiểm tra lịch sử
+            if (allowRetake === false) {
+                const titleElement = document.getElementById("ten-bai-tap");
+                const title = titleElement ? titleElement.innerText : "Bài Tập";
+                
+                // Tìm xem học sinh này đã nộp bài này chưa
+                const checkSnap = await db.collection("KET_QUA_TONG_HOP")
+                    .where("hoc_sinh", "==", studentName)
+                    .where("bai_tap", "==", title)
+                    .limit(1) // Chỉ cần tìm thấy 1 bài là đủ
+                    .get();
+
+                if (!checkSnap.empty) {
+                    // C. Nếu tìm thấy bài cũ -> CHẶN NGAY LẬP TỨC
+                    alert(`⛔ THÔNG BÁO QUAN TRỌNG:\n\nBài thi "${title}" chỉ được phép làm 01 lần duy nhất.\nHệ thống ghi nhận con đã nộp bài rồi.\n\nNhấn OK để quay về Menu.`);
+                    window.location.href = "Menu.html"; // Đá về trang chủ
+                    return; // Dừng, không cho chạy tiếp các lệnh dưới (không đếm giờ, không tải câu hỏi)
+                }
+            }
+        } catch (e) {
+            console.log("Lỗi kiểm tra lịch sử làm bài:", e);
+            // Nếu mất mạng hoặc lỗi, tạm thời vẫn cho học sinh làm để tránh gián đoạn
+        }
+    }
+    // --- [HẾT PHẦN MỚI] ---
+
+    // 3.4. Tải câu hỏi bảo mật (Nếu có)
     await loadSecurityQuestion();
 
-    // 3.4. Bắt đầu tính giờ
+    // 3.5. Bắt đầu tính giờ
     startTimer();
 });
 
 // --- 4. HÀM TẢI CÂU HỎI BẢO MẬT ---
 async function loadSecurityQuestion() {
     const container = document.querySelector(".security-quest");
-    if (!container || !db) return; // Không có chỗ chứa hoặc không có mạng thì bỏ qua
+    if (!container || !db) return;
 
     try {
         const doc = await db.collection("BAO_MAT").doc("cau_hoi_ngay").get();
         if (doc.exists) {
             const data = doc.data();
-            // Nếu giáo viên có đặt câu hỏi
             if (data.question && data.question.trim() !== "") {
                 securityCorrectAnswer = data.answer ? data.answer.trim().toLowerCase() : "";
                 
-                // Vẽ giao diện câu hỏi bảo mật
                 let html = `
                     <div class="question-text" style="color:#be123c">🔒 <b>CÂU HỎI BẢO MẬT:</b> ${data.question}</div>
                     <div class="input-group" style="margin-top:10px">
@@ -71,11 +101,11 @@ async function loadSecurityQuestion() {
                     <p style="font-size:12px; color:#666; margin-top:5px"><i>* Trả lời đúng câu này mới được nộp bài.</i></p>
                 `;
                 container.innerHTML = html;
-                container.style.display = "block"; // Hiện lên
+                container.style.display = "block";
                 container.style.border = "2px dashed #f43f5e";
                 container.style.background = "#fff1f2";
             } else {
-                container.style.display = "none"; // Ẩn đi nếu không có câu hỏi
+                container.style.display = "none";
             }
         }
     } catch (e) {
@@ -86,8 +116,6 @@ async function loadSecurityQuestion() {
 
 // --- 5. ĐỒNG HỒ TÍNH GIỜ ---
 function startTimer() {
-    // Ưu tiên lấy thời gian từ biến toàn cục (nếu giáo viên cài trong script bài thi)
-    // Nếu không có thì đếm xuôi (00:00 -> tăng dần)
     let timeLimit = window.serverTimeLimit || 0; 
 
     timerInterval = setInterval(() => {
@@ -101,7 +129,7 @@ function startTimer() {
             if (remaining <= 0) {
                 clearInterval(timerInterval);
                 alert("⏰ HẾT GIỜ! Hệ thống tự động thu bài.");
-                nopBai(true); // Nộp cưỡng ép
+                nopBai(true);
                 return;
             }
             showMin = Math.floor(remaining / 60);
@@ -115,17 +143,16 @@ function startTimer() {
         const timerEl = document.getElementById("timer");
         if(timerEl) {
             timerEl.innerText = `${showMin.toString().padStart(2, '0')}:${showSec.toString().padStart(2, '0')}`;
-            if (isCountDown && showMin < 2) timerEl.style.color = "red"; // Đỏ khi còn dưới 2 phút
+            if (isCountDown && showMin < 2) timerEl.style.color = "red";
         }
     }, 1000);
 }
 
 // --- 6. HÀM NỘP BÀI (QUAN TRỌNG NHẤT) ---
-// Gán vào window để file HTML chắc chắn gọi được
 window.nopBai = async function(force = false) {
     if (isSubmitted) return; 
 
-    // 6.1. Kiểm tra bảo mật (Nếu không phải nộp ép)
+    // 6.1. Kiểm tra bảo mật
     if (!force && securityCorrectAnswer) {
         const userAns = document.getElementById("sec-answer-input").value.trim().toLowerCase();
         if (userAns !== securityCorrectAnswer) {
@@ -151,22 +178,20 @@ window.nopBai = async function(force = false) {
 
     // 6.4. Chấm điểm logic
     let correctCount = 0;
-    // Chỉ chọn các câu hỏi trắc nghiệm (bỏ qua câu bảo mật)
     const blocks = document.querySelectorAll(".question-block:not(.security-quest)");
     const total = blocks.length;
 
     blocks.forEach(block => {
         const checked = block.querySelector("input:checked");
-        // Kiểm tra đáp án có data-correct="true"
         if (checked && checked.getAttribute("data-correct") === "true") {
             correctCount++;
         }
     });
 
     let score = total === 0 ? 0 : (correctCount / total) * 10;
-    score = Number(score.toFixed(1)); // Làm tròn 1 số thập phân
+    score = Number(score.toFixed(1));
 
-    // 6.5. Lưu Firebase (Chỉ chạy nếu có mạng và db)
+    // 6.5. Lưu Firebase
     const title = document.getElementById("ten-bai-tap") ? document.getElementById("ten-bai-tap").innerText : "Bài Tập";
     
     if (db) {
@@ -178,37 +203,31 @@ window.nopBai = async function(force = false) {
                 so_cau_dung: correctCount,
                 tong_so_cau: total,
                 thoi_gian_lam: totalSeconds,
-                ngay_nop: firebase.firestore.FieldValue.serverTimestamp() // Dùng giờ server cho chuẩn
+                ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
             });
             console.log("💾 Đã lưu điểm lên mây.");
         } catch (e) {
             console.error("Lỗi lưu điểm (Mất mạng?):", e);
-            // Không alert lỗi để tránh làm học sinh hoang mang, vẫn hiện điểm bình thường
         }
     }
 
     // 6.6. Hiện kết quả
     hienThiPopup(score, correctCount, total);
     
-    // Hiệu ứng ăn mừng
     if (score >= 5 && typeof confetti !== 'undefined') confetti();
-    
-    // Đọc lời chúc
     docLoiChuc(score);
 };
 
 // --- 7. HIỆN POPUP KẾT QUẢ ---
 function hienThiPopup(diem, dung, tong) {
-    // Xóa popup cũ nếu có
     const old = document.querySelector(".result-overlay");
     if(old) old.remove();
 
     const div = document.createElement("div");
     div.className = "result-overlay";
-    // Inline style để đảm bảo hiện đẹp ngay cả khi CSS chưa load kịp
     div.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:99999; display:flex; justify-content:center; align-items:center; animation: fadeIn 0.3s;";
     
-    let color = diem >= 5 ? "#16a34a" : "#dc2626"; // Xanh hoặc Đỏ
+    let color = diem >= 5 ? "#16a34a" : "#dc2626";
     let emoji = diem >= 9 ? "🏆" : (diem >= 5 ? "👍" : "💪");
 
     div.innerHTML = `
@@ -228,34 +247,27 @@ function hienThiPopup(diem, dung, tong) {
 
 // --- 8. CHẾ ĐỘ XEM LỜI GIẢI (REVIEW) ---
 window.xemLoiGiai = function() {
-    // Ẩn popup
     const overlay = document.querySelector(".result-overlay");
     if(overlay) overlay.style.display = "none";
     
-    // Ẩn nút nộp
     const btnNop = document.getElementById("btn-nop");
     if(btnNop) btnNop.style.display = "none";
 
-    // Duyệt qua từng câu hỏi
     document.querySelectorAll(".question-block:not(.security-quest)").forEach(block => {
         const inputs = block.querySelectorAll("input");
         let explainText = "";
 
         inputs.forEach(input => {
-            input.disabled = true; // Khóa không cho chọn lại
+            input.disabled = true;
             
-            // Xử lý hiển thị màu sắc
             if (input.getAttribute("data-correct") === "true") {
-                // Đây là đáp án ĐÚNG -> Tô xanh
                 input.parentElement.style.backgroundColor = "#dcfce7"; 
                 input.parentElement.style.border = "2px solid #22c55e";
                 input.parentElement.style.color = "#14532d";
-                input.parentElement.classList.add("res-correct"); // Thêm class cho CSS xử lý icon check
-                
+                input.parentElement.classList.add("res-correct");
                 explainText = input.getAttribute("data-explain");
             } 
             else if (input.checked) {
-                // Đây là đáp án SAI mà học sinh đã chọn -> Tô đỏ
                 input.parentElement.style.backgroundColor = "#fee2e2";
                 input.parentElement.style.border = "2px solid #ef4444";
                 input.parentElement.style.color = "#991b1b";
@@ -263,17 +275,14 @@ window.xemLoiGiai = function() {
             }
         });
 
-        // Thêm khung giải thích bên dưới câu hỏi
         if (explainText) {
             const expDiv = document.createElement("div");
             expDiv.innerHTML = `💡 <b>Giải thích:</b> ${explainText}`;
-            // Style trực tiếp để đảm bảo đẹp
             expDiv.style.cssText = "margin-top:15px; padding:15px; background:#fff7ed; border-left:5px solid #f97316; color:#c2410c; font-size:0.95rem; border-radius: 4px;";
             block.appendChild(expDiv);
         }
     });
 
-    // Cuộn màn hình lên đầu để học sinh xem từ câu 1
     window.scrollTo({top: 0, behavior: 'smooth'});
 };
 
@@ -288,7 +297,7 @@ function docLoiChuc(diem) {
 
         let utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'vi-VN'; 
-        utterance.rate = 0.9; // Đọc chậm rãi
+        utterance.rate = 0.9;
         window.speechSynthesis.speak(utterance);
     }
 }
