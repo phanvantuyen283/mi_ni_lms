@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài Tập Trắc Nghiệm - Toán 4</title>
+    <title>Toán Lớp 4 - Tính Chất Phân Phối</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -12,200 +12,200 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Style cho thẻ mức độ câu hỏi */
-        .level-tag {
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 12px;
-            margin-left: 8px;
-            font-weight: 700;
+        /* Một chút style bổ sung cho tiêu đề phân đoạn */
+        .section-header {
+            background: #e0f2fe;
+            color: #0284c7;
+            padding: 10px 15px;
+            font-weight: 900;
+            border-radius: 8px;
+            margin: 25px 0 15px 0;
+            border-left: 5px solid #0284c7;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            vertical-align: middle;
-            display: inline-block;
+            font-size: 1.1rem;
         }
-        .nb { background-color: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
-        .th { background-color: #ffedd5; color: #9a3412; border: 1px solid #fdba74; }
-        .vd { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
-        
-        /* Highlight số trong câu hỏi cho dễ nhìn */
-        .h-num { color: #dc2626; font-weight: bold; font-family: 'Consolas', monospace; }
     </style>
 </head>
 <body>
 
     <div class="quiz-container">
         <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; display:flex; align-items:center; gap:5px;">
-                ⬅ Quay về Menu Môn Học
-            </a>
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
         </div>
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TOÁN 4: TÍNH CHẤT PHÂN PHỐI & TÍNH NHẨM</h2>
+                <h2 id="ten-bai-tap">TOÁN: TÍNH CHẤT PHÂN PHỐI</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
-                <p style="font-size:12px; color:#64748b; font-style:italic">⚡ Thời gian làm bài: 15 phút</p>
             </div>
-            <div class="timer">⏱ <span id="timer">15:00</span></div>
+            <div class="timer">⏱ <span id="timer">20:00</span></div>
         </div>
 
-        <script>
-            window.serverTimeLimit = 900; 
-        </script>
+        <div class="section-header">PHẦN 1: NHẬN BIẾT (3.5 ĐIỂM)</div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: <span class="level-tag nb">Nhận biết</span><br>Công thức nào dưới đây biểu thị tính chất phân phối của phép nhân đối với phép cộng?</div>
+            <div class="question-text">Câu 1: Công thức nào dưới đây biểu diễn đúng tính chất phân phối của phép nhân đối với phép cộng?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. a &times; (b + c) = a &times; b + c</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Tính chất phân phối: Khi nhân một số với một tổng, ta có thể nhân số đó với từng số hạng của tổng, rồi cộng các kết quả lại."> B. a &times; (b + c) = a &times; b + a &times; c</label>
-                <label><input type="radio" name="q1" value="C"> C. a &times; b + c = a &times; (b + c)</label>
-                <label><input type="radio" name="q1" value="D"> D. a &times; (b &times; c) = (a &times; b) &times; c</label>
+                <label><input type="radio" name="q1" value="A"> A. a x (b + c) = a x b + c</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. a x (b + c) = a x b + a x c</label>
+                <label><input type="radio" name="q1" value="C"> C. a x (b + c) = a + b x c</label>
+                <label><input type="radio" name="q1" value="D"> D. a x (b + c) = a x b x c</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: <span class="level-tag th">Thông hiểu</span><br>Để tính nhanh giá trị của biểu thức <span class="h-num">25 &times; 7 + 25 &times; 3</span>, cách làm nào dưới đây là thuận tiện nhất?</div>
+            <div class="question-text">Câu 2: Điền số thích hợp vào chỗ chấm: 5 x (3 + 8) = 5 x 3 + 5 x ...</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. (25 + 25) &times; (7 + 3)</label>
-                <label><input type="radio" name="q2" value="B"> B. Tính 25 &times; 7 = 175, sau đó cộng với 25 &times; 3 = 75</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Ta đưa thừa số chung 25 ra ngoài: 25 &times; (7 + 3) = 25 &times; 10 = 250."> C. 25 &times; (7 + 3) = 25 &times; 10</label>
-                <label><input type="radio" name="q2" value="D"> D. 25 &times; 7 &times; 3</label>
+                <label><input type="radio" name="q2" value="A"> A. 3</label>
+                <label><input type="radio" name="q2" value="B"> B. 5</label>
+                <label><input type="radio" name="q2" value="C" data-correct="true"> C. 8</label>
+                <label><input type="radio" name="q2" value="D"> D. 11</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: <span class="level-tag th">Thông hiểu</span><br>Kết quả của phép tính <span class="h-num">45 &times; 6 + 45 &times; 4</span> là bao nhiêu?</div>
+            <div class="question-text">Câu 3: Biểu thức 4 x 2 + 4 x 5 được viết gọn lại thành:</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A" data-correct="true" data-explain="Tính nhanh: 45 &times; (6 + 4) = 45 &times; 10 = 450."> A. 450</label>
-                <label><input type="radio" name="q3" value="B"> B. 405</label>
-                <label><input type="radio" name="q3" value="C"> C. 540</label>
-                <label><input type="radio" name="q3" value="D"> D. 4050</label>
+                <label><input type="radio" name="q3" value="A" data-correct="true"> A. 4 x (2 + 5)</label>
+                <label><input type="radio" name="q3" value="B"> B. 4 + (2 x 5)</label>
+                <label><input type="radio" name="q3" value="C"> C. (4 + 4) x (2 + 5)</label>
+                <label><input type="radio" name="q3" value="D"> D. 4 x 2 x 5</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: <span class="level-tag vd">Vận dụng</span><br>Điền số thích hợp vào chỗ chấm: <br> <span class="h-num">27 &times; 6 + 73 &times; 6 = ( ... + 73 ) &times; 6</span></div>
+            <div class="question-text">Câu 4: Trong biểu thức a x (b + c), a được gọi là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. 73</label>
-                <label><input type="radio" name="q4" value="B"> B. 6</label>
-                <label><input type="radio" name="q4" value="C"> C. 100</label>
-                <label><input type="radio" name="q4" value="D" data-correct="true" data-explain="Thừa số chung là 6. Áp dụng công thức ngược lại: a &times; c + b &times; c = (a + b) &times; c. Số cần điền là 27."> D. 27</label>
+                <label><input type="radio" name="q4" value="A"> A. Số hạng</label>
+                <label><input type="radio" name="q4" value="B"> B. Số chia</label>
+                <label><input type="radio" name="q4" value="C" data-correct="true"> C. Thừa số chung</label>
+                <label><input type="radio" name="q4" value="D"> D. Tổng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: <span class="level-tag vd">Vận dụng</span><br>Đợt 1 có 3 xe ô tô, mỗi xe chở 44 thùng hàng. Đợt 2 có 3 xe ô tô, mỗi xe chở 56 thùng hàng. Hỏi cả hai đợt chở được tất cả bao nhiêu thùng hàng?</div>
+            <div class="question-text">Câu 5: Kết quả của biểu thức 10 x (2 + 3) là:</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. 132 thùng</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true" data-explain="Cách tính nhanh: 3 &times; (44 + 56) = 3 &times; 100 = 300 thùng."> B. 300 thùng</label>
-                <label><input type="radio" name="q5" value="C"> C. 168 thùng</label>
-                <label><input type="radio" name="q5" value="D"> D. 3000 thùng</label>
+                <label><input type="radio" name="q5" value="A"> A. 23</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true"> B. 50</label>
+                <label><input type="radio" name="q5" value="C"> C. 20</label>
+                <label><input type="radio" name="q5" value="D"> D. 32</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: <span class="level-tag nb">Nhận biết</span><br>Tính nhẩm: <span class="h-num">300 &times; 20 = ?</span></div>
+            <div class="question-text">Câu 6: Phép tính nào dưới đây có giá trị bằng với 24 x 5 + 24 x 3?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. 600</label>
-                <label><input type="radio" name="q6" value="B" data-correct="true" data-explain="Ta lấy 3 &times; 2 = 6. Sau đó thêm 3 số 0 vào sau (hai số 0 của 300 và một số 0 của 20). Kết quả là 6000."> B. 6000</label>
-                <label><input type="radio" name="q6" value="C"> C. 60000</label>
-                <label><input type="radio" name="q6" value="D"> D. 500</label>
+                <label><input type="radio" name="q6" value="A"> A. 24 x 15</label>
+                <label><input type="radio" name="q6" value="B"> B. 24 x 2</label>
+                <label><input type="radio" name="q6" value="C" data-correct="true"> C. 24 x 8</label>
+                <label><input type="radio" name="q6" value="D"> D. 48 x 8</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: <span class="level-tag nb">Nhận biết</span><br>Tính nhẩm: <span class="h-num">8000 : 40 = ?</span></div>
+            <div class="question-text">Câu 7: Khẳng định nào sau đây là SAI?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A" data-correct="true" data-explain="Bớt 1 số 0 ở cả hai số: 800 : 4 = 200."> A. 200</label>
-                <label><input type="radio" name="q7" value="B"> B. 20</label>
-                <label><input type="radio" name="q7" value="C"> C. 2000</label>
-                <label><input type="radio" name="q7" value="D"> D. 400</label>
+                <label><input type="radio" name="q7" value="A"> A. a x c + b x c = (a + b) x c</label>
+                <label><input type="radio" name="q7" value="B"> B. (a + b) x c = a x c + b x c</label>
+                <label><input type="radio" name="q7" value="C"> C. m x (n + p) = m x n + m x p</label>
+                <label><input type="radio" name="q7" value="D" data-correct="true"> D. a x (b + c) = a x b + c</label>
+            </div>
+        </div>
+
+        <div class="section-header">PHẦN 2: THÔNG HIỂU (3.5 ĐIỂM)</div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 8: Tính giá trị của biểu thức 36 x (7 + 3).</div>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A" data-correct="true" data-explain="36 x (7 + 3) = 36 x 10 = 360"> A. 360</label>
+                <label><input type="radio" name="q8" value="B"> B. 367</label>
+                <label><input type="radio" name="q8" value="C"> C. 108</label>
+                <label><input type="radio" name="q8" value="D"> D. 252</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: <span class="level-tag nb">Nhận biết</span><br>Tính nhẩm: <span class="h-num">400 &times; 30 = ?</span></div>
+            <div class="question-text">Câu 9: Một hình chữ nhật có chiều dài là a, chiều rộng là b. Công thức tính chu vi là (a + b) x 2. Biểu thức nào sau đây cũng dùng để tính chu vi hình chữ nhật đó?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. 1200</label>
-                <label><input type="radio" name="q8" value="B"> B. 120</label>
-                <label><input type="radio" name="q8" value="C" data-correct="true" data-explain="Lấy 4 &times; 3 = 12. Thêm ba số 0 vào sau. Kết quả là 12000."> C. 12000</label>
-                <label><input type="radio" name="q8" value="D"> D. 700</label>
+                <label><input type="radio" name="q9" value="A"> A. a x 2 + b</label>
+                <label><input type="radio" name="q9" value="B"> B. a + b x 2</label>
+                <label><input type="radio" name="q9" value="C" data-correct="true" data-explain="Áp dụng tính chất phân phối: (a + b) x 2 = a x 2 + b x 2"> C. a x 2 + b x 2</label>
+                <label><input type="radio" name="q9" value="D"> D. a x b x 2</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: <span class="level-tag nb">Nhận biết</span><br>Tính nhẩm: <span class="h-num">6000 : 20 = ?</span></div>
+            <div class="question-text">Câu 10: Hai lớp 4A và 4B tham gia trồng cây. Lớp 4A có 30 học sinh, lớp 4B có 32 học sinh. Mỗi học sinh trồng được 5 cây. Hỏi cả hai lớp trồng được bao nhiêu cây?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. 30</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="Bớt 1 số 0 ở cả hai số: 600 : 2 = 300."> B. 300</label>
-                <label><input type="radio" name="q9" value="C"> C. 3000</label>
-                <label><input type="radio" name="q9" value="D"> D. 1200</label>
+                <label><input type="radio" name="q10" value="A"> A. 150 cây</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="Tổng số HS: 30 + 32 = 62. Tổng cây: 62 x 5 = 310 cây."> B. 310 cây</label>
+                <label><input type="radio" name="q10" value="C"> C. 160 cây</label>
+                <label><input type="radio" name="q10" value="D"> D. 300 cây</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: <span class="level-tag nb">Nhận biết</span><br>Tính nhẩm: <span class="h-num">500 &times; 40 = ?</span></div>
+            <div class="question-text">Câu 11: Tìm số thích hợp điền vào dấu ?: 15 x 6 + 15 x 4 = 15 x ( ? )</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. 2000</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="Lấy 5 &times; 4 = 20. Thêm ba số 0 vào sau số 20. Kết quả là 20000."> B. 20000</label>
-                <label><input type="radio" name="q10" value="C"> C. 200</label>
-                <label><input type="radio" name="q10" value="D"> D. 900</label>
+                <label><input type="radio" name="q11" value="A"> A. 24</label>
+                <label><input type="radio" name="q11" value="B" data-correct="true" data-explain="Nhóm thừa số chung 15 ra ngoài: 15 x (6 + 4) = 15 x 10. Vậy số cần điền là 10 (tổng của 6+4)."> B. 10</label>
+                <label><input type="radio" name="q11" value="C"> C. 2</label>
+                <label><input type="radio" name="q11" value="D"> D. 90</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: <span class="level-tag nb">Nhận biết</span><br>Tính nhẩm: <span class="h-num">9000 : 30 = ?</span></div>
+            <div class="question-text">Câu 12: So sánh giá trị hai biểu thức: A = 8 x (5 + 4) và B = 8 x 5 + 8 x 5</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. 30</label>
-                <label><input type="radio" name="q11" value="B" data-correct="true" data-explain="Bớt 1 số 0: 900 : 3 = 300."> B. 300</label>
-                <label><input type="radio" name="q11" value="C"> C. 3000</label>
-                <label><input type="radio" name="q11" value="D"> D. 270</label>
+                <label><input type="radio" name="q12" value="A"> A. A > B</label>
+                <label><input type="radio" name="q12" value="B" data-correct="true" data-explain="A = 8x9 = 72. B = 8x10 = 80. Vậy A < B."> B. A < B</label>
+                <label><input type="radio" name="q12" value="C"> C. A = B</label>
+                <label><input type="radio" name="q12" value="D"> D. Không so sánh được</label>
+            </div>
+        </div>
+
+        <div class="section-header">PHẦN 3: VẬN DỤNG (3.0 ĐIỂM)</div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 13: Tính bằng cách thuận tiện nhất: 145 x 2 + 145 x 8</div>
+            <div class="options">
+                <label><input type="radio" name="q13" value="A" data-correct="true" data-explain="145 x (2 + 8) = 145 x 10 = 1450"> A. 1450</label>
+                <label><input type="radio" name="q13" value="B"> B. 14500</label>
+                <label><input type="radio" name="q13" value="C"> C. 290</label>
+                <label><input type="radio" name="q13" value="D"> D. 1160</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: <span class="level-tag th">Thông hiểu</span><br>Kết quả của phép tính <span class="h-num">200 &times; 50</span> là:</div>
+            <div class="question-text">Câu 14: Hai đội xe chở hàng. Đội 1 có 5 xe, Đội 2 có 5 xe. Xe Đội 1 chở 24 thùng/xe. Xe Đội 2 chở 26 thùng/xe. Hỏi cả hai đội chở bao nhiêu thùng? (Chọn cách tính nhanh)</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. 1000</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true" data-explain="2 &times; 5 = 10. Thêm ba số 0. Kết quả là 10000."> B. 10000</label>
-                <label><input type="radio" name="q12" value="C"> C. 100</label>
-                <label><input type="radio" name="q12" value="D"> D. 250</label>
+                <label><input type="radio" name="q14" value="A"> A. 5 x 24 + 5 x 26 = 120 + 130 = 250</label>
+                <label><input type="radio" name="q14" value="B" data-correct="true" data-explain="Nhóm thừa số chung là 5 (số xe): 5 x (24 + 26) = 5 x 50 = 250."> B. 5 x (24 + 26) = 5 x 50 = 250</label>
+                <label><input type="radio" name="q14" value="C"> C. (5 + 5) x (24 + 26) = 10 x 50 = 500</label>
+                <label><input type="radio" name="q14" value="D"> D. 24 x (5 + 26) = 24 x 31 = 744</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 13: <span class="level-tag nb">Nhận biết</span><br>Tính nhẩm: <span class="h-num">8000 : 20 = ?</span></div>
+            <div class="question-text">Câu 15: Tính nhanh giá trị biểu thức: 202 x 7 (Gợi ý: Tách 202 thành 200 + 2)</div>
             <div class="options">
-                <label><input type="radio" name="q13" value="A" data-correct="true" data-explain="Bớt 1 số 0: 800 : 2 = 400."> A. 400</label>
-                <label><input type="radio" name="q13" value="B"> B. 40</label>
-                <label><input type="radio" name="q13" value="C"> C. 4000</label>
-                <label><input type="radio" name="q13" value="D"> D. 1600</label>
+                <label><input type="radio" name="q15" value="A"> A. 1402</label>
+                <label><input type="radio" name="q15" value="B" data-correct="true" data-explain="(200 + 2) x 7 = 200 x 7 + 2 x 7 = 1400 + 14 = 1414"> B. 1414</label>
+                <label><input type="radio" name="q15" value="C"> C. 1400</label>
+                <label><input type="radio" name="q15" value="D"> D. 1424</label>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 14: <span class="level-tag nb">Nhận biết</span><br>Tính nhẩm: <span class="h-num">600 &times; 50 = ?</span></div>
-            <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. 3000</label>
-                <label><input type="radio" name="q14" value="B"> B. 300</label>
-                <label><input type="radio" name="q14" value="C" data-correct="true" data-explain="6 &times; 5 = 30. Thêm ba số 0 vào sau số 30. Kết quả là 30000."> C. 30000</label>
-                <label><input type="radio" name="q14" value="D"> D. 1100</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 15: <span class="level-tag th">Thông hiểu</span><br>Tính nhẩm thương của <span class="h-num">27000 : 90</span></div>
-            <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. 30</label>
-                <label><input type="radio" name="q15" value="B"> B. 3000</label>
-                <label><input type="radio" name="q15" value="C" data-correct="true" data-explain="Bớt 1 số 0: 2700 : 9 = 300."> C. 300</label>
-                <label><input type="radio" name="q15" value="D"> D. 243</label>
-            </div>
-        </div>
+        <div class="security-quest" style="display:none; margin-bottom:20px;"></div>
 
         <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
     </div>
+
+    <script>
+        // 20 phút = 1200 giây
+        window.serverTimeLimit = 1200; 
+    </script>
 
     <script src="config.js"></script>
     <script src="core.js"></script>
