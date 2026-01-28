@@ -3,28 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toán Lớp 4 - Tính Chất Phân Phối</title>
+    <title>Ôn tập Toán Lớp 4 - Bài 43</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* Một chút style bổ sung cho tiêu đề phân đoạn */
-        .section-header {
-            background: #e0f2fe;
-            color: #0284c7;
-            padding: 10px 15px;
-            font-weight: 900;
-            border-radius: 8px;
-            margin: 25px 0 15px 0;
-            border-left: 5px solid #0284c7;
-            text-transform: uppercase;
-            font-size: 1.1rem;
-        }
-    </style>
 </head>
 <body>
 
@@ -35,177 +20,164 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TOÁN: TÍNH CHẤT PHÂN PHỐI</h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
+                <h2 id="ten-bai-tap">TOÁN LỚP 4: NHÂN VỚI SỐ CÓ HAI CHỮ SỐ</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
-            <div class="timer">⏱ <span id="timer">20:00</span></div>
+            <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
-        <div class="section-header">PHẦN 1: NHẬN BIẾT (3.5 ĐIỂM)</div>
-
         <div class="question-block">
-            <div class="question-text">Câu 1: Công thức nào dưới đây biểu diễn đúng tính chất phân phối của phép nhân đối với phép cộng?</div>
+            <div class="question-text">Câu 1: Kết quả của phép tính 34 × 12 là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. a x (b + c) = a x b + c</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. a x (b + c) = a x b + a x c</label>
-                <label><input type="radio" name="q1" value="C"> C. a x (b + c) = a + b x c</label>
-                <label><input type="radio" name="q1" value="D"> D. a x (b + c) = a x b x c</label>
+                <label><input type="radio" name="q1" value="A"> A. 102</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. 408</label>
+                <label><input type="radio" name="q1" value="C"> C. 340</label>
+                <label><input type="radio" name="q1" value="D"> D. 400</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Điền số thích hợp vào chỗ chấm: 5 x (3 + 8) = 5 x 3 + 5 x ...</div>
+            <div class="question-text">Câu 2: Trong phép nhân 34 × 12, tích riêng thứ nhất là số nào?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. 3</label>
-                <label><input type="radio" name="q2" value="B"> B. 5</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true"> C. 8</label>
-                <label><input type="radio" name="q2" value="D"> D. 11</label>
+                <label><input type="radio" name="q2" value="A" data-correct="true"> A. 68 (do 34 × 2)</label>
+                <label><input type="radio" name="q2" value="B"> B. 34 (do 34 × 1)</label>
+                <label><input type="radio" name="q2" value="C"> C. 408</label>
+                <label><input type="radio" name="q2" value="D"> D. 12</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Biểu thức 4 x 2 + 4 x 5 được viết gọn lại thành:</div>
+            <div class="question-text">Câu 3: Trong phép nhân 34 × 12, tích riêng thứ hai là số nào?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A" data-correct="true"> A. 4 x (2 + 5)</label>
-                <label><input type="radio" name="q3" value="B"> B. 4 + (2 x 5)</label>
-                <label><input type="radio" name="q3" value="C"> C. (4 + 4) x (2 + 5)</label>
-                <label><input type="radio" name="q3" value="D"> D. 4 x 2 x 5</label>
+                <label><input type="radio" name="q3" value="A"> A. 68</label>
+                <label><input type="radio" name="q3" value="B" data-correct="true"> B. 34 (do 34 × 1)</label>
+                <label><input type="radio" name="q3" value="C"> C. 340</label>
+                <label><input type="radio" name="q3" value="D"> D. 30</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Trong biểu thức a x (b + c), a được gọi là gì?</div>
+            <div class="question-text">Câu 4: Khi đặt tính nhân với số có hai chữ số, tích riêng thứ hai phải viết như thế nào so với tích riêng thứ nhất?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Số hạng</label>
-                <label><input type="radio" name="q4" value="B"> B. Số chia</label>
-                <label><input type="radio" name="q4" value="C" data-correct="true"> C. Thừa số chung</label>
-                <label><input type="radio" name="q4" value="D"> D. Tổng</label>
+                <label><input type="radio" name="q4" value="A"> A. Viết thẳng cột (đơn vị thẳng đơn vị)</label>
+                <label><input type="radio" name="q4" value="B"> B. Lùi sang phải một cột</label>
+                <label><input type="radio" name="q4" value="C" data-correct="true"> C. Lùi sang trái một cột</label>
+                <label><input type="radio" name="q4" value="D"> D. Viết ở đâu cũng được</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Kết quả của biểu thức 10 x (2 + 3) là:</div>
+            <div class="question-text">Câu 5: Vì sao tích riêng thứ hai của 34 × 12 lại phải viết lùi sang trái một cột?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. 23</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true"> B. 50</label>
-                <label><input type="radio" name="q5" value="C"> C. 20</label>
-                <label><input type="radio" name="q5" value="D"> D. 32</label>
+                <label><input type="radio" name="q5" value="A"> A. Vì đó là quy định bắt buộc không cần hiểu</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true"> B. Vì tích riêng thứ hai là 34 chục (tức là 340 đơn vị)</label>
+                <label><input type="radio" name="q5" value="C"> C. Vì số 1 lớn hơn số 2</label>
+                <label><input type="radio" name="q5" value="D"> D. Để phép tính nhìn đẹp hơn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Phép tính nào dưới đây có giá trị bằng với 24 x 5 + 24 x 3?</div>
+            <div class="question-text">Câu 6: Phép tính 34 × 12 có thể được tách thành tổng nào dưới đây?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. 24 x 15</label>
-                <label><input type="radio" name="q6" value="B"> B. 24 x 2</label>
-                <label><input type="radio" name="q6" value="C" data-correct="true"> C. 24 x 8</label>
-                <label><input type="radio" name="q6" value="D"> D. 48 x 8</label>
+                <label><input type="radio" name="q6" value="A" data-correct="true"> A. 34 × 10 + 34 × 2</label>
+                <label><input type="radio" name="q6" value="B"> B. 34 × 1 + 34 × 2</label>
+                <label><input type="radio" name="q6" value="C"> C. 34 × 10 + 2</label>
+                <label><input type="radio" name="q6" value="D"> D. 30 × 10 + 4 × 2</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Khẳng định nào sau đây là SAI?</div>
+            <div class="question-text">Câu 7: Kết quả của phép tính 87 × 23 là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. a x c + b x c = (a + b) x c</label>
-                <label><input type="radio" name="q7" value="B"> B. (a + b) x c = a x c + b x c</label>
-                <label><input type="radio" name="q7" value="C"> C. m x (n + p) = m x n + m x p</label>
-                <label><input type="radio" name="q7" value="D" data-correct="true"> D. a x (b + c) = a x b + c</label>
-            </div>
-        </div>
-
-        <div class="section-header">PHẦN 2: THÔNG HIỂU (3.5 ĐIỂM)</div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 8: Tính giá trị của biểu thức 36 x (7 + 3).</div>
-            <div class="options">
-                <label><input type="radio" name="q8" value="A" data-correct="true" data-explain="36 x (7 + 3) = 36 x 10 = 360"> A. 360</label>
-                <label><input type="radio" name="q8" value="B"> B. 367</label>
-                <label><input type="radio" name="q8" value="C"> C. 108</label>
-                <label><input type="radio" name="q8" value="D"> D. 252</label>
+                <label><input type="radio" name="q7" value="A"> A. 696</label>
+                <label><input type="radio" name="q7" value="B"> B. 1901</label>
+                <label><input type="radio" name="q7" value="C" data-correct="true"> C. 2001</label>
+                <label><input type="radio" name="q7" value="D"> D. 2011</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Một hình chữ nhật có chiều dài là a, chiều rộng là b. Công thức tính chu vi là (a + b) x 2. Biểu thức nào sau đây cũng dùng để tính chu vi hình chữ nhật đó?</div>
+            <div class="question-text">Câu 8: Kết quả của phép tính 134 × 32 là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. a x 2 + b</label>
-                <label><input type="radio" name="q9" value="B"> B. a + b x 2</label>
-                <label><input type="radio" name="q9" value="C" data-correct="true" data-explain="Áp dụng tính chất phân phối: (a + b) x 2 = a x 2 + b x 2"> C. a x 2 + b x 2</label>
-                <label><input type="radio" name="q9" value="D"> D. a x b x 2</label>
+                <label><input type="radio" name="q8" value="A"> A. 1608</label>
+                <label><input type="radio" name="q8" value="B" data-correct="true"> B. 4288</label>
+                <label><input type="radio" name="q8" value="C"> C. 4188</label>
+                <label><input type="radio" name="q8" value="D"> D. 5360</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Hai lớp 4A và 4B tham gia trồng cây. Lớp 4A có 30 học sinh, lớp 4B có 32 học sinh. Mỗi học sinh trồng được 5 cây. Hỏi cả hai lớp trồng được bao nhiêu cây?</div>
+            <div class="question-text">Câu 9: Trong phép nhân 134 × 32, tích riêng thứ hai là số nào?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. 150 cây</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="Tổng số HS: 30 + 32 = 62. Tổng cây: 62 x 5 = 310 cây."> B. 310 cây</label>
-                <label><input type="radio" name="q10" value="C"> C. 160 cây</label>
-                <label><input type="radio" name="q10" value="D"> D. 300 cây</label>
+                <label><input type="radio" name="q9" value="A"> A. 268 (134 × 2)</label>
+                <label><input type="radio" name="q9" value="B"> B. 134 (134 × 1)</label>
+                <label><input type="radio" name="q9" value="C" data-correct="true"> C. 402 (134 × 3)</label>
+                <label><input type="radio" name="q9" value="D"> D. 4020</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: Tìm số thích hợp điền vào dấu ?: 15 x 6 + 15 x 4 = 15 x ( ? )</div>
+            <div class="question-text">Câu 10: Mỗi ô tô chở 34 học sinh. Hỏi 12 ô tô như thế chở bao nhiêu học sinh?</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. 24</label>
-                <label><input type="radio" name="q11" value="B" data-correct="true" data-explain="Nhóm thừa số chung 15 ra ngoài: 15 x (6 + 4) = 15 x 10. Vậy số cần điền là 10 (tổng của 6+4)."> B. 10</label>
-                <label><input type="radio" name="q11" value="C"> C. 2</label>
-                <label><input type="radio" name="q11" value="D"> D. 90</label>
+                <label><input type="radio" name="q10" value="A"> A. 340 học sinh</label>
+                <label><input type="radio" name="q10" value="B"> B. 400 học sinh</label>
+                <label><input type="radio" name="q10" value="C" data-correct="true"> C. 408 học sinh</label>
+                <label><input type="radio" name="q10" value="D"> D. 48 học sinh</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: So sánh giá trị hai biểu thức: A = 8 x (5 + 4) và B = 8 x 5 + 8 x 5</div>
+            <div class="question-text">Câu 11: Cửa hàng có 18 bao ngô, mỗi bao cân nặng 35 kg. Hỏi cửa hàng có tất cả bao nhiêu ki-lô-gam ngô?</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. A > B</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true" data-explain="A = 8x9 = 72. B = 8x10 = 80. Vậy A < B."> B. A < B</label>
-                <label><input type="radio" name="q12" value="C"> C. A = B</label>
-                <label><input type="radio" name="q12" value="D"> D. Không so sánh được</label>
-            </div>
-        </div>
-
-        <div class="section-header">PHẦN 3: VẬN DỤNG (3.0 ĐIỂM)</div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 13: Tính bằng cách thuận tiện nhất: 145 x 2 + 145 x 8</div>
-            <div class="options">
-                <label><input type="radio" name="q13" value="A" data-correct="true" data-explain="145 x (2 + 8) = 145 x 10 = 1450"> A. 1450</label>
-                <label><input type="radio" name="q13" value="B"> B. 14500</label>
-                <label><input type="radio" name="q13" value="C"> C. 290</label>
-                <label><input type="radio" name="q13" value="D"> D. 1160</label>
+                <label><input type="radio" name="q11" value="A"> A. 530 kg</label>
+                <label><input type="radio" name="q11" value="B" data-correct="true"> B. 630 kg</label>
+                <label><input type="radio" name="q11" value="C"> C. 63 kg</label>
+                <label><input type="radio" name="q11" value="D"> D. 600 kg</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 14: Hai đội xe chở hàng. Đội 1 có 5 xe, Đội 2 có 5 xe. Xe Đội 1 chở 24 thùng/xe. Xe Đội 2 chở 26 thùng/xe. Hỏi cả hai đội chở bao nhiêu thùng? (Chọn cách tính nhanh)</div>
+            <div class="question-text">Câu 12: Không cần tính hết, em hãy cho biết chữ số tận cùng của tích 24 × 16 là số mấy?</div>
             <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. 5 x 24 + 5 x 26 = 120 + 130 = 250</label>
-                <label><input type="radio" name="q14" value="B" data-correct="true" data-explain="Nhóm thừa số chung là 5 (số xe): 5 x (24 + 26) = 5 x 50 = 250."> B. 5 x (24 + 26) = 5 x 50 = 250</label>
-                <label><input type="radio" name="q14" value="C"> C. (5 + 5) x (24 + 26) = 10 x 50 = 500</label>
-                <label><input type="radio" name="q14" value="D"> D. 24 x (5 + 26) = 24 x 31 = 744</label>
+                <label><input type="radio" name="q12" value="A"> A. 0</label>
+                <label><input type="radio" name="q12" value="B"> B. 6</label>
+                <label><input type="radio" name="q12" value="C" data-correct="true"> C. 4 (vì 4 × 6 = 24)</label>
+                <label><input type="radio" name="q12" value="D"> D. 8</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 15: Tính nhanh giá trị biểu thức: 202 x 7 (Gợi ý: Tách 202 thành 200 + 2)</div>
+            <div class="question-text">Câu 13: Bạn Lan tính: 34 × 12 = 102 (Do bạn lấy tích riêng thứ nhất 68 cộng với tích riêng thứ hai 34 mà KHÔNG lùi cột). Bạn Lan đã sai ở bước nào?</div>
             <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. 1402</label>
-                <label><input type="radio" name="q15" value="B" data-correct="true" data-explain="(200 + 2) x 7 = 200 x 7 + 2 x 7 = 1400 + 14 = 1414"> B. 1414</label>
-                <label><input type="radio" name="q15" value="C"> C. 1400</label>
-                <label><input type="radio" name="q15" value="D"> D. 1424</label>
+                <label><input type="radio" name="q13" value="A"> A. Tính sai tích riêng thứ nhất</label>
+                <label><input type="radio" name="q13" value="B" data-correct="true"> B. Đặt sai vị trí tích riêng thứ hai</label>
+                <label><input type="radio" name="q13" value="C"> C. Tính sai tích riêng thứ hai</label>
+                <label><input type="radio" name="q13" value="D"> D. Cộng sai kết quả</label>
             </div>
         </div>
 
-        <div class="security-quest" style="display:none; margin-bottom:20px;"></div>
+        <div class="question-block">
+            <div class="question-text">Câu 14: Nếu bác nông dân có 630 kg ngô và bán với giá 10.000 đồng/kg thì bác thu được bao nhiêu tiền?</div>
+            <div class="options">
+                <label><input type="radio" name="q14" value="A"> A. 630.000 đồng</label>
+                <label><input type="radio" name="q14" value="B" data-correct="true"> B. 6.300.000 đồng</label>
+                <label><input type="radio" name="q14" value="C"> C. 63.000.000 đồng</label>
+                <label><input type="radio" name="q14" value="D"> D. 63.000 đồng</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 15: Điều quan trọng nhất cần nhớ khi thực hiện nhân với số có hai chữ số là gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A"> A. Tính thật nhanh không cần nháp</label>
+                <label><input type="radio" name="q15" value="B"> B. Tích riêng thứ hai phải viết lùi sang phải</label>
+                <label><input type="radio" name="q15" value="C" data-correct="true"> C. Tích riêng thứ hai phải lùi sang trái 1 cột</label>
+                <label><input type="radio" name="q15" value="D"> D. Chỉ cần tính tích riêng thứ nhất là đủ</label>
+            </div>
+        </div>
 
         <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
     </div>
-
-    <script>
-        // 20 phút = 1200 giây
-        window.serverTimeLimit = 1200; 
-    </script>
 
     <script src="config.js"></script>
     <script src="core.js"></script>
