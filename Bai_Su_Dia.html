@@ -3,198 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lịch Sử & Địa Lí 4 - Bài 15</title>
+    <title>Ôn tập Lịch sử & Địa lí 4 - Bài 16</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
-    <script src="config.js"></script>
-    <script src="core.js" defer></script>
-    
+
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* GIỮ NGUYÊN GIAO DIỆN MÀU XANH LÁ CỦA MÔN SỬ ĐỊA */
-        body { background-color: #f0fdf4; } 
-        .header { border-color: #16a34a; background: #dcfce7; }
-        .header h2 { color: #15803d; }
-        .question-block:hover { border-color: #22c55e; }
-        /* Tùy chỉnh nút nộp bài màu xanh lá */
-        #btn-nop { background: linear-gradient(to bottom, #22c55e, #16a34a); box-shadow: 0 6px 0 #14532d; }
-        .question-text { color: #064e3b; }
-    </style>
 </head>
 <body>
 
     <div class="quiz-container">
         <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về chọn môn khác</a>
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
         </div>
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">Lịch sử _Địa lí - BÀI 15: THIÊN NHIÊN VÙNG DUYÊN HẢI MIỀN TRUNG</h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#15803d">Đang tải...</span></p>
+                <h2 id="ten-bai-tap">LS&ĐL 4: DÂN CƯ VÀ HOẠT ĐỘNG SẢN XUẤT Ở DUYÊN HẢI MIỀN TRUNG</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
-            <div class="timer">⏱ <span id="timer">--:--</span></div>
+            <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Vùng Duyên hải miền Trung kéo dài từ tỉnh nào đến tỉnh nào?</div>
+            <div class="question-text">Câu 1: Hai câu thơ: "Làng tôi ở vốn làm nghề chài lưới / Nước bao vây cách biển nửa ngày sông" nhắc đến hoạt động kinh tế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Từ Nghệ An đến Khánh Hòa</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Duyên hải miền Trung là dải đất hẹp ngang kéo dài từ tỉnh Thanh Hóa đến tỉnh Bình Thuận."> B. Từ Thanh Hóa đến Bình Thuận</label>
-                <label><input type="radio" name="q1" value="C"> C. Từ Đà Nẵng đến Cà Mau</label>
-                <label><input type="radio" name="q1" value="D"> D. Từ Thừa Thiên Huế đến Vũng Tàu</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 2: Đặc điểm nào sau đây mô tả đúng nhất về hình dáng của vùng Duyên hải miền Trung?</div>
-            <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Rộng lớn và bằng phẳng</label>
-                <label><input type="radio" name="q2" value="B"> B. Hình tam giác châu thổ</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Vùng Duyên hải miền Trung là dải đất hẹp ngang, kéo dài, là cầu nối giữa miền Bắc và miền Nam."> C. Hẹp ngang và kéo dài</label>
-                <label><input type="radio" name="q2" value="D"> D. Cao nguyên xếp tầng</label>
+                <label><input type="radio" name="q1" value="A"> A. Làm muối</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Chài lưới (đánh cá)</label>
+                <label><input type="radio" name="q1" value="C"> C. Trồng lúa nước</label>
+                <label><input type="radio" name="q1" value="D"> D. Dệt vải</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Hai quần đảo lớn nào thuộc vùng Duyên hải miền Trung đóng vai trò quan trọng đối với kinh tế và quốc phòng?</div>
+            <div class="question-text">Câu 2: Tính đến năm 2020, số dân của vùng Duyên hải miền Trung khoảng bao nhiêu người?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Cô Tô và Bạch Long Vĩ</label>
-                <label><input type="radio" name="q3" value="B"> B. Phú Quốc và Côn Đảo</label>
-                <label><input type="radio" name="q3" value="C"> C. Cát Bà và Lý Sơn</label>
-                <label><input type="radio" name="q3" value="D" data-correct="true" data-explain="Vùng này có hai quần đảo Hoàng Sa và Trường Sa đóng vai trò quan trọng đối với kinh tế và quốc phòng của đất nước."> D. Hoàng Sa và Trường Sa</label>
+                <label><input type="radio" name="q2" value="A"> A. Hơn 10 triệu người</label>
+                <label><input type="radio" name="q2" value="B"> B. Khoảng 15 triệu người</label>
+                <label><input type="radio" name="q2" value="C" data-correct="true"> C. Hơn 20 triệu người</label>
+                <label><input type="radio" name="q2" value="D"> D. Hơn 30 triệu người</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Dãy núi nào chạy dọc phía tây của vùng Duyên hải miền Trung?</div>
+            <div class="question-text">Câu 3: Ngoài người Kinh, vùng Duyên hải miền Trung còn là nơi sinh sống của các dân tộc nào?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Dãy Hoàng Liên Sơn</label>
-                <label><input type="radio" name="q4" value="B" data-correct="true" data-explain="Dãy Trường Sơn là dãy núi dài nhất Việt Nam, nằm ở phía tây của vùng."> B. Dãy Trường Sơn</label>
-                <label><input type="radio" name="q4" value="C"> C. Dãy Đông Triều</label>
-                <label><input type="radio" name="q4" value="D"> D. Dãy Tam Đảo</label>
+                <label><input type="radio" name="q3" value="A"> A. H'mông, Dao, Tày</label>
+                <label><input type="radio" name="q3" value="B" data-correct="true"> B. Chăm, Thái, Mường, Bru – Vân Kiều</label>
+                <label><input type="radio" name="q3" value="C"> C. Khơ-me, Hoa, Chơ-ro</label>
+                <label><input type="radio" name="q3" value="D"> D. Ê-đê, Gia-rai, Ba-na</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Địa hình vùng Duyên hải miền Trung có đặc điểm phân hóa từ Tây sang Đông như thế nào?</div>
+            <div class="question-text">Câu 4: Dựa vào hình ảnh trong bài học, người dân tộc nào thường mặc trang phục sáng màu và có điệu múa quạt đặc trưng?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Phía tây là biển, phía đông là núi</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true" data-explain="Địa hình thấp dần từ Tây sang Đông: Phía tây là đồi núi; phía đông là dải đồng bằng nhỏ, hẹp."> B. Phía tây là đồi núi, phía đông là đồng bằng nhỏ hẹp</label>
-                <label><input type="radio" name="q5" value="C"> C. Toàn bộ là đồng bằng rộng lớn</label>
-                <label><input type="radio" name="q5" value="D"> D. Phía tây là đồng bằng, phía đông là đồi núi</label>
+                <label><input type="radio" name="q4" value="A"> A. Người Mường</label>
+                <label><input type="radio" name="q4" value="B"> B. Người Thái</label>
+                <label><input type="radio" name="q4" value="C" data-correct="true"> C. Người Chăm</label>
+                <label><input type="radio" name="q4" value="D"> D. Người Kinh</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Dạng địa hình nào thường xuất hiện ven biển miền Trung?</div>
+            <div class="question-text">Câu 5: Trong các hoạt động lễ hội ở Duyên hải miền Trung, người Mường thường sử dụng nhạc cụ nào?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Hang động đá vôi lớn</label>
-                <label><input type="radio" name="q6" value="B"> B. Rừng ngập mặn rộng lớn</label>
-                <label><input type="radio" name="q6" value="C" data-correct="true" data-explain="Ven biển miền Trung thường có các cồn cát và đầm phá."> C. Cồn cát và đầm phá</label>
-                <label><input type="radio" name="q6" value="D"> D. Cao nguyên đất đỏ</label>
+                <label><input type="radio" name="q5" value="A"> A. Đàn tranh</label>
+                <label><input type="radio" name="q5" value="B"> B. Kèn Saxophone</label>
+                <label><input type="radio" name="q5" value="C" data-correct="true"> C. Cồng chiêng</label>
+                <label><input type="radio" name="q5" value="D"> D. Đàn đá</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Dãy núi nào đâm ngang ra biển, chia cắt khí hậu vùng Duyên hải miền Trung thành hai khu vực?</div>
+            <div class="question-text">Câu 6: Điều kiện tự nhiên thuận lợi nhất để phát triển nghề làm muối ở Duyên hải miền Trung là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Dãy Hoành Sơn</label>
-                <label><input type="radio" name="q7" value="B"> B. Dãy Ngân Sơn</label>
-                <label><input type="radio" name="q7" value="C"> C. Dãy Bắc Sơn</label>
-                <label><input type="radio" name="q7" value="D" data-correct="true" data-explain="Dãy Bạch Mã đâm ngang ra biển tạo thành bức tường chắn gió, làm khí hậu phía Bắc và phía Nam khác nhau."> D. Dãy Bạch Mã</label>
+                <label><input type="radio" name="q6" value="A"> A. Có nhiều sông ngòi lớn</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Nước biển mặn và nhiều nắng</label>
+                <label><input type="radio" name="q6" value="C"> C. Có nhiều rừng cây</label>
+                <label><input type="radio" name="q6" value="D"> D. Khí hậu mát mẻ quanh năm</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Khí hậu phía Bắc dãy Bạch Mã có đặc điểm gì nổi bật?</div>
+            <div class="question-text">Câu 7: Để đánh bắt cá xa bờ, ngư dân miền Trung thường sử dụng phương tiện gì?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Nóng quanh năm</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true" data-explain="Phần phía bắc dãy Bạch Mã chịu ảnh hưởng của gió mùa Đông Bắc nên có 1-2 tháng nhiệt độ dưới 20 độ C (có mùa đông lạnh)."> B. Có mùa đông lạnh (nhiệt độ dưới 20 độ C)</label>
-                <label><input type="radio" name="q8" value="C"> C. Mát mẻ quanh năm như ôn đới</label>
-                <label><input type="radio" name="q8" value="D"> D. Không bao giờ có bão</label>
+                <label><input type="radio" name="q7" value="A"> A. Thuyền thúng</label>
+                <label><input type="radio" name="q7" value="B"> B. Bè tre</label>
+                <label><input type="radio" name="q7" value="C" data-correct="true"> C. Tàu lớn công suất lớn</label>
+                <label><input type="radio" name="q7" value="D"> D. Xuồng ba lá</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Vào mùa hạ, vùng Duyên hải miền Trung thường chịu ảnh hưởng của loại gió nào gây khô nóng?</div>
+            <div class="question-text">Câu 8: "Thuyền thúng" - vật dụng quen thuộc của ngư dân miền Trung thường được làm chủ yếu từ vật liệu gì?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Gió mùa Đông Bắc</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true" data-explain="Mùa hạ, phía bắc chịu ảnh hưởng của gió Tây Nam khô nóng (hay còn gọi là gió Lào)."> B. Gió Tây Nam (Gió Lào)</label>
-                <label><input type="radio" name="q9" value="C"> C. Gió Đông Nam</label>
-                <label><input type="radio" name="q9" value="D"> D. Gió Bấc</label>
+                <label><input type="radio" name="q8" value="A"> A. Gỗ lim</label>
+                <label><input type="radio" name="q8" value="B"> B. Nhựa tổng hợp</label>
+                <label><input type="radio" name="q8" value="C" data-correct="true"> C. Tre</label>
+                <label><input type="radio" name="q8" value="D"> D. Sắt thép</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Mùa mưa bão ở vùng Duyên hải miền Trung thường diễn ra vào thời gian nào?</div>
+            <div class="question-text">Câu 9: Ngoài việc dùng để di chuyển và đánh bắt gần bờ, thuyền thúng ngày nay còn được dùng để làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Mùa xuân</label>
-                <label><input type="radio" name="q10" value="B"> B. Mùa hạ</label>
-                <label><input type="radio" name="q10" value="C" data-correct="true" data-explain="Vào mùa thu – đông, vùng Duyên hải miền Trung thường có mưa lớn và bão."> C. Mùa thu - đông</label>
-                <label><input type="radio" name="q10" value="D"> D. Quanh năm</label>
+                <label><input type="radio" name="q9" value="A"> A. Chở hàng hóa nặng đi quốc tế</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true"> B. Phục vụ du lịch, chở khách tham quan</label>
+                <label><input type="radio" name="q9" value="C"> C. Làm nhà ở nổi trên biển</label>
+                <label><input type="radio" name="q9" value="D"> D. Trưng bày trong bảo tàng nghệ thuật</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: Sông ngòi ở vùng Duyên hải miền Trung có đặc điểm chính là gì?</div>
+            <div class="question-text">Câu 10: Bên cạnh nghề làm muối và đánh bắt hải sản, biển miền Trung còn mang lại lợi ích kinh tế nào khác?</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. Dài và chảy êm đềm</label>
-                <label><input type="radio" name="q11" value="B" data-correct="true" data-explain="Do địa hình hẹp ngang và núi sát biển, sông ngòi ở đây thường ngắn và dốc."> B. Ngắn và dốc</label>
-                <label><input type="radio" name="q11" value="C"> C. Nhiều phù sa bồi đắp lớn</label>
-                <label><input type="radio" name="q11" value="D"> D. Chảy theo hướng Bắc - Nam</label>
+                <label><input type="radio" name="q10" value="A"> A. Khai thác than đá</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true"> B. Phát triển du lịch biển, nghỉ dưỡng</label>
+                <label><input type="radio" name="q10" value="C"> C. Trồng cây công nghiệp lâu năm</label>
+                <label><input type="radio" name="q10" value="D"> D. Chăn nuôi gia súc lớn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: Do đặc điểm sông ngòi ngắn và dốc, khi có mưa lớn, điều gì thường xảy ra?</div>
+            <div class="question-text">Câu 11: Vì sao hoạt động sản xuất của người dân miền Trung lại gắn liền với biển?</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Nước sông dâng lên chậm</label>
-                <label><input type="radio" name="q12" value="B"> B. Nước biển xâm nhập sâu</label>
-                <label><input type="radio" name="q12" value="C" data-correct="true" data-explain="Độ dốc lớn và chiều dài ngắn khiến nước mưa đổ về hạ lưu rất nhanh, gây lũ lên nhanh đột ngột."> C. Nước sông dâng lên nhanh, gây lũ lụt đột ngột</label>
-                <label><input type="radio" name="q12" value="D"> D. Sông cạn nước</label>
+                <label><input type="radio" name="q11" value="A"> A. Vì người dân không thích làm ruộng</label>
+                <label><input type="radio" name="q11" value="B" data-correct="true"> B. Vì vị trí địa lí giáp biển, có đường bờ biển dài</label>
+                <label><input type="radio" name="q11" value="C"> C. Vì đất đai ở đây màu mỡ nhất cả nước</label>
+                <label><input type="radio" name="q11" value="D"> D. Vì không có núi và sông</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 13: Vườn quốc gia nào ở vùng Duyên hải miền Trung nổi tiếng với hệ thống hang động kỳ vĩ?</div>
+            <div class="question-text">Câu 12: Nhận xét nào sau đây là đúng về đặc điểm dân cư vùng Duyên hải miền Trung?</div>
             <div class="options">
-                <label><input type="radio" name="q13" value="A"> A. Vườn quốc gia Cúc Phương</label>
-                <label><input type="radio" name="q13" value="B"> B. Vườn quốc gia Cát Tiên</label>
-                <label><input type="radio" name="q13" value="C"> C. Vườn quốc gia Ba Vì</label>
-                <label><input type="radio" name="q13" value="D" data-correct="true" data-explain="Vườn quốc gia Phong Nha - Kẻ Bàng (Quảng Bình) là địa danh tiêu biểu với hệ thống hang động kỳ vĩ."> D. Vườn quốc gia Phong Nha - Kẻ Bàng</label>
+                <label><input type="radio" name="q12" value="A"> A. Dân cư thưa thớt, ít người sinh sống</label>
+                <label><input type="radio" name="q12" value="B"> B. Chỉ có duy nhất dân tộc Kinh sinh sống</label>
+                <label><input type="radio" name="q12" value="C" data-correct="true"> C. Dân cư đông đúc, nhiều dân tộc cùng chung sống</label>
+                <label><input type="radio" name="q12" value="D"> D. Người dân chủ yếu sống trên núi cao</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 14: Đầm phá lớn nhất ở Đông Nam Á nằm tại Thừa Thiên Huế tên là gì?</div>
+            <div class="question-text">Câu 13: Hình ảnh những người nông dân đang vun những "đống trắng" trên cánh đồng ven biển mô tả nghề gì?</div>
             <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. Đầm Ô Loan</label>
-                <label><input type="radio" name="q14" value="B" data-correct="true" data-explain="Đầm phá Tam Giang – Cầu Hai là vùng đầm phá lớn nhất Đông Nam Á, thuộc tỉnh Thừa Thiên Huế."> B. Phá Tam Giang</label>
-                <label><input type="radio" name="q14" value="C"> C. Đầm Thị Nại</label>
-                <label><input type="radio" name="q14" value="D"> D. Đầm Lập An</label>
+                <label><input type="radio" name="q13" value="A"> A. Làm gốm</label>
+                <label><input type="radio" name="q13" value="B"> B. Nuôi tôm</label>
+                <label><input type="radio" name="q13" value="C"> C. Trồng bông</label>
+                <label><input type="radio" name="q13" value="D" data-correct="true"> D. Làm muối</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 15: Hiện tượng thiên nhiên nào thường gây khó khăn cho sản xuất và đời sống ở vùng ven biển miền Trung vào mùa hè?</div>
+            <div class="question-text">Câu 14: Người dân miền Trung thường được biết đến với đức tính gì trong lao động sản xuất?</div>
             <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. Sương muối</label>
-                <label><input type="radio" name="q15" value="B"> B. Lũ lụt</label>
-                <label><input type="radio" name="q15" value="C" data-correct="true" data-explain="Ở phía nam, vào mùa hạ thường xảy ra hiện tượng hạn hán gây thiếu nước cho sản xuất và đời sống."> C. Hạn hán</label>
-                <label><input type="radio" name="q15" value="D"> D. Rét đậm</label>
+                <label><input type="radio" name="q14" value="A" data-correct="true"> A. Cần cù, chịu khó</label>
+                <label><input type="radio" name="q14" value="B"> B. Thích nghỉ ngơi</label>
+                <label><input type="radio" name="q14" value="C"> C. Dễ nản chí</label>
+                <label><input type="radio" name="q14" value="D"> D. Thích làm việc nhẹ nhàng</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 15: Mối quan hệ giữa các dân tộc anh em (Kinh, Chăm, Hoa, Mường...) ở vùng Duyên hải miền Trung như thế nào?</div>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A"> A. Sống tách biệt, không giao lưu</label>
+                <label><input type="radio" name="q15" value="B"> B. Thường xuyên xảy ra xung đột</label>
+                <label><input type="radio" name="q15" value="C" data-correct="true"> C. Đoàn kết, tôn trọng văn hóa của nhau</label>
+                <label><input type="radio" name="q15" value="D"> D. Chỉ người Kinh mới được tham gia lễ hội</label>
             </div>
         </div>
 
         <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
-        <p id="status-log" style="text-align:center; color:#666; font-size:12px; margin-top:10px;"></p>
     </div>
-    <script src="core.js"></script>
-    <script src="config.js"></script>
 
-    </body>
+    <script src="config.js"></script>
+    <script src="core.js"></script>
+
+</body>
 </html>
