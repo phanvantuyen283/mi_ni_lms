@@ -3,201 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài Tập Trắc Nghiệm - Khoa Học 4</title>
+    <title>Ôn tập Khoa học Lớp 4 - Bài 21</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        /* CSS cho thẻ mức độ nhận thức */
-        .level-tag {
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 12px;
-            margin-left: 8px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            vertical-align: middle;
-            display: inline-block;
-        }
-        .nb { background-color: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; } /* Nhận biết */
-        .th { background-color: #ffedd5; color: #9a3412; border: 1px solid #fdba74; } /* Thông hiểu */
-        .vd { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; } /* Vận dụng */
-    </style>
 </head>
 <body>
 
     <div class="quiz-container">
         <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; display:flex; align-items:center; gap:5px;">
-                ⬅ Quay về Menu Môn Học
-            </a>
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
         </div>
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">KHOA HỌC 4 - BÀI: NẤM MEN</h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">Đang tải...</span></p>
-                <p style="font-size:12px; color:#64748b; font-style:italic">⚡ Thời gian làm bài: 15 phút</p>
+                <h2 id="ten-bai-tap">KHOA HỌC 4: NẤM GÂY HỎNG THỰC PHẨM</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
-            <div class="timer">⏱ <span id="timer">15:00</span></div>
+            <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
-        <script>
-            window.serverTimeLimit = 900; 
-        </script>
-
         <div class="question-block">
-            <div class="question-text">Câu 1: <span class="level-tag nb">Nhận biết</span><br>Tại sao trong quy trình làm bánh mì, người ta lại cho đường vào hòa tan cùng với nấm men?</div>
+            <div class="question-text">Câu 1: Những vết đốm đen, xanh, trắng lạ mắt xuất hiện trên thực phẩm để lâu ngày được gọi là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Để làm cho bánh có vị ngọt đậm.</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true" data-explain="Nấm men là một sinh vật sống, chúng cần thức ăn để sinh trưởng và hoạt động. Đường chính là nguồn thức ăn yêu thích giúp men hoạt động mạnh."> B. Để cung cấp thức ăn giúp nấm men hoạt động mạnh hơn.</label>
-                <label><input type="radio" name="q1" value="C"> C. Để nấm men chết đi và tạo mùi thơm.</label>
-                <label><input type="radio" name="q1" value="D"> D. Đường giúp làm chín bột nhanh hơn.</label>
+                <label><input type="radio" name="q1" value="A"> A. Bụi bẩn</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Nấm mốc</label>
+                <label><input type="radio" name="q1" value="C"> C. Gia vị</label>
+                <label><input type="radio" name="q1" value="D"> D. Màu thực phẩm</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: <span class="level-tag th">Thông hiểu</span><br>Vì sao khi cắt đôi chiếc bánh mì hoặc bánh bao, em thường thấy bên trong ruột bánh có rất nhiều lỗ nhỏ li ti?</div>
+            <div class="question-text">Câu 2: Khi quan sát một chiếc bánh mì bị hỏng, em thường thấy dấu hiệu nào rõ nhất? </div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Do người làm bánh dùng kim châm vào.</label>
-                <label><input type="radio" name="q2" value="B"> B. Do bột mì tự nứt ra khi nướng.</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true" data-explain="Khi nấm men 'ăn' đường, chúng thải ra khí các-bô-níc (CO2). Khí này bị giữ lại trong bột tạo thành các bọt khí, khi nướng lên tạo thành các lỗ nhỏ xốp."> C. Do nấm men sinh ra khí trong quá trình ủ bột tạo thành các bọt khí.</label>
-                <label><input type="radio" name="q2" value="D"> D. Do nước bốc hơi tạo thành lỗ thủng.</label>
+                <label><input type="radio" name="q2" value="A"> A. Bánh mì trở nên giòn tan và thơm phức</label>
+                <label><input type="radio" name="q2" value="B"> B. Bánh mì đổi sang màu vàng óng</label>
+                <label><input type="radio" name="q2" value="C" data-correct="true"> C. Xuất hiện các đốm xanh đen, xám loang lổ</label>
+                <label><input type="radio" name="q2" value="D"> D. Bánh mì cứng như đá</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: <span class="level-tag vd">Vận dụng</span><br>Trong thí nghiệm kích hoạt men, nếu em sử dụng nước sôi 100 độ C để hòa men thì điều gì sẽ xảy ra?</div>
+            <div class="question-text">Câu 3: Quả cam khi bị nấm mốc tấn công thường có biểu hiện gì? </div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A" data-correct="true" data-explain="Nấm men là sinh vật sống. Nước sôi 100 độ C quá nóng sẽ làm nấm men bị chết ngay lập tức, do đó bột sẽ không thể nở được."> A. Nấm men sẽ bị chết và bột không thể nở được.</label>
-                <label><input type="radio" name="q3" value="B"> B. Nấm men sẽ hoạt động cực kỳ mạnh mẽ và nhanh chóng.</label>
-                <label><input type="radio" name="q3" value="C"> C. Bột sẽ nở to gấp 10 lần bình thường.</label>
-                <label><input type="radio" name="q3" value="D"> D. Nước sôi giúp bánh chín ngay lập tức.</label>
+                <label><input type="radio" name="q3" value="A"> A. Vỏ cam bóng loáng, căng mọng</label>
+                <label><input type="radio" name="q3" value="B" data-correct="true"> B. Vỏ có lớp phấn trắng hoặc xanh, quả bị nhũn</label>
+                <label><input type="radio" name="q3" value="C"> C. Quả cam to lên bất thường</label>
+                <label><input type="radio" name="q3" value="D"> D. Cam chuyển sang màu đỏ rực</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: <span class="level-tag vd">Vận dụng</span><br>Nếu một bạn học sinh làm đúng quy trình nhưng quên không cho nấm men vào bột, sản phẩm bánh mì sau khi nướng sẽ như thế nào?</div>
+            <div class="question-text">Câu 4: Ngoài màu sắc, thực phẩm bị nhiễm nấm mốc thường có mùi vị như thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Bánh vẫn nở to và xốp nhưng không thơm.</label>
-                <label><input type="radio" name="q4" value="B" data-correct="true" data-explain="Không có men thì không có khí được sinh ra để làm phồng bột. Kết quả là khối bột đặc, cứng và chai lì."> B. Bánh sẽ bị cứng, chai, không nở và ăn không ngon.</label>
-                <label><input type="radio" name="q4" value="C"> C. Bánh sẽ mềm nhũn như cháo.</label>
-                <label><input type="radio" name="q4" value="D"> D. Bánh sẽ có màu đen.</label>
+                <label><input type="radio" name="q4" value="A"> A. Mùi thơm ngọt ngào</label>
+                <label><input type="radio" name="q4" value="B"> B. Vị mặn đậm đà</label>
+                <label><input type="radio" name="q4" value="C" data-correct="true"> C. Mùi hôi, mốc, vị chua hoặc đắng</label>
+                <label><input type="radio" name="q4" value="D"> D. Không có mùi vị gì</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: <span class="level-tag th">Thông hiểu</span><br>Dấu hiệu rõ nhất để phân biệt bát bột ĐÃ Ủ và bát bột CHƯA Ủ sau 40 phút là gì?</div>
+            <div class="question-text">Câu 5: Nấm mốc phát triển mạnh nhất trong điều kiện nhiệt độ như thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Bát bột đã ủ có màu xanh lá cây.</label>
-                <label><input type="radio" name="q5" value="B"> B. Bát bột đã ủ bị khô cứng lại như đá.</label>
-                <label><input type="radio" name="q5" value="C" data-correct="true" data-explain="Sau khi ủ, nấm men hoạt động sinh khí làm khối bột phồng to lên (thường gấp đôi kích thước ban đầu) và kết cấu trở nên xốp mềm."> C. Bát bột đã ủ nở phồng lên (gấp đôi), ấn vào thấy mềm xốp.</label>
-                <label><input type="radio" name="q5" value="D"> D. Bát bột đã ủ tan chảy thành nước.</label>
+                <label><input type="radio" name="q5" value="A"> A. Rất lạnh (đóng băng)</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true"> B. Ấm áp, nóng</label>
+                <label><input type="radio" name="q5" value="C"> C. Mát mẻ như mùa thu</label>
+                <label><input type="radio" name="q5" value="D"> D. Nhiệt độ nào cũng phát triển như nhau</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: <span class="level-tag nb">Nhận biết</span><br>Vai trò chính của nấm men trong làm bánh là gì?</div>
+            <div class="question-text">Câu 6: Ngoài nhiệt độ, yếu tố nào giúp nấm mốc sinh sôi nhanh chóng?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A" data-correct="true" data-explain="Vai trò quan trọng nhất của men là tạo độ xốp, nở cho bánh."> A. Làm cho bánh nở xốp.</label>
-                <label><input type="radio" name="q6" value="B"> B. Làm cho bánh có màu đỏ.</label>
-                <label><input type="radio" name="q6" value="C"> C. Làm cho bánh cứng lại để dễ cầm.</label>
-                <label><input type="radio" name="q6" value="D"> D. Làm cho bánh mặn hơn.</label>
+                <label><input type="radio" name="q6" value="A"> A. Môi trường khô ráo</label>
+                <label><input type="radio" name="q6" value="B"> B. Môi trường chân không</label>
+                <label><input type="radio" name="q6" value="C" data-correct="true"> C. Môi trường ẩm ướt (độ ẩm cao)</label>
+                <label><input type="radio" name="q6" value="D"> D. Môi trường nhiều ánh sáng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: <span class="level-tag nb">Nhận biết</span><br>Ngoài bánh mì, nấm men còn được sử dụng để sản xuất những sản phẩm nào dưới đây?</div>
+            <div class="question-text">Câu 7: Tại sao vào những ngày "trời nồm" ở Việt Nam, thực phẩm lại rất dễ bị mốc?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Kẹo dẻo, thạch rau câu.</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true" data-explain="Nấm men còn được dùng trong công nghệ lên men thực phẩm như làm bánh bao, sản xuất bia, rượu, cồn..."> B. Bánh bao, bia, rượu.</label>
-                <label><input type="radio" name="q7" value="C"> C. Nước ngọt có ga, kem.</label>
-                <label><input type="radio" name="q7" value="D"> D. Đậu phụ, nước mắm.</label>
+                <label><input type="radio" name="q7" value="A"> A. Vì trời quá lạnh</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true"> B. Vì không khí nóng và rất ẩm</label>
+                <label><input type="radio" name="q7" value="C"> C. Vì trời nhiều gió</label>
+                <label><input type="radio" name="q7" value="D"> D. Vì không có ánh nắng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: <span class="level-tag nb">Nhận biết</span><br>Nhiệt độ nước thích hợp nhất để kích hoạt nấm men hoạt động tốt là bao nhiêu?</div>
+            <div class="question-text">Câu 8: Nếu lỡ ăn phải thực phẩm bị nấm mốc, em có thể gặp triệu chứng gì ngay lập tức?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Nước lạnh ngắt (nước đá).</label>
-                <label><input type="radio" name="q8" value="B"> B. Nước sôi sùng sục (100 độ C).</label>
-                <label><input type="radio" name="q8" value="C" data-correct="true" data-explain="Nước ấm khoảng 35-40 độ C (như nước tắm em bé) là môi trường lý tưởng nhất. Nước quá nóng làm chết men, nước quá lạnh làm men ngủ đông."> C. Nước ấm (khoảng 35 - 40 độ C).</label>
-                <label><input type="radio" name="q8" value="D"> D. Nước lọc ở nhiệt độ phòng nào cũng được.</label>
+                <label><input type="radio" name="q8" value="A"> A. Cao lớn hơn</label>
+                <label><input type="radio" name="q8" value="B"> B. Thông minh hơn</label>
+                <label><input type="radio" name="q8" value="C" data-correct="true"> C. Đau bụng, tiêu chảy, nôn mửa</label>
+                <label><input type="radio" name="q8" value="D"> D. Buồn ngủ</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: <span class="level-tag nb">Nhận biết</span><br>Khi trộn men, đường và nước ấm, hiện tượng gì xuất hiện sau 2-3 phút chứng tỏ men đang hoạt động?</div>
+            <div class="question-text">Câu 9: Việc thường xuyên ăn thực phẩm bị mốc có thể gây ra hậu quả nghiêm trọng nào về lâu dài?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A" data-correct="true" data-explain="Men 'ăn' đường và sinh ra khí, làm xuất hiện lớp bọt khí sủi lên bề mặt giống như gạch cua."> A. Sủi bọt khí lên bề mặt.</label>
-                <label><input type="radio" name="q9" value="B"> B. Hỗn hợp đông cứng lại.</label>
-                <label><input type="radio" name="q9" value="C"> C. Hỗn hợp đổi sang màu tím.</label>
-                <label><input type="radio" name="q9" value="D"> D. Không có hiện tượng gì xảy ra.</label>
+                <label><input type="radio" name="q9" value="A"> A. Gây béo phì</label>
+                <label><input type="radio" name="q9" value="B"> B. Làm đẹp da</label>
+                <label><input type="radio" name="q9" value="C" data-correct="true"> C. Hại gan, thận, nguy cơ gây ung thư</label>
+                <label><input type="radio" name="q9" value="D"> D. Tăng cường hệ miễn dịch</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: <span class="level-tag nb">Nhận biết</span><br>Trong bài học, cô giáo đã ví von Nấm men là nhân vật nào?</div>
+            <div class="question-text">Câu 10: Nếu một ổ bánh mì chỉ bị mốc một góc nhỏ, em nên làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Chú ong chăm chỉ.</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true" data-explain="Nấm men được ví là 'Người thợ tí hon' vì tuy nhỏ bé không nhìn thấy bằng mắt thường nhưng lại làm việc rất chăm chỉ để giúp bánh nở phồng."> B. Người thợ tí hon.</label>
-                <label><input type="radio" name="q10" value="C"> C. Bác sĩ tài ba.</label>
-                <label><input type="radio" name="q10" value="D"> D. Ảo thuật gia đại tài.</label>
+                <label><input type="radio" name="q10" value="A"> A. Cắt bỏ phần mốc đi rồi ăn phần còn lại cho đỡ phí</label>
+                <label><input type="radio" name="q10" value="B"> B. Rửa sạch bằng nước rồi ăn</label>
+                <label><input type="radio" name="q10" value="C"> C. Nướng lại cho nóng rồi ăn</label>
+                <label><input type="radio" name="q10" value="D" data-correct="true"> D. Vứt bỏ toàn bộ ổ bánh mì đó</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: <span class="level-tag nb">Nhận biết</span><br>Theo giáo án, thời gian ủ bột cần thiết để bột nở đạt chuẩn thường là khoảng bao lâu?</div>
+            <div class="question-text">Câu 11: Vì sao chúng ta KHÔNG nên ăn phần còn lại của thực phẩm mốc dù nhìn nó vẫn bình thường? </div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. 1 - 2 phút.</label>
-                <label><input type="radio" name="q11" value="B"> B. 5 - 10 phút.</label>
-                <label><input type="radio" name="q11" value="C" data-correct="true" data-explain="Cần khoảng 30-40 phút để nấm men có đủ thời gian sinh khí và làm nở bột."> C. 30 - 40 phút.</label>
-                <label><input type="radio" name="q11" value="D"> D. 1 ngày đêm.</label>
+                <label><input type="radio" name="q11" value="A" data-correct="true"> A. Vì chân nấm và độc tố đã lan sâu vào bên trong mà mắt thường không thấy</label>
+                <label><input type="radio" name="q11" value="B"> B. Vì ăn không ngon miệng</label>
+                <label><input type="radio" name="q11" value="C"> C. Vì sợ bị bố mẹ mắng</label>
+                <label><input type="radio" name="q11" value="D"> D. Vì thực phẩm đó đã mất hết chất dinh dưỡng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: <span class="level-tag th">Thông hiểu</span><br>Trong quy trình làm bánh mì, nấm men thường được cho vào ở bước nào?</div>
+            <div class="question-text">Câu 12: Nấm mốc xuất hiện trên các loại hạt như lạc (đậu phộng), đỗ, ngô,... đặc biệt nguy hiểm vì chứa độc tố gì?</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Cho vào cuối cùng khi bánh đã nướng chín.</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true" data-explain="Nấm men cần được kích hoạt và trộn đều với bột ngay từ đầu để có thời gian hoạt động trong suốt quá trình nhào và ủ."> B. Trộn cùng nước ấm và đường ngay ở bước đầu tiên.</label>
-                <label><input type="radio" name="q12" value="C"> C. Rắc lên mặt bánh trước khi ăn.</label>
-                <label><input type="radio" name="q12" value="D"> D. Cho vào khi đang nướng trong lò.</label>
+                <label><input type="radio" name="q12" value="A"> A. Vitamin C</label>
+                <label><input type="radio" name="q12" value="B" data-correct="true"> B. Aflatoxin (độc tố gây ung thư)</label>
+                <label><input type="radio" name="q12" value="C"> C. Protein</label>
+                <label><input type="radio" name="q12" value="D"> D. Canxi</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 13: <span class="level-tag nb">Nhận biết</span><br>Ruột bánh mì thường có màu gì?</div>
+            <div class="question-text">Câu 13: Trong các thực phẩm sau, thực phẩm nào được coi là AN TOÀN để sử dụng?</div>
             <div class="options">
-                <label><input type="radio" name="q13" value="A" data-correct="true" data-explain="Ruột bánh mì làm từ bột mì thông thường sẽ có màu trắng hoặc hơi ngà vàng."> A. Màu trắng (hoặc hơi ngà).</label>
-                <label><input type="radio" name="q13" value="B"> B. Màu xanh dương.</label>
-                <label><input type="radio" name="q13" value="C"> C. Màu đen tuyền.</label>
-                <label><input type="radio" name="q13" value="D"> D. Màu tím than.</label>
+                <label><input type="radio" name="q13" value="A"> A. Cơm nguội để qua đêm có mùi chua</label>
+                <label><input type="radio" name="q13" value="B"> B. Dưa muối nổi váng trắng dày đặc</label>
+                <label><input type="radio" name="q13" value="C" data-correct="true"> C. Hạt lạc có nhân màu trắng ngà, giòn thơm</label>
+                <label><input type="radio" name="q13" value="D"> D. Bánh chưng bị chảy nước, có mùi lạ</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 14: <span class="level-tag vd">Vận dụng</span><br>Nếu dùng nước đá lạnh để hòa men thì điều gì xảy ra?</div>
+            <div class="question-text">Câu 14: Khi đi siêu thị mua đồ ăn, để tránh mua phải thực phẩm hỏng, em cần kiểm tra thông tin nào trên bao bì?</div>
             <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. Men sẽ chết ngay lập tức.</label>
-                <label><input type="radio" name="q14" value="B"> B. Men hoạt động rất nhanh.</label>
-                <label><input type="radio" name="q14" value="C" data-correct="true" data-explain="Nước lạnh không làm chết men nhưng sẽ làm men 'ngủ đông' (bị tê liệt), hoạt động rất yếu hoặc không hoạt động, khiến bánh lâu nở hoặc không nở."> C. Men sẽ "ngủ đông", hoạt động rất yếu hoặc không hoạt động.</label>
-                <label><input type="radio" name="q14" value="D"> D. Men sẽ biến thành đường.</label>
+                <label><input type="radio" name="q14" value="A"> A. Tên giám đốc công ty</label>
+                <label><input type="radio" name="q14" value="B"> B. Màu sắc bao bì</label>
+                <label><input type="radio" name="q14" value="C" data-correct="true"> C. Hạn sử dụng (Date)</label>
+                <label><input type="radio" name="q14" value="D"> D. Giá tiền cao hay thấp</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 15: <span class="level-tag vd">Vận dụng</span><br>Khi thực hành làm thí nghiệm hoặc làm bánh, học sinh cần có phẩm chất nào?</div>
+            <div class="question-text">Câu 15: Khẩu hiệu hành động đúng đắn nhất để bảo vệ sức khỏe trước thực phẩm mốc là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. Lười biếng, không dọn dẹp.</label>
-                <label><input type="radio" name="q15" value="B"> B. Gian dối kết quả.</label>
-                <label><input type="radio" name="q15" value="C" data-correct="true" data-explain="Khoa học cần sự trung thực (ghi chép đúng hiện tượng), chăm chỉ (làm đúng quy trình) và giữ vệ sinh (nhất là với thực phẩm)."> C. Chăm chỉ, trung thực và giữ vệ sinh.</label>
-                <label><input type="radio" name="q15" value="D"> D. Nghịch ngợm, ném bột vào bạn.</label>
+                <label><input type="radio" name="q15" value="A"> A. "Rửa sạch là ăn được"</label>
+                <label><input type="radio" name="q15" value="B"> B. "Nấu chín kĩ sẽ hết mốc"</label>
+                <label><input type="radio" name="q15" value="C" data-correct="true"> C. "Thấy mốc là bỏ - Không được tiếc rẻ"</label>
+                <label><input type="radio" name="q15" value="D"> D. "Ăn một ít cũng không sao"</label>
             </div>
         </div>
 
