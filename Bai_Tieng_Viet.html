@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn tập: Viết đoạn văn nêu tình cảm, cảm xúc (12 Câu)</title>
+    <title>Ôn tập Tiếng Việt - Tiếng Ru</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,129 +20,89 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TIẾNG VIỆT 4 - VIẾT ĐOẠN VĂN CẢM XÚC</h2>
+                <h2 id="ten-bai-tap">TIẾNG VIỆT: BÀI ĐỌC "TIẾNG RU"</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Yêu cầu chính của bài học viết đoạn văn này là gì?</div>
+            <div class="question-text">Câu 1: Bài thơ "Tiếng Ru" là lời của ai nói với ai?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Kể lại toàn bộ câu chuyện đã đọc.</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Nêu tình cảm, cảm xúc về một nhân vật trong văn học.</label>
-                <label><input type="radio" name="q1" value="C"> C. Tả ngoại hình của một người thân trong gia đình.</label>
-                <label><input type="radio" name="q1" value="D"> D. Viết bản kiểm điểm cá nhân.</label>
+                <label><input type="radio" name="q1" value="A"> A. Lời của bà ru cháu ngủ.</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Lời của mẹ ru con, khuyên con điều hay lẽ phải.</label>
+                <label><input type="radio" name="q1" value="C"> C. Lời của cô giáo dạy học sinh.</label>
+                <label><input type="radio" name="q1" value="D"> D. Lời của người chị ru em.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Theo yêu cầu cần đạt, độ dài của đoạn văn nên vào khoảng bao nhiêu câu?</div>
+            <div class="question-text">Câu 2: Trong khổ thơ đầu, người mẹ khuyên con phải biết yêu thương những ai?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. 1-2 câu.</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true"> B. 4-6 câu.</label>
-                <label><input type="radio" name="q2" value="C"> C. 10-15 câu.</label>
-                <label><input type="radio" name="q2" value="D"> D. Càng dài càng tốt.</label>
+                <label><input type="radio" name="q2" value="A" data-correct="true"> A. Yêu thương đồng chí, anh em.</label>
+                <label><input type="radio" name="q2" value="B"> B. Chỉ yêu thương người trong gia đình.</label>
+                <label><input type="radio" name="q2" value="C"> C. Yêu thương cỏ cây, hoa lá.</label>
+                <label><input type="radio" name="q2" value="D"> D. Yêu thương các loài vật nuôi.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Cấu trúc của đoạn văn nêu tình cảm, cảm xúc gồm mấy phần chính?</div>
+            <div class="question-text">Câu 3: Câu thơ "Một ngôi sao chẳng sáng đêm / Một thân lúa chín, chẳng nên mùa vàng" muốn nói lên điều gì?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. 2 phần (Mở đầu, Kết thúc).</label>
-                <label><input type="radio" name="q3" value="B" data-correct="true"> B. 3 phần (Mở đầu, Triển khai, Kết thúc).</label>
-                <label><input type="radio" name="q3" value="C"> C. 1 phần duy nhất.</label>
-                <label><input type="radio" name="q3" value="D"> D. 4 phần (Mở bài, Thân bài, Luận điểm, Kết bài).</label>
+                <label><input type="radio" name="q3" value="A"> A. Ngôi sao rất nhỏ bé và lúa rất quý giá.</label>
+                <label><input type="radio" name="q3" value="B"> B. Cần phải chăm sóc lúa để có mùa vàng.</label>
+                <label><input type="radio" name="q3" value="C" data-correct="true"> C. Một cá nhân lẻ loi không thể làm nên việc lớn, cần phải đoàn kết.</label>
+                <label><input type="radio" name="q3" value="D"> D. Ban đêm trời tối nên sao không sáng được.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Phần "Mở đầu" của đoạn văn cần giới thiệu thông tin gì?</div>
+            <div class="question-text">Câu 4: Theo khổ thơ thứ 3, nhờ đâu mà "Núi cao" và "Biển sâu"?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A" data-correct="true"> A. Tên nhân vật và tên tác phẩm/câu chuyện.</label>
-                <label><input type="radio" name="q4" value="B"> B. Kể lại chi tiết hành động của nhân vật.</label>
-                <label><input type="radio" name="q4" value="C"> C. Nêu bài học kinh nghiệm.</label>
-                <label><input type="radio" name="q4" value="D"> D. Lời chào và lời cảm ơn.</label>
+                <label><input type="radio" name="q4" value="A"> A. Núi cao nhờ mây, biển sâu nhờ cá.</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Núi cao nhờ đất bồi, biển sâu nhờ nước sông.</label>
+                <label><input type="radio" name="q4" value="C"> C. Núi cao nhờ cây cối, biển sâu nhờ mưa.</label>
+                <label><input type="radio" name="q4" value="D"> D. Núi và biển tự nhiên đã cao và sâu như vậy.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Khi viết phần "Triển khai", để tránh lỗi kể lể dài dòng, em cần làm gì?</div>
+            <div class="question-text">Câu 5: Từ "nhân gian" trong bài thơ có nghĩa là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Chép lại nguyên văn lời thoại của nhân vật.</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true"> B. Chọn 1-2 đặc điểm nổi bật và nêu cảm xúc tương ứng.</label>
-                <label><input type="radio" name="q5" value="C"> C. Kể lại toàn bộ diễn biến câu chuyện từ đầu đến cuối.</label>
-                <label><input type="radio" name="q5" value="D"> D. Liệt kê tên tất cả các nhân vật phụ.</label>
+                <label><input type="radio" name="q5" value="A"> A. Một khoảng thời gian ngắn.</label>
+                <label><input type="radio" name="q5" value="B"> B. Thế giới của các loài vật.</label>
+                <label><input type="radio" name="q5" value="C" data-correct="true"> C. Cuộc sống chung của loài người, mọi người.</label>
+                <label><input type="radio" name="q5" value="D"> D. Những người sống ở trên núi.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Đâu là những cụm từ "dẫn dắt" phù hợp để nối các ý trong đoạn văn?</div>
+            <div class="question-text">Câu 6: Dòng nào dưới đây chỉ chứa các <strong>tính từ</strong> xuất hiện trong khổ thơ 3?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. "Ngày xửa ngày xưa...", "Một hôm nọ..."</label>
-                <label><input type="radio" name="q6" value="B"> B. "Em xin hứa...", "Em cam đoan..."</label>
-                <label><input type="radio" name="q6" value="C" data-correct="true"> C. "Em rất thích...", "Điều làm em nhớ nhất là...", "Qua nhân vật này..."</label>
-                <label><input type="radio" name="q6" value="D"> D. "Thưa thầy cô...", "Kính gửi..."</label>
+                <label><input type="radio" name="q6" value="A"> A. Núi, sông, biển, đất.</label>
+                <label><input type="radio" name="q6" value="B"> B. Chê, bồi, nhớ, quên.</label>
+                <label><input type="radio" name="q6" value="C" data-correct="true"> C. Cao, thấp, sâu, nhỏ.</label>
+                <label><input type="radio" name="q6" value="D"> D. Cao, thấp, sông, biển.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Dòng nào dưới đây chứa các từ chỉ cảm xúc phù hợp với một nhân vật tốt bụng, dũng cảm (như Thạch Sanh)?</div>
+            <div class="question-text">Câu 7: Xác định <strong>Chủ ngữ</strong> trong câu sau: "Ngọn núi này rất cao."</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Sợ hãi, căm ghét, xa lánh.</label>
-                <label><input type="radio" name="q7" value="B"> B. Buồn bã, thất vọng, chán chường.</label>
-                <label><input type="radio" name="q7" value="C" data-correct="true"> C. Yêu mến, khâm phục, ngưỡng mộ, trân trọng.</label>
-                <label><input type="radio" name="q7" value="D"> D. Nghi ngờ, đố kỵ, ghen tỵ.</label>
+                <label><input type="radio" name="q7" value="A"> A. Ngọn núi</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true"> B. Ngọn núi này</label>
+                <label><input type="radio" name="q7" value="C"> C. Rất cao</label>
+                <label><input type="radio" name="q7" value="D"> D. Núi</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Đối với những nhân vật phản diện, độc ác (như Sói già, Mụ phù thủy), cảm xúc của em thường là gì?</div>
+            <div class="question-text">Câu 8: Bài thơ "Tiếng Ru" được viết theo thể thơ nào?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A" data-correct="true"> A. Không đồng tình, ghét, sợ hãi.</label>
-                <label><input type="radio" name="q8" value="B"> B. Ngưỡng mộ, muốn học tập theo.</label>
-                <label><input type="radio" name="q8" value="C"> C. Vui vẻ, hào hứng, phấn khởi.</label>
-                <label><input type="radio" name="q8" value="D"> D. Kính trọng, biết ơn.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 9: Khi tự đọc soát bài viết của mình, em cần kiểm tra những tiêu chí nào?</div>
-            <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Chỉ cần đếm số lượng câu.</label>
-                <label><input type="radio" name="q9" value="B"> B. Chỉ xem chữ viết có đẹp không.</label>
-                <label><input type="radio" name="q9" value="C" data-correct="true"> C. Bố cục, Cảm xúc (từ ngữ), Dùng từ đặt câu và Chính tả.</label>
-                <label><input type="radio" name="q9" value="D"> D. Xem đã vẽ hình minh họa chưa.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 10: Trong hoạt động trao đổi nhóm, nếu thấy câu văn của bạn hay, em sẽ vẽ ký hiệu gì vào bên cạnh?</div>
-            <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Dấu gạch chéo (X).</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true"> B. Biểu tượng "mặt cười".</label>
-                <label><input type="radio" name="q10" value="C"> C. Dấu hỏi chấm (?).</label>
-                <label><input type="radio" name="q10" value="D"> D. Dấu trừ (-).</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 11: Nếu em đọc thấy bài của bạn có chỗ chưa hiểu, em nên làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. Gạch bỏ câu đó đi.</label>
-                <label><input type="radio" name="q11" value="B"> B. Viết lại bài hộ bạn.</label>
-                <label><input type="radio" name="q11" value="C" data-correct="true"> C. Vẽ "dấu hỏi chấm" bên cạnh để hỏi lại bạn.</label>
-                <label><input type="radio" name="q11" value="D"> D. Chê bài của bạn trước lớp.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 12: Hoạt động vận dụng cuối bài gợi ý em làm gì để thể hiện tình cảm với người thân nhân ngày 8/3?</div>
-            <div class="options">
-                <label><input type="radio" name="q12" value="A" data-correct="true"> A. Làm thiệp và viết lời yêu thương tặng mẹ/bà/cô giáo.</label>
-                <label><input type="radio" name="q12" value="B"> B. Kể lại câu chuyện Tấm Cám cho mẹ nghe.</label>
-                <label><input type="radio" name="q12" value="C"> C. Mua một món đồ chơi mới.</label>
-                <label><input type="radio" name="q12" value="D"> D. Viết một bài thơ dài 100 câu.</label>
+                <label><input type="radio" name="q8" value="A"> A. Thơ 5 chữ.</label>
+                <label><input type="radio" name="q8" value="B"> B. Thơ tự do.</label>
+                <label><input type="radio" name="q8" value="C"> C. Thơ 4 chữ.</label>
+                <label><input type="radio" name="q8" value="D" data-correct="true"> D. Thơ Lục bát.</label>
             </div>
         </div>
 
