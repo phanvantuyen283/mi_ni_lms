@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn tập Lịch sử & Địa lí 4 - Bài 16</title>
+    <title>Ôn tập Lịch sử & Địa lí 4 - Kinh tế biển miền Trung</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,159 +20,59 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">LỊCH SỬ - ĐỊA LÍ: DÂN CƯ VÀ HOẠT ĐỘNG SẢN XUẤT Ở DUYÊN HẢI MIỀN TRUNG</h2>
+                <h2 id="ten-bai-tap">LS & ĐL 4: KINH TẾ BIỂN Ở DUYÊN HẢI MIỀN TRUNG</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Hai câu thơ: "Làng tôi ở vốn làm nghề chài lưới / Nước bao vây cách biển nửa ngày sông" nhắc đến hoạt động kinh tế nào?</div>
+            <div class="question-text">Câu 1: Đâu là nhóm 4 hoạt động kinh tế biển tiêu biểu ở vùng Duyên hải miền Trung?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Làm muối</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Chài lưới (đánh cá)</label>
-                <label><input type="radio" name="q1" value="C"> C. Trồng lúa nước</label>
-                <label><input type="radio" name="q1" value="D"> D. Dệt vải</label>
+                <label><input type="radio" name="q1" value="A"> A. Làm muối, trồng lúa nước, khai thác than, du lịch.</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Làm muối, đánh bắt nuôi trồng hải sản, du lịch biển, giao thông đường biển.</label>
+                <label><input type="radio" name="q1" value="C"> C. Trồng cây ăn quả, dệt vải, nuôi cá tra, du lịch núi.</label>
+                <label><input type="radio" name="q1" value="D"> D. Đánh bắt cá, khai thác dầu khí, trồng chè, xây dựng.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Tính đến năm 2020, số dân của vùng Duyên hải miền Trung khoảng bao nhiêu người?</div>
+            <div class="question-text">Câu 2: Vì sao nghề làm muối rất phát triển ở các nơi như Sa Huỳnh, Cà Ná?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Hơn 10 triệu người</label>
-                <label><input type="radio" name="q2" value="B"> B. Khoảng 15 triệu người</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true"> C. Hơn 20 triệu người</label>
-                <label><input type="radio" name="q2" value="D"> D. Hơn 30 triệu người</label>
+                <label><input type="radio" name="q2" value="A"> A. Vì ở đây thường xuyên có mưa to.</label>
+                <label><input type="radio" name="q2" value="B"> B. Vì có nhiều sông lớn đổ ra biển.</label>
+                <label><input type="radio" name="q2" value="C" data-correct="true"> C. Vì nước biển mặn và có nhiều nắng.</label>
+                <label><input type="radio" name="q2" value="D"> D. Vì người dân thích ăn mặn.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Ngoài người Kinh, vùng Duyên hải miền Trung còn là nơi sinh sống của các dân tộc nào?</div>
+            <div class="question-text">Câu 3: Điều kiện tự nhiên nào giúp Duyên hải miền Trung xây dựng được nhiều cảng biển lớn (như cảng Đà Nẵng)?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. H'mông, Dao, Tày</label>
-                <label><input type="radio" name="q3" value="B" data-correct="true"> B. Chăm, Thái, Mường, Bru – Vân Kiều</label>
-                <label><input type="radio" name="q3" value="C"> C. Khơ-me, Hoa, Chơ-ro</label>
-                <label><input type="radio" name="q3" value="D"> D. Ê-đê, Gia-rai, Ba-na</label>
+                <label><input type="radio" name="q3" value="A" data-correct="true"> A. Có nhiều vũng, vịnh nước sâu và kín gió.</label>
+                <label><input type="radio" name="q3" value="B"> B. Có bãi cát trắng trải dài, bằng phẳng.</label>
+                <label><input type="radio" name="q3" value="C"> C. Có nhiều đảo nhỏ xa bờ.</label>
+                <label><input type="radio" name="q3" value="D"> D. Có khí hậu mát mẻ quanh năm.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Dựa vào hình ảnh trong bài học, người dân tộc nào thường mặc trang phục sáng màu và có điệu múa quạt đặc trưng?</div>
+            <div class="question-text">Câu 4: Hình ảnh chiếc "thuyền thúng" thường gắn liền với hoạt động nào của ngư dân miền Trung?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Người Mường</label>
-                <label><input type="radio" name="q4" value="B"> B. Người Thái</label>
-                <label><input type="radio" name="q4" value="C" data-correct="true"> C. Người Chăm</label>
-                <label><input type="radio" name="q4" value="D"> D. Người Kinh</label>
+                <label><input type="radio" name="q4" value="A"> A. Chở hàng hóa xuất khẩu đi quốc tế.</label>
+                <label><input type="radio" name="q4" value="B"> B. Đua thuyền thể thao chuyên nghiệp.</label>
+                <label><input type="radio" name="q4" value="C" data-correct="true"> C. Đánh bắt hải sản gần bờ hoặc di chuyển từ tàu lớn vào bờ.</label>
+                <label><input type="radio" name="q4" value="D"> D. Làm nhà ở nổi trên mặt nước.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Trong các hoạt động lễ hội ở Duyên hải miền Trung, người Mường thường sử dụng nhạc cụ nào?</div>
+            <div class="question-text">Câu 5: Dãy địa danh nào sau đây gồm các bãi biển, địa điểm du lịch nổi tiếng ở miền Trung?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Đàn tranh</label>
-                <label><input type="radio" name="q5" value="B"> B. Kèn Saxophone</label>
-                <label><input type="radio" name="q5" value="C" data-correct="true"> C. Cồng chiêng</label>
-                <label><input type="radio" name="q5" value="D"> D. Đàn đá</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 6: Điều kiện tự nhiên thuận lợi nhất để phát triển nghề làm muối ở Duyên hải miền Trung là gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Có nhiều sông ngòi lớn</label>
-                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Nước biển mặn và nhiều nắng</label>
-                <label><input type="radio" name="q6" value="C"> C. Có nhiều rừng cây</label>
-                <label><input type="radio" name="q6" value="D"> D. Khí hậu mát mẻ quanh năm</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 7: Để đánh bắt cá xa bờ, ngư dân miền Trung thường sử dụng phương tiện gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Thuyền thúng</label>
-                <label><input type="radio" name="q7" value="B"> B. Bè tre</label>
-                <label><input type="radio" name="q7" value="C" data-correct="true"> C. Tàu lớn công suất lớn</label>
-                <label><input type="radio" name="q7" value="D"> D. Xuồng ba lá</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 8: "Thuyền thúng" - vật dụng quen thuộc của ngư dân miền Trung thường được làm chủ yếu từ vật liệu gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Gỗ lim</label>
-                <label><input type="radio" name="q8" value="B"> B. Nhựa tổng hợp</label>
-                <label><input type="radio" name="q8" value="C" data-correct="true"> C. Tre</label>
-                <label><input type="radio" name="q8" value="D"> D. Sắt thép</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 9: Ngoài việc dùng để di chuyển và đánh bắt gần bờ, thuyền thúng ngày nay còn được dùng để làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Chở hàng hóa nặng đi quốc tế</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true"> B. Phục vụ du lịch, chở khách tham quan</label>
-                <label><input type="radio" name="q9" value="C"> C. Làm nhà ở nổi trên biển</label>
-                <label><input type="radio" name="q9" value="D"> D. Trưng bày trong bảo tàng nghệ thuật</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 10: Bên cạnh nghề làm muối và đánh bắt hải sản, biển miền Trung còn mang lại lợi ích kinh tế nào khác?</div>
-            <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Khai thác than đá</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true"> B. Phát triển du lịch biển, nghỉ dưỡng</label>
-                <label><input type="radio" name="q10" value="C"> C. Trồng cây công nghiệp lâu năm</label>
-                <label><input type="radio" name="q10" value="D"> D. Chăn nuôi gia súc lớn</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 11: Vì sao hoạt động sản xuất của người dân miền Trung lại gắn liền với biển?</div>
-            <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. Vì người dân không thích làm ruộng</label>
-                <label><input type="radio" name="q11" value="B" data-correct="true"> B. Vì vị trí địa lí giáp biển, có đường bờ biển dài</label>
-                <label><input type="radio" name="q11" value="C"> C. Vì đất đai ở đây màu mỡ nhất cả nước</label>
-                <label><input type="radio" name="q11" value="D"> D. Vì không có núi và sông</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 12: Nhận xét nào sau đây là đúng về đặc điểm dân cư vùng Duyên hải miền Trung?</div>
-            <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Dân cư thưa thớt, ít người sinh sống</label>
-                <label><input type="radio" name="q12" value="B"> B. Chỉ có duy nhất dân tộc Kinh sinh sống</label>
-                <label><input type="radio" name="q12" value="C" data-correct="true"> C. Dân cư đông đúc, nhiều dân tộc cùng chung sống</label>
-                <label><input type="radio" name="q12" value="D"> D. Người dân chủ yếu sống trên núi cao</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 13: Hình ảnh những người nông dân đang vun những "đống trắng" trên cánh đồng ven biển mô tả nghề gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q13" value="A"> A. Làm gốm</label>
-                <label><input type="radio" name="q13" value="B"> B. Nuôi tôm</label>
-                <label><input type="radio" name="q13" value="C"> C. Trồng bông</label>
-                <label><input type="radio" name="q13" value="D" data-correct="true"> D. Làm muối</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 14: Người dân miền Trung thường được biết đến với đức tính gì trong lao động sản xuất?</div>
-            <div class="options">
-                <label><input type="radio" name="q14" value="A" data-correct="true"> A. Cần cù, chịu khó</label>
-                <label><input type="radio" name="q14" value="B"> B. Thích nghỉ ngơi</label>
-                <label><input type="radio" name="q14" value="C"> C. Dễ nản chí</label>
-                <label><input type="radio" name="q14" value="D"> D. Thích làm việc nhẹ nhàng</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 15: Mối quan hệ giữa các dân tộc anh em (Kinh, Chăm, Hoa, Mường...) ở vùng Duyên hải miền Trung như thế nào?</div>
-            <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. Sống tách biệt, không giao lưu</label>
-                <label><input type="radio" name="q15" value="B"> B. Thường xuyên xảy ra xung đột</label>
-                <label><input type="radio" name="q15" value="C" data-correct="true"> C. Đoàn kết, tôn trọng văn hóa của nhau</label>
-                <label><input type="radio" name="q15" value="D"> D. Chỉ người Kinh mới được tham gia lễ hội</label>
+                <label><input type="radio" name="q5" value="A"> A. Đồ Sơn, Cát Bà, Sa Pa.</label>
+                <label><input type="radio" name="q5" value="B"> B. Vũng Tàu, Hồ Xuân Hương, Chợ Bến Thành.</label>
+                <label><input type="radio" name="q5" value="C"> C. Phú Quốc, Cần Thơ, Cà Mau.</label>
+                <label><input type="radio" name="q5" value="D" data-correct="true"> D. Sầm Sơn, Mỹ Khê, Nha Trang.</label>
             </div>
         </div>
 
