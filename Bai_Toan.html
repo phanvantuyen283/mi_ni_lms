@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn tập Toán 4 - Nhân với số có hai chữ số (Mở rộng)</title>
+    <title>Bài Tập Trắc Nghiệm Toán 4</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,162 +20,159 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TOÁN LỚP 4: LUYỆN TẬP NHÂN NHẨM & GIẢI TOÁN</h2>
+                <h2 id="ten-bai-tap">TOÁN 4 - TÍNH CHẤT PHÂN PHỐI CỦA PHÉP NHÂN</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Kết quả của phép tính nhẩm <strong>14 x 30</strong> là:</div>
+            <div class="question-text">Câu 1: Biểu thức nào dưới đây thể hiện đúng tính chất phân phối của phép nhân đối với phép cộng?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. 320</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. 420</label>
-                <label><input type="radio" name="q1" value="C"> C. 42</label>
-                <label><input type="radio" name="q1" value="D"> D. 140</label>
+                <label><input type="radio" name="q1" value="A"> A. a × (b + c) = a × b + c</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. a × (b + c) = a × b + a × c</label>
+                <label><input type="radio" name="q1" value="C"> C. a × (b + c) = a + b × c</label>
+                <label><input type="radio" name="q1" value="D"> D. a × (b + c) = a × b × c</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Tính nhẩm: <strong>23 x 40 = ?</strong></div>
+            <div class="question-text">Câu 2: Kết quả của biểu thức 15 × (3 + 2) được tính theo cách khai triển là:</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A" data-correct="true"> A. 920</label>
-                <label><input type="radio" name="q2" value="B"> B. 820</label>
-                <label><input type="radio" name="q2" value="C"> C. 92</label>
-                <label><input type="radio" name="q2" value="D"> D. 2300</label>
+                <label><input type="radio" name="q2" value="A"> A. 15 × 3 + 2</label>
+                <label><input type="radio" name="q2" value="B"> B. 15 + 3 × 2</label>
+                <label><input type="radio" name="q2" value="C" data-correct="true"> C. 15 × 3 + 15 × 2</label>
+                <label><input type="radio" name="q2" value="D"> D. 15 × 3 × 2</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Kết quả của phép tính <strong>52 x 20</strong> là:</div>
+            <div class="question-text">Câu 3: Tính giá trị của biểu thức: 26 × (5 + 4)</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. 140</label>
-                <label><input type="radio" name="q3" value="B"> B. 1004</label>
-                <label><input type="radio" name="q3" value="C" data-correct="true"> C. 1040</label>
-                <label><input type="radio" name="q3" value="D"> D. 104</label>
+                <label><input type="radio" name="q3" value="A" data-correct="true"> A. 234</label>
+                <label><input type="radio" name="q3" value="B"> B. 134</label>
+                <label><input type="radio" name="q3" value="C"> C. 269</label>
+                <label><input type="radio" name="q3" value="D"> D. 260</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Tính nhẩm nhanh: <strong>45 x 20 = ?</strong></div>
+            <div class="question-text">Câu 4: Biểu thức a × (b - c) bằng với biểu thức nào dưới đây?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. 800</label>
-                <label><input type="radio" name="q4" value="B" data-correct="true"> B. 900</label>
-                <label><input type="radio" name="q4" value="C"> C. 90</label>
-                <label><input type="radio" name="q4" value="D"> D. 450</label>
+                <label><input type="radio" name="q4" value="A"> A. a × b - c</label>
+                <label><input type="radio" name="q4" value="B"> B. a × b + a × c</label>
+                <label><input type="radio" name="q4" value="C" data-correct="true"> C. a × b - a × c</label>
+                <label><input type="radio" name="q4" value="D"> D. a - b × c</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Kết quả của phép tính <strong>15 x 60</strong> là:</div>
+            <div class="question-text">Câu 5: Tính bằng cách thuận tiện nhất: 34 × 8 + 34 × 2</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. 600</label>
-                <label><input type="radio" name="q5" value="B"> B. 850</label>
-                <label><input type="radio" name="q5" value="C"> C. 90</label>
-                <label><input type="radio" name="q5" value="D" data-correct="true"> D. 900</label>
+                <label><input type="radio" name="q5" value="A"> A. 348</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true"> B. 340</label>
+                <label><input type="radio" name="q5" value="C"> C. 272</label>
+                <label><input type="radio" name="q5" value="D"> D. 680</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Tính nhẩm: <strong>200 x 40 = ?</strong></div>
+            <div class="question-text">Câu 6: Khối Bốn có 2 lớp học vẽ, khối Ba có 3 lớp học vẽ. Mỗi lớp học vẽ có 12 bạn. Hỏi cả hai khối lớp có bao nhiêu bạn học vẽ?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. 800</label>
-                <label><input type="radio" name="q6" value="B" data-correct="true"> B. 8 000</label>
-                <label><input type="radio" name="q6" value="C"> C. 80 000</label>
-                <label><input type="radio" name="q6" value="D"> D. 80</label>
+                <label><input type="radio" name="q6" value="A"> A. 36 bạn</label>
+                <label><input type="radio" name="q6" value="B"> B. 50 bạn</label>
+                <label><input type="radio" name="q6" value="C" data-correct="true"> C. 60 bạn</label>
+                <label><input type="radio" name="q6" value="D"> D. 24 bạn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Kết quả của phép tính <strong>300 x 30</strong> là:</div>
+            <div class="question-text">Câu 7: Với m = 4, n = 5, p = 3. Giá trị của biểu thức m × (n + p) là:</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. 900</label>
-                <label><input type="radio" name="q7" value="B"> B. 90</label>
-                <label><input type="radio" name="q7" value="C" data-correct="true"> C. 9 000</label>
-                <label><input type="radio" name="q7" value="D"> D. 90 000</label>
+                <label><input type="radio" name="q7" value="A"> A. 23</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true"> B. 32</label>
+                <label><input type="radio" name="q7" value="C"> C. 60</label>
+                <label><input type="radio" name="q7" value="D"> D. 12</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Tính nhẩm: <strong>500 x 30 = ?</strong></div>
+            <div class="question-text">Câu 8: Điền số thích hợp vào chỗ chấm: 5 × (9 - 2) = 5 × 9 - 5 × ...</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. 1 500</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true"> B. 15 000</label>
-                <label><input type="radio" name="q8" value="C"> C. 150 000</label>
-                <label><input type="radio" name="q8" value="D"> D. 150</label>
+                <label><input type="radio" name="q8" value="A"> A. 9</label>
+                <label><input type="radio" name="q8" value="B"> B. 5</label>
+                <label><input type="radio" name="q8" value="C" data-correct="true"> C. 2</label>
+                <label><input type="radio" name="q8" value="D"> D. 7</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Kết quả của phép tính <strong>400 x 50</strong> là bao nhiêu? (Lưu ý số lượng số 0)</div>
+            <div class="question-text">Câu 9: Tính bằng cách thuận tiện: 156 × 7 - 156 × 2</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. 2 000</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true"> B. 20 000</label>
-                <label><input type="radio" name="q9" value="C"> C. 200 000</label>
-                <label><input type="radio" name="q9" value="D"> D. 200</label>
+                <label><input type="radio" name="q9" value="A"> A. 156</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true"> B. 780</label>
+                <label><input type="radio" name="q9" value="C"> C. 1092</label>
+                <label><input type="radio" name="q9" value="D"> D. 1404</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Tính nhẩm: <strong>120 x 20 = ?</strong></div>
+            <div class="question-text">Câu 10: Điền dấu thích hợp: 4 × (6 - 2) ... 4 × 6 - 4 × 2</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. 240</label>
-                <label><input type="radio" name="q10" value="B"> B. 2 400</label>
-                <label><input type="radio" name="q10" value="C" data-correct="true"> C. 2 400</label> <script>
-                    // Sửa nóng đáp án B hiển thị trên giao diện người dùng để tránh lỗi trùng lặp logic
-                    document.currentScript.parentElement.querySelector('input[value="B"]').parentElement.innerHTML = '<input type="radio" name="q10" value="B"> B. 1 400';
-                </script>
-                <label><input type="radio" name="q10" value="D"> D. 24 000</label>
+                <label><input type="radio" name="q10" value="A"> A. ></label>
+                <label><input type="radio" name="q10" value="B"> B. <</label>
+                <label><input type="radio" name="q10" value="C" data-correct="true"> C. =</label>
+                <label><input type="radio" name="q10" value="D"> D. Không so sánh được</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: Kết quả của phép tính nhẩm <strong>36 x 40</strong> là bao nhiêu?</div>
+            <div class="question-text">Câu 11: Đợt một chuyển được 3 chuyến, mỗi chuyến 44 thùng hàng. Đợt hai chuyển được 3 chuyến, mỗi chuyến 56 thùng hàng. Hỏi cả hai đợt chuyển được bao nhiêu thùng?</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. 144</label>
-                <label><input type="radio" name="q11" value="B"> B. 1240</label>
-                <label><input type="radio" name="q11" value="C" data-correct="true"> C. 1440</label>
-                <label><input type="radio" name="q11" value="D"> D. 3640</label>
+                <label><input type="radio" name="q11" value="A" data-correct="true"> A. 300 thùng</label>
+                <label><input type="radio" name="q11" value="B"> B. 200 thùng</label>
+                <label><input type="radio" name="q11" value="C"> C. 330 thùng</label>
+                <label><input type="radio" name="q11" value="D"> D. 100 thùng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: Khi đặt tính nhân với số có hai chữ số, tích riêng thứ hai phải viết như thế nào so với tích riêng thứ nhất?</div>
+            <div class="question-text">Câu 12: Kết quả của phép tính: 67 × 3 + 67 × 7 là:</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Viết thẳng cột.</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true"> B. Lùi sang trái một cột.</label>
-                <label><input type="radio" name="q12" value="C"> C. Lùi sang phải một cột.</label>
-                <label><input type="radio" name="q12" value="D"> D. Viết ở vị trí bất kỳ.</label>
+                <label><input type="radio" name="q12" value="A"> A. 6700</label>
+                <label><input type="radio" name="q12" value="B"> B. 673</label>
+                <label><input type="radio" name="q12" value="C" data-correct="true"> C. 670</label>
+                <label><input type="radio" name="q12" value="D"> D. 607</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 13: Không cần tính cụ thể, hãy cho biết tích của phép nhân <strong>72 x 60</strong> chắc chắn có chữ số tận cùng là số nào?</div>
+            <div class="question-text">Câu 13: Trong các biểu thức sau, biểu thức nào có giá trị LỚN NHẤT?</div>
             <div class="options">
-                <label><input type="radio" name="q13" value="A" data-correct="true"> A. Số 0</label>
-                <label><input type="radio" name="q13" value="B"> B. Số 2</label>
-                <label><input type="radio" name="q13" value="C"> C. Số 6</label>
-                <label><input type="radio" name="q13" value="D"> D. Số 4</label>
+                <label><input type="radio" name="q13" value="A"> A. 5 × (4 + 6)</label>
+                <label><input type="radio" name="q13" value="B"> B. 5 × 4 + 5 × 6</label>
+                <label><input type="radio" name="q13" value="C"> C. 5 × 10</label>
+                <label><input type="radio" name="q13" value="D" data-correct="true"> D. 5 × 4 + 6</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 14: Một mảnh vườn hình chữ nhật có chiều dài 30m và chiều rộng 24m. Diện tích của mảnh vườn là:</div>
+            <div class="question-text">Câu 14: Biểu thức nào sau đây KHÔNG bằng với: 135 × 6 + 135 × 2</div>
             <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. 720 m</label>
-                <label><input type="radio" name="q14" value="B"> B. 108 m²</label>
-                <label><input type="radio" name="q14" value="C" data-correct="true"> C. 720 m²</label>
-                <label><input type="radio" name="q14" value="D"> D. 540 m²</label>
+                <label><input type="radio" name="q14" value="A"> A. 135 × (6 + 2)</label>
+                <label><input type="radio" name="q14" value="B"> B. 135 × 8</label>
+                <label><input type="radio" name="q14" value="C" data-correct="true"> C. 135 × 6 + 2</label>
+                <label><input type="radio" name="q14" value="D"> D. 135 × 2 + 135 × 6</label>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 15: Kết quả của phép tính <strong>62 x 11</strong> là bao nhiêu?</div>
+         <div class="question-block">
+            <div class="question-text">Câu 15: Một đội đồng diễn có 3 hàng áo đỏ và 2 hàng áo vàng, mỗi hàng 15 người. Biểu thức nào tính đúng tổng số người?</div>
             <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. 622</label>
-                <label><input type="radio" name="q15" value="B"> B. 62</label>
-                <label><input type="radio" name="q15" value="C"> C. 742</label>
-                <label><input type="radio" name="q15" value="D" data-correct="true"> D. 682</label>
+                <label><input type="radio" name="q15" value="A"> A. 15 × 3 × 2</label>
+                <label><input type="radio" name="q15" value="B" data-correct="true"> B. 15 × (3 + 2)</label>
+                <label><input type="radio" name="q15" value="C"> C. 15 + 3 + 2</label>
+                <label><input type="radio" name="q15" value="D"> D. (15 + 3) × 2</label>
             </div>
         </div>
 
