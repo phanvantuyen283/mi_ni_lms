@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài Tập Trắc Nghiệm Toán 4</title>
+    <title>Ôn tập Toán Lớp 4 - Bài 44</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,159 +20,89 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TOÁN 4 - TÍNH CHẤT PHÂN PHỐI CỦA PHÉP NHÂN</h2>
+                <h2 id="ten-bai-tap">TOÁN LỚP 4: CHIA CHO SỐ CÓ HAI CHỮ SỐ</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Biểu thức nào dưới đây thể hiện đúng tính chất phân phối của phép nhân đối với phép cộng?</div>
+            <div class="question-text">Câu 1: Khi thực hiện phép chia cho số có hai chữ số, thứ tự các bước thực hiện trong mỗi lượt chia là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. a × (b + c) = a × b + c</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. a × (b + c) = a × b + a × c</label>
-                <label><input type="radio" name="q1" value="C"> C. a × (b + c) = a + b × c</label>
-                <label><input type="radio" name="q1" value="D"> D. a × (b + c) = a × b × c</label>
+                <label><input type="radio" name="q1" value="A"> A. Nhân -> Trừ -> Chia -> Hạ</label>
+                <label><input type="radio" name="q1" value="B"> B. Trừ -> Nhân -> Chia -> Hạ</label>
+                <label><input type="radio" name="q1" value="C" data-correct="true"> C. Chia -> Nhân -> Trừ -> Hạ</label>
+                <label><input type="radio" name="q1" value="D"> D. Hạ -> Chia -> Nhân -> Trừ</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Kết quả của biểu thức 15 × (3 + 2) được tính theo cách khai triển là:</div>
+            <div class="question-text">Câu 2: Kết quả của phép tính 216 : 12 là bao nhiêu? (Bài toán về đoàn khách du lịch)</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. 15 × 3 + 2</label>
-                <label><input type="radio" name="q2" value="B"> B. 15 + 3 × 2</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true"> C. 15 × 3 + 15 × 2</label>
-                <label><input type="radio" name="q2" value="D"> D. 15 × 3 × 2</label>
+                <label><input type="radio" name="q2" value="A"> A. 12</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true"> B. 18</label>
+                <label><input type="radio" name="q2" value="C"> C. 21</label>
+                <label><input type="radio" name="q2" value="D"> D. 16</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Tính giá trị của biểu thức: 26 × (5 + 4)</div>
+            <div class="question-text">Câu 3: Trong phép chia có dư, số dư phải luôn thỏa mãn điều kiện nào?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A" data-correct="true"> A. 234</label>
-                <label><input type="radio" name="q3" value="B"> B. 134</label>
-                <label><input type="radio" name="q3" value="C"> C. 269</label>
-                <label><input type="radio" name="q3" value="D"> D. 260</label>
+                <label><input type="radio" name="q3" value="A"> A. Số dư lớn hơn số chia</label>
+                <label><input type="radio" name="q3" value="B"> B. Số dư bằng số chia</label>
+                <label><input type="radio" name="q3" value="C"> C. Số dư lớn hơn số bị chia</label>
+                <label><input type="radio" name="q3" value="D" data-correct="true"> D. Số dư nhỏ hơn số chia</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Biểu thức a × (b - c) bằng với biểu thức nào dưới đây?</div>
+            <div class="question-text">Câu 4: Khi ước lượng thương, nếu lấy thương nhân với số chia được kết quả LỚN HƠN số bị chia (hoặc số được hạ xuống), em cần làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. a × b - c</label>
-                <label><input type="radio" name="q4" value="B"> B. a × b + a × c</label>
-                <label><input type="radio" name="q4" value="C" data-correct="true"> C. a × b - a × c</label>
-                <label><input type="radio" name="q4" value="D"> D. a - b × c</label>
+                <label><input type="radio" name="q4" value="A" data-correct="true"> A. Giảm thương xuống</label>
+                <label><input type="radio" name="q4" value="B"> B. Tăng thương lên</label>
+                <label><input type="radio" name="q4" value="C"> C. Giữ nguyên thương và thực hiện phép trừ</label>
+                <label><input type="radio" name="q4" value="D"> D. Đổi phép tính khác</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Tính bằng cách thuận tiện nhất: 34 × 8 + 34 × 2</div>
+            <div class="question-text">Câu 5: Để tính nhanh phép chia 450 : 90, ta có thể làm như thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. 348</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true"> B. 340</label>
-                <label><input type="radio" name="q5" value="C"> C. 272</label>
-                <label><input type="radio" name="q5" value="D"> D. 680</label>
+                <label><input type="radio" name="q5" value="A"> A. Lấy 450 chia cho 9</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true"> B. Cùng xóa đi một chữ số 0 ở tận cùng số chia và số bị chia, rồi lấy 45 chia 9</label>
+                <label><input type="radio" name="q5" value="C"> C. Nhân cả hai số với 10</label>
+                <label><input type="radio" name="q5" value="D"> D. Chỉ xóa số 0 ở số 450</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Khối Bốn có 2 lớp học vẽ, khối Ba có 3 lớp học vẽ. Mỗi lớp học vẽ có 12 bạn. Hỏi cả hai khối lớp có bao nhiêu bạn học vẽ?</div>
+            <div class="question-text">Câu 6: Xếp 384 cái ghế vào hội trường, mỗi dãy xếp được 24 ghế. Hỏi xếp được bao nhiêu dãy ghế?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. 36 bạn</label>
-                <label><input type="radio" name="q6" value="B"> B. 50 bạn</label>
-                <label><input type="radio" name="q6" value="C" data-correct="true"> C. 60 bạn</label>
-                <label><input type="radio" name="q6" value="D"> D. 24 bạn</label>
+                <label><input type="radio" name="q6" value="A"> A. 14 dãy</label>
+                <label><input type="radio" name="q6" value="B"> B. 15 dãy</label>
+                <label><input type="radio" name="q6" value="C" data-correct="true"> C. 16 dãy</label>
+                <label><input type="radio" name="q6" value="D"> D. 18 dãy</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Với m = 4, n = 5, p = 3. Giá trị của biểu thức m × (n + p) là:</div>
+            <div class="question-text">Câu 7: Trong phép chia cho số 15, số dư lớn nhất có thể là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. 23</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true"> B. 32</label>
-                <label><input type="radio" name="q7" value="C"> C. 60</label>
-                <label><input type="radio" name="q7" value="D"> D. 12</label>
+                <label><input type="radio" name="q7" value="A"> A. 15</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true"> B. 14</label>
+                <label><input type="radio" name="q7" value="C"> C. 1</label>
+                <label><input type="radio" name="q7" value="D"> D. 10</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Điền số thích hợp vào chỗ chấm: 5 × (9 - 2) = 5 × 9 - 5 × ...</div>
+            <div class="question-text">Câu 8: Kết quả của phép chia 322 : 14 là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. 9</label>
-                <label><input type="radio" name="q8" value="B"> B. 5</label>
-                <label><input type="radio" name="q8" value="C" data-correct="true"> C. 2</label>
-                <label><input type="radio" name="q8" value="D"> D. 7</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 9: Tính bằng cách thuận tiện: 156 × 7 - 156 × 2</div>
-            <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. 156</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true"> B. 780</label>
-                <label><input type="radio" name="q9" value="C"> C. 1092</label>
-                <label><input type="radio" name="q9" value="D"> D. 1404</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 10: Điền dấu thích hợp: 4 × (6 - 2) ... 4 × 6 - 4 × 2</div>
-            <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. ></label>
-                <label><input type="radio" name="q10" value="B"> B. <</label>
-                <label><input type="radio" name="q10" value="C" data-correct="true"> C. =</label>
-                <label><input type="radio" name="q10" value="D"> D. Không so sánh được</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 11: Đợt một chuyển được 3 chuyến, mỗi chuyến 44 thùng hàng. Đợt hai chuyển được 3 chuyến, mỗi chuyến 56 thùng hàng. Hỏi cả hai đợt chuyển được bao nhiêu thùng?</div>
-            <div class="options">
-                <label><input type="radio" name="q11" value="A" data-correct="true"> A. 300 thùng</label>
-                <label><input type="radio" name="q11" value="B"> B. 200 thùng</label>
-                <label><input type="radio" name="q11" value="C"> C. 330 thùng</label>
-                <label><input type="radio" name="q11" value="D"> D. 100 thùng</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 12: Kết quả của phép tính: 67 × 3 + 67 × 7 là:</div>
-            <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. 6700</label>
-                <label><input type="radio" name="q12" value="B"> B. 673</label>
-                <label><input type="radio" name="q12" value="C" data-correct="true"> C. 670</label>
-                <label><input type="radio" name="q12" value="D"> D. 607</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 13: Trong các biểu thức sau, biểu thức nào có giá trị LỚN NHẤT?</div>
-            <div class="options">
-                <label><input type="radio" name="q13" value="A"> A. 5 × (4 + 6)</label>
-                <label><input type="radio" name="q13" value="B"> B. 5 × 4 + 5 × 6</label>
-                <label><input type="radio" name="q13" value="C"> C. 5 × 10</label>
-                <label><input type="radio" name="q13" value="D" data-correct="true"> D. 5 × 4 + 6</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 14: Biểu thức nào sau đây KHÔNG bằng với: 135 × 6 + 135 × 2</div>
-            <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. 135 × (6 + 2)</label>
-                <label><input type="radio" name="q14" value="B"> B. 135 × 8</label>
-                <label><input type="radio" name="q14" value="C" data-correct="true"> C. 135 × 6 + 2</label>
-                <label><input type="radio" name="q14" value="D"> D. 135 × 2 + 135 × 6</label>
-            </div>
-        </div>
-
-         <div class="question-block">
-            <div class="question-text">Câu 15: Một đội đồng diễn có 3 hàng áo đỏ và 2 hàng áo vàng, mỗi hàng 15 người. Biểu thức nào tính đúng tổng số người?</div>
-            <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. 15 × 3 × 2</label>
-                <label><input type="radio" name="q15" value="B" data-correct="true"> B. 15 × (3 + 2)</label>
-                <label><input type="radio" name="q15" value="C"> C. 15 + 3 + 2</label>
-                <label><input type="radio" name="q15" value="D"> D. (15 + 3) × 2</label>
+                <label><input type="radio" name="q8" value="A"> A. 22</label>
+                <label><input type="radio" name="q8" value="B" data-correct="true"> B. 23</label>
+                <label><input type="radio" name="q8" value="C"> C. 24</label>
+                <label><input type="radio" name="q8" value="D"> D. 25</label>
             </div>
         </div>
 
