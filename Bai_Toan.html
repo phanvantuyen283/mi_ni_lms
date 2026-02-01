@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn tập Toán Lớp 4 - Bài 44</title>
+    <title>Toán 4: Chuẩn bị chia cho số có hai chữ số</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,89 +20,309 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TOÁN LỚP 4: CHIA CHO SỐ CÓ HAI CHỮ SỐ</h2>
+                <h2 id="ten-bai-tap">TOÁN 4: CHUẨN BỊ CHIA SỐ CÓ HAI CHỮ SỐ</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Khi thực hiện phép chia cho số có hai chữ số, thứ tự các bước thực hiện trong mỗi lượt chia là gì?</div>
+            <div class="question-text">Câu 1: Kết quả của phép nhân 8 x 7 là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Nhân -> Trừ -> Chia -> Hạ</label>
-                <label><input type="radio" name="q1" value="B"> B. Trừ -> Nhân -> Chia -> Hạ</label>
-                <label><input type="radio" name="q1" value="C" data-correct="true"> C. Chia -> Nhân -> Trừ -> Hạ</label>
-                <label><input type="radio" name="q1" value="D"> D. Hạ -> Chia -> Nhân -> Trừ</label>
+                <label><input type="radio" name="q1" value="A"> A. 54</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. 56</label>
+                <label><input type="radio" name="q1" value="C"> C. 64</label>
+                <label><input type="radio" name="q1" value="D"> D. 49</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Kết quả của phép tính 216 : 12 là bao nhiêu? (Bài toán về đoàn khách du lịch)</div>
+            <div class="question-text">Câu 2: Tính nhẩm: 12 x 2 = ?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. 12</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true"> B. 18</label>
-                <label><input type="radio" name="q2" value="C"> C. 21</label>
-                <label><input type="radio" name="q2" value="D"> D. 16</label>
+                <label><input type="radio" name="q2" value="A"> A. 22</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true"> B. 24</label>
+                <label><input type="radio" name="q2" value="C"> C. 14</label>
+                <label><input type="radio" name="q2" value="D"> D. 20</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Trong phép chia có dư, số dư phải luôn thỏa mãn điều kiện nào?</div>
+            <div class="question-text">Câu 3: Làm tròn số 12 đến hàng chục gần nhất, ta được số nào?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Số dư lớn hơn số chia</label>
-                <label><input type="radio" name="q3" value="B"> B. Số dư bằng số chia</label>
-                <label><input type="radio" name="q3" value="C"> C. Số dư lớn hơn số bị chia</label>
-                <label><input type="radio" name="q3" value="D" data-correct="true"> D. Số dư nhỏ hơn số chia</label>
+                <label><input type="radio" name="q3" value="A" data-correct="true"> A. 10</label>
+                <label><input type="radio" name="q3" value="B"> B. 20</label>
+                <label><input type="radio" name="q3" value="C"> C. 15</label>
+                <label><input type="radio" name="q3" value="D"> D. 12</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Khi ước lượng thương, nếu lấy thương nhân với số chia được kết quả LỚN HƠN số bị chia (hoặc số được hạ xuống), em cần làm gì?</div>
+            <div class="question-text">Câu 4: Làm tròn số 18 đến hàng chục gần nhất, ta được số nào?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A" data-correct="true"> A. Giảm thương xuống</label>
-                <label><input type="radio" name="q4" value="B"> B. Tăng thương lên</label>
-                <label><input type="radio" name="q4" value="C"> C. Giữ nguyên thương và thực hiện phép trừ</label>
-                <label><input type="radio" name="q4" value="D"> D. Đổi phép tính khác</label>
+                <label><input type="radio" name="q4" value="A"> A. 10</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true"> B. 20</label>
+                <label><input type="radio" name="q4" value="C"> C. 15</label>
+                <label><input type="radio" name="q4" value="D"> D. 180</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Để tính nhanh phép chia 450 : 90, ta có thể làm như thế nào?</div>
+            <div class="question-text">Câu 5: Trong phép chia có dư, số dư phải luôn như thế nào so với số chia?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Lấy 450 chia cho 9</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true"> B. Cùng xóa đi một chữ số 0 ở tận cùng số chia và số bị chia, rồi lấy 45 chia 9</label>
-                <label><input type="radio" name="q5" value="C"> C. Nhân cả hai số với 10</label>
-                <label><input type="radio" name="q5" value="D"> D. Chỉ xóa số 0 ở số 450</label>
+                <label><input type="radio" name="q5" value="A"> A. Lớn hơn số chia</label>
+                <label><input type="radio" name="q5" value="B"> B. Bằng số chia</label>
+                <label><input type="radio" name="q5" value="C" data-correct="true"> C. Nhỏ hơn số chia</label>
+                <label><input type="radio" name="q5" value="D"> D. Bằng 1</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Xếp 384 cái ghế vào hội trường, mỗi dãy xếp được 24 ghế. Hỏi xếp được bao nhiêu dãy ghế?</div>
+            <div class="question-text">Câu 6: Thực hiện phép trừ: 21 - 12 = ?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. 14 dãy</label>
-                <label><input type="radio" name="q6" value="B"> B. 15 dãy</label>
-                <label><input type="radio" name="q6" value="C" data-correct="true"> C. 16 dãy</label>
-                <label><input type="radio" name="q6" value="D"> D. 18 dãy</label>
+                <label><input type="radio" name="q6" value="A"> A. 8</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true"> B. 9</label>
+                <label><input type="radio" name="q6" value="C"> C. 11</label>
+                <label><input type="radio" name="q6" value="D"> D. 19</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Trong phép chia cho số 15, số dư lớn nhất có thể là bao nhiêu?</div>
+            <div class="question-text">Câu 7: Kết quả của 40 : 2 là?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. 15</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true"> B. 14</label>
-                <label><input type="radio" name="q7" value="C"> C. 1</label>
-                <label><input type="radio" name="q7" value="D"> D. 10</label>
+                <label><input type="radio" name="q7" value="A"> A. 2</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true"> B. 20</label>
+                <label><input type="radio" name="q7" value="C"> C. 80</label>
+                <label><input type="radio" name="q7" value="D"> D. 200</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Kết quả của phép chia 322 : 14 là bao nhiêu?</div>
+            <div class="question-text">Câu 8: Để ước lượng thương của 82 : 21, ta nên làm tròn 82 và 21 thành các số nào?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. 22</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true"> B. 23</label>
-                <label><input type="radio" name="q8" value="C"> C. 24</label>
-                <label><input type="radio" name="q8" value="D"> D. 25</label>
+                <label><input type="radio" name="q8" value="A" data-correct="true"> A. 80 và 20</label>
+                <label><input type="radio" name="q8" value="B"> B. 90 và 20</label>
+                <label><input type="radio" name="q8" value="C"> C. 80 và 30</label>
+                <label><input type="radio" name="q8" value="D"> D. 100 và 20</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 9: Ước lượng thương của 60 : 20?</div>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A" data-correct="true"> A. 3</label>
+                <label><input type="radio" name="q9" value="B"> B. 30</label>
+                <label><input type="radio" name="q9" value="C"> C. 2</label>
+                <label><input type="radio" name="q9" value="D"> D. 4</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 10: Phép tính nào dùng để kiểm tra lại phép chia: 15 : 3 = 5?</div>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A"> A. 5 + 3 = 8</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true"> B. 5 x 3 = 15</label>
+                <label><input type="radio" name="q10" value="C"> C. 15 - 5 = 10</label>
+                <label><input type="radio" name="q10" value="D"> D. 15 x 3 = 45</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 11: Tính giá trị của 13 x 3.</div>
+            <div class="options">
+                <label><input type="radio" name="q11" value="A"> A. 36</label>
+                <label><input type="radio" name="q11" value="B" data-correct="true"> B. 39</label>
+                <label><input type="radio" name="q11" value="C"> C. 33</label>
+                <label><input type="radio" name="q11" value="D"> D. 49</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 12: Nếu 24 : 12 = 2, thì 240 : 12 = ?</div>
+            <div class="options">
+                <label><input type="radio" name="q12" value="A"> A. 2</label>
+                <label><input type="radio" name="q12" value="B" data-correct="true"> B. 20</label>
+                <label><input type="radio" name="q12" value="C"> C. 12</label>
+                <label><input type="radio" name="q12" value="D"> D. 24</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 13: Trong phép chia cho 12, số dư lớn nhất có thể là bao nhiêu?</div>
+            <div class="options">
+                <label><input type="radio" name="q13" value="A"> A. 12</label>
+                <label><input type="radio" name="q13" value="B"> B. 10</label>
+                <label><input type="radio" name="q13" value="C" data-correct="true"> C. 11</label>
+                <label><input type="radio" name="q13" value="D"> D. 13</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 14: Tính nhẩm: 15 x 2 = ?</div>
+            <div class="options">
+                <label><input type="radio" name="q14" value="A"> A. 25</label>
+                <label><input type="radio" name="q14" value="B" data-correct="true"> B. 30</label>
+                <label><input type="radio" name="q14" value="C"> C. 35</label>
+                <label><input type="radio" name="q14" value="D"> D. 20</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 15: Khi thực hiện phép chia theo cột dọc, thứ tự các bước là gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A"> A. Nhân -> Chia -> Trừ -> Hạ</label>
+                <label><input type="radio" name="q15" value="B" data-correct="true"> B. Chia -> Nhân -> Trừ -> Hạ</label>
+                <label><input type="radio" name="q15" value="C"> C. Trừ -> Nhân -> Chia -> Hạ</label>
+                <label><input type="radio" name="q15" value="D"> D. Chia -> Trừ -> Nhân -> Hạ</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 16: Kết quả của 36 : 3 là?</div>
+            <div class="options">
+                <label><input type="radio" name="q16" value="A"> A. 13</label>
+                <label><input type="radio" name="q16" value="B" data-correct="true"> B. 12</label>
+                <label><input type="radio" name="q16" value="C"> C. 10</label>
+                <label><input type="radio" name="q16" value="D"> D. 21</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 17: Tính 25 x 4.</div>
+            <div class="options">
+                <label><input type="radio" name="q17" value="A"> A. 80</label>
+                <label><input type="radio" name="q17" value="B" data-correct="true"> B. 100</label>
+                <label><input type="radio" name="q17" value="C"> C. 90</label>
+                <label><input type="radio" name="q17" value="D"> D. 125</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 18: Số nào thích hợp điền vào chỗ chấm: 60 : ... = 3?</div>
+            <div class="options">
+                <label><input type="radio" name="q18" value="A" data-correct="true"> A. 20</label>
+                <label><input type="radio" name="q18" value="B"> B. 30</label>
+                <label><input type="radio" name="q18" value="C"> C. 10</label>
+                <label><input type="radio" name="q18" value="D"> D. 2</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 19: Làm tròn số 35 đến hàng chục gần nhất.</div>
+            <div class="options">
+                <label><input type="radio" name="q19" value="A"> A. 30</label>
+                <label><input type="radio" name="q19" value="B" data-correct="true"> B. 40</label>
+                <label><input type="radio" name="q19" value="C"> C. 35</label>
+                <label><input type="radio" name="q19" value="D"> D. 50</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 20: Ước lượng 93 : 31. Ta nhẩm tính 90 : 30 = ?</div>
+            <div class="options">
+                <label><input type="radio" name="q20" value="A"> A. 2</label>
+                <label><input type="radio" name="q20" value="B" data-correct="true"> B. 3</label>
+                <label><input type="radio" name="q20" value="C"> C. 4</label>
+                <label><input type="radio" name="q20" value="D"> D. 30</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 21: Kết quả của 72 : 8 là?</div>
+            <div class="options">
+                <label><input type="radio" name="q21" value="A"> A. 8</label>
+                <label><input type="radio" name="q21" value="B" data-correct="true"> B. 9</label>
+                <label><input type="radio" name="q21" value="C"> C. 7</label>
+                <label><input type="radio" name="q21" value="D"> D. 6</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 22: Phép trừ 50 - 36 = ?</div>
+            <div class="options">
+                <label><input type="radio" name="q22" value="A"> A. 24</label>
+                <label><input type="radio" name="q22" value="B" data-correct="true"> B. 14</label>
+                <label><input type="radio" name="q22" value="C"> C. 16</label>
+                <label><input type="radio" name="q22" value="D"> D. 26</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 23: Khi chia một số tròn chục cho 10, ta chỉ cần làm gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q23" value="A"> A. Thêm số 0</label>
+                <label><input type="radio" name="q23" value="B" data-correct="true"> B. Bớt đi một chữ số 0 ở tận cùng</label>
+                <label><input type="radio" name="q23" value="C"> C. Chia đôi</label>
+                <label><input type="radio" name="q23" value="D"> D. Trừ đi 10</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 24: Tính giá trị 11 x 5.</div>
+            <div class="options">
+                <label><input type="radio" name="q24" value="A" data-correct="true"> A. 55</label>
+                <label><input type="radio" name="q24" value="B"> B. 50</label>
+                <label><input type="radio" name="q24" value="C"> C. 65</label>
+                <label><input type="radio" name="q24" value="D"> D. 15</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 25: Tìm số dư của phép chia 14 : 3.</div>
+            <div class="options">
+                <label><input type="radio" name="q25" value="A"> A. 1</label>
+                <label><input type="radio" name="q25" value="B" data-correct="true"> B. 2</label>
+                <label><input type="radio" name="q25" value="C"> C. 3</label>
+                <label><input type="radio" name="q25" value="D"> D. 0</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 26: Nếu ước lượng thương là 5, nhưng khi nhân lại thấy kết quả lớn hơn số bị chia, ta phải làm gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q26" value="A"> A. Tăng thương lên 6</label>
+                <label><input type="radio" name="q26" value="B"> B. Giữ nguyên</label>
+                <label><input type="radio" name="q26" value="C" data-correct="true"> C. Giảm thương xuống 4</label>
+                <label><input type="radio" name="q26" value="D"> D. Bỏ qua</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 27: Tính nhẩm 12 x 3.</div>
+            <div class="options">
+                <label><input type="radio" name="q27" value="A" data-correct="true"> A. 36</label>
+                <label><input type="radio" name="q27" value="B"> B. 32</label>
+                <label><input type="radio" name="q27" value="C"> C. 26</label>
+                <label><input type="radio" name="q27" value="D"> D. 46</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 28: Kết quả của 56 : 7 là?</div>
+            <div class="options">
+                <label><input type="radio" name="q28" value="A"> A. 7</label>
+                <label><input type="radio" name="q28" value="B"> B. 9</label>
+                <label><input type="radio" name="q28" value="C" data-correct="true"> C. 8</label>
+                <label><input type="radio" name="q28" value="D"> D. 6</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 29: Ước lượng 79 : 42. Ta làm tròn thành 80 : 40. Kết quả ước lượng là?</div>
+            <div class="options">
+                <label><input type="radio" name="q29" value="A" data-correct="true"> A. 2</label>
+                <label><input type="radio" name="q29" value="B"> B. 3</label>
+                <label><input type="radio" name="q29" value="C"> C. 1</label>
+                <label><input type="radio" name="q29" value="D"> D. 20</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 30: Sau khi hạ số ở hàng đơn vị xuống, ta phải làm gì tiếp theo?</div>
+            <div class="options">
+                <label><input type="radio" name="q30" value="A"> A. Kết thúc</label>
+                <label><input type="radio" name="q30" value="B" data-correct="true"> B. Tiếp tục chia cho số chia</label>
+                <label><input type="radio" name="q30" value="C"> C. Nhân ngay</label>
+                <label><input type="radio" name="q30" value="D"> D. Viết số dư</label>
             </div>
         </div>
 
