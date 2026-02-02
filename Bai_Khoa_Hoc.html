@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn tập Khoa học Lớp 4 - Bài 21</title>
+    <title>Ôn tập Khoa Học Bài 21</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,159 +20,109 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">KHOA HỌC 4: NẤM GÂY HỎNG THỰC PHẨM</h2>
+                <h2 id="ten-bai-tap">KHOA HỌC 4 - BÀI 21: NẤM GÂY HỎNG THỰC PHẨM VÀ NẤM ĐỘC (TIẾT 2)</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Những vết đốm đen, xanh, trắng lạ mắt xuất hiện trên thực phẩm để lâu ngày được gọi là gì?</div>
+            <div class="question-text">Câu 1: Để ngăn chặn nấm mốc phát triển, chúng ta cần phá vỡ các điều kiện ưa thích của chúng. Đó là những điều kiện nào?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Bụi bẩn</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Nấm mốc</label>
-                <label><input type="radio" name="q1" value="C"> C. Gia vị</label>
-                <label><input type="radio" name="q1" value="D"> D. Màu thực phẩm</label>
+                <label><input type="radio" name="q1" value="A"> A. Khô ráo và Lạnh lẽo</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Ẩm ướt và Ấm áp</label>
+                <label><input type="radio" name="q1" value="C"> C. Sạch sẽ và Thoáng mát</label>
+                <label><input type="radio" name="q1" value="D"> D. Nhiều ánh sáng mặt trời</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Khi quan sát một chiếc bánh mì bị hỏng, em thường thấy dấu hiệu nào rõ nhất? </div>
+            <div class="question-text">Câu 2: Tại sao phương pháp phơi khô hoặc sấy khô (như làm mực khô, mứt sấy) lại giúp bảo quản thực phẩm được lâu?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Bánh mì trở nên giòn tan và thơm phức</label>
-                <label><input type="radio" name="q2" value="B"> B. Bánh mì đổi sang màu vàng óng</label>
-                <label><input type="radio" name="q2" value="C" data-correct="true"> C. Xuất hiện các đốm xanh đen, xám loang lổ</label>
-                <label><input type="radio" name="q2" value="D"> D. Bánh mì cứng như đá</label>
+                <label><input type="radio" name="q2" value="A" data-correct="true"> A. Vì làm mất đi lượng nước trong thực phẩm, nấm mốc không thể sống thiếu nước</label>
+                <label><input type="radio" name="q2" value="B"> B. Vì làm cho thực phẩm cứng lại, nấm mốc không cắn được</label>
+                <label><input type="radio" name="q2" value="C"> C. Vì phương pháp này làm thực phẩm mặn hơn</label>
+                <label><input type="radio" name="q2" value="D"> D. Vì làm thay đổi màu sắc của thực phẩm</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Quả cam khi bị nấm mốc tấn công thường có biểu hiện gì? </div>
+            <div class="question-text">Câu 3: Việc bảo quản thực phẩm trong tủ lạnh dựa trên yếu tố nào để hạn chế nấm mốc?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Vỏ cam bóng loáng, căng mọng</label>
-                <label><input type="radio" name="q3" value="B" data-correct="true"> B. Vỏ có lớp phấn trắng hoặc xanh, quả bị nhũn</label>
-                <label><input type="radio" name="q3" value="C"> C. Quả cam to lên bất thường</label>
-                <label><input type="radio" name="q3" value="D"> D. Cam chuyển sang màu đỏ rực</label>
+                <label><input type="radio" name="q3" value="A"> A. Ánh sáng thấp</label>
+                <label><input type="radio" name="q3" value="B"> B. Độ ẩm cao</label>
+                <label><input type="radio" name="q3" value="C" data-correct="true"> C. Nhiệt độ thấp</label>
+                <label><input type="radio" name="q3" value="D"> D. Không khí loãng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Ngoài màu sắc, thực phẩm bị nhiễm nấm mốc thường có mùi vị như thế nào?</div>
+            <div class="question-text">Câu 4: Đặc điểm thường thấy (nhưng không phải tất cả) của các loại nấm độc như Nấm độc đỏ là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Mùi thơm ngọt ngào</label>
-                <label><input type="radio" name="q4" value="B"> B. Vị mặn đậm đà</label>
-                <label><input type="radio" name="q4" value="C" data-correct="true"> C. Mùi hôi, mốc, vị chua hoặc đắng</label>
-                <label><input type="radio" name="q4" value="D"> D. Không có mùi vị gì</label>
+                <label><input type="radio" name="q4" value="A"> A. Có màu nâu xám, nhìn rất giản dị</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Có màu sắc sặc sỡ, bắt mắt và hình dáng lạ</label>
+                <label><input type="radio" name="q4" value="C"> C. Thường mọc ở trong tủ lạnh</label>
+                <label><input type="radio" name="q4" value="D"> D. Có mùi thơm như kẹo</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Nấm mốc phát triển mạnh nhất trong điều kiện nhiệt độ như thế nào?</div>
+            <div class="question-text">Câu 5: Nguyên tắc vàng khi đi rừng hoặc cắm trại mà gặp các loại nấm lạ là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Rất lạnh (đóng băng)</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true"> B. Ấm áp, nóng</label>
-                <label><input type="radio" name="q5" value="C"> C. Mát mẻ như mùa thu</label>
-                <label><input type="radio" name="q5" value="D"> D. Nhiệt độ nào cũng phát triển như nhau</label>
+                <label><input type="radio" name="q5" value="A"> A. Hái về nấu thử xem có ngon không</label>
+                <label><input type="radio" name="q5" value="B"> B. Chỉ hái những cây nấm to</label>
+                <label><input type="radio" name="q5" value="C"> C. Ngửi thử, nếu thơm thì ăn được</label>
+                <label><input type="radio" name="q5" value="D" data-correct="true"> D. Tuyệt đối KHÔNG hái và KHÔNG ăn nấm lạ</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Ngoài nhiệt độ, yếu tố nào giúp nấm mốc sinh sôi nhanh chóng?</div>
+            <div class="question-text">Câu 6: Nếu ổ bánh mì bị mốc một góc nhỏ, em nên xử lý như thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Môi trường khô ráo</label>
-                <label><input type="radio" name="q6" value="B"> B. Môi trường chân không</label>
-                <label><input type="radio" name="q6" value="C" data-correct="true"> C. Môi trường ẩm ướt (độ ẩm cao)</label>
-                <label><input type="radio" name="q6" value="D"> D. Môi trường nhiều ánh sáng</label>
+                <label><input type="radio" name="q6" value="A"> A. Xé bỏ phần mốc, ăn phần còn lại cho đỡ phí</label>
+                <label><input type="radio" name="q6" value="B"> B. Đem nướng lại thật nóng rồi ăn tiếp</label>
+                <label><input type="radio" name="q6" value="C" data-correct="true"> C. Bỏ toàn bộ ổ bánh mì, không ăn nữa</label>
+                <label><input type="radio" name="q6" value="D"> D. Cho vật nuôi trong nhà ăn hộ</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Tại sao vào những ngày "trời nồm" ở Việt Nam, thực phẩm lại rất dễ bị mốc?</div>
+            <div class="question-text">Câu 7: Vì sao chúng ta phải bỏ toàn bộ thực phẩm đã bị mốc dù chỉ thấy một đốm nhỏ?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Vì trời quá lạnh</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true"> B. Vì không khí nóng và rất ẩm</label>
-                <label><input type="radio" name="q7" value="C"> C. Vì trời nhiều gió</label>
-                <label><input type="radio" name="q7" value="D"> D. Vì không có ánh nắng</label>
+                <label><input type="radio" name="q7" value="A"> A. Vì nhìn không đẹp mắt</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true"> B. Vì chân nấm và độc tố đã lan sâu vào bên trong mà mắt thường không thấy được</label>
+                <label><input type="radio" name="q7" value="C"> C. Vì mốc làm thực phẩm bị nhạt đi</label>
+                <label><input type="radio" name="q7" value="D"> D. Vì kiến sẽ bu vào ăn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Nếu lỡ ăn phải thực phẩm bị nấm mốc, em có thể gặp triệu chứng gì ngay lập tức?</div>
+            <div class="question-text">Câu 8: Bạn Lan định rang lại mẻ lạc (đậu phộng) đã bị mốc để ăn vì nghĩ nhiệt độ cao sẽ diệt hết độc. Điều này Đúng hay Sai?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Cao lớn hơn</label>
-                <label><input type="radio" name="q8" value="B"> B. Thông minh hơn</label>
-                <label><input type="radio" name="q8" value="C" data-correct="true"> C. Đau bụng, tiêu chảy, nôn mửa</label>
-                <label><input type="radio" name="q8" value="D"> D. Buồn ngủ</label>
+                <label><input type="radio" name="q8" value="A"> A. Đúng, nhiệt độ cao sẽ làm sạch mọi thứ</label>
+                <label><input type="radio" name="q8" value="B" data-correct="true"> B. Sai, độc tố nấm mốc trong các loại hạt (Aflatoxin) không bị phá hủy hoàn toàn bởi nhiệt độ cao</label>
+                <label><input type="radio" name="q8" value="C"> C. Đúng, nhưng phải rang thật cháy</label>
+                <label><input type="radio" name="q8" value="D"> D. Sai, vì rang lên ăn sẽ bị đắng thôi chứ không độc</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Việc thường xuyên ăn thực phẩm bị mốc có thể gây ra hậu quả nghiêm trọng nào về lâu dài?</div>
+            <div class="question-text">Câu 9: Khi đi siêu thị mua thực phẩm đóng gói, thông tin quan trọng nào trên bao bì giúp em tránh mua phải hàng hết hạn dễ bị mốc?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Gây béo phì</label>
-                <label><input type="radio" name="q9" value="B"> B. Làm đẹp da</label>
-                <label><input type="radio" name="q9" value="C" data-correct="true"> C. Hại gan, thận, nguy cơ gây ung thư</label>
-                <label><input type="radio" name="q9" value="D"> D. Tăng cường hệ miễn dịch</label>
+                <label><input type="radio" name="q9" value="A"> A. Tên nhà sản xuất</label>
+                <label><input type="radio" name="q9" value="B"> B. Hình ảnh minh họa</label>
+                <label><input type="radio" name="q9" value="C" data-correct="true"> C. Hạn sử dụng (Date)</label>
+                <label><input type="radio" name="q9" value="D"> D. Mã vạch sản phẩm</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Nếu một ổ bánh mì chỉ bị mốc một góc nhỏ, em nên làm gì?</div>
+            <div class="question-text">Câu 10: Khẩu hiệu an toàn thực phẩm nào phù hợp nhất với nội dung bài học hôm nay?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Cắt bỏ phần mốc đi rồi ăn phần còn lại cho đỡ phí</label>
-                <label><input type="radio" name="q10" value="B"> B. Rửa sạch bằng nước rồi ăn</label>
-                <label><input type="radio" name="q10" value="C"> C. Nướng lại cho nóng rồi ăn</label>
-                <label><input type="radio" name="q10" value="D" data-correct="true"> D. Vứt bỏ toàn bộ ổ bánh mì đó</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 11: Vì sao chúng ta KHÔNG nên ăn phần còn lại của thực phẩm mốc dù nhìn nó vẫn bình thường? </div>
-            <div class="options">
-                <label><input type="radio" name="q11" value="A" data-correct="true"> A. Vì chân nấm và độc tố đã lan sâu vào bên trong mà mắt thường không thấy</label>
-                <label><input type="radio" name="q11" value="B"> B. Vì ăn không ngon miệng</label>
-                <label><input type="radio" name="q11" value="C"> C. Vì sợ bị bố mẹ mắng</label>
-                <label><input type="radio" name="q11" value="D"> D. Vì thực phẩm đó đã mất hết chất dinh dưỡng</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 12: Nấm mốc xuất hiện trên các loại hạt như lạc (đậu phộng), đỗ, ngô,... đặc biệt nguy hiểm vì chứa độc tố gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Vitamin C</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true"> B. Aflatoxin (độc tố gây ung thư)</label>
-                <label><input type="radio" name="q12" value="C"> C. Protein</label>
-                <label><input type="radio" name="q12" value="D"> D. Canxi</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 13: Trong các thực phẩm sau, thực phẩm nào được coi là AN TOÀN để sử dụng?</div>
-            <div class="options">
-                <label><input type="radio" name="q13" value="A"> A. Cơm nguội để qua đêm có mùi chua</label>
-                <label><input type="radio" name="q13" value="B"> B. Dưa muối nổi váng trắng dày đặc</label>
-                <label><input type="radio" name="q13" value="C" data-correct="true"> C. Hạt lạc có nhân màu trắng ngà, giòn thơm</label>
-                <label><input type="radio" name="q13" value="D"> D. Bánh chưng bị chảy nước, có mùi lạ</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 14: Khi đi siêu thị mua đồ ăn, để tránh mua phải thực phẩm hỏng, em cần kiểm tra thông tin nào trên bao bì?</div>
-            <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. Tên giám đốc công ty</label>
-                <label><input type="radio" name="q14" value="B"> B. Màu sắc bao bì</label>
-                <label><input type="radio" name="q14" value="C" data-correct="true"> C. Hạn sử dụng (Date)</label>
-                <label><input type="radio" name="q14" value="D"> D. Giá tiền cao hay thấp</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 15: Khẩu hiệu hành động đúng đắn nhất để bảo vệ sức khỏe trước thực phẩm mốc là gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. "Rửa sạch là ăn được"</label>
-                <label><input type="radio" name="q15" value="B"> B. "Nấu chín kĩ sẽ hết mốc"</label>
-                <label><input type="radio" name="q15" value="C" data-correct="true"> C. "Thấy mốc là bỏ - Không được tiếc rẻ"</label>
-                <label><input type="radio" name="q15" value="D"> D. "Ăn một ít cũng không sao"</label>
+                <label><input type="radio" name="q10" value="A"> A. Ăn chín uống sôi</label>
+                <label><input type="radio" name="q10" value="B"> B. Rửa tay trước khi ăn</label>
+                <label><input type="radio" name="q10" value="C" data-correct="true"> C. Thấy mốc là bỏ - Không được tiếc rẻ</label>
+                <label><input type="radio" name="q10" value="D"> D. Cần kiệm là quốc sách</label>
             </div>
         </div>
 
