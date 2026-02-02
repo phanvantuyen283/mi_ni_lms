@@ -3,161 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kế hoạch Bài dạy - Tuần 22</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f9fafb; }
-        h1 { color: #1e3a8a; text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 10px; }
-        h2 { color: #be123c; margin-top: 30px; border-left: 5px solid #be123c; padding-left: 10px; }
-        h3 { color: #0369a1; margin-top: 20px; }
-        .box { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .activity-title { font-weight: bold; color: #b45309; text-transform: uppercase; }
-        .phase { font-weight: bold; color: #047857; margin-top: 10px; display: block; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #d1d5db; padding: 10px; text-align: left; vertical-align: top; }
-        th { background-color: #f3f4f6; color: #1f2937; }
-        .highlight { background-color: #fef3c7; padding: 2px 5px; border-radius: 4px; }
-        .citation { font-size: 0.85em; color: #6b7280; font-style: italic; }
-        ul { margin: 5px 0; padding-left: 20px; }
-    </style>
+    <title>Ôn tập HĐTN Tuần 22</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>KẾ HOẠCH BÀI DẠY HOẠT ĐỘNG TRẢI NGHIỆM LỚP 4</h1>
-    <div style="text-align: center; font-weight: bold; color: #555;">
-        Chủ đề: VẺ ĐẸP QUÊ HƯƠNG - TUẦN 22<br>
-        Tên bài: GIỚI THIỆU CẢNH QUAN THIÊN NHIÊN QUÊ HƯƠNG
-    </div>
-
-    <div class="box">
-        <h2>I. YÊU CẦU CẦN ĐẠT</h2>
-        <ul>
-            <li><strong>Năng lực thích ứng với cuộc sống:</strong> Nhận biết và giới thiệu được vẻ đẹp của cảnh quan thiên nhiên quê hương (địa danh, đặc điểm nổi bật).</li>
-            <li><strong>Năng lực thiết kế và tổ chức hoạt động:</strong> Biết cách sử dụng tranh ảnh, tư liệu để xây dựng bài giới thiệu sinh động.</li>
-            <li><strong>Phẩm chất:</strong> Thể hiện tình yêu quê hương đất nước, lòng tự hào dân tộc và ý thức bảo vệ môi trường ("Rừng vàng biển bạc") <span class="citation"></span>.</li>
-        </ul>
-    </div>
-
-    <div class="box">
-        <h2>II. ĐỒ DÙNG DẠY HỌC</h2>
-        <ul>
-            <li><strong>Giáo viên:</strong> Video bài hát "Việt Nam quê hương tôi" <span class="citation"></span>, micro, sân khấu giả định.</li>
-            <li><strong>Học sinh:</strong> Tranh ảnh sưu tầm về cảnh đẹp quê hương (Đã dặn dò từ tiết trước) <span class="citation"></span>, bài thuyết trình chuẩn bị theo nhóm.</li>
-        </ul>
-    </div>
-
-    <div class="box">
-        <h2>III. CÁC HOẠT ĐỘNG DẠY HỌC CHỦ YẾU</h2>
-
-        <h3>1. HOẠT ĐỘNG KHỞI ĐỘNG: DU LỊCH QUA MÀN ẢNH NHỎ (5 phút)</h3>
-        <table>
-            <tr>
-                <th style="width: 40%;">Hoạt động của Giáo viên</th>
-                <th>Hoạt động của Học sinh</th>
-            </tr>
-            <tr>
-                <td>
-                    <span class="phase">1. Chuyển giao nhiệm vụ:</span>
-                    - GV đóng vai "Hướng dẫn viên du lịch" <span class="citation"></span>, mời cả lớp cùng khởi động chuyến đi xuyên Việt qua một đoạn video/bài hát.<br>
-                    - Yêu cầu HS quan sát và ghi nhớ tên các địa danh xuất hiện.
-                </td>
-                <td>- HS lắng nghe, chuẩn bị tâm thế tham gia.</td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="phase">2. Tổ chức thực hiện:</span>
-                    - Phát video bài hát "Việt Nam quê hương tôi".<br>
-                    - GV đặt câu hỏi nhanh: <em>"Trong video có nhắc đến hình ảnh ruộng bậc thang, đó là đặc trưng của vùng nào?"</em>
-                </td>
-                <td>
-                    - HS xem và lắc lư theo nhạc.<br>
-                    - Trả lời nhanh: <em>"Vùng núi cao (Tây Bắc)"</em> <span class="citation"></span>.
-                </td>
-            </tr>
-        </table>
-
-        <h3>2. HOẠT ĐỘNG KHÁM PHÁ & THỰC HÀNH: GALA "VẺ ĐẸP QUÊ HƯƠNG" (20 phút)</h3>
-        <p><em>Mục tiêu: Học sinh giới thiệu được cảnh quan thiên nhiên và rèn kỹ năng nói.</em></p>
-        
-        <table>
-            <tr>
-                <th style="width: 40%;">Tiến trình hoạt động</th>
-                <th>Chi tiết thực hiện</th>
-            </tr>
-            <tr>
-                <td><span class="phase">Pha 1: Chuyển giao nhiệm vụ</span></td>
-                <td>
-                    - GV chia lớp thành các nhóm theo vùng miền (hoặc tổ).<br>
-                    - Nhiệm vụ: Đại diện nhóm lên sân khấu, sử dụng tranh ảnh đã chuẩn bị (như hình minh họa SGK) để giới thiệu về một cảnh đẹp.<br>
-                    - Tiêu chí: Nói to, rõ, cảm xúc; tranh ảnh đẹp; có thông điệp bảo vệ môi trường.
-                </td>
-            </tr>
-            <tr>
-                <td><span class="phase">Pha 2: Tổ chức thực hiện</span></td>
-                <td>
-                    - Các nhóm thảo luận nhanh (2 phút) để cử đại diện và sắp xếp tranh ảnh.<br>
-                    - GV mời Ban giám khảo nhí (các tổ trưởng) cầm phiếu chấm điểm.
-                </td>
-            </tr>
-            <tr>
-                <td><span class="phase">Pha 3: Báo cáo kết quả</span></td>
-                <td>
-                    - Lần lượt đại diện các nhóm lên trình bày (Mô phỏng hình ảnh trong SGK: 3 HS cầm tranh, 1 HS thuyết trình).<br>
-                    - Ví dụ HS giới thiệu Vịnh Hạ Long: Nhấn mạnh đây là di sản thế giới, có hàng nghìn đảo đá <span class="citation"></span>.
-                </td>
-            </tr>
-            <tr>
-                <td><span class="phase">Pha 4: Nhận xét & Chốt</span></td>
-                <td>
-                    - GV nhận xét tinh thần chuẩn bị của các nhóm.<br>
-                    - Chốt ý: Mỗi vùng miền đều có vẻ đẹp riêng (Núi non hùng vĩ, biển đảo bao la...).
-                </td>
-            </tr>
-        </table>
-
-        <h3>3. HOẠT ĐỘNG MỞ RỘNG: PHÓNG VIÊN NHÍ & CẢM XÚC (7 phút)</h3>
-        <p><em>Mục tiêu: Chia sẻ cảm xúc tích cực và lan tỏa tình yêu quê hương.</em></p>
-
-        <table>
-            <tr>
-                <th style="width: 40%;">Tiến trình hoạt động</th>
-                <th>Chi tiết thực hiện</th>
-            </tr>
-            <tr>
-                <td><span class="phase">Pha 1 & 2: Chuyển giao & Thực hiện</span></td>
-                <td>
-                    - GV tổ chức trò chơi "Phóng viên nhí" <span class="citation"></span>.<br>
-                    - Một số HS đóng vai phóng viên đi xuống khán đài phỏng vấn các bạn khác.<br>
-                    - Câu hỏi gợi ý: <em>"Bạn cảm thấy thế nào khi xem phần giới thiệu vừa rồi?", "Bạn yêu thích cảnh đẹp nào nhất?"</em>
-                </td>
-            </tr>
-            <tr>
-                <td><span class="phase">Pha 3: Báo cáo (Chia sẻ)</span></td>
-                <td>
-                    - HS được phỏng vấn trả lời: Thể hiện sự <strong>"Tự hào và yêu quý"</strong> <span class="citation"></span>.<br>
-                    - HS chia sẻ thêm về trách nhiệm: <em>"Giữ gìn vệ sinh, không vứt rác bừa bãi khi đi du lịch"</em> <span class="citation"></span>.
-                </td>
-            </tr>
-            <tr>
-                <td><span class="phase">Pha 4: Chốt kiến thức</span></td>
-                <td>
-                    - GV kết luận bằng thành ngữ: Đất nước ta <strong>"Rừng vàng biển bạc"</strong>, chúng ta cần trân trọng và bảo vệ <span class="citation"></span>.
-                </td>
-            </tr>
-        </table>
-
-        <h3>4. VẬN DỤNG & ĐÁNH GIÁ (3 phút)</h3>
-        <div style="background-color: #ecfdf5; padding: 10px; border-radius: 5px;">
-            <strong>Nhiệm vụ về nhà:</strong><br>
-            - Chọn bức tranh/ảnh cảnh đẹp mà em thích nhất.<br>
-            - Dán vào <strong>"Cuốn sổ tay trải nghiệm"</strong> và viết lời giới thiệu ngắn gọn để lưu giữ kỉ niệm <span class="citation"></span>.<br>
-            - Chuẩn bị cho chủ đề tuần sau.
+    <div class="quiz-container">
+        <div style="margin-bottom:15px">
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
         </div>
+
+        <div class="header">
+            <div class="info">
+                <h2 id="ten-bai-tap">HĐTN LỚP 4 - TUẦN 22: VẺ ĐẸP QUÊ HƯƠNG</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
+            </div>
+            <div class="timer">⏱ <span id="timer">00:00</span></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 1: Trong video bài hát "Việt Nam quê hương tôi" ở phần khởi động, hình ảnh "ruộng bậc thang" là đặc trưng của vùng nào?</div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. Vùng biển đảo</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Vùng núi cao (Tây Bắc)</label>
+                <label><input type="radio" name="q1" value="C"> C. Vùng đồng bằng sông Cửu Long</label>
+                <label><input type="radio" name="q1" value="D"> D. Các thành phố lớn</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 2: Khi giới thiệu về Vịnh Hạ Long, đặc điểm nổi bật nào được nhắc đến?</div>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A" data-correct="true"> A. Là di sản thế giới với hàng nghìn đảo đá</label>
+                <label><input type="radio" name="q2" value="B"> B. Là vùng đất có nhiều tòa nhà cao tầng</label>
+                <label><input type="radio" name="q2" value="C"> C. Là nơi trồng nhiều lúa gạo nhất cả nước</label>
+                <label><input type="radio" name="q2" value="D"> D. Là vùng đất đỏ bazan rộng lớn</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 3: Qua hoạt động "Phóng viên nhí", các bạn học sinh đã chia sẻ cảm xúc gì đối với quê hương mình?</div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. Lo lắng và sợ hãi</label>
+                <label><input type="radio" name="q3" value="B"> B. Thờ ơ, không quan tâm</label>
+                <label><input type="radio" name="q3" value="C" data-correct="true"> C. Tự hào và yêu quý</label>
+                <label><input type="radio" name="q3" value="D"> D. Mệt mỏi và chán nản</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 4: Câu thành ngữ nào được giáo viên sử dụng để khẳng định sự giàu có và tươi đẹp của tài nguyên thiên nhiên nước ta?</div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. Đất lành chim đậu</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Rừng vàng biển bạc</label>
+                <label><input type="radio" name="q4" value="C"> C. Lá lành đùm lá rách</label>
+                <label><input type="radio" name="q4" value="D"> D. Uống nước nhớ nguồn</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 5: Nhiệm vụ về nhà yêu cầu học sinh dán bức ảnh cảnh đẹp yêu thích vào đâu để lưu giữ kỉ niệm?</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. Sách giáo khoa Toán</label>
+                <label><input type="radio" name="q5" value="B"> B. Bảng tin lớp học</label>
+                <label><input type="radio" name="q5" value="C"> C. Cửa tủ lạnh ở nhà</label>
+                <label><input type="radio" name="q5" value="D" data-correct="true"> D. Cuốn sổ tay trải nghiệm</label>
+            </div>
+        </div>
+
+        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
     </div>
 
-    <div class="box" style="text-align: center; font-style: italic; color: #666;">
-        Giáo án được xây dựng dựa trên định hướng phát triển phẩm chất, năng lực và dữ liệu thực tế từ bài học.<br>
-        (Hoàn thành ngày 01 tháng 02 năm 2026)
-    </div>
+    <script src="config.js"></script>
+    <script src="core.js"></script>
 
 </body>
 </html>
