@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn tập Khoa Học Bài 21</title>
+    <title>Ôn tập Khoa học 4 - Bài 22: Chủ đề Nấm</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,109 +20,129 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">KHOA HỌC 4 - BÀI 21: NẤM GÂY HỎNG THỰC PHẨM VÀ NẤM ĐỘC (TIẾT 2)</h2>
+                <h2 id="ten-bai-tap">KHOA HỌC 4 - BÀI 22: ÔN TẬP CHỦ ĐỀ NẤM</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Để ngăn chặn nấm mốc phát triển, chúng ta cần phá vỡ các điều kiện ưa thích của chúng. Đó là những điều kiện nào?</div>
+            <div class="question-text">Câu 1: Nấm thường ưa sống ở môi trường nào sau đây?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Khô ráo và Lạnh lẽo</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Ẩm ướt và Ấm áp</label>
-                <label><input type="radio" name="q1" value="C"> C. Sạch sẽ và Thoáng mát</label>
-                <label><input type="radio" name="q1" value="D"> D. Nhiều ánh sáng mặt trời</label>
+                <label><input type="radio" name="q1" value="A"> A. Nơi khô ráo, có nhiều ánh nắng</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Nơi ẩm ướt, râm mát</label>
+                <label><input type="radio" name="q1" value="C"> C. Dưới đáy sông, hồ sâu</label>
+                <label><input type="radio" name="q1" value="D"> D. Trên sa mạc nóng bức</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Tại sao phương pháp phơi khô hoặc sấy khô (như làm mực khô, mứt sấy) lại giúp bảo quản thực phẩm được lâu?</div>
+            <div class="question-text">Câu 2: Loại nấm nào sau đây được dùng làm thức ăn (nấm ăn)?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A" data-correct="true"> A. Vì làm mất đi lượng nước trong thực phẩm, nấm mốc không thể sống thiếu nước</label>
-                <label><input type="radio" name="q2" value="B"> B. Vì làm cho thực phẩm cứng lại, nấm mốc không cắn được</label>
-                <label><input type="radio" name="q2" value="C"> C. Vì phương pháp này làm thực phẩm mặn hơn</label>
-                <label><input type="radio" name="q2" value="D"> D. Vì làm thay đổi màu sắc của thực phẩm</label>
+                <label><input type="radio" name="q2" value="A" data-correct="true"> A. Nấm rơm, nấm hương</label>
+                <label><input type="radio" name="q2" value="B"> B. Nấm mốc đen</label>
+                <label><input type="radio" name="q2" value="C"> C. Nấm lạ có màu đỏ rực</label>
+                <label><input type="radio" name="q2" value="D"> D. Nấm men làm bia</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Việc bảo quản thực phẩm trong tủ lạnh dựa trên yếu tố nào để hạn chế nấm mốc?</div>
+            <div class="question-text">Câu 3: Nấm men có ích lợi gì trong đời sống con người?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Ánh sáng thấp</label>
-                <label><input type="radio" name="q3" value="B"> B. Độ ẩm cao</label>
-                <label><input type="radio" name="q3" value="C" data-correct="true"> C. Nhiệt độ thấp</label>
-                <label><input type="radio" name="q3" value="D"> D. Không khí loãng</label>
+                <label><input type="radio" name="q3" value="A"> A. Dùng để trang trí nhà cửa</label>
+                <label><input type="radio" name="q3" value="B"> B. Gây hỏng thực phẩm</label>
+                <label><input type="radio" name="q3" value="C" data-correct="true"> C. Dùng để làm bia, rượu, làm bánh mì</label>
+                <label><input type="radio" name="q3" value="D"> D. Dùng làm thuốc trừ sâu</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Đặc điểm thường thấy (nhưng không phải tất cả) của các loại nấm độc như Nấm độc đỏ là gì?</div>
+            <div class="question-text">Câu 4: Dấu hiệu thường thấy của các loại nấm độc là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Có màu nâu xám, nhìn rất giản dị</label>
-                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Có màu sắc sặc sỡ, bắt mắt và hình dáng lạ</label>
-                <label><input type="radio" name="q4" value="C"> C. Thường mọc ở trong tủ lạnh</label>
-                <label><input type="radio" name="q4" value="D"> D. Có mùi thơm như kẹo</label>
+                <label><input type="radio" name="q4" value="A"> A. Màu nâu xám, hình dáng bình thường</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Màu sắc sặc sỡ, có thể có vòng cổ ở chân nấm</label>
+                <label><input type="radio" name="q4" value="C"> C. Có mùi thơm như thịt nướng</label>
+                <label><input type="radio" name="q4" value="D"> D. Được bán trong siêu thị uy tín</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Nguyên tắc vàng khi đi rừng hoặc cắm trại mà gặp các loại nấm lạ là gì?</div>
+            <div class="question-text">Câu 5: Khi thấy miếng bánh mì bị nấm mốc, em nên xử lý như thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Hái về nấu thử xem có ngon không</label>
-                <label><input type="radio" name="q5" value="B"> B. Chỉ hái những cây nấm to</label>
-                <label><input type="radio" name="q5" value="C"> C. Ngửi thử, nếu thơm thì ăn được</label>
-                <label><input type="radio" name="q5" value="D" data-correct="true"> D. Tuyệt đối KHÔNG hái và KHÔNG ăn nấm lạ</label>
+                <label><input type="radio" name="q5" value="A"> A. Cắt bỏ phần mốc rồi ăn phần còn lại</label>
+                <label><input type="radio" name="q5" value="B"> B. Rửa sạch mốc rồi ăn</label>
+                <label><input type="radio" name="q5" value="C"> C. Nấu thật kỹ rồi ăn</label>
+                <label><input type="radio" name="q5" value="D" data-correct="true"> D. Bỏ đi, tuyệt đối không ăn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Nếu ổ bánh mì bị mốc một góc nhỏ, em nên xử lý như thế nào?</div>
+            <div class="question-text">Câu 6: Nấm mốc gây ra tác hại gì đối với lương thực, thực phẩm?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Xé bỏ phần mốc, ăn phần còn lại cho đỡ phí</label>
-                <label><input type="radio" name="q6" value="B"> B. Đem nướng lại thật nóng rồi ăn tiếp</label>
-                <label><input type="radio" name="q6" value="C" data-correct="true"> C. Bỏ toàn bộ ổ bánh mì, không ăn nữa</label>
-                <label><input type="radio" name="q6" value="D"> D. Cho vật nuôi trong nhà ăn hộ</label>
+                <label><input type="radio" name="q6" value="A"> A. Giúp thực phẩm ngon hơn</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Làm hỏng thực phẩm, tiết ra độc tố gây hại</label>
+                <label><input type="radio" name="q6" value="C"> C. Giúp thực phẩm bảo quản được lâu hơn</label>
+                <label><input type="radio" name="q6" value="D"> D. Làm thực phẩm có màu sắc đẹp mắt</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Vì sao chúng ta phải bỏ toàn bộ thực phẩm đã bị mốc dù chỉ thấy một đốm nhỏ?</div>
+            <div class="question-text">Câu 7: Trong rừng sau cơn mưa, Lan thấy một cây nấm màu đỏ rất đẹp. Lan nên làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Vì nhìn không đẹp mắt</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true"> B. Vì chân nấm và độc tố đã lan sâu vào bên trong mà mắt thường không thấy được</label>
-                <label><input type="radio" name="q7" value="C"> C. Vì mốc làm thực phẩm bị nhạt đi</label>
-                <label><input type="radio" name="q7" value="D"> D. Vì kiến sẽ bu vào ăn</label>
+                <label><input type="radio" name="q7" value="A"> A. Hái về để nấu canh cho cả nhà</label>
+                <label><input type="radio" name="q7" value="B"> B. Nếm thử một ít xem có ngon không</label>
+                <label><input type="radio" name="q7" value="C" data-correct="true"> C. Tránh xa, không hái và không ăn</label>
+                <label><input type="radio" name="q7" value="D"> D. Mang về trồng trong vườn nhà</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Bạn Lan định rang lại mẻ lạc (đậu phộng) đã bị mốc để ăn vì nghĩ nhiệt độ cao sẽ diệt hết độc. Điều này Đúng hay Sai?</div>
+            <div class="question-text">Câu 8: Mộc nhĩ (còn gọi là nấm mèo) thuộc nhóm nấm nào?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Đúng, nhiệt độ cao sẽ làm sạch mọi thứ</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true"> B. Sai, độc tố nấm mốc trong các loại hạt (Aflatoxin) không bị phá hủy hoàn toàn bởi nhiệt độ cao</label>
-                <label><input type="radio" name="q8" value="C"> C. Đúng, nhưng phải rang thật cháy</label>
-                <label><input type="radio" name="q8" value="D"> D. Sai, vì rang lên ăn sẽ bị đắng thôi chứ không độc</label>
+                <label><input type="radio" name="q8" value="A" data-correct="true"> A. Nấm ăn</label>
+                <label><input type="radio" name="q8" value="B"> B. Nấm độc</label>
+                <label><input type="radio" name="q8" value="C"> C. Nấm mốc</label>
+                <label><input type="radio" name="q8" value="D"> D. Nấm men</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Khi đi siêu thị mua thực phẩm đóng gói, thông tin quan trọng nào trên bao bì giúp em tránh mua phải hàng hết hạn dễ bị mốc?</div>
+            <div class="question-text">Câu 9: Phát biểu nào sau đây về Nấm là ĐÚNG nhất?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Tên nhà sản xuất</label>
-                <label><input type="radio" name="q9" value="B"> B. Hình ảnh minh họa</label>
-                <label><input type="radio" name="q9" value="C" data-correct="true"> C. Hạn sử dụng (Date)</label>
-                <label><input type="radio" name="q9" value="D"> D. Mã vạch sản phẩm</label>
+                <label><input type="radio" name="q9" value="A"> A. Tất cả các loài nấm đều ăn được</label>
+                <label><input type="radio" name="q9" value="B"> B. Tất cả các loài nấm đều có hại</label>
+                <label><input type="radio" name="q9" value="C"> C. Nấm chỉ dùng để làm thuốc chữa bệnh</label>
+                <label><input type="radio" name="q9" value="D" data-correct="true"> D. Có loài nấm có lợi, có loài nấm có hại</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Khẩu hiệu an toàn thực phẩm nào phù hợp nhất với nội dung bài học hôm nay?</div>
+            <div class="question-text">Câu 10: Ăn phải nấm độc có thể gây ra hậu quả nghiêm trọng nào?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Ăn chín uống sôi</label>
-                <label><input type="radio" name="q10" value="B"> B. Rửa tay trước khi ăn</label>
-                <label><input type="radio" name="q10" value="C" data-correct="true"> C. Thấy mốc là bỏ - Không được tiếc rẻ</label>
-                <label><input type="radio" name="q10" value="D"> D. Cần kiệm là quốc sách</label>
+                <label><input type="radio" name="q10" value="A"> A. Giúp cơ thể cao lớn nhanh chóng</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true"> B. Đau bụng, nôn mửa, ngộ độc, thậm chí tử vong</label>
+                <label><input type="radio" name="q10" value="C"> C. Giúp thông minh hơn</label>
+                <label><input type="radio" name="q10" value="D"> D. Không gây ảnh hưởng gì</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 11: Để đảm bảo an toàn, chúng ta CHỈ nên ăn nấm khi nào?</div>
+            <div class="options">
+                <label><input type="radio" name="q11" value="A" data-correct="true"> A. Khi biết rõ nguồn gốc và biết chắc chắn là nấm ăn được</label>
+                <label><input type="radio" name="q11" value="B"> B. Khi thấy nấm có màu sắc đẹp</label>
+                <label><input type="radio" name="q11" value="C"> C. Khi thấy côn trùng ăn được thì người cũng ăn được</label>
+                <label><input type="radio" name="q11" value="D"> D. Khi nấm mọc hoang trong vườn nhà</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 12: Hình ảnh nào sau đây cần phải nói "KHÔNG" (bỏ đi) ngay lập tức?</div>
+            <div class="options">
+                <label><input type="radio" name="q12" value="A"> A. Một giỏ nấm hương tươi ngon</label>
+                <label><input type="radio" name="q12" value="B"> B. Sữa chua (được lên men tốt)</label>
+                <label><input type="radio" name="q12" value="C" data-correct="true"> C. Cơm nguội đã chuyển màu xanh đen, có mùi lạ</label>
+                <label><input type="radio" name="q12" value="D"> D. Bánh mì mới nướng thơm phức</label>
             </div>
         </div>
 
