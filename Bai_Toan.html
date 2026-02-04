@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toán 4: Chia số tròn chục (Phân hóa)</title>
+    <title>Ôn Tập: Chia số có nhiều chữ số cho số tròn chục</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,209 +20,137 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TOÁN 4: CHIA CHO SỐ TRÒN CHỤC</h2>
+                <h2 id="ten-bai-tap">TOÁN LỚP 4: CHIA CHO SỐ TRÒN CHỤC</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Trong phần Khởi động, để tính nhẩm nhanh phép tính 60 : 20, chúng ta thường làm cách nào?</div>
+            <div class="question-text">Câu 1: Trong mỗi lượt chia, quy trình 3 bước chuẩn cần thực hiện là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Đặt tính rồi tính theo 4 bước</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Cùng xóa (hoặc che) đi một chữ số 0 ở tận cùng của hai số rồi chia</label>
-                <label><input type="radio" name="q1" value="C"> C. Nhân cả hai số với 10</label>
-                <label><input type="radio" name="q1" value="D"> D. Lấy 60 trừ đi 20 nhiều lần</label>
+                <label><input type="radio" name="q1" value="A"> A. Ước lượng thương &rarr; Tìm số dư &rarr; Xác định số bị chia</label>
+                <label><input type="radio" name="q1" value="B"> B. Nhân kiểm tra &rarr; Chia ước lượng &rarr; Trừ để tìm số dư</label>
+                <label><input type="radio" name="q1" value="C" data-correct="true"> C. Xác định số bị chia &rarr; Ước lượng thương ( CHIA ước lượng và NHÂN kiểm tra) &rarr; Xác định số dư ( Trừ) </label>
+                <label><input type="radio" name="q1" value="D"> D. Tìm số dư (trừ) &rarr; Ước lượng thương ( CHIA ước lượng và NHÂN kiểm tra) &rarr; Hạ số</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Khi đặt tính chia 60 : 30, thương số (kết quả) phải được viết ở vị trí nào?</div>
+            <div class="question-text">Câu 2: Để thực hiện thao tác CHIA ước lượng thương nhanh khi thực hiện phép chia 135 : 20 thì ta nên dùng kỹ thuật nào?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Viết thẳng cột với chữ số 6 (hàng chục)</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true"> B. Viết thẳng cột với chữ số 0 (hàng đơn vị) của số bị chia</label>
-                <label><input type="radio" name="q2" value="C"> C. Viết ở đâu cũng được</label>
-                <label><input type="radio" name="q2" value="D"> D. Viết bên dưới số chia</label>
+                <label><input type="radio" name="q2" value="A"> A. Che bớt hàng chục của cả hai số</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true"> B. Che bớt hàng đơn vị của cả hai số</label>
+                <label><input type="radio" name="q2" value="C"> C. Che toàn bộ số chia</label>
+                <label><input type="radio" name="q2" value="D"> D. Che hai mắt lại và đoán mò</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Kỹ thuật quan trọng nhất để ước lượng thương khi chia cho số tròn chục là gì?</div>
+            <div class="question-text">Câu 3: Ước lượng thương của phép tính <strong>83 : 20</strong>. Khi che bớt số 3 và số 0, ta nhẩm tính phép chia nào?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Đếm ngón tay</label>
-                <label><input type="radio" name="q3" value="B"> B. Dùng thước kẻ đo độ dài</label>
-                <label><input type="radio" name="q3" value="C" data-correct="true"> C. Dùng ngón tay che bớt chữ số hàng đơn vị (số 0) của số chia và số bị chia</label>
-                <label><input type="radio" name="q3" value="D"> D. Viết tất cả các số ra nháp rồi chọn bừa</label>
+                <label><input type="radio" name="q3" value="A"> A. 3 : 0</label>
+                <label><input type="radio" name="q3" value="B"> B. 80 : 20</label>
+                <label><input type="radio" name="q3" value="C" data-correct="true"> C. 8 : 2</label>
+                <label><input type="radio" name="q3" value="D"> D. 83 : 2</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Để ước lượng thương của phép tính 95 : 30, em sẽ nhẩm phép tính đơn giản nào trong đầu?</div>
+            <div class="question-text">Câu 4: Tại sao sau khi ước lượng thương, ta phải thực hiện bước "Nhân ngược lại"?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. 95 : 3</label>
-                <label><input type="radio" name="q4" value="B"> B. 5 : 0</label>
-                <label><input type="radio" name="q4" value="C" data-correct="true"> C. 9 : 3 (Che số 5 và số 0 đi)</label>
-                <label><input type="radio" name="q4" value="D"> D. 30 : 9</label>
+                <label><input type="radio" name="q4" value="A" data-correct="true"> A. Để kiểm tra xem tích có nhỏ hơn hoặc bằng số bị chia không</label>
+                <label><input type="radio" name="q4" value="B"> B. Để tìm số dư ngay lập tức</label>
+                <label><input type="radio" name="q4" value="C"> C. Để tìm số bị chia</label>
+                <label><input type="radio" name="q4" value="D"> D. Để tìm số chia</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Kết quả của phép chia 80 : 40 là bao nhiêu?</div>
+            <div class="question-text">Câu 5: Trong phép chia có dư, điều kiện bắt buộc của số dư là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A" data-correct="true"> A. 2</label>
-                <label><input type="radio" name="q5" value="B"> B. 20</label>
-                <label><input type="radio" name="q5" value="C"> C. 4</label>
-                <label><input type="radio" name="q5" value="D"> D. 40</label>
+                <label><input type="radio" name="q5" value="A"> A. Số dư phải lớn hơn số chia</label>
+                <label><input type="radio" name="q5" value="B"> B. Số dư phải bằng số chia</label>
+                <label><input type="radio" name="q5" value="C"> C. Số dư phải bằng 0</label>
+                <label><input type="radio" name="q5" value="D" data-correct="true"> D. Số dư phải bé hơn số chia</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Thực hiện phép tính 95 : 30. Kết quả đúng là:</div>
+            <div class="question-text">Câu 6: Cho phép chia <strong>8374 : 20</strong>.Số bị chia ở lượt chia thứ nhất là số nào?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A" data-correct="true"> A. 3 (dư 5)</label>
-                <label><input type="radio" name="q6" value="B"> B. 3 (dư 50)</label>
-                <label><input type="radio" name="q6" value="C"> C. 31 (dư 5)</label>
-                <label><input type="radio" name="q6" value="D"> D. 3 (dư 0.5)</label>
+                <label><input type="radio" name="q6" value="A"> A. Số 8</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Số 83</label>
+                <label><input type="radio" name="q6" value="C"> C. Số 837</label>
+                <label><input type="radio" name="q6" value="D"> D. Số 8374</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Một bạn thực hiện phép chia: 85 : 40 = 2 (dư 5). Bạn ấy làm đúng hay sai?</div>
+            <div class="question-text">Câu 7: Thương thu được ở lượt chia thứ nhất: <strong>83 : 20</strong> là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Sai, vì 85 : 40 không chia được</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true"> B. Đúng</label>
-                <label><input type="radio" name="q7" value="C"> C. Sai, vì thương phải là 20</label>
-                <label><input type="radio" name="q7" value="D"> D. Sai, vì số dư quá nhỏ</label>
+                <label><input type="radio" name="q7" value="A" data-correct="true"> A. Được 4, dư 3</label>
+                <label><input type="radio" name="q7" value="B"> B. Được 3, dư 23</label>
+                <label><input type="radio" name="q7" value="C"> C. Được 4, dư 0</label>
+                <label><input type="radio" name="q7" value="D"> D. Được 5</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Trong phép chia có dư, điều kiện bắt buộc của số dư là gì?</div>
+            <div class="question-text">Câu 8: Trong phép chia <strong>8374:20</strong>, Sau khi chia lượt thứ nhất còn dư 3. Để xác định số bị chia ở lượt chia thứ hai ta làm thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Số dư có thể lớn hơn số chia</label>
-                <label><input type="radio" name="q8" value="B"> B. Số dư phải luôn bằng 0</label>
-                <label><input type="radio" name="q8" value="C" data-correct="true"> C. Số dư phải luôn nhỏ hơn số chia</label>
-                <label><input type="radio" name="q8" value="D"> D. Số dư phải bằng số chia</label>
+                <label><input type="radio" name="q8" value="A"> A. Lấy 7 + 3</label>
+                <label><input type="radio" name="q8" value="B"> B. Lấy 7 - 3</label>
+                <label><input type="radio" name="q8" value="C" data-correct="true"> C. Hạ 7 xuống và viết sau số 3 dư để được số bị chia ở lượt 3 là 37</label>
+                <label><input type="radio" name="q8" value="D"> D. Hạ 74 xuống để được số bị chia là 74</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Để ước lượng 240 : 60, ta thực hiện nhẩm như thế nào?</div>
+            <div class="question-text">Câu 9: Ước lượng phép chia <strong>174 : 20</strong> thì thương ước lượng được khi thực hiện lượt chia đầu tiên là bao nhiêu?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A" data-correct="true"> A. Che số 0 ở cả hai số, nhẩm 24 : 6</label>
-                <label><input type="radio" name="q9" value="B"> B. Che số 0 và số 4, nhẩm 2 : 6</label>
-                <label><input type="radio" name="q9" value="C"> C. Lấy 240 : 6</label>
-                <label><input type="radio" name="q9" value="D"> D. Lấy 240 - 60</label>
+                <label><input type="radio" name="q9" value="A"> A. 7</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true"> B. 8</label>
+                <label><input type="radio" name="q9" value="C"> C. 9</label>
+                <label><input type="radio" name="q9" value="D"> D. 6</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Kết quả của phép tính 240 : 60 là:</div>
+            <div class="question-text">Câu 10:Trong khi thực hiện phép chia <strong>174 : 20</strong> ở câu trên, nếu ước lượng thương là 8 thì ta thực hiện thao tác NHÂN KIỂM TRA bằng phép tính nào?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. 40</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true"> B. 4</label>
-                <label><input type="radio" name="q10" value="C"> C. 6</label>
-                <label><input type="radio" name="q10" value="D"> D. 4 (dư 10)</label>
+                <label><input type="radio" name="q10" value="A"> A. <strong>8 + 20</strong></label>
+                <label><input type="radio" name="q10" value="B" data-correct="true"> B. <strong> 8 x 20</strong>160 bé hơn 174 và số dư (14) bé hơn 20</label>
+                <label><input type="radio" name="q10" value="C"> C. <strong> 20 - 8</strong></label>
+                <label><input type="radio" name="q10" value="D"> D. <strong>20 : 8</strong></label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: Tìm lỗi sai trong phép tính sau: 85 : 40 = 1 (dư 45)</div>
+            <div class="question-text">Câu 11: Thực hiện phép tính: <strong>6540 : 30</strong>. Kết quả đúng là:</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A" data-correct="true"> A. Thương quá nhỏ, dẫn đến số dư lớn hơn số chia</label>
-                <label><input type="radio" name="q11" value="B"> B. Thương quá lớn</label>
-                <label><input type="radio" name="q11" value="C"> C. Phép tính này làm đúng rồi</label>
-                <label><input type="radio" name="q11" value="D"> D. Lỗi ở cách đặt tính</label>
+                <label><input type="radio" name="q11" value="A"> A. 210</label>
+                <label><input type="radio" name="q11" value="B"> B. 208</label>
+                <label><input type="radio" name="q11" value="C" data-correct="true"> C. 218</label>
+                <label><input type="radio" name="q11" value="D"> D. 228</label>
             </div>
         </div>
-
         <div class="question-block">
-            <div class="question-text">Câu 12: Tính 140 : 50. Kết quả là:</div>
+            <div class="question-text">Câu 12: Một đoàn khách du lịch có 128 người. Mỗi xe ô tô chở được nhiều nhất 40 người. Hỏi cần ÍT NHẤT  bao nhiêu xe để chở hết khách?</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. 2 (dư 4)</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true"> B. 2 (dư 40)</label>
-                <label><input type="radio" name="q12" value="C"> C. 3 (dư 10)</label>
-                <label><input type="radio" name="q12" value="D"> D. 20 (dư 40)</label>
+                <label><input type="radio" name="q12" value="A"> A. 3 xe</label>
+                <label><input type="radio" name="q12" value="B" data-correct="true"> B. 4 xe</label>
+                <label><input type="radio" name="q12" value="C"> C. 5 xe</label>
+                <label><input type="radio" name="q12" value="D"> D. 6 xe</label>
             </div>
         </div>
-
         <div class="question-block">
-            <div class="question-text">Câu 13: Tại sao trong phép chia 95 : 30, ta KHÔNG được tùy tiện xóa bỏ chữ số 0 rồi viết là 9.5 : 3?</div>
+            <div class="question-text">Câu 14: Sáng nay, khi thực hiện phép chia trước khi ra chơi trên bảng lớp, thầy đã quên làm điều gì?</div>
             <div class="options">
-                <label><input type="radio" name="q13" value="A" data-correct="true"> A. Vì như thế sẽ làm sai lệch số dư thực tế</label>
-                <label><input type="radio" name="q13" value="B"> B. Vì sẽ làm sai thương</label>
-                <label><input type="radio" name="q13" value="C"> C. Vì cô giáo không cho phép</label>
-                <label><input type="radio" name="q13" value="D"> D. Vì tốn mực bút</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 14: Giải bài toán: "Cần chuyển 450 tấn hàng, mỗi toa tàu chở được 60 tấn. Cần ít nhất bao nhiêu toa?"</div>
-            <div class="options">
-                <label><input type="radio" name="q14" value="A"> A. 7 toa</label>
-                <label><input type="radio" name="q14" value="B" data-correct="true"> B. 8 toa</label>
-                <label><input type="radio" name="q14" value="C"> C. 6 toa</label>
-                <label><input type="radio" name="q14" value="D"> D. 7 toa và một nửa toa</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 15: Trong bài toán tìm số toa tàu ở trên, tại sao thương là 7 nhưng đáp án lại là 8?</div>
-            <div class="options">
-                <label><input type="radio" name="q15" value="A"> A. Vì người lái tàu thích số 8</label>
-                <label><input type="radio" name="q15" value="B"> B. Vì ta làm tròn xuống</label>
-                <label><input type="radio" name="q15" value="C" data-correct="true"> C. Vì còn dư hàng hóa, cần thêm 1 toa để chở nốt</label>
-                <label><input type="radio" name="q15" value="D"> D. Vì tính sai</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 16: Nếu số chia là 40, số dư lớn nhất có thể là bao nhiêu?</div>
-            <div class="options">
-                <label><input type="radio" name="q16" value="A"> A. 40</label>
-                <label><input type="radio" name="q16" value="B" data-correct="true"> B. 39</label>
-                <label><input type="radio" name="q16" value="C"> C. 1</label>
-                <label><input type="radio" name="q16" value="D"> D. 41</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 17: Dự đoán bài học tiếp theo: Nếu phép chia là 95 : 32 (không có số 0), ta có áp dụng được cách "che số" không?</div>
-            <div class="options">
-                <label><input type="radio" name="q17" value="A"> A. Không, vì không có số 0 để che</label>
-                <label><input type="radio" name="q17" value="B" data-correct="true"> B. Có, ta vẫn che chữ số hàng đơn vị (số 5 và số 2) để ước lượng</label>
-                <label><input type="radio" name="q17" value="C"> C. Phải dùng máy tính bỏ túi</label>
-                <label><input type="radio" name="q17" value="D"> D. Chỉ làm được nếu đề bài cho số tròn chục</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 18: Khi thực hiện 140 : 50, bước đầu tiên em làm gì?</div>
-            <div class="options">
-                <label><input type="radio" name="q18" value="A"> A. Lấy 1 chia 50</label>
-                <label><input type="radio" name="q18" value="B"> B. Lấy 14 chia 50</label>
-                <label><input type="radio" name="q18" value="C" data-correct="true"> C. Lấy cả 140 chia 50</label>
-                <label><input type="radio" name="q18" value="D"> D. Lấy 50 chia 140</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 19: Phép tính nào sau đây có thương là 3?</div>
-            <div class="options">
-                <label><input type="radio" name="q19" value="A"> A. 80 : 20</label>
-                <label><input type="radio" name="q19" value="B" data-correct="true"> B. 90 : 30</label>
-                <label><input type="radio" name="q19" value="C"> C. 100 : 20</label>
-                <label><input type="radio" name="q19" value="D"> D. 60 : 30</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 20: Câu nào sau đây nói ĐÚNG về quy trình chia?</div>
-            <div class="options">
-                <label><input type="radio" name="q20" value="A"> A. Chia -> Trừ -> Nhân -> Hạ</label>
-                <label><input type="radio" name="q20" value="B"> B. Nhân -> Chia -> Trừ -> Hạ</label>
-                <label><input type="radio" name="q20" value="C" data-correct="true"> C. Chia -> Nhân -> Trừ -> Hạ</label>
-                <label><input type="radio" name="q20" value="D"> D. Hạ -> Chia -> Nhân -> Trừ</label>
+                <label><input type="radio" name="q12" value="A"> A. Quên XÁC ĐỊNH SỐ BỊ CHIA</label>
+                <label><input type="radio" name="q12" value="B" data-correct="true"> B. Quên đánh dấu phẩy trên đầu số 7 để nhớ lượt chia</label>
+                <label><input type="radio" name="q12" value="C"> C.Quên CHIA ƯỚC LƯỢNG THƯƠNG</label>
+                <label><input type="radio" name="q12" value="D"> D. quên NHÂN KIỂM TRA</label>
             </div>
         </div>
 
