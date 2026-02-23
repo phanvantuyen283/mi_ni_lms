@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn tập Khoa học 4 - Bài 22: Chủ đề Nấm</title>
+    <title>Ôn tập Khoa học 4 - Bài 24</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,140 +20,131 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">KHOA HỌC 4 - BÀI 22: ÔN TẬP CHỦ ĐỀ NẤM</h2>
+                <h2 id="ten-bai-tap">KHOA HỌC 4 - BÀI 24: CHẾ ĐỘ ĂN UỐNG CÂN BẰNG</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Nấm thường ưa sống ở môi trường nào sau đây?</div>
+            <div class="question-text">Câu 1: Một bữa ăn cân bằng cần có sự phối hợp của bao nhiêu nhóm chất dinh dưỡng chính?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Nơi khô ráo, có nhiều ánh nắng</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Nơi ẩm ướt, râm mát</label>
-                <label><input type="radio" name="q1" value="C"> C. Dưới đáy sông, hồ sâu</label>
-                <label><input type="radio" name="q1" value="D"> D. Trên sa mạc nóng bức</label>
+                <label><input type="radio" name="q1" value="A"> A. 2 nhóm chất</label>
+                <label><input type="radio" name="q1" value="B"> B. 3 nhóm chất</label>
+                <label><input type="radio" name="q1" value="C" data-correct="true"> C. 4 nhóm chất</label>
+                <label><input type="radio" name="q1" value="D"> D. 5 nhóm chất</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Loại nấm nào sau đây được dùng làm thức ăn (nấm ăn)?</div>
+            <div class="question-text">Câu 2: Nhóm chất nào sau đây bao gồm các thực phẩm như cơm, bánh mì, khoai lang?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A" data-correct="true"> A. Nấm rơm, nấm hương</label>
-                <label><input type="radio" name="q2" value="B"> B. Nấm mốc đen</label>
-                <label><input type="radio" name="q2" value="C"> C. Nấm lạ có màu đỏ rực</label>
-                <label><input type="radio" name="q2" value="D"> D. Nấm men làm bia</label>
+                <label><input type="radio" name="q2" value="A" data-correct="true"> A. Nhóm chứa nhiều chất bột đường</label>
+                <label><input type="radio" name="q2" value="B"> B. Nhóm chứa nhiều chất đạm</label>
+                <label><input type="radio" name="q2" value="C"> C. Nhóm chứa nhiều chất béo</label>
+                <label><input type="radio" name="q2" value="D"> D. Nhóm vitamin và khoáng chất</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Nấm men có ích lợi gì trong đời sống con người?</div>
+            <div class="question-text">Câu 3: Tại sao chúng ta KHÔNG nên chỉ ăn một món yêu thích trong nhiều ngày liên tiếp?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Dùng để trang trí nhà cửa</label>
-                <label><input type="radio" name="q3" value="B"> B. Gây hỏng thực phẩm</label>
-                <label><input type="radio" name="q3" value="C" data-correct="true"> C. Dùng để làm bia, rượu, làm bánh mì</label>
-                <label><input type="radio" name="q3" value="D"> D. Dùng làm thuốc trừ sâu</label>
+                <label><input type="radio" name="q3" value="A"> A. Vì sẽ tốn nhiều tiền mua đồ ăn</label>
+                <label><input type="radio" name="q3" value="B" data-correct="true"> B. Vì cơ thể sẽ bị thiếu chất và mệt mỏi</label>
+                <label><input type="radio" name="q3" value="C"> C. Vì thức ăn sẽ bị hỏng</label>
+                <label><input type="radio" name="q3" value="D"> D. Vì không có thời gian nấu nướng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Dấu hiệu thường thấy của các loại nấm độc là gì?</div>
+            <div class="question-text">Câu 4: Thực phẩm nào dưới đây thuộc nhóm chất đạm có nguồn gốc thực vật?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Màu nâu xám, hình dáng bình thường</label>
-                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Màu sắc sặc sỡ, có thể có vòng cổ ở chân nấm</label>
-                <label><input type="radio" name="q4" value="C"> C. Có mùi thơm như thịt nướng</label>
-                <label><input type="radio" name="q4" value="D"> D. Được bán trong siêu thị uy tín</label>
+                <label><input type="radio" name="q4" value="A"> A. Thịt bò, cá, trứng</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Đậu phụ, lạc (đậu phộng), đỗ</label>
+                <label><input type="radio" name="q4" value="C"> C. Mỡ lợn, bơ</label>
+                <label><input type="radio" name="q4" value="D"> D. Rau bắp cải, cà rốt</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Khi thấy miếng bánh mì bị nấm mốc, em nên xử lý như thế nào?</div>
+            <div class="question-text">Câu 5: Trong bài học, thực đơn ngày thứ mấy được nhận xét là đa dạng và cân bằng nhất?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Cắt bỏ phần mốc rồi ăn phần còn lại</label>
-                <label><input type="radio" name="q5" value="B"> B. Rửa sạch mốc rồi ăn</label>
-                <label><input type="radio" name="q5" value="C"> C. Nấu thật kỹ rồi ăn</label>
-                <label><input type="radio" name="q5" value="D" data-correct="true"> D. Bỏ đi, tuyệt đối không ăn</label>
+                <label><input type="radio" name="q5" value="A"> A. Thứ Tư</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true"> B. Thứ Năm</label>
+                <label><input type="radio" name="q5" value="C"> C. Thứ Sáu</label>
+                <label><input type="radio" name="q5" value="D"> D. Thứ Bảy</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Nấm mốc gây ra tác hại gì đối với lương thực, thực phẩm?</div>
+            <div class="question-text">Câu 6: Để hỗ trợ hệ tiêu hóa hoạt động tốt và tránh táo bón, em cần ăn bổ sung gì?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Giúp thực phẩm ngon hơn</label>
-                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Làm hỏng thực phẩm, tiết ra độc tố gây hại</label>
-                <label><input type="radio" name="q6" value="C"> C. Giúp thực phẩm bảo quản được lâu hơn</label>
-                <label><input type="radio" name="q6" value="D"> D. Làm thực phẩm có màu sắc đẹp mắt</label>
+                <label><input type="radio" name="q6" value="A"> A. Ăn thật nhiều thịt mỡ</label>
+                <label><input type="radio" name="q6" value="B"> B. Uống nhiều nước ngọt có gas</label>
+                <label><input type="radio" name="q6" value="C" data-correct="true"> C. Ăn đủ rau xanh, quả chín và uống đủ nước</label>
+                <label><input type="radio" name="q6" value="D"> D. Chỉ ăn cơm trắng</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 7: Một bữa ăn phối hợp đạm động vật và đạm thực vật có lợi ích gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q7" value="A"> A. Chỉ để cho ngon miệng</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true"> B. Giúp cơ thể phát triển toàn diện và khỏe mạnh</label>
+                <label><input type="radio" name="q7" value="C"> C. Làm cho bữa ăn kéo dài hơn</label>
+                <label><input type="radio" name="q7" value="D"> D. Không có lợi ích gì đặc biệt</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Trong rừng sau cơn mưa, Lan thấy một cây nấm màu đỏ rất đẹp. Lan nên làm gì?</div>
+            <div class="question-text">Câu 8: Nhóm thực phẩm nào cung cấp nhiều Vitamin và khoáng chất nhất?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Hái về để nấu canh cho cả nhà</label>
-                <label><input type="radio" name="q7" value="B"> B. Nếm thử một ít xem có ngon không</label>
-                <label><input type="radio" name="q7" value="C" data-correct="true"> C. Tránh xa, không hái và không ăn</label>
-                <label><input type="radio" name="q7" value="D"> D. Mang về trồng trong vườn nhà</label>
+                <label><input type="radio" name="q8" value="A"> A. Tôm, cua, thịt gà</label>
+                <label><input type="radio" name="q8" value="B"> B. Dầu ăn, mỡ, bơ</label>
+                <label><input type="radio" name="q8" value="C" data-correct="true"> C. Các loại rau, củ và trái cây</label>
+                <label><input type="radio" name="q8" value="D"> D. Gạo, ngô, sắn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Mộc nhĩ (còn gọi là nấm mèo) thuộc nhóm nấm nào?</div>
+            <div class="question-text">Câu 9: Khi bạn của em chỉ thích ăn cơm với thịt mà lười ăn rau, em nên khuyên bạn thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A" data-correct="true"> A. Nấm ăn</label>
-                <label><input type="radio" name="q8" value="B"> B. Nấm độc</label>
-                <label><input type="radio" name="q8" value="C"> C. Nấm mốc</label>
-                <label><input type="radio" name="q8" value="D"> D. Nấm men</label>
+                <label><input type="radio" name="q9" value="A"> A. Cứ ăn thịt thoải mái vì thịt giúp mau lớn</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true"> B. Nên ăn thêm rau quả để bổ sung vitamin và chất xơ</label>
+                <label><input type="radio" name="q9" value="C"> C. Chỉ cần uống nước là đủ, không cần ăn rau</label>
+                <label><input type="radio" name="q9" value="D"> D. Không cần khuyên gì cả</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Phát biểu nào sau đây về Nấm là ĐÚNG nhất?</div>
+            <div class="question-text">Câu 10: "Chế độ ăn uống cân bằng" được hiểu đơn giản là gì?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Tất cả các loài nấm đều ăn được</label>
-                <label><input type="radio" name="q9" value="B"> B. Tất cả các loài nấm đều có hại</label>
-                <label><input type="radio" name="q9" value="C"> C. Nấm chỉ dùng để làm thuốc chữa bệnh</label>
-                <label><input type="radio" name="q9" value="D" data-correct="true"> D. Có loài nấm có lợi, có loài nấm có hại</label>
+                <label><input type="radio" name="q10" value="A"> A. Ăn thật nhiều thức ăn bổ dưỡng nhất</label>
+                <label><input type="radio" name="q10" value="B"> B. Ăn ít đi để không bị béo</label>
+                <label><input type="radio" name="q10" value="C" data-correct="true"> C. Ăn phối hợp nhiều loại thực phẩm từ các nhóm chất khác nhau</label>
+                <label><input type="radio" name="q10" value="D"> D. Chỉ ăn những món mình thích</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Ăn phải nấm độc có thể gây ra hậu quả nghiêm trọng nào?</div>
+            <div class="question-text">Câu 11: Nguồn cung cấp chất béo động vật chủ yếu từ đâu?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Giúp cơ thể cao lớn nhanh chóng</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true"> B. Đau bụng, nôn mửa, ngộ độc, thậm chí tử vong</label>
-                <label><input type="radio" name="q10" value="C"> C. Giúp thông minh hơn</label>
-                <label><input type="radio" name="q10" value="D"> D. Không gây ảnh hưởng gì</label>
+                <label><input type="radio" name="q11" value="A" data-correct="true"> A. Mỡ lợn, mỡ cá, bơ từ sữa</label>
+                <label><input type="radio" name="q11" value="B"> B. Dầu lạc, dầu đậu nành</label>
+                <label><input type="radio" name="q11" value="C"> C. Quả dừa, quả bơ</label>
+                <label><input type="radio" name="q11" value="D"> D. Các loại hạt như vừng, mè</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: Để đảm bảo an toàn, chúng ta CHỈ nên ăn nấm khi nào?</div>
+            <div class="question-text">Câu 12: Hành động nào sau đây thể hiện thói quen ăn uống lành mạnh?</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A" data-correct="true"> A. Khi biết rõ nguồn gốc và biết chắc chắn là nấm ăn được</label>
-                <label><input type="radio" name="q11" value="B"> B. Khi thấy nấm có màu sắc đẹp</label>
-                <label><input type="radio" name="q11" value="C"> C. Khi thấy côn trùng ăn được thì người cũng ăn được</label>
-                <label><input type="radio" name="q11" value="D"> D. Khi nấm mọc hoang trong vườn nhà</label>
+                <label><input type="radio" name="q12" value="A"> A. Bỏ bữa sáng thường xuyên</label>
+                <label><input type="radio" name="q12" value="B"> B. Uống rất ít nước trong ngày</label>
+                <label><input type="radio" name="q12" value="C"> C. Chỉ ăn đồ ăn nhanh và đồ chiên rán</label>
+                <label><input type="radio" name="q12" value="D" data-correct="true"> D. Tự giác thay đổi thực đơn đa dạng mỗi ngày</label>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 12: Hình ảnh nào sau đây cần phải nói "KHÔNG" (bỏ đi) ngay lập tức?</div>
-            <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Một giỏ nấm hương tươi ngon</label>
-                <label><input type="radio" name="q12" value="B"> B. Sữa chua (được lên men tốt)</label>
-                <label><input type="radio" name="q12" value="C" data-correct="true"> C. Cơm nguội đã chuyển màu xanh đen, có mùi lạ</label>
-                <label><input type="radio" name="q12" value="D"> D. Bánh mì mới nướng thơm phức</label>
-            </div>
-        </div>
-        <div class="question-block">
-  <div class="question-text">Câu 14 (bỏ câu 13 nhé các bạn 4A): Hôm nay lớp ta có những bạn nào không mang vở bài tập Khoa học đi học ?</div>
-  <div class="options">
-    <label><input type="radio" name="q14" value="A"> A. Bạn Thu Ngân, bạn Kiên, bạn Bảo Nam, bạn Minh Tâm</label>
-    <label><input type="radio" name="q14" value="B"> B. Bạn Gia Phát, bạn Yến Nhi, bạn MInh Hạnh, bạn Ngọc Sơn</label>
-    <label><input type="radio" name="q14" value="C" data-correct="true"> C. Bạn Việt Anh, bạn Bá Đạt,.... ( 5 bạn mà thầy không nhớ hết tên)</label>
-    <label><input type="radio" name="q12" value="D"> D. Bánh mì mới nướng thơm phức</label>
-  </div>
-</div>
         <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
     </div>
 
