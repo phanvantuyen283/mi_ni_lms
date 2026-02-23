@@ -3,256 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KHBD: Chia cho số có hai chữ số</title>
-    <style>
-        :root {
-            --primary-color: #0277bd; /* Màu xanh dương chủ đạo của Toán */
-            --secondary-color: #e1f5fe;
-            --accent-color: #f9a825;
-            --text-color: #263238;
-            --border-color: #b0bec5;
-        }
-        body {
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-        h1 {
-            text-align: center;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            font-size: 26px;
-            margin-bottom: 15px;
-            border-bottom: 4px solid var(--primary-color);
-            padding-bottom: 15px;
-        }
-        h2 {
-            color: var(--primary-color);
-            border-left: 5px solid var(--accent-color);
-            padding-left: 15px;
-            margin-top: 35px;
-            font-size: 22px;
-            background-color: var(--secondary-color);
-            padding-top: 5px;
-            padding-bottom: 5px;
-        }
-        .meta-info {
-            background-color: #eceff1;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 25px;
-            border: 1px dashed var(--border-color);
-        }
-        .activity-box {
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 25px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .activity-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px 20px;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .phase {
-            padding: 20px;
-            border-bottom: 1px solid #eeeeee;
-        }
-        .phase:last-child {
-            border-bottom: none;
-        }
-        .phase-title {
-            font-weight: bold;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            font-size: 14px;
-            display: block;
-            margin-bottom: 8px;
-        }
-        ul {
-            margin: 5px 0 15px 20px;
-            padding: 0;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-        .math-block {
-            background-color: #fff9c4;
-            padding: 15px;
-            border-radius: 5px;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            margin: 10px 0;
-            text-align: center;
-            border: 1px solid #fbc02d;
-        }
-        .highlight {
-            color: #d81b60;
-            font-weight: bold;
-        }
-    </style>
+    <title>Ôn tập Toán 4: Chia cho số có hai chữ số</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>KẾ HOẠCH BÀI DẠY</h1>
-        
-        <div class="meta-info">
-            <p><strong>Môn học:</strong> Toán</p>
-            <p><strong>Tên bài:</strong> Bài 44: CHIA CHO SỐ CÓ HAI CHỮ SỐ (Tiết 1)</p>
-            <p><strong>Lớp:</strong> 4</p>
-            <p><strong>Thời lượng:</strong> 35 - 40 phút</p>
-            <p><strong>Bộ sách:</strong> Kết nối tri thức với cuộc sống (Dựa trên hình ảnh cung cấp)</p>
+    <div class="quiz-container">
+        <div style="margin-bottom:15px">
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
         </div>
 
-        <h2>I. YÊU CẦU CẦN ĐẠT</h2>
-        <ul>
-            <li><strong>Kiến thức:</strong> 
-                <ul>
-                    <li>Biết cách thực hiện phép chia số có ba, bốn chữ số cho số có hai chữ số.</li>
-                    <li>Phân biệt được phép chia hết và phép chia có dư.</li>
-                    <li>Nắm được mẹo chia cho số tròn chục (Bài tập 2).</li>
-                </ul>
-            </li>
-            <li><strong>Năng lực:</strong> 
-                <ul>
-                    <li><strong>Tư duy và lập luận toán học:</strong> Thực hiện ước lượng thương hợp lí.</li>
-                    <li><strong>Giải quyết vấn đề toán học:</strong> Vận dụng phép chia để giải bài toán thực tế (chia nhóm khách du lịch, xếp ghế hội trường).</li>
-                </ul>
-            </li>
-            <li><strong>Phẩm chất:</strong> Rèn luyện tính cẩn thận, chính xác khi tính toán.</li>
-        </ul>
-
-        <h2>II. ĐỒ DÙNG DẠY HỌC</h2>
-        <ul>
-            <li><strong>Giáo viên:</strong> Máy tính, TV/Máy chiếu (chiếu hình ảnh bến thuyền, du khách), bảng phụ ghi quy trình chia.</li>
-            <li><strong>Học sinh:</strong> SGK, bảng con, vở ghi.</li>
-        </ul>
-
-        <h2>III. CÁC HOẠT ĐỘNG DẠY HỌC CHỦ YẾU</h2>
-
-        <div class="activity-box">
-            <div class="activity-header">1. HOẠT ĐỘNG KHỞI ĐỘNG (5 phút)</div>
-            
-            <div class="phase">
-                <span class="phase-title">Pha 1: Chuyển giao nhiệm vụ</span>
-                <p>- GV chiếu hình ảnh khách du lịch đang lên thuyền tham quan hang động.</p>
-                <p>- Kể chuyện dẫn dắt: <em>"Đoàn khách du lịch có 216 người. Bến thuyền có các chiếc thuyền lớn, mỗi thuyền chở được 12 người. Các em hãy giúp bác quản lý bến tính xem cần bao nhiêu thuyền?"</em></p>
+        <div class="header">
+            <div class="info">
+                <h2 id="ten-bai-tap">TOÁN 4 - CHIA CHO SỐ CÓ HAI CHỮ SỐ (TIẾT 1)</h2>
+                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
+            <div class="timer">⏱ <span id="timer">00:00</span></div>
+        </div>
 
-            <div class="phase">
-                <span class="phase-title">Pha 2: Thực hiện nhiệm vụ</span>
-                <p>- HS suy nghĩ phép tính cần thực hiện.</p>
-                <p>- HS nêu phép tính: <span class="highlight">216 : 12</span>.</p>
-            </div>
-
-            <div class="phase">
-                <span class="phase-title">Pha 3: Báo cáo & Kết nối</span>
-                <p>- GV viết phép tính lên bảng. Hỏi: <em>"Số chia ở đây là 12, có mấy chữ số?"</em> (2 chữ số).</p>
-                <p>- GV dẫn vào bài: <em>"Hôm nay chúng ta sẽ học cách thực hiện phép chia cho số có hai chữ số."</em></p>
+        <div class="question-block">
+            <div class="question-text">Câu 1: Để tính số thuyền cần thiết cho đoàn khách 216 người, mỗi thuyền chở 12 người, ta thực hiện phép tính nào?</div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. 216 + 12</label>
+                <label><input type="radio" name="q1" value="B"> B. 216 x 12</label>
+                <label><input type="radio" name="q1" value="C" data-correct="true"> C. 216 : 12</label>
+                <label><input type="radio" name="q1" value="D"> D. 216 - 12</label>
             </div>
         </div>
 
-        <div class="activity-box">
-            <div class="activity-header">2. HOẠT ĐỘNG KHÁM PHÁ (12 phút)</div>
-            
-            <div class="phase">
-                <span class="phase-title">Pha 1: Hình thành kiến thức (Phép chia hết)</span>
-                <p>- GV hướng dẫn đặt tính phép tính: <strong>216 : 12</strong>.</p>
-                <p>- <strong>Bước 1 (Lượt chia 1):</strong> Lấy 21 chia 12. 
-                    <br><em>Hướng dẫn ước lượng:</em> 21 chia 12 được khoảng mấy lần? (Nhẩm 2 chia 1 được 2, thử 12 x 2 = 24 > 21 nên chỉ lấy 1).
-                    <br>-> Viết 1. 1 nhân 12 bằng 12. 21 trừ 12 bằng 9.
-                </p>
-                <p>- <strong>Bước 2 (Lượt chia 2):</strong> Hạ 6 được 96. 96 chia 12.
-                    <br><em>Hướng dẫn ước lượng:</em> 9 chia 1 được 9, nhưng số dư ở lượt trước lớn, thử lùi xuống 8. 12 x 8 = 96.
-                    <br>-> Viết 8. 8 nhân 12 bằng 96. 96 trừ 96 bằng 0.
-                </p>
-                <div class="math-block">Kết quả: 216 : 12 = 18 (thuyền)</div>
-            </div>
-
-            <div class="phase">
-                <span class="phase-title">Pha 2: Mở rộng (Phép chia có dư)</span>
-                <p>- GV đưa ra tình huống 2: <em>"Có 218 cái áo phao, mỗi thuyền cần 18 cái. Hỏi xếp được bao nhiêu thuyền và thừa mấy áo?"</em>.</p>
-                <p>- Yêu cầu HS thực hiện phép tính <strong>218 : 18</strong> ra bảng con.</p>
-                <p>- GV gọi 1 HS lên bảng làm và diễn giải cách chia.</p>
-                <p>- <strong>Lưu ý số dư:</strong> Kết quả là 12, dư 2. Số dư (2) luôn nhỏ hơn số chia (18).</p>
-                <div class="math-block">218 : 18 = 12 (dư 2)</div>
-            </div>
-
-            <div class="phase">
-                <span class="phase-title">Pha 3: Chốt kiến thức</span>
-                <p>- GV nhấn mạnh quy trình: <strong>Chia -> Nhân -> Trừ -> Hạ</strong>.</p>
-                <p>- Lưu ý quan trọng: Khi ước lượng thương, nếu nhân lên thấy lớn hơn số bị chia thì phải giảm thương xuống.</p>
+        <div class="question-block">
+            <div class="question-text">Câu 2: Quy trình thực hiện mỗi lượt chia cho số có hai chữ số là:</div>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A" data-correct="true"> A. Chia -> Nhân -> Trừ -> Hạ</label>
+                <label><input type="radio" name="q2" value="B"> B. Nhân -> Chia -> Trừ -> Hạ</label>
+                <label><input type="radio" name="q2" value="C"> C. Chia -> Trừ -> Nhân -> Hạ</label>
+                <label><input type="radio" name="q2" value="D"> D. Hạ -> Chia -> Nhân -> Trừ</label>
             </div>
         </div>
 
-        <div class="activity-box">
-            <div class="activity-header">3. HOẠT ĐỘNG THỰC HÀNH (15 phút)</div>
-            
-            <div class="phase">
-                <span class="phase-title">Pha 1: Bài 1 - Đặt tính rồi tính (Cá nhân)</span>
-                <p>- GV yêu cầu HS làm bài 1 vào vở. Chọn 2 phép tính đại diện: <strong>322 : 14</strong> và <strong>1554 : 37</strong>.</p>
-                <p>- HS làm bài. GV đi quan sát, hỗ trợ các em gặp khó khăn khi ước lượng.</p>
-                <p>- Sửa bài trên bảng lớp. Mời HS nêu rõ cách ước lượng.</p>
-            </div>
-
-            <div class="phase">
-                <span class="phase-title">Pha 2: Bài 2 - Khám phá quy tắc chia số tròn chục (Nhóm đôi)</span>
-                <p>- GV viết lên bảng: <strong>450 : 90</strong>.</p>
-                <p>- Hỏi: <em>"Có cách nào tính nhanh không?"</em> -> HS phát hiện cùng xóa số 0.</p>
-                <p>- GV chốt quy tắc: Khi chia hai số tận cùng là chữ số 0, ta có thể cùng xóa đi một (hoặc nhiều) chữ số 0 ở tận cùng số chia và số bị chia rồi chia như thường.</p>
-                <p>- HS áp dụng tính nhanh: <strong>45 000 : 900 = 450 : 9 = 50</strong>.</p>
-            </div>
-
-            <div class="phase">
-                <span class="phase-title">Pha 3: Bài 3 - Giải toán (Cả lớp)</span>
-                <p>- GV chiếu đề bài: <em>"Xếp 384 cái ghế, mỗi dãy 24 ghế. Hỏi xếp được bao nhiêu dãy?"</em>.</p>
-                <p>- HS phân tích đề: 
-                    <br>+ Có: 384 ghế.
-                    <br>+ 1 dãy: 24 ghế.
-                    <br>+ Tìm: Số dãy ghế.
-                </p>
-                <p>- HS giải vào vở. Một HS làm bảng phụ.</p>
-                <div class="math-block">
-                    Bài giải:<br>
-                    Số dãy ghế xếp được là:<br>
-                    384 : 24 = 16 (dãy)<br>
-                    Đáp số: 16 dãy ghế.
-                </div>
+        <div class="question-block">
+            <div class="question-text">Câu 3: Kết quả của phép tính 216 : 12 bằng bao nhiêu?</div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. 12</label>
+                <label><input type="radio" name="q3" value="B" data-correct="true"> B. 18</label>
+                <label><input type="radio" name="q3" value="C"> C. 21</label>
+                <label><input type="radio" name="q3" value="D"> D. 28</label>
             </div>
         </div>
 
-        <div class="activity-box">
-            <div class="activity-header">4. VẬN DỤNG & CỦNG CỐ (3-5 phút)</div>
-            
-            <div class="phase">
-                <span class="phase-title">Pha 1: Thử thách</span>
-                <p>- GV đưa ra câu hỏi nhanh: <em>"Trong phép chia cho 15, số dư lớn nhất có thể là bao nhiêu?"</em></p>
-                <p>- HS trả lời: Là 14 (vì số dư phải nhỏ hơn số chia).</p>
-            </div>
-
-            <div class="phase">
-                <span class="phase-title">Pha 2: Dặn dò</span>
-                <p>- Về nhà hoàn thành các bài tập còn lại trong SGK.</p>
-                <p>- Ôn lại bảng cửu chương để ước lượng thương nhanh hơn.</p>
+        <div class="question-block">
+            <div class="question-text">Câu 4: Kết quả của phép chia 218 : 18 là:</div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. 12 (không dư)</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true"> B. 12 (dư 2)</label>
+                <label><input type="radio" name="q4" value="C"> C. 11 (dư 20)</label>
+                <label><input type="radio" name="q4" value="D"> D. 12 (dư 10)</label>
             </div>
         </div>
 
+        <div class="question-block">
+            <div class="question-text">Câu 5: Trong phép chia cho 15, số dư lớn nhất có thể có là bao nhiêu?</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. 15</label>
+                <label><input type="radio" name="q5" value="B" data-correct="true"> B. 14</label>
+                <label><input type="radio" name="q5" value="C"> C. 1</label>
+                <label><input type="radio" name="q5" value="D"> D. 0</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 6: Khi thực hiện phép chia 322 : 14, ở lượt chia thứ nhất ta lấy số nào chia cho 14?</div>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A"> A. Lấy 3 chia 14</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Lấy 32 chia 14</label>
+                <label><input type="radio" name="q6" value="C"> C. Lấy 322 chia 14</label>
+                <label><input type="radio" name="q6" value="D"> D. Lấy 2 chia 14</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 7: Tính kết quả phép chia: 322 : 14?</div>
+            <div class="options">
+                <label><input type="radio" name="q7" value="A"> A. 21</label>
+                <label><input type="radio" name="q7" value="B"> B. 22</label>
+                <label><input type="radio" name="q7" value="C" data-correct="true"> C. 23</label>
+                <label><input type="radio" name="q7" value="D"> D. 24</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 8: Cách nhanh nhất để tính 450 : 90 là:</div>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A"> A. Đặt tính theo cách thông thường</label>
+                <label><input type="radio" name="q8" value="B" data-correct="true"> B. Cùng xóa một chữ số 0 ở tận cùng rồi tính 45 : 9</label>
+                <label><input type="radio" name="q8" value="C"> C. Lấy 450 chia cho 10 rồi cộng 9</label>
+                <label><input type="radio" name="q8" value="D"> D. Lấy 90 nhân 10</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 9: Kết quả của phép tính 45 000 : 900 là:</div>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A"> A. 5</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true"> B. 50</label>
+                <label><input type="radio" name="q9" value="C"> C. 500</label>
+                <label><input type="radio" name="q9" value="D"> D. 5 000</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 10: Tìm thương của phép chia 1554 : 37?</div>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A"> A. 32</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true"> B. 42</label>
+                <label><input type="radio" name="q10" value="C"> C. 52</label>
+                <label><input type="radio" name="q10" value="D"> D. 40 (dư 7)</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 11: Có 384 cái ghế xếp vào các dãy, mỗi dãy 24 ghế. Hỏi xếp được tất cả bao nhiêu dãy ghế?</div>
+            <div class="options">
+                <label><input type="radio" name="q11" value="A"> A. 14 dãy</label>
+                <label><input type="radio" name="q11" value="B"> B. 15 dãy</label>
+                <label><input type="radio" name="q11" value="C" data-correct="true"> C. 16 dãy</label>
+                <label><input type="radio" name="q11" value="D"> D. 18 dãy</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Câu 12: Khi ước lượng thương, nếu nhân thương với số chia mà được kết quả LỚN HƠN số bị chia thì ta phải làm gì?</div>
+            <div class="options">
+                <label><input type="radio" name="q12" value="A"> A. Giữ nguyên thương đó</label>
+                <label><input type="radio" name="q12" value="B"> B. Tăng thương lên 1 đơn vị</label>
+                <label><input type="radio" name="q12" value="C" data-correct="true"> C. Giảm thương xuống 1 đơn vị</label>
+                <label><input type="radio" name="q12" value="D"> D. Dừng lại không chia nữa</label>
+            </div>
+        </div>
+
+        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
     </div>
+
+    <script src="config.js"></script>
+    <script src="core.js"></script>
 
 </body>
 </html>
