@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn tập Toán 4: Chia cho số có hai chữ số</title>
+    <title>TOÁN- Chia Cho Số Có Hai Chữ Số</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -20,129 +20,131 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TOÁN 4 - CHIA CHO SỐ CÓ HAI CHỮ SỐ (TIẾT 1)</h2>
+                <h2 id="ten-bai-tap">TOÁN  - CHIA CHO SỐ CÓ HAI CHỮ SỐ (TIẾT 2)</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Để tính số thuyền cần thiết cho đoàn khách 216 người, mỗi thuyền chở 12 người, ta thực hiện phép tính nào?</div>
+            <div class="question-text">Câu 1: Thương lớn nhất có thể trong mỗi lượt chia là bao nhiêu?
+        </div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. 216 + 12</label>
-                <label><input type="radio" name="q1" value="B"> B. 216 x 12</label>
-                <label><input type="radio" name="q1" value="C" data-correct="true"> C. 216 : 12</label>
-                <label><input type="radio" name="q1" value="D"> D. 216 - 12</label>
+                <label><input type="radio" name="q1" value="A"> A. là 10.</label>
+                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Là 9.</label>
+                <label><input type="radio" name="q1" value="C"> C. Là 8.</label>
+                <label><input type="radio" name="q1" value="D"> D. Là 7.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Quy trình thực hiện mỗi lượt chia cho số có hai chữ số là:</div>
+            <div class="question-text">Câu 2: Khi hạ một chữ số xuống mà số đó nhỏ hơn số chia, ta phải viết chữ số nào vào thương?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A" data-correct="true"> A. Chia -> Nhân -> Trừ -> Hạ</label>
-                <label><input type="radio" name="q2" value="B"> B. Nhân -> Chia -> Trừ -> Hạ</label>
-                <label><input type="radio" name="q2" value="C"> C. Chia -> Trừ -> Nhân -> Hạ</label>
-                <label><input type="radio" name="q2" value="D"> D. Hạ -> Chia -> Nhân -> Trừ</label>
+                <label><input type="radio" name="q2" value="A"> A. Viết số 1</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true"> B. Viết số 0</label>
+                <label><input type="radio" name="q2" value="C"> C. Không viết gì cả</label>
+                <label><input type="radio" name="q2" value="D"> D. Viết số dư</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Kết quả của phép tính 216 : 12 bằng bao nhiêu?</div>
+            <div class="question-text">Câu 3: Kết quả của phép tính 60 : (2 × 5) theo chiến thuật "Chia liên tiếp" là:</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. 12</label>
-                <label><input type="radio" name="q3" value="B" data-correct="true"> B. 18</label>
-                <label><input type="radio" name="q3" value="C"> C. 21</label>
-                <label><input type="radio" name="q3" value="D"> D. 28</label>
+                <label><input type="radio" name="q3" value="A"> A. 60 : 2 × 5 = 150</label>
+                <label><input type="radio" name="q3" value="B"> B. 60 : 10 = 60</label>
+                <label><input type="radio" name="q3" value="C" data-correct="true"> C. 60 : 2 : 5 = 6</label>
+                <label><input type="radio" name="q3" value="D"> D. 60 : 5 : 2 = 12</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Kết quả của phép chia 218 : 18 là:</div>
+            <div class="question-text">Câu 4: Để tính nhanh biểu thức (24 × 48) : 12, cách nào sau đây là tối ưu nhất?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. 12 (không dư)</label>
-                <label><input type="radio" name="q4" value="B" data-correct="true"> B. 12 (dư 2)</label>
-                <label><input type="radio" name="q4" value="C"> C. 11 (dư 20)</label>
-                <label><input type="radio" name="q4" value="D"> D. 12 (dư 10)</label>
+                <label><input type="radio" name="q4" value="A"> A. Lấy 24 nhân 48 trước rồi mới chia cho 12.</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Lấy (24 : 12) rồi nhân với 48.</label>
+                <label><input type="radio" name="q4" value="C"> C. Lấy (48 : 12) rồi cộng với 24.</label>
+                <label><input type="radio" name="q4" value="D"> D. Lấy 24 nhân (48 : 2).</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Trong phép chia cho 15, số dư lớn nhất có thể có là bao nhiêu?</div>
+            <div class="question-text">Câu 5: Một sân bóng đá hình chữ nhật có diện tích 7140 m² và chiều rộng 68 m. Chiều dài của sân bóng là:</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. 15</label>
-                <label><input type="radio" name="q5" value="B" data-correct="true"> B. 14</label>
-                <label><input type="radio" name="q5" value="C"> C. 1</label>
-                <label><input type="radio" name="q5" value="D"> D. 0</label>
+                <label><input type="radio" name="q5" value="A"> A. 15 m</label>
+                <label><input type="radio" name="q5" value="B"> B. 100 m</label>
+                <label><input type="radio" name="q5" value="C" data-correct="true"> C. 105 m</label>
+                <label><input type="radio" name="q5" value="D"> D. 150 m</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Khi thực hiện phép chia 322 : 14, ở lượt chia thứ nhất ta lấy số nào chia cho 14?</div>
+            <div class="question-text">Câu 6: Tại sao trong phép chia 7140 : 68, chúng ta dễ mắc lỗi ở lượt chia thứ hai?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Lấy 3 chia 14</label>
-                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Lấy 32 chia 14</label>
-                <label><input type="radio" name="q6" value="C"> C. Lấy 322 chia 14</label>
-                <label><input type="radio" name="q6" value="D"> D. Lấy 2 chia 14</label>
+                <label><input type="radio" name="q6" value="A"> A. Vì không biết bảng cửu chương.</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Vì QUÊN VIẾT chữ số 0 vào thương khi số bị chia nhỏ hơn số chia.</label>
+                <label><input type="radio" name="q6" value="C"> C. Vì phép chia này có dư.</label>
+                <label><input type="radio" name="q6" value="D"> D. Vì số chia quá lớn.</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Tính kết quả phép chia: 322 : 14?</div>
+            <div class="question-text">Câu 7: Tính chu vi của sân bóng đá có chiều dài 105 m và chiều rộng 68 m:</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. 21</label>
-                <label><input type="radio" name="q7" value="B"> B. 22</label>
-                <label><input type="radio" name="q7" value="C" data-correct="true"> C. 23</label>
-                <label><input type="radio" name="q7" value="D"> D. 24</label>
+                <label><input type="radio" name="q7" value="A"> A. 173 m</label>
+                <label><input type="radio" name="q7" value="B" data-correct="true"> B. 346 m</label>
+                <label><input type="radio" name="q7" value="C"> C. 7140 m</label>
+                <label><input type="radio" name="q7" value="D"> D. 340 m</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Cách nhanh nhất để tính 450 : 90 là:</div>
+            <div class="question-text">Câu 8:   Làm thế nào để tính được chu vi hình chữ nhật khi biết chiều dài và chiều rộng?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Đặt tính theo cách thông thường</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true"> B. Cùng xóa một chữ số 0 ở tận cùng rồi tính 45 : 9</label>
-                <label><input type="radio" name="q8" value="C"> C. Lấy 450 chia cho 10 rồi cộng 9</label>
-                <label><input type="radio" name="q8" value="D"> D. Lấy 90 nhân 10</label>
+                <label><input type="radio" name="q8" value="A"> A. Lấy chiều dài nhân với chiều rộng.</label>
+                <label><input type="radio" name="q8" value="B" data-correct="true"> B. Lấy chiều dài cộng với chiều rộng rồi nhân 2.</label>
+                <label><input type="radio" name="q8" value="C"> C. Lấy chiều dài cộng với chiều rộng ( nửa chu vi).</label>
+                <label><input type="radio" name="q8" value="D"> D. Lấy diện tích chia cho chiều rộng.
+                </label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Kết quả của phép tính 45 000 : 900 là:</div>
+            <div class="question-text">Câu 9: Phép tính nào dưới đây có kết quả bằng 96?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. 5</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true"> B. 50</label>
-                <label><input type="radio" name="q9" value="C"> C. 500</label>
-                <label><input type="radio" name="q9" value="D"> D. 5 000</label>
+                <label><input type="radio" name="q9" value="A"> A. (24 + 48) : 12</label>
+                <label><input type="radio" name="q9" value="B" data-correct="true"> B. (24 × 48) : 12</label>
+                <label><input type="radio" name="q9" value="C"> C. 24 × (48 + 12)</label>
+                <label><input type="radio" name="q9" value="D"> D. (48 - 24) × 12</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Tìm thương của phép chia 1554 : 37?</div>
+            <div class="question-text">Câu 10: Điền số thích hợp vào chỗ trống: 90 : (3 × 3) = 90 : 3 : ...</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. 32</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true"> B. 42</label>
-                <label><input type="radio" name="q10" value="C"> C. 52</label>
-                <label><input type="radio" name="q10" value="D"> D. 40 (dư 7)</label>
+                <label><input type="radio" name="q10" value="A"> A. 90</label>
+                <label><input type="radio" name="q10" value="B"> B. 1</label>
+                <label><input type="radio" name="q10" value="C" data-correct="true"> C. 3</label>
+                <label><input type="radio" name="q10" value="D"> D. 9</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: Có 384 cái ghế xếp vào các dãy, mỗi dãy 24 ghế. Hỏi xếp được tất cả bao nhiêu dãy ghế?</div>
+            <div class="question-text">Câu 11: Làm thế nào để tính được chiều dài của sân bóng trong bài tập 3?</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. 14 dãy</label>
-                <label><input type="radio" name="q11" value="B"> B. 15 dãy</label>
-                <label><input type="radio" name="q11" value="C" data-correct="true"> C. 16 dãy</label>
-                <label><input type="radio" name="q11" value="D"> D. 18 dãy</label>
+                <label><input type="radio" name="q11" value="A" data-correct="true"> A. Lấy diện tích chia cho chiều rộng ( tách chiều dài ra khỏi diện tích)</label>
+                <label><input type="radio" name="q11" value="B"> B. Lấy diện tích cộng với chiều rộng</label>
+                <label><input type="radio" name="q11" value="C"> C. Lấy chiều dài cộng với chiều rộng rồi nhân 2</label>
+                <label><input type="radio" name="q11" value="D"> D. Lấy chiều dài cộng với chiều rộng ( nửa chu vi)</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: Khi ước lượng thương, nếu nhân thương với số chia mà được kết quả LỚN HƠN số bị chia thì ta phải làm gì?</div>
+            <div class="question-text">Câu 12: Khi thực hiện phép chia, nếu số dư cuối cùng lớn hơn số chia thì:</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Giữ nguyên thương đó</label>
-                <label><input type="radio" name="q12" value="B"> B. Tăng thương lên 1 đơn vị</label>
-                <label><input type="radio" name="q12" value="C" data-correct="true"> C. Giảm thương xuống 1 đơn vị</label>
-                <label><input type="radio" name="q12" value="D"> D. Dừng lại không chia nữa</label>
+                <label><input type="radio" name="q12" value="A"> A. Phép chia đó đúng.</label>
+                <label><input type="radio" name="q12" value="B"> B. Phép chia đó có dư.</label>
+                <label><input type="radio" name="q12" value="C" data-correct="true"> C. Phép chia đó bị sai (thương bị tính thiếu).</label>
+                <label><input type="radio" name="q12" value="D"> D. Không cần làm gì thêm.</label>
             </div>
         </div>
 
