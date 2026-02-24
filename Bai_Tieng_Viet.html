@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Kể chuyện về nhân vật lịch sử -Bà Triệu</title>
+    <title>Ôn tập: Bà Triệu và Kỹ năng Lập dàn ý</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,140 +19,132 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap"> TIẾNG VIỆT - ÔN TẬP VĂN KỂ CHUYỆN</h2>
+                <h2 id="ten-bai-tap">LUYỆN KỂ CHUYỆN: BÀ TRIỆU</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
         </div>
-        <P>Các bạn hãy xem kĩ video sau dây về Bà Triệu và trả lời các câu hỏi nhé !</P>
-        <div class="video-container" style="text-align:center; margin: 20px 0;">
-    <h3>Phim tư liệu: Khởi nghĩa Bà Triệu</h3>
-    <iframe width="560" height="315" 
-        src="https://youtu.be/l_AN45poSHU?si=nDAe_LXogOGKwTFc" 
-        title="YouTube video player" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-    </iframe>
-</div>
+
+        <div style="text-align:center; margin-bottom:25px; background:#f1f5f9; padding:15px; border-radius:10px;">
+            <h3 style="color:#1e293b; margin-bottom:10px;">🎬 Phim tư liệu: Khởi nghĩa Bà Triệu</h3>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                <iframe 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;"
+                    src="https://www.youtube.com/embed/l_AN45poSHU" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <p style="font-style:italic; font-size:13px; margin-top:10px;">(Em hãy xem kỹ video và đọc bài giảng để trả lời 12 câu hỏi bên dưới nhé!)</p>
+        </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 1: Trong phần Mở bài của Timeline, từ khóa nào thể hiện đúng bối cảnh đất nước lúc bấy giờ?</div>
+            <div class="question-text">Câu 1: Trong dàn ý Timeline, sự việc "Giặc Đông Ngô đô hộ" thuộc phần nào?</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. Đất nước hòa bình, thịnh vượng</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. Giặc Đông Ngô đô hộ, nhân dân lầm than</label>
-                <label><input type="radio" name="q1" value="C"> C. Quân giặc đã bị đánh tan</label>
-                <label><input type="radio" name="q1" value="D"> D. Thời kỳ các vua Hùng dựng nước</label>
+                <label><input type="radio" name="q1" value="A" data-correct="true"> A. Mở bài (Bối cảnh)</label>
+                <label><input type="radio" name="q1" value="B"> B. Thân bài (Diễn biến)</label>
+                <label><input type="radio" name="q1" value="C"> C. Kết bài (Ý nghĩa)</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 2: Sự việc đầu tiên cho thấy Bà Triệu khác biệt với những thiếu nữ cùng trang lứa là gì?</div>
+            <div class="question-text">Câu 2: Bà Triệu mang trong mình dòng máu anh hùng và ý chí gì?</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. Bà thích dạo chơi trên núi Nưa</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true"> B. Ngày đêm cùng anh trai luyện võ nghệ, rèn vũ khí</label>
-                <label><input type="radio" name="q2" value="C"> C. Bà chăm chỉ thêu thùa và dệt vải</label>
-                <label><input type="radio" name="q2" value="D"> D. Bà khuyên anh trai nên đi lấy vợ</label>
+                <label><input type="radio" name="q2" value="A"> A. Ý chí ham học hỏi</label>
+                <label><input type="radio" name="q2" value="B" data-correct="true"> B. Ý chí sắt đá</label>
+                <label><input type="radio" name="q2" value="C"> C. Ý chí thăng tiến</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 3: Trong lời tuyên bố nổi tiếng, Bà Triệu muốn làm gì với "cá kình ở biển Đông"?</div>
+            <div class="question-text">Câu 3: Thay vì thêu thùa, Bà Triệu đã cùng anh trai làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="A"> A. Đánh đuổi cá kình</label>
-                <label><input type="radio" name="q3" value="B" data-correct="true"> B. Chém cá kình</label>
-                <label><input type="radio" name="q3" value="C"> C. Cưỡi trên lưng cá kình</label>
-                <label><input type="radio" name="q3" value="D"> D. Nuôi dưỡng cá kình</label>
+                <label><input type="radio" name="q3" value="A" data-correct="true"> A. Luyện tập võ nghệ, rèn đúc vũ khí</label>
+                <label><input type="radio" name="q3" value="B"> B. Đi buôn bán xa</label>
+                <label><input type="radio" name="q3" value="C"> C. Chăm sóc ruộng vườn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 4: Tình tiết "thu phục voi dữ" diễn ra tại địa điểm cụ thể nào?</div>
+            <div class="question-text">Câu 4: "Tôi muốn cưỡi cơn gió mạnh, đạp luồng sóng dữ..." là từ khóa cho phần nào?</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. Trên bãi biển Đông</label>
-                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Ở vùng núi Nưa</label>
-                <label><input type="radio" name="q4" value="C"> C. Trên đỉnh núi Tùng</label>
-                <label><input type="radio" name="q4" value="D"> D. Trong làng bản của bà</label>
+                <label><input type="radio" name="q4" value="A"> A. Mở bài</label>
+                <label><input type="radio" name="q4" value="B" data-correct="true"> B. Sự việc khởi đầu (Ý chí khởi nghĩa)</label>
+                <label><input type="radio" name="q4" value="C"> C. Kết bài</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 5: Con voi mà Bà Triệu thu phục được có đặc điểm ngoại hình nổi bật nào?</div>
+            <div class="question-text">Câu 5: Tại sao trong sơ đồ Timeline ta chỉ nên ghi từ khóa?</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="A"> A. Voi xám hai ngà</label>
-                <label><input type="radio" name="q5" value="B"> B. Voi đen khổng lồ</label>
-                <label><input type="radio" name="q5" value="C" data-correct="true"> C. Voi trắng một ngà</label>
-                <label><input type="radio" name="q5" value="D"> D. Voi trắng chín ngà</label>
+                <label><input type="radio" name="q5" value="A" data-correct="true"> A. Để nhìn thấy "xương sống" câu chuyện logic và ngắn gọn</label>
+                <label><input type="radio" name="q5" value="B"> B. Vì học sinh lười viết dài</label>
+                <label><input type="radio" name="q5" value="C"> C. Để sơ đồ trông đẹp hơn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 6: Sau khi bị thu phục, con voi dữ đã trở thành gì của Bà Triệu?</div>
+            <div class="question-text">Câu 6: Con voi trắng một ngà ở núi Nưa ban đầu có tính chất thế nào?</div>
             <div class="options">
-                <label><input type="radio" name="q6" value="A"> A. Con vật nuôi trong nhà</label>
-                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Người bạn chiến đấu thân thiết</label>
-                <label><input type="radio" name="q6" value="C"> C. Kẻ phá hoại làng bản</label>
-                <label><input type="radio" name="q6" value="D"> D. Vật dùng để kéo gỗ</label>
+                <label><input type="radio" name="q6" value="A"> A. Rất hiền lành</label>
+                <label><input type="radio" name="q6" value="B" data-correct="true"> B. Vô cùng hung dữ, phá hoại mùa màng</label>
+                <label><input type="radio" name="q6" value="C"> C. Rất nhút nhát</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 7: Khi phất cờ khởi nghĩa ra trận, Bà Triệu đi loại guốc gì?</div>
+            <div class="question-text">Câu 7: Khi ra trận, Bà Triệu mặc áo giáp màu gì và đi loại guốc nào?</div>
             <div class="options">
-                <label><input type="radio" name="q7" value="A"> A. Guốc gỗ</label>
-                <label><input type="radio" name="q7" value="B" data-correct="true"> B. Guốc ngà</label>
-                <label><input type="radio" name="q7" value="C"> C. Guốc vàng</label>
-                <label><input type="radio" name="q7" value="D"> D. Guốc sắt</label>
+                <label><input type="radio" name="q7" value="A" data-correct="true"> A. Áo giáp vàng, đi guốc ngà</label>
+                <label><input type="radio" name="q7" value="B"> B. Áo giáp sắt, đi guốc gỗ</label>
+                <label><input type="radio" name="q7" value="C"> C. Áo lụa đỏ, đi guốc vàng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 8: Quân giặc có thái độ như thế nào khi nghe đến danh tiếng của bà?</div>
+            <div class="question-text">Câu 8: Danh xưng "Lệ Hải Bà Vương" là do ai gọi bà?</div>
             <div class="options">
-                <label><input type="radio" name="q8" value="A"> A. Xem thường và chủ quan</label>
-                <label><input type="radio" name="q8" value="B" data-correct="true"> B. Khiếp đảm, gọi bà là Lệ Hải Bà Vương</label>
-                <label><input type="radio" name="q8" value="C"> C. Muốn kết bạn với bà</label>
-                <label><input type="radio" name="q8" value="D"> D. Cử người đến cầu thân</label>
+                <label><input type="radio" name="q8" value="A"> A. Nhân dân ta yêu mến gọi</label>
+                <label><input type="radio" name="q8" value="B" data-correct="true"> B. Quân giặc khiếp đảm gọi</label>
+                <label><input type="radio" name="q8" value="C"> C. Anh trai bà đặt cho</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 9: Để giữ trọn lời thề bảo vệ quê hương, Bà Triệu đã làm gì?</div>
+            <div class="question-text">Câu 9: Sự hy sinh của Bà Triệu trên đỉnh núi Tùng mang ý nghĩa gì?</div>
             <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Đầu hàng quân giặc</label>
-                <label><input type="radio" name="q9" value="B" data-correct="true"> B. Anh dũng hy sinh trên đỉnh núi Tùng</label>
-                <label><input type="radio" name="q9" value="C"> C. Đi trốn vào rừng sâu</label>
-                <label><input type="radio" name="q9" value="D"> D. Quay về quê thêu thùa</label>
+                <label><input type="radio" name="q9" value="A" data-correct="true"> A. Giữ trọn khí tiết anh hùng, không rơi vào tay giặc</label>
+                <label><input type="radio" name="q9" value="B"> B. Thể hiện sự thất bại hoàn toàn</label>
+                <label><input type="radio" name="q9" value="C"> C. Là một sự việc ngẫu nhiên</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 10: Theo em, sự việc "Thu phục voi dữ" nên nằm ở vị trí nào trong Timeline?</div>
+            <div class="question-text">Câu 10: Kỹ thuật "Soi kính hiển vi" trong tiết học giúp em điều gì?</div>
             <div class="options">
-                <label><input type="radio" name="q10" value="A"> A. Trước khi luyện võ</label>
-                <label><input type="radio" name="q10" value="B" data-correct="true"> B. Sau khi có ý chí đánh giặc và trước khi ra trận</label>
-                <label><input type="radio" name="q10" value="C"> C. Sau khi bà hy sinh</label>
-                <label><input type="radio" name="q10" value="D"> D. Ở phần Kết bài</label>
+                <label><input type="radio" name="q10" value="A"> A. Để nhìn rõ chữ viết</label>
+                <label><input type="radio" name="q10" value="B" data-correct="true"> B. Kiểm tra xem bạn có thiếu mốc thời gian quan trọng nào không</label>
+                <label><input type="radio" name="q10" value="C"> C. Để sửa lỗi chính tả cho bạn</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 11: Từ khóa nào sau đây KHÔNG phù hợp để đưa vào sơ đồ Timeline kể về Bà Triệu?</div>
+            <div class="question-text">Câu 11: Bài học "Sự dũng cảm" từ Bà Triệu nhắc nhở học sinh điều gì?</div>
             <div class="options">
-                <label><input type="radio" name="q11" value="A"> A. Núi Tùng</label>
-                <label><input type="radio" name="q11" value="B"> B. Lệ Hải Bà Vương</label>
-                <label><input type="radio" name="q11" value="C" data-correct="true"> C. Cọc gỗ sông Bạch Đằng</label>
-                <label><input type="radio" name="q11" value="D"> D. Voi trắng một ngà</label>
+                <label><input type="radio" name="q11" value="A" data-correct="true"> A. Không lùi bước trước khó khăn, thử thách</label>
+                <label><input type="radio" name="q11" value="B"> B. Phải đi đánh giặc như bà</label>
+                <label><input type="radio" name="q11" value="C"> C. Phải tìm được voi trắng</label>
             </div>
         </div>
 
         <div class="question-block">
-            <div class="question-text">Câu 12: Việc ghi nhớ các tình tiết theo trình tự giúp ích gì khi em viết bài văn kể chuyện?</div>
+            <div class="question-text">Câu 12: Hoạt động "Chuyến tàu tưởng tượng" yêu cầu học sinh làm gì?</div>
             <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. Viết nhanh hơn mà không cần suy nghĩ</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true"> B. Giúp câu chuyện mạch lạc, không bị chồng chéo sự việc</label>
-                <label><input type="radio" name="q12" value="C"> C. Để bài văn ngắn lại</label>
-                <label><input type="radio" name="q12" value="D"> D. Chỉ để cho giáo viên dễ chấm điểm</label>
+                <label><input type="radio" name="q12" value="A"> A. Vẽ một đoàn tàu hỏa</label>
+                <label><input type="radio" name="q12" value="B" data-correct="true"> B. Nhẩm kể lại câu chuyện dựa trên các mốc Timeline đã lập</label>
+                <label><input type="radio" name="q12" value="C"> C. Tưởng tượng mình đang đi du lịch</label>
             </div>
         </div>
 
@@ -162,6 +153,5 @@
 
     <script src="config.js"></script>
     <script src="core.js"></script>
-
 </body>
 </html>
