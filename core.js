@@ -10,6 +10,16 @@ let timerInterval;
 let isSubmitted = false;
 let totalSeconds = 0;
 let securityCorrectAnswer = null; // Lưu đáp án bảo mật từ server
+// --- 1. KHỞI TẠO BIẾN TOÀN CỤC ---
+let db = null; 
+let studentName = localStorage.getItem("hocSinhLop4A") || "Khách";
+let timerInterval;
+let isSubmitted = false;
+let totalSeconds = 0;
+let securityCorrectAnswer = null;
+
+// DÁN URL WEB APP CỦA BẠN VÀO ĐÂY 👇
+const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbxgFRP96zt04J4-Yz4buomnnb-U5m9rszti0DfJr2USdUawuafZ5A7z8gek2e7q8WxZ/exec"; 
 
 // --- 2. KẾT NỐI FIREBASE AN TOÀN ---
 try {
@@ -301,3 +311,57 @@ function docLoiChuc(diem) {
         window.speechSynthesis.speak(utterance);
     }
 }
+// ==========================================
+// MỤC 10: KẾT NỐI VÀ XỬ LÝ TRÍ TUỆ NHÂN TẠO (AI)
+// ==========================================
+
+async function goiAI(index, loaiHanhDong) {
+    // 1. Lấy thông tin câu hỏi và bài làm
+    const cauHoi = document.querySelector(`#cau-hoi-${index} .noi-dung`).innerText;
+    const baiLam = document.getElementById(`input-${index}`).value;
+    const dapAnDung = danhSachDapAn[index]; // Biến này lấy từ file bài tập của bạn
+
+    // 2. Hiển thị trạng thái đang xử lý (Loading)
+    const vungPhanHoi = document.getElementById(`phan-hoi-ai-${index}`);
+    vungPhanHoi.innerHTML = "<span class='loading'>🔄 Trợ lý đang suy nghĩ...</span>";
+    vungPhanHoi.style.display = "block";
+
+    // 3. Chuẩn bị dữ liệu gửi đi (Payload)
+    const data = {
+        action: loaiHanhDong, // 'goi_y' hoặc 'cham_bai'
+        question: cauHoi,
+        studentAnswer: baiLam,
+        correctAnswer: dapAnDung
+    };
+
+    try {
+        // 4. Gọi đến Apps Script (Tài khoản 2TB)
+        const response = await fetch(URL_APPS_SCRIPT, { // URL_APPS_SCRIPT khai báo ở đầu file core.js
+            method: "POST",
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        
+        // 5. Xử lý kết quả trả về từ Gemini 2.0 Flash-Lite
+        if (loaiHanhDong === "goi_y") {
+            // Hiển thị gợi ý sư phạm (Không cho đáp án)
+            vungPhanHoi.innerHTML = `💡 <b>Gợi ý từ Trợ lý:</b> <br> ${result.candidates[0].content.parts[0].text}`;
+            vungPhanHoi.className = "box-goi-y";
+        } else {
+            // Hiển thị điểm và nhận xét (Chế độ chấm bài)
+            const aiData = JSON.parse(result.candidates[0].content.parts[0].text);
+            vungPhanHoi.innerHTML = `🤖 <b>AI đề xuất:</b> ${aiData.diem}/10đ <br> 📝 ${aiData.nhan_xet}`;
+            vungPhanHoi.className = "box-cham-diem";
+            
+            // Lưu tạm điểm AI để thầy duyệt sau này ở trang Dieu_phoi
+            luuDiemTamTinh(index, aiData.diem, aiData.nhan_xet);
+        }
+
+    } catch (error) {
+        console.error("Lỗi kết nối AI:", error);
+        vungPhanHoi.innerHTML = "⚠️ Rất tiếc, Trợ lý đang bận một chút. Con thử lại sau nhé!";
+    }
+}
+
+
