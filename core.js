@@ -12,7 +12,7 @@ let totalSeconds = 0;
 let securityCorrectAnswer = null;
 
 // URL Web App kết nối Gemini 2.0 Flash-Lite (Tài khoản 2TB)
-const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbxgFRP96zt04J4-Yz4buomnnb-U5m9rszti0DfJr2USdUawuafZ5A7z8gek2e7q8WxZ/exec"; 
+const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbwCjihLUyII_kTCkbIlbiQAUb8qDo6UUQbooJb2vn01-VvPuZgqunPyyy_ZpUO9Eqs_/exec"; 
 
 // --- 2. KẾT NỐI FIREBASE AN TOÀN ---
 try {
