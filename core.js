@@ -1,16 +1,9 @@
 /* ============================================================
-   CORE.JS - TRÁI TIM HỆ THỐNG MINI LMS V4.0 (UPDATED)
-   Nhiệm vụ: Chấm điểm, Đếm giờ, Lưu trữ, Bảo mật, CHẶN LÀM LẠI
+   CORE.JS - TRÁI TIM HỆ THỐNG MINI LMS V4.0 (BẢN CHUẨN 2026)
+   Nhiệm vụ: Điều phối AI, Chấm điểm, Đếm giờ, Bảo mật, Chặn làm lại
    ============================================================ */
 
-// --- 1. KHỞI TẠO BIẾN TOÀN CỤC ---
-let db = null; // Biến kết nối cơ sở dữ liệu
-let studentName = localStorage.getItem("hocSinhLop4A") || "Khách";
-let timerInterval;
-let isSubmitted = false;
-let totalSeconds = 0;
-let securityCorrectAnswer = null; // Lưu đáp án bảo mật từ server
-// --- 1. KHỞI TẠO BIẾN TOÀN CỤC ---
+// --- 1. CẤU HÌNH BIẾN TOÀN CỤC ---
 let db = null; 
 let studentName = localStorage.getItem("hocSinhLop4A") || "Khách";
 let timerInterval;
@@ -18,350 +11,192 @@ let isSubmitted = false;
 let totalSeconds = 0;
 let securityCorrectAnswer = null;
 
-// DÁN URL WEB APP CỦA BẠN VÀO ĐÂY 👇
+// URL Web App kết nối Gemini 2.0 Flash-Lite (Tài khoản 2TB)
 const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbxgFRP96zt04J4-Yz4buomnnb-U5m9rszti0DfJr2USdUawuafZ5A7z8gek2e7q8WxZ/exec"; 
 
 // --- 2. KẾT NỐI FIREBASE AN TOÀN ---
 try {
-    if (typeof CONFIG === 'undefined') {
-        console.error("❌ LỖI: Thiếu file config.js. Hệ thống sẽ chạy ở chế độ Offline.");
-    } else if (typeof firebase === 'undefined') {
-        console.error("❌ LỖI: Thiếu thư viện Firebase. Hệ thống sẽ chạy ở chế độ Offline.");
-    } else {
-        // Chỉ khởi tạo nếu chưa có app nào chạy
+    if (typeof CONFIG !== 'undefined' && typeof firebase !== 'undefined') {
         if (!firebase.apps.length) {
             firebase.initializeApp(CONFIG.firebase);
         }
         db = firebase.firestore();
-        console.log("✅ Core V4: Kết nối Database thành công.");
+        console.log("✅ Core V4: Hệ thống Database đã sẵn sàng.");
     }
 } catch (e) {
-    console.error("⚠️ Cảnh báo: Không kết nối được Firebase.", e);
+    console.error("⚠️ Lỗi kết nối Firebase:", e);
 }
 
-// --- 3. KHI TRANG WEB TẢI XONG (MAIN LOGIC) ---
+// --- 3. LOGIC KHI TRANG TẢI XONG ---
 document.addEventListener("DOMContentLoaded", async () => {
-    // 3.1. Hiển thị tên học sinh
+    // 3.1. Hiển thị tên học sinh lên giao diện
     const display = document.getElementById("student-display");
     if (display) display.innerText = studentName;
 
-    // 3.2. Cảnh báo nếu chưa đăng nhập
-    if (studentName === "Khách") {
-        console.warn("⚠️ Đang truy cập với tư cách Khách.");
-    }
+    const titleElement = document.getElementById("ten-bai-tap");
+    const currentFileName = window.location.pathname.split('/').pop();
+    const title = titleElement ? titleElement.innerText : currentFileName;
 
-    // --- [MỚI] 3.3. KIỂM TRA CHẾ ĐỘ: CẤM LÀM LẠI BÀI ---
     if (db && studentName !== "Khách") {
         try {
-            // A. Lấy cấu hình chung xem có cho làm lại không
+            // 3.2. Kiểm tra chế độ Chặn làm lại bài
             const configDoc = await db.collection("CAU_HINH").doc("cau_hinh_chung").get();
-            // Mặc định là TRUE (cho làm) nếu chưa cài đặt
             const allowRetake = configDoc.exists ? configDoc.data().cho_phep_lam_lai : true;
 
-            // B. Nếu KHÔNG cho phép làm lại -> Kiểm tra lịch sử
             if (allowRetake === false) {
-                const titleElement = document.getElementById("ten-bai-tap");
-                const title = titleElement ? titleElement.innerText : "Bài Tập";
-                
-                // Tìm xem học sinh này đã nộp bài này chưa
                 const checkSnap = await db.collection("KET_QUA_TONG_HOP")
                     .where("hoc_sinh", "==", studentName)
                     .where("bai_tap", "==", title)
-                    .limit(1) // Chỉ cần tìm thấy 1 bài là đủ
-                    .get();
+                    .limit(1).get();
 
                 if (!checkSnap.empty) {
-                    // C. Nếu tìm thấy bài cũ -> CHẶN NGAY LẬP TỨC
-                    alert(`⛔ THÔNG BÁO QUAN TRỌNG:\n\nBài thi "${title}" chỉ được phép làm 01 lần duy nhất.\nHệ thống ghi nhận con đã nộp bài rồi.\n\nNhấn OK để quay về Menu.`);
-                    window.location.href = "Menu.html"; // Đá về trang chủ
-                    return; // Dừng, không cho chạy tiếp các lệnh dưới (không đếm giờ, không tải câu hỏi)
+                    alert(`⛔ THÔNG BÁO: Con đã nộp bài "${title}" rồi. Không thể làm lại!`);
+                    window.location.href = "Menu.html";
+                    return;
                 }
             }
-        } catch (e) {
-            console.log("Lỗi kiểm tra lịch sử làm bài:", e);
-            // Nếu mất mạng hoặc lỗi, tạm thời vẫn cho học sinh làm để tránh gián đoạn
-        }
+
+            // 3.3. Đồng bộ Trạm điều phối (Ẩn/Hiện nút Gợi ý AI)
+            const dieuPhoiDoc = await db.collection("DIEU_PHOI_BAI_TAP").doc(currentFileName).get();
+            if (dieuPhoiDoc.exists) {
+                const cauHinhAI = dieuPhoiDoc.data().cau_hinh;
+                Object.keys(cauHinhAI).forEach(id => {
+                    const btnHint = document.querySelector(`#cau-hoi-${id} .btn-ai-hint`);
+                    if (btnHint && cauHinhAI[id].allowHint === false) {
+                        btnHint.style.display = "none"; // Ẩn nút nếu thầy không cho phép
+                    }
+                });
+            }
+        } catch (e) { console.log("Lỗi đồng bộ cấu hình:", e); }
     }
-    // --- [HẾT PHẦN MỚI] ---
 
-    // 3.4. Tải câu hỏi bảo mật (Nếu có)
     await loadSecurityQuestion();
-
-    // 3.5. Bắt đầu tính giờ
     startTimer();
 });
 
-// --- 4. HÀM TẢI CÂU HỎI BẢO MẬT ---
+// --- 4. CÂU HỎI BẢO MẬT ---
 async function loadSecurityQuestion() {
     const container = document.querySelector(".security-quest");
     if (!container || !db) return;
-
     try {
         const doc = await db.collection("BAO_MAT").doc("cau_hoi_ngay").get();
-        if (doc.exists) {
-            const data = doc.data();
-            if (data.question && data.question.trim() !== "") {
-                securityCorrectAnswer = data.answer ? data.answer.trim().toLowerCase() : "";
-                
-                let html = `
-                    <div class="question-text" style="color:#be123c">🔒 <b>CÂU HỎI BẢO MẬT:</b> ${data.question}</div>
-                    <div class="input-group" style="margin-top:10px">
-                        <input type="text" id="sec-answer-input" placeholder="Nhập câu trả lời..." class="security-input" autocomplete="off">
-                    </div>
-                    <p style="font-size:12px; color:#666; margin-top:5px"><i>* Trả lời đúng câu này mới được nộp bài.</i></p>
-                `;
-                container.innerHTML = html;
-                container.style.display = "block";
-                container.style.border = "2px dashed #f43f5e";
-                container.style.background = "#fff1f2";
-            } else {
-                container.style.display = "none";
-            }
+        if (doc.exists && doc.data().question) {
+            securityCorrectAnswer = doc.data().answer.trim().toLowerCase();
+            container.innerHTML = `
+                <div class="question-text" style="color:#be123c">🔒 <b>XÁC MINH LỚP 4A:</b> ${doc.data().question}</div>
+                <input type="text" id="sec-answer-input" placeholder="Nhập câu trả lời..." class="security-input" style="width:100%; padding:10px; margin-top:10px; border-radius:8px; border:1px solid #fda4af;">
+            `;
+            container.style.display = "block";
         }
-    } catch (e) {
-        console.log("Lỗi tải security:", e);
-        container.style.display = "none";
-    }
+    } catch (e) { container.style.display = "none"; }
 }
 
 // --- 5. ĐỒNG HỒ TÍNH GIỜ ---
 function startTimer() {
-    let timeLimit = window.serverTimeLimit || 0; 
-
     timerInterval = setInterval(() => {
         totalSeconds++;
-        
-        let showMin = 0, showSec = 0;
-        let isCountDown = false;
-
-        if (timeLimit > 0) {
-            let remaining = timeLimit - totalSeconds;
-            if (remaining <= 0) {
-                clearInterval(timerInterval);
-                alert("⏰ HẾT GIỜ! Hệ thống tự động thu bài.");
-                nopBai(true);
-                return;
-            }
-            showMin = Math.floor(remaining / 60);
-            showSec = remaining % 60;
-            isCountDown = true;
-        } else {
-            showMin = Math.floor(totalSeconds / 60);
-            showSec = totalSeconds % 60;
-        }
-
         const timerEl = document.getElementById("timer");
         if(timerEl) {
-            timerEl.innerText = `${showMin.toString().padStart(2, '0')}:${showSec.toString().padStart(2, '0')}`;
-            if (isCountDown && showMin < 2) timerEl.style.color = "red";
+            const min = Math.floor(totalSeconds / 60);
+            const sec = totalSeconds % 60;
+            timerEl.innerText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
         }
     }, 1000);
 }
 
-// --- 6. HÀM NỘP BÀI (QUAN TRỌNG NHẤT) ---
-window.nopBai = async function(force = false) {
-    if (isSubmitted) return; 
+// --- 6. HÀM NỘP BÀI & CHẤM ĐIỂM ---
+window.nopBai = async function() {
+    if (isSubmitted) return;
 
-    // 6.1. Kiểm tra bảo mật
-    if (!force && securityCorrectAnswer) {
+    if (securityCorrectAnswer) {
         const userAns = document.getElementById("sec-answer-input").value.trim().toLowerCase();
         if (userAns !== securityCorrectAnswer) {
-            alert("⛔ BẠN CHƯA TRẢ LỜI ĐÚNG CÂU HỎI BẢO MẬT!\nHãy nhập đúng để xác nhận bạn là học sinh lớp 4A.");
-            document.getElementById("sec-answer-input").focus();
+            alert("⛔ Sai câu hỏi bảo mật! Con không thể nộp bài.");
             return;
         }
     }
 
-    // 6.2. Xác nhận nộp
-    if (!force && !confirm("Con đã kiểm tra kỹ và muốn nộp bài chưa?")) return;
+    if (!confirm("Con chắc chắn muốn nộp bài chứ?")) return;
 
-    // 6.3. Khóa hệ thống
     isSubmitted = true;
     clearInterval(timerInterval);
-    const btn = document.getElementById("btn-nop");
-    if(btn) {
-        btn.disabled = true;
-        btn.innerText = "ĐANG CHẤM ĐIỂM...";
-        btn.style.opacity = "0.7";
-        btn.style.cursor = "not-allowed";
-    }
-
-    // 6.4. Chấm điểm logic
+    
+    // Logic chấm trắc nghiệm
     let correctCount = 0;
     const blocks = document.querySelectorAll(".question-block:not(.security-quest)");
-    const total = blocks.length;
-
     blocks.forEach(block => {
         const checked = block.querySelector("input:checked");
-        if (checked && checked.getAttribute("data-correct") === "true") {
-            correctCount++;
-        }
+        if (checked && checked.getAttribute("data-correct") === "true") correctCount++;
     });
 
-    let score = total === 0 ? 0 : (correctCount / total) * 10;
-    score = Number(score.toFixed(1));
+    const score = blocks.length === 0 ? 0 : Number(((correctCount / blocks.length) * 10).toFixed(1));
+    const title = document.getElementById("ten-bai-tap")?.innerText || "Bài Tập";
 
-    // 6.5. Lưu Firebase
-    const title = document.getElementById("ten-bai-tap") ? document.getElementById("ten-bai-tap").innerText : "Bài Tập";
-    
     if (db) {
-        try {
-            await db.collection("KET_QUA_TONG_HOP").add({
-                hoc_sinh: studentName,
-                bai_tap: title,
-                diem: score,
-                so_cau_dung: correctCount,
-                tong_so_cau: total,
-                thoi_gian_lam: totalSeconds,
-                ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            console.log("💾 Đã lưu điểm lên mây.");
-        } catch (e) {
-            console.error("Lỗi lưu điểm (Mất mạng?):", e);
-        }
+        await db.collection("KET_QUA_TONG_HOP").add({
+            hoc_sinh: studentName,
+            bai_tap: title,
+            diem: score,
+            thoi_gian_lam: totalSeconds,
+            ngay_nop: firebase.firestore.FieldValue.serverTimestamp()
+        });
     }
 
-    // 6.6. Hiện kết quả
-    hienThiPopup(score, correctCount, total);
-    
+    hienThiPopup(score, correctCount, blocks.length);
     if (score >= 5 && typeof confetti !== 'undefined') confetti();
-    docLoiChuc(score);
 };
 
-// --- 7. HIỆN POPUP KẾT QUẢ ---
+// --- 7. GIAO DIỆN PHẢN HỒI AI & KẾT QUẢ ---
 function hienThiPopup(diem, dung, tong) {
-    const old = document.querySelector(".result-overlay");
-    if(old) old.remove();
-
     const div = document.createElement("div");
     div.className = "result-overlay";
-    div.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:99999; display:flex; justify-content:center; align-items:center; animation: fadeIn 0.3s;";
-    
-    let color = diem >= 5 ? "#16a34a" : "#dc2626";
-    let emoji = diem >= 9 ? "🏆" : (diem >= 5 ? "👍" : "💪");
-
+    div.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; display:flex; justify-content:center; align-items:center;";
     div.innerHTML = `
-        <div class="result-box" style="background:white; padding:30px; border-radius:20px; text-align:center; width:90%; max-width:400px; border-top: 6px solid ${color}; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
-            <h3 style="margin:0 0 10px 0; text-transform:uppercase; color:${color}; font-size:1.2rem">KẾT QUẢ BÀI LÀM</h3>
-            <div style="font-size:5rem; font-weight:900; color:${color}; margin:10px 0; line-height:1">${diem}</div>
-            <p style="font-size:1.1rem; color:#475569;">Đúng <b>${dung}/${tong}</b> câu ${emoji}</p>
-            
-            <div style="margin-top:25px; display:flex; flex-direction:column; gap:10px;">
-                <button onclick="xemLoiGiai()" style="padding:12px; background:#f59e0b; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; font-size:16px; box-shadow: 0 4px 0 #b45309;">🔍 Xem Lời Giải Chi Tiết</button>
-                <button onclick="window.location.href='Menu.html'" style="padding:12px; background:#334155; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; font-size:16px;">➜ Quay Về Menu</button>
-            </div>
+        <div style="background:white; padding:30px; border-radius:20px; text-align:center; max-width:400px; width:90%;">
+            <h2 style="color:#0284c7">KẾT QUẢ: ${diem}/10</h2>
+            <p>Con đã đúng ${dung}/${tong} câu hỏi.</p>
+            <button onclick="window.location.href='Menu.html'" style="padding:10px 20px; background:#0284c7; color:white; border:none; border-radius:8px; cursor:pointer;">Quay về Menu</button>
         </div>
     `;
     document.body.appendChild(div);
 }
 
-// --- 8. CHẾ ĐỘ XEM LỜI GIẢI (REVIEW) ---
-window.xemLoiGiai = function() {
-    const overlay = document.querySelector(".result-overlay");
-    if(overlay) overlay.style.display = "none";
-    
-    const btnNop = document.getElementById("btn-nop");
-    if(btnNop) btnNop.style.display = "none";
-
-    document.querySelectorAll(".question-block:not(.security-quest)").forEach(block => {
-        const inputs = block.querySelectorAll("input");
-        let explainText = "";
-
-        inputs.forEach(input => {
-            input.disabled = true;
-            
-            if (input.getAttribute("data-correct") === "true") {
-                input.parentElement.style.backgroundColor = "#dcfce7"; 
-                input.parentElement.style.border = "2px solid #22c55e";
-                input.parentElement.style.color = "#14532d";
-                input.parentElement.classList.add("res-correct");
-                explainText = input.getAttribute("data-explain");
-            } 
-            else if (input.checked) {
-                input.parentElement.style.backgroundColor = "#fee2e2";
-                input.parentElement.style.border = "2px solid #ef4444";
-                input.parentElement.style.color = "#991b1b";
-                input.parentElement.classList.add("res-wrong");
-            }
-        });
-
-        if (explainText) {
-            const expDiv = document.createElement("div");
-            expDiv.innerHTML = `💡 <b>Giải thích:</b> ${explainText}`;
-            expDiv.style.cssText = "margin-top:15px; padding:15px; background:#fff7ed; border-left:5px solid #f97316; color:#c2410c; font-size:0.95rem; border-radius: 4px;";
-            block.appendChild(expDiv);
-        }
-    });
-
-    window.scrollTo({top: 0, behavior: 'smooth'});
-};
-
-// --- 9. TIỆN ÍCH: ĐỌC LỜI CHÚC ---
-function docLoiChuc(diem) {
-    if ('speechSynthesis' in window) {
-        let text = "";
-        if (diem == 10) text = "Tuyệt vời! Con làm đúng hết rồi. Chúc mừng con!";
-        else if (diem >= 8) text = `Giỏi lắm! Con được ${diem} điểm.`;
-        else if (diem >= 5) text = `Khá tốt. Con được ${diem} điểm. Cố gắng thêm nhé.`;
-        else text = `Lần sau cẩn thận hơn nhé. Con được ${diem} điểm.`;
-
-        let utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'vi-VN'; 
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
-    }
-}
-// ==========================================
-// MỤC 10: KẾT NỐI VÀ XỬ LÝ TRÍ TUỆ NHÂN TẠO (AI)
-// ==========================================
-
+// --- 8. KẾT NỐI GEMINI 2.0 FLASH-LITE (AI LOGIC) ---
 async function goiAI(index, loaiHanhDong) {
-    // 1. Lấy thông tin câu hỏi và bài làm
-    const cauHoi = document.querySelector(`#cau-hoi-${index} .noi-dung`).innerText;
-    const baiLam = document.getElementById(`input-${index}`).value;
-    const dapAnDung = danhSachDapAn[index]; // Biến này lấy từ file bài tập của bạn
-
-    // 2. Hiển thị trạng thái đang xử lý (Loading)
     const vungPhanHoi = document.getElementById(`phan-hoi-ai-${index}`);
-    vungPhanHoi.innerHTML = "<span class='loading'>🔄 Trợ lý đang suy nghĩ...</span>";
+    vungPhanHoi.innerHTML = "<span style='color:#64748b'>🔄 Trợ lý Gemini đang suy nghĩ...</span>";
     vungPhanHoi.style.display = "block";
 
-    // 3. Chuẩn bị dữ liệu gửi đi (Payload)
-    const data = {
-        action: loaiHanhDong, // 'goi_y' hoặc 'cham_bai'
+    // Lấy nội dung câu hỏi
+    const cauHoi = document.querySelector(`#cau-hoi-${index} .noi-dung`).innerText;
+    
+    // Lấy bài làm (Hỗ trợ cả trắc nghiệm và tự luận)
+    const radioChecked = document.querySelector(`input[name="q${index}"]:checked`);
+    const baiLam = radioChecked ? "Đáp án chọn: " + radioChecked.value : (document.getElementById(`input-${index}`)?.value || "Chưa có câu trả lời");
+
+    const payload = {
+        action: loaiHanhDong,
         question: cauHoi,
         studentAnswer: baiLam,
-        correctAnswer: dapAnDung
+        correctAnswer: typeof danhSachDapAn !== 'undefined' ? danhSachDapAn[index] : ""
     };
 
     try {
-        // 4. Gọi đến Apps Script (Tài khoản 2TB)
-        const response = await fetch(URL_APPS_SCRIPT, { // URL_APPS_SCRIPT khai báo ở đầu file core.js
+        const response = await fetch(URL_APPS_SCRIPT, {
             method: "POST",
-            body: JSON.stringify(data)
+            body: JSON.stringify(payload)
         });
-
         const result = await response.json();
-        
-        // 5. Xử lý kết quả trả về từ Gemini 2.0 Flash-Lite
-        if (loaiHanhDong === "goi_y") {
-            // Hiển thị gợi ý sư phạm (Không cho đáp án)
-            vungPhanHoi.innerHTML = `💡 <b>Gợi ý từ Trợ lý:</b> <br> ${result.candidates[0].content.parts[0].text}`;
-            vungPhanHoi.className = "box-goi-y";
-        } else {
-            // Hiển thị điểm và nhận xét (Chế độ chấm bài)
-            const aiData = JSON.parse(result.candidates[0].content.parts[0].text);
-            vungPhanHoi.innerHTML = `🤖 <b>AI đề xuất:</b> ${aiData.diem}/10đ <br> 📝 ${aiData.nhan_xet}`;
-            vungPhanHoi.className = "box-cham-diem";
-            
-            // Lưu tạm điểm AI để thầy duyệt sau này ở trang Dieu_phoi
-            luuDiemTamTinh(index, aiData.diem, aiData.nhan_xet);
-        }
+        const textResponse = result.candidates[0].content.parts[0].text;
 
+        if (loaiHanhDong === "goi_y") {
+            vungPhanHoi.innerHTML = `💡 <b>Gợi ý sư phạm:</b><br>${textResponse}`;
+            vungPhanHoi.style.background = "#f0fdf4";
+            vungPhanHoi.style.borderLeft = "4px solid #22c55e";
+        } else {
+            vungPhanHoi.innerHTML = `🤖 <b>AI Nhận xét:</b><br>${textResponse}`;
+        }
     } catch (error) {
-        console.error("Lỗi kết nối AI:", error);
-        vungPhanHoi.innerHTML = "⚠️ Rất tiếc, Trợ lý đang bận một chút. Con thử lại sau nhé!";
+        vungPhanHoi.innerHTML = "⚠️ Trợ lý đang bận. Con hãy thử lại sau nhé!";
     }
 }
-
-
