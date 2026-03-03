@@ -8,7 +8,17 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS bổ sung để giao diện nút AI đẹp hơn */
+        .question-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; }
+        .btn-ai-hint { background: #fef9c3; border: 1px solid #facc15; border-radius: 8px; cursor: pointer; font-size: 11px; padding: 5px 12px; font-weight: bold; color: #854d0e; transition: 0.3s; }
+        .btn-ai-hint:hover { background: #fde68a; }
+        .ai-response-box { margin-top: 10px; padding: 12px; border-radius: 10px; font-size: 0.9em; line-height: 1.5; animation: fadeIn 0.4s; display: none; }
+        .box-goi-y { background: #ecfdf5; border-left: 5px solid #10b981; color: #065f46; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
@@ -19,7 +29,7 @@
 
         <div class="header">
             <div class="info">
-                <h2 id="ten-bai-tap">TIẾNG VIỆT-LUYỆN KỂ CHUYỆN: BÀ TRIỆU</h2>
+                <h2 id="ten-bai-tap">TIẾNG VIỆT - BÀ TRIỆU</h2>
                 <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display" style="font-weight:bold; color:#0284c7">...</span></p>
             </div>
             <div class="timer">⏱ <span id="timer">00:00</span></div>
@@ -31,125 +41,176 @@
                 <iframe 
                     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;"
                     src="https://www.youtube.com/embed/l_AN45poSHU" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
+                    title="YouTube video player" frameborder="0" allowfullscreen>
                 </iframe>
             </div>
-            <p style="font-style:italic; font-size:13px; margin-top:10px;">(Em hãy xem kỹ video và đọc bài giảng để trả lời 12 câu hỏi bên dưới nhé!)</p>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 1: Trong dàn ý Timeline, sự việc "Giặc Đông Ngô đô hộ" thuộc phần nào?</div>
+        <div class="question-block" id="cau-hoi-1">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 1: Trong dàn ý Timeline, sự việc "Giặc Đông Ngô đô hộ" thuộc phần nào?</div>
+                <button class="btn-ai-hint" onclick="goiAI(1, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q1" value="A" data-correct="true"> A. Mở bài (Bối cảnh)</label>
                 <label><input type="radio" name="q1" value="B"> B. Thân bài (Diễn biến)</label>
                 <label><input type="radio" name="q1" value="C"> C. Kết bài (Ý nghĩa)</label>
             </div>
+            <div id="phan-hoi-ai-1" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 2: Bà Triệu mang trong mình dòng máu anh hùng và ý chí gì?</div>
+        <div class="question-block" id="cau-hoi-2">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 2: Bà Triệu mang trong mình dòng máu anh hùng và ý chí gì?</div>
+                <button class="btn-ai-hint" onclick="goiAI(2, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q2" value="A"> A. Ý chí ham học hỏi</label>
                 <label><input type="radio" name="q2" value="B" data-correct="true"> B. Ý chí sắt đá</label>
                 <label><input type="radio" name="q2" value="C"> C. Ý chí thăng tiến</label>
             </div>
+            <div id="phan-hoi-ai-2" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 3: Thay vì thêu thùa, Bà Triệu đã cùng anh trai làm gì?</div>
+        <div class="question-block" id="cau-hoi-3">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 3: Thay vì thêu thùa, Bà Triệu đã cùng anh trai làm gì?</div>
+                <button class="btn-ai-hint" onclick="goiAI(3, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q3" value="A" data-correct="true"> A. Luyện tập võ nghệ, rèn đúc vũ khí</label>
                 <label><input type="radio" name="q3" value="B"> B. Đi buôn bán xa</label>
                 <label><input type="radio" name="q3" value="C"> C. Chăm sóc ruộng vườn</label>
             </div>
+            <div id="phan-hoi-ai-3" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 4: "Tôi muốn cưỡi cơn gió mạnh, đạp luồng sóng dữ..." là từ khóa cho phần nào?</div>
+        <div class="question-block" id="cau-hoi-4">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 4: "Tôi muốn cưỡi cơn gió mạnh, đạp luồng sóng dữ..." là từ khóa cho phần nào?</div>
+                <button class="btn-ai-hint" onclick="goiAI(4, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q4" value="A"> A. Mở bài</label>
                 <label><input type="radio" name="q4" value="B" data-correct="true"> B. Sự việc khởi đầu (Ý chí khởi nghĩa)</label>
                 <label><input type="radio" name="q4" value="C"> C. Kết bài</label>
             </div>
+            <div id="phan-hoi-ai-4" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 5: Tại sao trong sơ đồ Timeline ta chỉ nên ghi từ khóa?</div>
+        <div class="question-block" id="cau-hoi-5">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 5: Tại sao trong sơ đồ Timeline ta chỉ nên ghi từ khóa?</div>
+                <button class="btn-ai-hint" onclick="goiAI(5, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q5" value="A" data-correct="true"> A. Để nhìn thấy "xương sống" câu chuyện logic và ngắn gọn</label>
                 <label><input type="radio" name="q5" value="B"> B. Vì học sinh lười viết dài</label>
                 <label><input type="radio" name="q5" value="C"> C. Để sơ đồ trông đẹp hơn</label>
             </div>
+            <div id="phan-hoi-ai-5" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 6: Con voi trắng một ngà ở núi Nưa ban đầu có tính chất thế nào?</div>
+        <div class="question-block" id="cau-hoi-6">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 6: Con voi trắng một ngà ở núi Nưa ban đầu có tính chất thế nào?</div>
+                <button class="btn-ai-hint" onclick="goiAI(6, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q6" value="A"> A. Rất hiền lành</label>
                 <label><input type="radio" name="q6" value="B" data-correct="true"> B. Vô cùng hung dữ, phá hoại mùa màng</label>
                 <label><input type="radio" name="q6" value="C"> C. Rất nhút nhát</label>
             </div>
+            <div id="phan-hoi-ai-6" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 7: Khi ra trận, Bà Triệu mặc áo giáp màu gì và đi loại guốc nào?</div>
+        <div class="question-block" id="cau-hoi-7">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 7: Khi ra trận, Bà Triệu mặc áo giáp màu gì và đi loại guốc nào?</div>
+                <button class="btn-ai-hint" onclick="goiAI(7, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q7" value="A" data-correct="true"> A. Áo giáp vàng, đi guốc ngà</label>
                 <label><input type="radio" name="q7" value="B"> B. Áo giáp sắt, đi guốc gỗ</label>
                 <label><input type="radio" name="q7" value="C"> C. Áo lụa đỏ, đi guốc vàng</label>
             </div>
+            <div id="phan-hoi-ai-7" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 8: Danh xưng "Lệ Hải Bà Vương" là do ai gọi bà?</div>
+        <div class="question-block" id="cau-hoi-8">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 8: Danh xưng "Lệ Hải Bà Vương" là do ai gọi bà?</div>
+                <button class="btn-ai-hint" onclick="goiAI(8, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q8" value="A"> A. Nhân dân ta yêu mến gọi</label>
                 <label><input type="radio" name="q8" value="B" data-correct="true"> B. Quân giặc khiếp đảm gọi</label>
                 <label><input type="radio" name="q8" value="C"> C. Anh trai bà đặt cho</label>
             </div>
+            <div id="phan-hoi-ai-8" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 9: Sự hy sinh của Bà Triệu trên đỉnh núi Tùng mang ý nghĩa gì?</div>
+        <div class="question-block" id="cau-hoi-9">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 9: Sự hy sinh của Bà Triệu trên đỉnh núi Tùng mang ý nghĩa gì?</div>
+                <button class="btn-ai-hint" onclick="goiAI(9, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q9" value="A" data-correct="true"> A. Giữ trọn khí tiết anh hùng, không rơi vào tay giặc</label>
                 <label><input type="radio" name="q9" value="B"> B. Thể hiện sự thất bại hoàn toàn</label>
                 <label><input type="radio" name="q9" value="C"> C. Là một sự việc ngẫu nhiên</label>
             </div>
+            <div id="phan-hoi-ai-9" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 10: Kỹ thuật "Soi kính hiển vi" trong tiết học giúp em điều gì?</div>
+        <div class="question-block" id="cau-hoi-10">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 10: Kỹ thuật "Soi kính hiển vi" giúp em điều gì?</div>
+                <button class="btn-ai-hint" onclick="goiAI(10, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q10" value="A"> A. Để nhìn rõ chữ viết</label>
                 <label><input type="radio" name="q10" value="B" data-correct="true"> B. Kiểm tra xem bạn có thiếu mốc thời gian quan trọng nào không</label>
                 <label><input type="radio" name="q10" value="C"> C. Để sửa lỗi chính tả cho bạn</label>
             </div>
+            <div id="phan-hoi-ai-10" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 11: Bài học "Sự dũng cảm" từ Bà Triệu nhắc nhở học sinh điều gì?</div>
+        <div class="question-block" id="cau-hoi-11">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 11: Bài học "Sự dũng cảm" từ Bà Triệu nhắc nhở điều gì?</div>
+                <button class="btn-ai-hint" onclick="goiAI(11, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q11" value="A" data-correct="true"> A. Không lùi bước trước khó khăn, thử thách</label>
                 <label><input type="radio" name="q11" value="B"> B. Phải đi đánh giặc như bà</label>
                 <label><input type="radio" name="q11" value="C"> C. Phải tìm được voi trắng</label>
             </div>
+            <div id="phan-hoi-ai-11" class="ai-response-box"></div>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 12: Hoạt động "Chuyến tàu tưởng tượng" yêu cầu học sinh làm gì?</div>
+        <div class="question-block" id="cau-hoi-12">
+            <div class="question-header">
+                <div class="question-text noi-dung">Câu 12: Hoạt động "Chuyến tàu tưởng tượng" yêu cầu làm gì?</div>
+                <button class="btn-ai-hint" onclick="goiAI(12, 'goi_y')">💡 Gợi ý AI</button>
+            </div>
             <div class="options">
                 <label><input type="radio" name="q12" value="A"> A. Vẽ một đoàn tàu hỏa</label>
-                <label><input type="radio" name="q12" value="B" data-correct="true"> B. Nhẩm kể lại câu chuyện dựa trên các mốc Timeline đã lập</label>
+                <label><input type="radio" name="q12" value="B" data-correct="true"> B. Nhẩm kể lại câu chuyện dựa trên các mốc Timeline</label>
                 <label><input type="radio" name="q12" value="C"> C. Tưởng tượng mình đang đi du lịch</label>
             </div>
+            <div id="phan-hoi-ai-12" class="ai-response-box"></div>
         </div>
 
-        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
+        <button id="btn-nop" onclick="nopBai()">NỘP BÀI CHÍNH THỨC</button>
     </div>
+
+    <script>
+        const danhSachDapAn = {
+            1: "A", 2: "B", 3: "A", 4: "B", 5: "A", 6: "B",
+            7: "A", 8: "B", 9: "A", 10: "B", 11: "A", 12: "B"
+        };
+    </script>
 
     <script src="config.js"></script>
     <script src="core.js"></script>
