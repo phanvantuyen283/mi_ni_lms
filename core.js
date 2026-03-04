@@ -4,7 +4,7 @@
    ============================================================ */
 
 // 1. CẤU HÌNH URL AI (Lấy từ ảnh triển khai Vswl/exec của thầy)
-const URL_APPS_SCRIPT ="https://script.google.com/macros/s/AKfycbzh1wTR9MaiIVszkhoojknrBaV2rCMzpJ667B75kX72YsSwgNDVtVPOiOz0drjzVswl/exec";
+const URL_APPS_SCRIPT ="https://script.google.com/macros/s/AKfycbwFAIB2YTOT_AzwXDpGqg68w2Jkd8_Ku5sbl_pyB3Bj6uImgmuew1m2RvTjMAZj6TGR/exec";
 
 let db = null; 
 let studentName = localStorage.getItem("hocSinhLop4A") || "Khách";
