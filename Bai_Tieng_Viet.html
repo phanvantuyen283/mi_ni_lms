@@ -3,112 +3,374 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiếng Việt Lớp 4 - Trợ lý AI V4.0</title>
+    <title>Tiếng Việt Lớp 4 - Tuần 20 (AI V4.0)</title>
     
     <link rel="stylesheet" href="css/style.css">
     
     <style>
-        /* Tùy biến giao diện đặc thù môn Tiếng Việt */
-        body { background-color: #f0fdf4; } 
-        .header { border-left: 8px solid #15803d; background: #dcfce7; padding: 15px; border-radius: 8px; }
-        .header h2 { color: #166534; margin: 0; }
+        body { background-color: #f0fdf4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; } 
+        .quiz-container { max-width: 850px; margin: 0 auto; padding: 20px; }
+        .header { border-left: 8px solid #15803d; background: #dcfce7; padding: 20px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .header h2 { color: #166534; margin: 0; font-size: 1.4em; }
         .section-title {
             color: #166534;
-            border-bottom: 2px solid #86efac;
-            margin: 25px 0 15px 0;
+            border-bottom: 3px solid #86efac;
+            margin: 35px 0 20px 0;
+            padding-bottom: 5px;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1.3em;
+            text-transform: uppercase;
         }
-        .btn-ai {
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            color: #475569;
-            padding: 5px 12px;
-            border-radius: 20px;
+        .question-block {
+            background: white; 
+            padding: 25px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            transition: transform 0.2s;
+        }
+        .question-block:hover { transform: translateY(-2px); }
+        .question-text { font-size: 1.1em; line-height: 1.6; color: #1e293b; margin-bottom: 15px; }
+        .options label {
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 13px;
-            transition: 0.3s;
+            transition: 0.2s;
         }
-        .btn-ai:hover { background: #e2e8f0; border-color: #94a3b8; }
+        .options label:hover { background-color: #f8fafc; border-color: #15803d; }
+        .ai-control { margin-top: 15px; border-top: 1px dashed #cbd5e1; padding-top: 15px; }
+        .btn-ai {
+            background: #ffffff;
+            border: 1.5px solid #15803d;
+            color: #15803d;
+            padding: 8px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-ai:hover { background: #15803d; color: white; }
         .vung-phan-hoi {
-            margin-top: 10px;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            line-height: 1.5;
-            display: none; /* Ẩn mặc định, chỉ hiện khi nhấn nút */
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14.5px;
+            line-height: 1.6;
+            display: none;
+            background: #f0fdf4;
+            border-left: 5px solid #22c55e;
+            color: #166534;
         }
         #btn-nop { 
-            background: linear-gradient(to bottom, #22c55e, #15803d); 
-            color: white; padding: 15px 40px; border: none; 
-            border-radius: 30px; font-weight: bold; cursor: pointer;
-            display: block; margin: 30px auto; width: 200px;
+            background: linear-gradient(135deg, #22c55e, #15803d); 
+            color: white; padding: 18px 50px; border: none; 
+            border-radius: 35px; font-weight: bold; cursor: pointer;
+            display: block; margin: 50px auto; width: 250px;
+            font-size: 1.1em; box-shadow: 0 10px 15px -3px rgba(21, 128, 61, 0.3);
         }
     </style>
 </head>
 <body>
 
-    <div class="quiz-container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    <div class="quiz-container">
         <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về thực đơn</a>
+            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold; font-size:14px">⬅ Quay về chọn môn khác</a>
         </div>
 
         <div class="header">
-            <div class="info">
-                <h2 id="ten-bai-tap">TIẾNG VIỆT 4: ÔNG BỤT ĐÃ ĐẾN - QUẢ NGỌT CUỐI MÙA</h2>
-                <p style="margin-top:5px;">Học sinh: <span id="student-display" style="font-weight:bold; color:#15803d">Đang tải...</span></p>
-            </div>
+            <h2 id="ten-bai-tap">TIẾNG VIỆT 4: ÔNG BỤT ĐÃ ĐẾN - QUẢ NGỌT CUỐI MÙA</h2>
+            <p style="margin-top:8px;">Học sinh: <span id="student-display" style="font-weight:bold; color:#15803d">Đang tải...</span></p>
         </div>
 
         <div class="section-title">PHẦN 1: ĐỌC HIỂU VĂN BẢN</div>
 
-        <div class="question-block" id="cau-hoi-1" style="margin-bottom: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-            <div class="question-text" style="font-weight: bold; margin-bottom: 15px;">
-                <span class="noi-dung">Câu 1: Trong câu chuyện "Ông Bụt đã đến", tại sao cô bé Mai lại vô tình làm gãy cành hoa lan?</span>
-            </div>
+        <div class="question-block" id="cau-hoi-1">
+            <div class="question-text"><span class="noi-dung">Câu 1: Trong câu chuyện "Ông Bụt đã đến", tại sao cô bé Mai lại vô tình làm gãy cành hoa lan?</span></div>
             <div class="options">
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q1" value="A"> A. Do Mai mải chơi đùa, chạy nhảy quanh chậu hoa.</label>
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q1" value="B"> B. Do Mai muốn ngắt hoa để tặng mẹ.</label>
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q1" value="C"> C. Do Mai mải mê ngắm nghía và nâng niu nhành hoa nên sơ ý.</label>
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q1" value="D"> D. Do có một cơn gió mạnh thổi qua làm gãy cành hoa.</label>
+                <label><input type="radio" name="q1" value="A"> A. Do Mai mải chơi đùa, chạy nhảy quanh chậu hoa.</label>
+                <label><input type="radio" name="q1" value="B"> B. Do Mai muốn ngắt hoa để tặng mẹ.</label>
+                <label><input type="radio" name="q1" value="C"> C. Do Mai mải mê ngắm nghía và nâng niu nhành hoa nên sơ ý.</label>
+                <label><input type="radio" name="q1" value="D"> D. Do có một cơn gió mạnh thổi qua làm gãy cành hoa.</label>
             </div>
-            <div class="ai-control" style="margin-top: 15px; border-top: 1px dashed #e2e8f0; padding-top: 10px;">
+            <div class="ai-control">
                 <button class="btn-ai" onclick="goiY_AI_V4(1, 'Tiếng Việt')">💡 GỢI Ý AI</button>
                 <div id="phan-hoi-ai-1" class="vung-phan-hoi"></div>
             </div>
         </div>
 
-        <div class="question-block" id="cau-hoi-2" style="margin-bottom: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-            <div class="question-text" style="font-weight: bold; margin-bottom: 15px;">
-                <span class="noi-dung">Câu 2: Ai là "Ông Bụt" thực sự trong câu chuyện "Ông Bụt đã đến"?</span>
-            </div>
+        <div class="question-block" id="cau-hoi-2">
+            <div class="question-text"><span class="noi-dung">Câu 2: Ai là "Ông Bụt" thực sự trong câu chuyện "Ông Bụt đã đến"?</span></div>
             <div class="options">
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q2" value="A"> A. Một ông tiên hiện ra từ đám mây.</label>
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q2" value="B"> B. Người mẹ của Mai.</label>
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q2" value="C"> C. Ông nhạc sĩ chủ nhà.</label>
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q2" value="D"> D. Cô bé Mai.</label>
+                <label><input type="radio" name="q2" value="A"> A. Một ông tiên hiện ra từ đám mây.</label>
+                <label><input type="radio" name="q2" value="B"> B. Người mẹ của Mai.</label>
+                <label><input type="radio" name="q2" value="C"> C. Ông nhạc sĩ chủ nhà.</label>
+                <label><input type="radio" name="q2" value="D"> D. Cô bé Mai.</label>
             </div>
-            <div class="ai-control" style="margin-top: 15px; border-top: 1px dashed #e2e8f0; padding-top: 10px;">
+            <div class="ai-control">
                 <button class="btn-ai" onclick="goiY_AI_V4(2, 'Tiếng Việt')">💡 GỢI Ý AI</button>
                 <div id="phan-hoi-ai-2" class="vung-phan-hoi"></div>
             </div>
         </div>
 
+        <div class="question-block" id="cau-hoi-3">
+            <div class="question-text"><span class="noi-dung">Câu 3: Vì sao ông nhạc sĩ lại quyết định thay chậu hoa mới cho Mai?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. Vì ông muốn bán chậu hoa cho mẹ của Mai.</label>
+                <label><input type="radio" name="q3" value="B"> B. Vì ông tình cờ thấy những giọt nước mắt và nghe được lời thì thầm xin lỗi của Mai.</label>
+                <label><input type="radio" name="q3" value="C"> C. Vì ông không thích chậu hoa cũ nữa.</label>
+                <label><input type="radio" name="q3" value="D"> D. Vì ông là một người rất giàu có và muốn khoe khoang.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(3, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-3" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-4">
+            <div class="question-text"><span class="noi-dung">Câu 4: Trong bài thơ "Quả ngọt cuối mùa", người bà đã dành dụm điều gì cho con cháu?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. Những câu chuyện cổ tích.</label>
+                <label><input type="radio" name="q4" value="B"> B. Chùm cam (quả ngọt) đầu mùa.</label>
+                <label><input type="radio" name="q4" value="C"> C. Chùm cam (quả ngọt) cuối mùa.</label>
+                <label><input type="radio" name="q4" value="D"> D. Những chiếc áo ấm mùa đông.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(4, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-4" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-5">
+            <div class="question-text"><span class="noi-dung">Câu 5: Câu thơ "Giêng, Hai rét cứa như dao" sử dụng biện pháp nghệ thuật gì?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. Nhân hóa.</label>
+                <label><input type="radio" name="q5" value="B"> B. So sánh.</label>
+                <label><input type="radio" name="q5" value="C"> C. Ẩn dụ.</label>
+                <label><input type="radio" name="q5" value="D"> D. Điệp từ.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(5, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-5" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-6">
+            <div class="question-text"><span class="noi-dung">Câu 6: Hình ảnh "Bà như quả ngọt chín rồi" muốn nói lên điều gì?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A"> A. Bà có làn da hồng hào như quả chín.</label>
+                <label><input type="radio" name="q6" value="B"> B. Bà rất thích ăn các loại quả ngọt.</label>
+                <label><input type="radio" name="q6" value="C"> C. Tuổi già của bà và tình yêu thương, đức độ kết tinh như trái ngọt dâng cho đời.</label>
+                <label><input type="radio" name="q6" value="D"> D. Bà trồng được rất nhiều quả ngọt trong vườn.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(6, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-6" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
         <div class="section-title">PHẦN 2: LUYỆN TỪ VÀ CÂU</div>
 
-        <div class="question-block" id="cau-hoi-7" style="margin-bottom: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-            <div class="question-text" style="font-weight: bold; margin-bottom: 15px;">
-                <span class="noi-dung">Câu 7: Dòng nào dưới đây nêu đúng hai thành phần chính của câu?</span>
-            </div>
+        <div class="question-block" id="cau-hoi-7">
+            <div class="question-text"><span class="noi-dung">Câu 7: Dòng nào dưới đây nêu đúng hai thành phần chính của câu?</span></div>
             <div class="options">
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q7" value="A"> A. Chủ ngữ và Trạng ngữ.</label>
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q7" value="B"> B. Chủ ngữ và Vị ngữ.</label>
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q7" value="C"> C. Vị ngữ và Tính từ.</label>
-                <label style="display: block; margin-bottom: 8px;"><input type="radio" name="q7" value="D"> D. Danh từ và Động từ.</label>
+                <label><input type="radio" name="q7" value="A"> A. Chủ ngữ và Trạng ngữ.</label>
+                <label><input type="radio" name="q7" value="B"> B. Chủ ngữ và Vị ngữ.</label>
+                <label><input type="radio" name="q7" value="C"> C. Vị ngữ và Tính từ.</label>
+                <label><input type="radio" name="q7" value="D"> D. Danh từ và Động từ.</label>
             </div>
-            <div class="ai-control" style="margin-top: 15px; border-top: 1px dashed #e2e8f0; padding-top: 10px;">
+            <div class="ai-control">
                 <button class="btn-ai" onclick="goiY_AI_V4(7, 'Tiếng Việt')">💡 GỢI Ý AI</button>
                 <div id="phan-hoi-ai-7" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-8">
+            <div class="question-text"><span class="noi-dung">Câu 8: Chủ ngữ trong câu thường trả lời cho những câu hỏi nào?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A"> A. Làm gì, Như thế nào, Là gì?</label>
+                <label><input type="radio" name="q8" value="B"> B. Ai, Cái gì, Con gì?</label>
+                <label><input type="radio" name="q8" value="C"> C. Ở đâu, Khi nào, Bao giờ?</label>
+                <label><input type="radio" name="q8" value="D"> D. Vì sao, Để làm gì?</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(8, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-8" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-9">
+            <div class="question-text"><span class="noi-dung">Câu 9: Xác định Chủ ngữ trong câu: "Ông nhạc sĩ đang viết nhạc."</span></div>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A"> A. Ông nhạc sĩ</label>
+                <label><input type="radio" name="q9" value="B"> B. đang viết nhạc</label>
+                <label><input type="radio" name="q9" value="C"> C. nhạc</label>
+                <label><input type="radio" name="q9" value="D"> D. Ông</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(9, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-9" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-10">
+            <div class="question-text"><span class="noi-dung">Câu 10: Xác định Vị ngữ trong câu: "Chùm cam bà giữ vẫn còn đung đưa."</span></div>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A"> A. Chùm cam</label>
+                <label><input type="radio" name="q10" value="B"> B. Chùm cam bà giữ</label>
+                <label><input type="radio" name="q10" value="C"> C. vẫn còn đung đưa</label>
+                <label><input type="radio" name="q10" value="D"> D. bà giữ</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(10, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-10" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-11">
+            <div class="question-text"><span class="noi-dung">Câu 11: Trong câu "Mai là một cô bé rất yêu hoa", Vị ngữ trả lời cho câu hỏi nào?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q11" value="A"> A. Làm gì?</label>
+                <label><input type="radio" name="q11" value="B"> B. Thế nào?</label>
+                <label><input type="radio" name="q11" value="C"> C. Là gì (là ai)?</label>
+                <label><input type="radio" name="q11" value="D"> D. Ở đâu?</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(11, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-11" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-12">
+            <div class="question-text"><span class="noi-dung">Câu 12: Điền chủ ngữ thích hợp vào chỗ trống: "... hót líu lo trên cành cây."</span></div>
+            <div class="options">
+                <label><input type="radio" name="q12" value="A"> A. Chú mèo</label>
+                <label><input type="radio" name="q12" value="B"> B. Bông hoa</label>
+                <label><input type="radio" name="q12" value="C"> C. Chú chim sơn ca</label>
+                <label><input type="radio" name="q12" value="D"> D. Ông mặt trời</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(12, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-12" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-17">
+            <div class="question-text"><span class="noi-dung">Câu 17: Câu nào dưới đây có chủ ngữ chỉ "hiện tượng tự nhiên"?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q17" value="A"> A. Đàn chim én bay lượn.</label>
+                <label><input type="radio" name="q17" value="B"> B. Những cơn mưa rào mùa hạ đã đến.</label>
+                <label><input type="radio" name="q17" value="C"> C. Bà em đang đan len.</label>
+                <label><input type="radio" name="q17" value="D"> D. Chiếc xe đạp chạy rất nhanh.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(17, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-17" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-18">
+            <div class="question-text"><span class="noi-dung">Câu 18: Từ nào đồng nghĩa với từ "trông" trong câu thơ "Nghe tiếng chào mào chống gậy ra trông"?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q18" value="A"> A. Nghe</label>
+                <label><input type="radio" name="q18" value="B"> B. Nhìn</label>
+                <label><input type="radio" name="q18" value="C"> C. Chạy</label>
+                <label><input type="radio" name="q18" value="D"> D. Nói</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(18, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-18" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-19">
+            <div class="question-text"><span class="noi-dung">Câu 19: Câu nào dưới đây sử dụng đúng mẫu câu "Ai là gì"?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q19" value="A"> A. Mẹ em đang nấu cơm.</label>
+                <label><input type="radio" name="q19" value="B"> B. Con mèo mướp rất lười biếng.</label>
+                <label><input type="radio" name="q19" value="C"> C. Thiếu nhi là măng non của đất nước.</label>
+                <label><input type="radio" name="q19" value="D"> D. Bông hoa hồng tỏa hương thơm ngát.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(19, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-19" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="section-title">PHẦN 3: TẬP LÀM VĂN (BIỂU CẢM)</div>
+
+        <div class="question-block" id="cau-hoi-13">
+            <div class="question-text"><span class="noi-dung">Câu 13: Khi tìm ý cho đoạn văn nêu tình cảm, cảm xúc về một nhân vật văn học, em KHÔNG cần thực hiện bước nào?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q13" value="A"> A. Giới thiệu nhân vật.</label>
+                <label><input type="radio" name="q13" value="B"> B. Nêu những điều em ấn tượng về nhân vật.</label>
+                <label><input type="radio" name="q13" value="C"> C. Kể lại toàn bộ cốt truyện từ đầu đến cuối.</label>
+                <label><input type="radio" name="q13" value="D"> D. Nêu cảm xúc của em về nhân vật.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(13, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-13" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-14">
+            <div class="question-text"><span class="noi-dung">Câu 14: Phần "Mở đầu" của đoạn văn nêu tình cảm, cảm xúc về nhân vật cần có nội dung gì?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q14" value="A"> A. Kể chi tiết ngoại hình của nhân vật.</label>
+                <label><input type="radio" name="q14" value="B"> B. Giới thiệu nhân vật và nêu ý kiến khái quát/cảm xúc ban đầu.</label>
+                <label><input type="radio" name="q14" value="C"> C. Liên hệ bản thân em sẽ làm gì.</label>
+                <label><input type="radio" name="q14" value="D"> D. Trình bày suy nghĩ của người thân về nhân vật.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(14, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-14" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-15">
+            <div class="question-text"><span class="noi-dung">Câu 15: Từ ngữ nào phù hợp để bộc lộ cảm xúc về nhân vật "Ông nhạc sĩ" trong bài "Ông Bụt đã đến"?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A"> A. Sợ hãi, lo lắng.</label>
+                <label><input type="radio" name="q15" value="B"> B. Ngưỡng mộ, kính trọng, biết ơn.</label>
+                <label><input type="radio" name="q15" value="C"> C. Tức giận, khó chịu.</label>
+                <label><input type="radio" name="q15" value="D"> D. Thất vọng, chán nản.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(15, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-15" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-16">
+            <div class="question-text"><span class="noi-dung">Câu 16: Trong phần "Kết thúc" của đoạn văn biểu cảm, em nên viết gì?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q16" value="A"> A. Giới thiệu tên tác giả của câu chuyện.</label>
+                <label><input type="radio" name="q16" value="B"> B. Liệt kê các hành động của nhân vật.</label>
+                <label><input type="radio" name="q16" value="C"> C. Khẳng định lại tình cảm và rút ra bài học hoặc liên hệ bản thân.</label>
+                <label><input type="radio" name="q16" value="D"> D. Miêu tả lại ngoại hình nhân vật một lần nữa.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(16, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-16" class="vung-phan-hoi"></div>
+            </div>
+        </div>
+
+        <div class="question-block" id="cau-hoi-20">
+            <div class="question-text"><span class="noi-dung">Câu 20: Nếu viết đoạn văn về nhân vật "Người bà" trong bài thơ "Quả ngọt cuối mùa", chi tiết nào đắt giá nhất để thể hiện đức hy sinh?</span></div>
+            <div class="options">
+                <label><input type="radio" name="q20" value="A"> A. Bà chống gậy đi ra sân.</label>
+                <label><input type="radio" name="q20" value="B"> B. Bà có mái tóc bạc phơ.</label>
+                <label><input type="radio" name="q20" value="C"> C. Chùm cam bà giữ, dành tận cuối mùa để chờ con, phần cháu.</label>
+                <label><input type="radio" name="q20" value="D"> D. Nhà bà có trồng cây cam.</label>
+            </div>
+            <div class="ai-control">
+                <button class="btn-ai" onclick="goiY_AI_V4(20, 'Tiếng Việt')">💡 GỢI Ý AI</button>
+                <div id="phan-hoi-ai-20" class="vung-phan-hoi"></div>
             </div>
         </div>
 
@@ -117,28 +379,24 @@
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
     <script src="js/config.js"></script>
-    
     <script src="js/core.js"></script>
-
     <script src="js/ai_config.js"></script>
 
     <script>
-        // Khởi tạo trang và kiểm tra trạng thái đóng/mở môn học
-        async function checkStatus() {
+        // Đồng bộ dữ liệu và kiểm tra trạng thái mở/đóng môn học
+        async function initSync() {
             if (typeof db !== 'undefined') {
                 try {
                     const doc = await db.collection("CAU_HINH").doc("trang_thai_mon").get();
                     if (doc.exists && doc.data()["tv"] === false) {
-                        alert("⛔ Hệ thống bài tập Tiếng Việt đang tạm đóng để bảo trì!");
+                        alert("⛔ Hệ thống bài tập Tiếng Việt đang tạm nghỉ!");
                         window.location.href = "Menu.html";
                     }
                 } catch (e) { console.log("Lỗi Firebase:", e); }
             }
         }
-        setTimeout(checkStatus, 500);
+        setTimeout(initSync, 500);
     </script>
-
 </body>
 </html>
