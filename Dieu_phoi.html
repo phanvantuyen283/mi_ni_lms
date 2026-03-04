@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trạm Điều Phối Bài Tập AI</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <style>
+        /* CSS được bao bọc trong thẻ style để không bị hiện thành chữ */
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; }
+        .station-container { width: 100%; max-width: 800px; background: white; padding: 30px; border: 2px solid #333; border-radius: 8px; box-shadow: 5px 5px 0px #333; }
+        
+        h2 { text-align: center; text-transform: uppercase; margin-top: 0; border-bottom: 2px solid #333; padding-bottom: 10px; }
+        
+        /* Khu vực chọn bài tập theo bản vẽ */
+        .input-section { margin: 20px 0; text-align: center; }
+        .input-group { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        select { padding: 8px; width: 60%; border: 1px solid #333; border-radius: 4px; font-size: 16px; }
+        
+        .btn-scan { padding: 10px 40px; background: #fff; border: 2px solid #333; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-scan:hover { background: #e2e8f0; }
+
+        /* Bảng điều phối */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #333; padding: 12px; text-align: center; }
+        th { background: #f8fafc; }
+        .col-content { text-align: left; width: 50%; }
+
+        /* Nút gạt Toggle */
+        .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .4s; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .4s; }
+        input:checked + .slider { background-color: #22c55e; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .btn-publish { display: block; width: 100%; padding: 15px; margin-top: 25px; background: #22c55e; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 18px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="station-container">
+    <h2>Trạm Điều Phối</h2>
+
+    <div class="input-section">
+        <div class="input-group">
+            <label>Chọn bài tập:</label>
+            <select id="select-file">
+                <option value="Bai_Tieng_Viet.html">Tiếng Việt - Bà Triệu</option>
+                <option value="Bai_Toan.html">Toán - Ôn tập</option>
+            </select>
+        </div>
+        <button class="btn-scan" onclick="taiCauHoiTuGithub()">Quét câu hỏi</button>
+    </div>
+
+    <div id="setup-area" style="display: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nội dung</th>
+                    <th>Trợ lý Co</th>
+                    <th>Chấm bài</th>
+                </tr>
+            </thead>
+            <tbody id="config-body">
+                </tbody>
+        </table>
+
+        <button class="btn-publish" onclick="phatHanhBaiTap()">🚀 PHÁT HÀNH BÀI TẬP</button>
+    </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+    // Khởi tạo Firebase
+    if (typeof CONFIG !== 'undefined') firebase.initializeApp(CONFIG.firebase);
+    const db = firebase.firestore();
+    let danhSachCauHoi = [];
+
+    // Hàm quét từ GitHub RAW
+    async function taiCauHoiTuGithub() {
+        const fileName = document.getElementById('select-file').value;
+        const githubUrl = `https://raw.githubusercontent.com/phanvantuyen283/mi_ni_lms/main/${fileName}`;
+        
+        try {
+            const response = await fetch(githubUrl);
+            const htmlText = await response.text();
+            const doc = new DOMParser().parseFromString(htmlText, 'text/html');
+            const blocks = doc.querySelectorAll('.question-block');
+            
+            danhSachCauHoi = [];
+            let htmlRows = "";
+
+            blocks.forEach((block, index) => {
+                const id = index + 1;
+                const text = block.querySelector('.noi-dung')?.innerText || `Câu hỏi ${id}`;
+                danhSachCauHoi.push({ id, text });
+
+                htmlRows += `
+                    <tr>
+                        <td class="col-content">${text}</td>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" id="hint-${id}" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <select id="grade-${id}" style="width: auto; font-size: 14px;">
+                                <option value="ai">AI chấm</option>
+                                <option value="teacher">Thầy chấm</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('config-body').innerHTML = htmlRows;
+            document.getElementById('setup-area').style.display = 'block';
+        } catch (e) { alert("Lỗi quét file!"); }
+    }
+
+    // Phát hành cấu hình lên Firebase
+    async function phatHanhBaiTap() {
+        const fileName = document.getElementById('select-file').value;
+        const cauHinh = {};
+        danhSachCauHoi.forEach(item => {
+            cauHinh[item.id] = {
+                allowHint: document.getElementById(`hint-${item.id}`).checked,
+                gradingMode: document.getElementById(`grade-${item.id}`).value
+            };
+        });
+
+        try {
+            await db.collection("DIEU_PHOI_BAI_TAP").doc(fileName).set({
+                ten_file: fileName,
+                cau_hinh: cauHinh,
+                ngay_cap_nhat: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            alert("Đã phát hành bài tập thành công!");
+        } catch (e) { alert("Lỗi lưu cấu hình!"); }
+    }
+</script>
+
+</body>
+</html>
