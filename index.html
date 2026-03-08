@@ -2,171 +2,177 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập - Lớp 4A Online - Trường Tiểu học Châu Lộc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cổng Học Tập Lớp 4A</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <script src="config.js"></script>
 
-    <link rel="stylesheet" href="style.css">
-
     <style>
-        /* CSS bổ sung riêng cho trang Login để xử lý phần Câu hỏi bảo mật ẩn/hiện */
-        #security-section {
-            display: none; /* Mặc định ẩn */
-            background: #fff1f2;
-            padding: 15px;
-            border-radius: 12px;
-            border: 2px dashed #f43f5e;
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .sec-label {
-            font-size: 14px;
-            font-weight: bold;
-            color: #be123c;
-            margin-bottom: 8px;
-            display: block;
-        }
-        #security-answer {
-            border-color: #f43f5e;
-            color: #be123c;
-        }
-        #security-answer::placeholder { color: #fda4af; }
+        :root { --primary: #0284c7; --secondary: #38bdf8; --bg: #f0f9ff; --text: #1e293b; --success: #22c55e; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: white; padding: 15px 20px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-bottom: 4px solid var(--primary); }
+        header h1 { margin: 0; color: var(--primary); font-size: 1.5rem; text-transform: uppercase; }
+        #login-section { width: 90%; max-width: 400px; margin: 40px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); border: 2px solid #e0f2fe; box-sizing: border-box; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #334155; }
+        .input-group select, .input-group input { width: 100%; padding: 14px 12px; border: 2px solid #bae6fd; border-radius: 10px; font-size: 16px; box-sizing: border-box; outline: none; }
+        .btn-login { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        #dashboard-section { display: none; max-width: 900px; margin: 30px auto; padding: 0 15px; width: 100%; box-sizing: border-box; }
+        .welcome-box { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 25px 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; margin-bottom: 40px; }
+        .subject-card { background: white; border: 2px solid #e0f2fe; padding: 20px 15px; border-radius: 15px; text-align: center; cursor: pointer; }
+        .result-item { background: white; padding: 15px 20px; border-radius: 12px; border-left: 5px solid #cbd5e1; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .result-item.approved { border-left-color: var(--success); }
+        .score-box { font-size: 20px; font-weight: bold; color: var(--primary); background: #e0f2fe; padding: 8px 15px; border-radius: 8px; }
     </style>
 </head>
 <body>
 
-    <div class="login-container">
-        <h2 style="font-size: 1.5rem; margin-bottom: 20px;">
-            🚀 Lớp 4A Online- Trường TH Châu Lộc
-        </h2>
-        
-        <select id="student-name">
-            <option value="">-- Đang tải danh sách... --</option>
-        </select>
-        
-        <input type="text" id="access-code" placeholder="NHẬP MÃ BÍ MẬT (6 KÝ TỰ)" autocomplete="off">
-        
-        <div id="security-section">
-            <span class="sec-label">🔒 CÂU HỎI BẢO MẬT:</span>
-            <p id="sec-question-text" style="margin: 0 0 10px 0; font-size:14px; color:#333">...</p>
-            <input type="text" id="security-answer" placeholder="Nhập câu trả lời..." autocomplete="off">
-        </div>
+    <header><h1>🌟 LỚP HỌC 4A 🌟</h1></header>
 
-        <button onclick="handleLogin()" id="btn-login">ĐĂNG NHẬP NGAY</button>
-        
-        <p class="footer">Hệ thống kiểm tra & đánh giá năng lực V4.0</p>
+    <div id="login-section">
+        <div class="input-group">
+            <label>1. Em tên là gì?</label>
+            <select id="student-name"><option value="">-- Đang tải danh sách... --</option></select>
+        </div>
+        <div class="input-group">
+            <label>2. Mã số bí mật (Zalo):</label>
+            <input type="password" id="student-code" placeholder="Nhập mã 6 chữ số">
+        </div>
+        <div class="input-group">
+            <label>3. Câu hỏi của lớp:</label>
+            <div id="sec-question-display" style="font-size:14px; color:#0369a1; margin-bottom:8px; font-style:italic; font-weight:600;">...</div>
+            <input type="text" id="sec-answer" placeholder="Đáp án viết liền không dấu">
+        </div>
+        <button class="btn-login" onclick="handleLogin()">VÀO LỚP 🚀</button>
+    </div>
+
+    <div id="dashboard-section">
+        <div class="welcome-box">
+            <div><h2 id="display-name">...</h2><p>Chúc em một ngày học tập vui vẻ.</p></div>
+            <button onclick="sessionStorage.clear(); location.reload();" style="background:rgba(255,255,255,0.2); border:1px solid white; color:white; padding:10px; border-radius:8px; cursor:pointer;">Thoát</button>
+        </div>
+        <h3 style="color:var(--primary)">📚 BÀI TẬP HÔM NAY</h3>
+        <div class="subject-grid" id="active-subjects"></div>
+        <h3 style="color:var(--primary); margin-top:30px;">📝 KẾT QUẢ CỦA EM</h3>
+        <div id="my-results"></div>
     </div>
 
     <script>
-        // --- 1. KHỞI TẠO HỆ THỐNG ---
-        // Kiểm tra xem config.js đã được nạp chưa
-        if (typeof CONFIG === 'undefined') {
-            alert("Lỗi: Không tìm thấy file config.js! Vui lòng kiểm tra lại thư mục.");
-        } else {
-            // Khởi tạo Firebase riêng cho trang này (Không dùng Core.js)
-            if (!firebase.apps.length) {
-                firebase.initializeApp(CONFIG.firebase);
-            }
-            var db = firebase.firestore();
+        // KIỂM TRA BIẾN db TỪ config.js
+        if (typeof db === 'undefined') {
+            alert("❌ Lỗi: Không thể kết nối Firestore. Hãy kiểm tra lại file config.js!");
         }
 
-        // --- 2. DANH SÁCH HỌC SINH ---
-        const DANH_SACH_LOP = [
-            "Vũ Việt Anh", "Vũ Gia Bảo", "Lê Thị Liên Chi", "Bùi Anh Dũng", "Vũ Quốc Duy", 
-            "Nguyễn Đăng Dương", "Nguyễn Trí Đại", "Lê Bá Đạt", "Nguyễn Văn Đạt", "Phan Minh Quang", "Nguyễn Đăng Dương", "Lê Minh Hạnh", "Vũ Đình Khánh Linh","Vũ Thị Yến Nhi","Lê Vũ Chí Thành", "Phạm Hanh Gia Phát", "Lê Anh Thơ", "Vũ Song Vũ", 
-            "Vũ Ngọc Huyền", "Lê Gia Khánh", "Nguyễn Đăng Kiên", "Mai Quang Long", 
-            "Lê Văn Lộc", "Vũ Anh Minh", "Hoàng Bảo Nam", "Phạm Thị Kim Ngân", "Vũ Thu Ngân", "Đàm Thị Quỳnh Như", "Nguyễn Hoàng Thiên Phúc", 
-            "Vũ Quang Phúc", "Nguyễn Nhã Phương", "Nguyễn Thị Quỳnh", "Lê Ngọc Sơn", "Đặng Thị Thanh Tâm", 
-            "Vũ Thị Minh Tâm", "--- GIÁO VIÊN TEST ---"
-        ];
+        let sysData = { codes: {}, secAnswer: "" };
 
-        // Nạp danh sách vào thẻ Select
-        const selectBox = document.getElementById("student-name");
-        selectBox.innerHTML = '<option value="">-- Chọn tên của bạn --</option>';
-        DANH_SACH_LOP.forEach(name => {
-            let opt = document.createElement("option");
-            opt.value = name;
-            opt.innerText = name;
-            selectBox.appendChild(opt);
+        // 1. TẢI DANH SÁCH HỌC SINH VÀ CẤU HÌNH
+        document.addEventListener("DOMContentLoaded", async () => {
+            const savedUser = sessionStorage.getItem("LMS_User");
+            if (savedUser) { showDashboard(savedUser); return; }
+
+            try {
+                // Tải mã từ BAO_MAT/danh_sach_ma
+                const codeSnap = await db.collection("BAO_MAT").doc("danh_sach_ma").get();
+                if (codeSnap.exists) {
+                    sysData.codes = codeSnap.data();
+                    const select = document.getElementById("student-name");
+                    select.innerHTML = '<option value="">-- Chọn tên của em --</option>';
+                    Object.keys(sysData.codes).filter(k => k !== 'admin_key' && k !== 'updated_at').sort().forEach(name => {
+                        let opt = document.createElement("option"); opt.value = name; opt.innerText = name;
+                        select.appendChild(opt);
+                    });
+                }
+                // Tải câu hỏi bảo mật từ CAU_HINH/cau_hinh_chung
+                const confSnap = await db.collection("CAU_HINH").doc("cau_hinh_chung").get();
+                if (confSnap.exists) {
+                    document.getElementById("sec-question-display").innerText = confSnap.data().question || "Câu hỏi của lớp?";
+                    sysData.secAnswer = (confSnap.data().answer || "").toLowerCase().trim();
+                }
+            } catch (error) { console.error("Lỗi:", error); }
         });
 
-        // Biến lưu đáp án bảo mật (nếu có)
-        let serverSecAnswer = "";
-
-        // --- 3. KIỂM TRA CẤU HÌNH BẢO MẬT TỪ SERVER ---
-        async function checkSecurityConfig() {
-            try {
-                const doc = await db.collection("BAO_MAT").doc("cau_hoi_ngay").get();
-                if (doc.exists) {
-                    const data = doc.data();
-                    // Nếu có câu hỏi và câu hỏi không rỗng
-                    if (data.question && data.question.trim() !== "") {
-                        document.getElementById("security-section").style.display = "block";
-                        document.getElementById("sec-question-text").innerText = data.question;
-                        serverSecAnswer = data.answer ? data.answer.trim().toLowerCase() : "";
-                    }
-                }
-            } catch (e) {
-                console.log("Không tải được cấu hình bảo mật:", e);
-            }
-        }
-        // Chạy ngay khi tải trang
-        checkSecurityConfig();
-
-        // --- 4. XỬ LÝ ĐĂNG NHẬP ---
-        async function handleLogin() {
+        // 2. XỬ LÝ ĐĂNG NHẬP
+        function handleLogin() {
             const name = document.getElementById("student-name").value;
-            const code = document.getElementById("access-code").value.trim().toUpperCase();
-            const userSecAns = document.getElementById("security-answer").value.trim().toLowerCase();
-            const btn = document.getElementById("btn-login");
+            const code = document.getElementById("student-code").value.trim();
+            const ans = document.getElementById("sec-answer").value.toLowerCase().trim();
 
-            // Validate cơ bản
-            if (!name) return alert("Vui lòng chọn tên của bạn!");
-            if (!code) return alert("Vui lòng nhập mã bí mật!");
+            if (!name || !code) return alert("Em điền thiếu thông tin!");
+            if (sysData.codes[name] !== code) return alert("Mã số bí mật không đúng!");
+            if (sysData.secAnswer && ans !== sysData.secAnswer) return alert("Câu trả lời bảo mật sai!");
 
-            // Kiểm tra câu hỏi bảo mật (Nếu hệ thống yêu cầu)
-            if (serverSecAnswer !== "") {
-                if (!userSecAns) return alert("Vui lòng trả lời câu hỏi bảo mật!");
-                if (userSecAns !== serverSecAnswer) {
-                    return alert("❌ Câu trả lời bảo mật KHÔNG ĐÚNG!");
-                }
-            }
+            sessionStorage.setItem("LMS_User", name);
+            showDashboard(name);
+        }
 
-            // Bắt đầu kiểm tra mã
-            btn.innerText = "ĐANG KIỂM TRA...";
-            btn.disabled = true;
+        function showDashboard(userName) {
+            document.getElementById("login-section").style.display = "none";
+            document.getElementById("dashboard-section").style.display = "block";
+            document.getElementById("display-name").innerText = "👋 Chào em, " + userName + "!";
+            loadActiveSubjects(); 
+            loadMyResults(userName);
+        }
 
+        // 3. TẢI MÔN HỌC
+        async function loadActiveSubjects() {
+            const grid = document.getElementById("active-subjects");
             try {
-                const doc = await db.collection("BAO_MAT").doc("danh_sach_ma").get();
-                if (doc.exists) {
-                    const listCodes = doc.data();
-                    const validCode = listCodes[name];
-
-                    // Logic so sánh mã: Đúng mã HOẶC là Giáo viên dùng mã vạn năng 123456
-                    if (validCode === code || (name.includes("GIÁO VIÊN") && code === "123456")) {
-                        // Đăng nhập thành công
-                        localStorage.setItem("hocSinhLop4A", name);
-                        window.location.href = "Menu.html";
-                    } else {
-                        alert("❌ MÃ ĐĂNG NHẬP KHÔNG ĐÚNG!\nVui lòng kiểm tra lại hoặc hỏi giáo viên.");
-                        btn.innerText = "ĐĂNG NHẬP NGAY";
-                        btn.disabled = false;
-                    }
-                } else {
-                    alert("⚠️ Hệ thống chưa kích hoạt danh sách mã. Vui lòng liên hệ giáo viên.");
-                    btn.innerText = "ĐĂNG NHẬP NGAY";
-                    btn.disabled = false;
+                const snap = await db.collection("CAI_DAT_MON_HOC").doc("status").get();
+                if (snap.exists) {
+                    const statusData = snap.data(); let html = "";
+                    const icons = { "Toán": "📐", "Tiếng Việt": "📘", "Tiếng Anh": "🇬🇧", "Khoa học": "🔬", "Lịch sử & Địa lý": "🌍" };
+                    GLOBAL_CONFIG.SUBJECTS.forEach(sub => {
+                        if (statusData[sub] === true) {
+                            html += `<div class="subject-card" onclick="goToExam('${sub}')">
+                                <div style="font-size:40px;">${icons[sub] || "📙"}</div>
+                                <div style="font-weight:bold; margin-top:10px;">${sub}</div>
+                            </div>`;
+                        }
+                    });
+                    grid.innerHTML = html || "<p>Chưa có môn nào mở.</p>";
                 }
-            } catch (e) {
-                console.error(e);
-                alert("Lỗi kết nối mạng: " + e.message);
-                btn.innerText = "ĐĂNG NHẬP NGAY";
-                btn.disabled = false;
-            }
+            } catch (e) { grid.innerHTML = "<p>Lỗi tải môn học.</p>"; }
+        }
+
+        function goToExam(subjectName) {
+            const map = { "Toán": "Bai_Toan.html", "Tiếng Việt": "Bai_TiengViet.html", "Khoa học": "Bai_KhoaHoc.html", "Lịch sử & Địa lý": "Bai_SuDia.html" };
+            if (map[subjectName]) window.location.href = map[subjectName];
+            else alert("Môn này đang được thầy cập nhật!");
+        }
+
+        // 4. HIỂN THỊ KẾT QUẢ (SỬA LỖI UNDEFINED & MẤT BÀI)
+        async function loadMyResults(userName) {
+            const list = document.getElementById("my-results");
+            try {
+                const snap = await db.collection("KET_QUA").where("student_name", "==", userName).get();
+                if (snap.empty) {
+                    list.innerHTML = "<p style='text-align:center;'>Em chưa nộp bài nào.</p>";
+                    return;
+                }
+                let results = []; snap.forEach(doc => results.push(doc.data()));
+                results.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+                let html = "";
+                results.forEach(data => {
+                    const isApproved = data.status === "approved";
+                    const timeStr = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString('vi-VN') : "Vừa xong";
+                    // SỬA LỖI: Gọi đúng scores.teacher_final
+                    const scoreDisplay = isApproved ? (data.scores.teacher_final + "đ") : "⏳ Đang chấm";
+                    html += `<div class="result-item ${isApproved ? 'approved' : ''}">
+                        <div>
+                            <h4 style="margin:0">${data.subject}</h4>
+                            <small>Đã nộp: ${timeStr}</small>
+                            <div style="font-size:13px; color:#64748b; margin-top:5px;">${isApproved ? (data.feedback.teacher_final || "Thầy đã chấm bài.") : "Bài đang chờ thầy kiểm tra."}</div>
+                        </div>
+                        <div class="score-box">${scoreDisplay}</div>
+                    </div>`;
+                });
+                list.innerHTML = html;
+            } catch (e) { console.error(e); }
         }
     </script>
 </body>

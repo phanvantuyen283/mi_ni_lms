@@ -1,77 +1,133 @@
 /* ============================================================
-   CORE.JS - TRÁI TIM HỆ THỐNG MINI LMS V4.0 (BẢN CHUẨN)
-   Nhiệm vụ: Điều phối AI, Chấm điểm, Bảo mật
+   CORE.JS - BỘ NÃO ĐIỀU PHỐI TRUNG TÂM (PHIÊN BẢN V6.1 - STABLE)
+   Cập nhật: Tự động làm sạch rác dữ liệu & Đồng bộ hiển thị điểm
    ============================================================ */
 
-// 1. CẤU HÌNH URL AI (Lấy từ ảnh triển khai Vswl/exec của thầy)
-const URL_APPS_SCRIPT ="https://script.google.com/macros/s/AKfycbwFAIB2YTOT_AzwXDpGqg68w2Jkd8_Ku5sbl_pyB3Bj6uImgmuew1m2RvTjMAZj6TGR/exec";
-
-let db = null; 
-let studentName = localStorage.getItem("hocSinhLop4A") || "Khách";
-let isSubmitted = false;
-
-// --- 2. KẾT NỐI FIREBASE ---
-try {
-    if (typeof CONFIG !== 'undefined' && typeof firebase !== 'undefined') {
-        if (!firebase.apps.length) firebase.initializeApp(CONFIG.firebase);
-        db = firebase.firestore();
-        console.log("✅ Core V4: Hệ thống Database đã sẵn sàng.");
-    }
-} catch (e) { console.error("⚠️ Lỗi kết nối Firebase:", e); }
-
-// --- 3. HIỂN THỊ THÔNG TIN KHI TẢI TRANG ---
-document.addEventListener("DOMContentLoaded", () => {
-    const display = document.getElementById("student-display");
-    if (display) display.innerText = studentName;
-    console.log("🚀 Hệ thống đã sẵn sàng cho học sinh: " + studentName);
-});
-
-// --- 4. KẾT NỐI GEMINI 2.0 FLASH-LITE (Xử lý Gợi ý AI) ---
-async function goiAI(index, loaiHanhDong) {
-    const vungPhanHoi = document.getElementById(`phan-hoi-ai-${index}`);
-    vungPhanHoi.innerHTML = "<span style='color:#64748b'>🔄 Trợ lý Gemini đang suy nghĩ...</span>";
-    vungPhanHoi.style.display = "block";
-
-    // Lấy nội dung câu hỏi và bài làm
-    const cauHoi = document.querySelector(`#cau-hoi-${index} .noi-dung`).innerText;
-    const radioChecked = document.querySelector(`input[name="q${index}"]:checked`);
-    const baiLam = radioChecked ? "Đáp án chọn: " + radioChecked.value : "Chưa chọn đáp án";
-
-    const payload = {
-        action: loaiHanhDong,
-        question: cauHoi,
-        studentAnswer: baiLam
-    };
-
-    try {
-        const response = await fetch(URL_APPS_SCRIPT, {
-            method: "POST",
-            body: JSON.stringify(payload)
-        });
+const CoreSystem = {
+    // 1. PHÒNG XÁC THỰC (ĐĂNG NHẬP)
+    async login(studentId, securityAnswer) {
+        const db = firebase.firestore();
         
-        const result = await response.json();
-        
-        // Trích xuất văn bản từ cấu trúc phản hồi của Gemini
-        if (result.candidates && result.candidates[0].content.parts[0].text) {
-            const textResponse = result.candidates[0].content.parts[0].text;
-            vungPhanHoi.innerHTML = `💡 <b>Gợi ý sư phạm:</b><br>${textResponse}`;
-            vungPhanHoi.style.background = "#f0fdf4";
-            vungPhanHoi.style.borderLeft = "4px solid #22c55e";
-        } else {
-            vungPhanHoi.innerHTML = "⚠️ AI trả về dữ liệu trống. Thầy hãy kiểm tra API Key.";
+        if (studentId === "GV01") {
+            if (securityAnswer === "123456") { 
+                sessionStorage.setItem("LMS_User", "Giáo Viên Test");
+                return { success: true, name: "Giáo Viên Test", role: "admin" };
+            }
+            return { success: false, msg: "Sai mật khẩu kiểm thử!" };
         }
-    } catch (error) {
-        vungPhanHoi.innerHTML = "⚠️ Trợ lý đang bận. Con hãy thử lại sau nhé!";
-        console.error("Lỗi gọi AI:", error);
+
+        try {
+            const doc = await db.collection("DANH_SACH_LOP").doc(studentId).get();
+            if (!doc.exists) return { success: false, msg: "Không tìm thấy mã học sinh!" };
+            
+            const studentData = doc.data();
+            if (studentData.secret_a === securityAnswer) {
+                sessionStorage.setItem("LMS_User", studentData.name);
+                return { success: true, name: studentData.name, role: "student" };
+            }
+            return { success: false, msg: "Câu trả lời bảo mật không chính xác!" };
+        } catch (error) {
+            return { success: false, msg: "Lỗi kết nối CSDL: " + error.message };
+        }
+    },
+
+    // 2. PHÒNG TRỢ GIẢNG AI (XIN GỢI Ý)
+    async getAIHint(subject, question, currentAnswer) {
+        try {
+            const payload = { 
+                action: "GET_AI_HINT", 
+                subject: subject, 
+                question: question, 
+                current_text: currentAnswer 
+            };
+            const response = await fetch(GLOBAL_CONFIG.WEB_API_URL, { 
+                method: 'POST', 
+                body: JSON.stringify(payload) 
+            });
+            const result = await response.json();
+            return result.status === "success" ? result.hint : "❌ Lỗi máy chủ AI.";
+        } catch (error) {
+            return "❌ Mạng chậm, em hãy tự suy nghĩ một chút nhé.";
+        }
+    },
+
+    // 3. PHÒNG XỬ LÝ NỘP BÀI (GHI ĐÈ HOÀN TOÀN)
+    async submitExam(payload) {
+        const studentName = sessionStorage.getItem("LMS_User");
+        if (!studentName) throw new Error("Hết phiên làm việc, vui lòng đăng nhập lại!");
+
+        try {
+            // A. TỰ ĐỘNG CHẤM ĐIỂM HỆ THỐNG (SYSTEM)
+            let score_sys = 0;
+            let total_sys_max = 0;
+            const systemResults = {};
+            
+            if (typeof EXAM_STRUCTURE !== 'undefined') {
+                EXAM_STRUCTURE.forEach(q => {
+                    if (q.type === "system") {
+                        total_sys_max += (q.max_score || 0);
+                        let studentAns = (payload.answers.system[q.id] || "").toString().trim();
+                        let correctAns = (q.answer || "").toString().trim();
+                        
+                        let isCorrect = (studentAns.toLowerCase() === correctAns.toLowerCase());
+                        if (isCorrect) score_sys += (q.max_score || 0);
+                        systemResults[q.id] = { answer: studentAns, isCorrect: isCorrect };
+                    }
+                });
+            }
+
+            // B. GỬI DỮ LIỆU QUA GOOGLE APPS SCRIPT (XỬ LÝ ẢNH & AI CHẤM)
+            const apiPayload = {
+                action: "SUBMIT_EXAM", 
+                student_name: studentName,
+                subject: payload.subject,
+                ai_data: payload.answers.ai || {}, 
+                multimedia_data: payload.answers.multimedia || {} 
+            };
+            
+            const response = await fetch(GLOBAL_CONFIG.WEB_API_URL, { 
+                method: 'POST', 
+                body: JSON.stringify(apiPayload) 
+            });
+            const result = await response.json();
+            if (result.status !== "success") throw new Error(result.message);
+
+            // C. LƯU FIREBASE (DÙNG MERGE: FALSE ĐỂ LÀM SẠCH BÀI CŨ)
+            const db = firebase.firestore();
+            const docId = studentName + "_" + payload.subject; 
+
+            const finalDoc = {
+                student_name: studentName,
+                subject: payload.subject,
+                answers: { 
+                    system: systemResults, 
+                    ai: payload.answers.ai || {}, 
+                    multimedia_keys: Object.keys(payload.answers.multimedia || {}) 
+                },
+                multimedia_urls: result.multimedia_urls || {}, 
+                scores: { 
+                    sys: Number(score_sys.toFixed(2)), 
+                    sys_max: Number(total_sys_max.toFixed(2)), 
+                    ai_draft: Number((result.ai_total_score || 0).toFixed(2)), 
+                    teacher_final: null // Để null thay vì "" để tránh lỗi undefinedđ
+                },
+                feedback: { 
+                    ai_details: result.ai_details || {}, 
+                    teacher_final: "" 
+                },
+                status: "pending",
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            await db.collection("KET_QUA").doc(docId).set(finalDoc, { merge: false });
+            
+            // Xóa cache bài làm cũ cục bộ sau khi nộp thành công
+            localStorage.removeItem(`temp_answers_${payload.subject}`);
+            
+            return { success: true };
+        } catch (error) {
+            console.error("Lỗi nộp bài:", error);
+            throw error; 
+        }
     }
-}
-
-// --- 5. HÀM NỘP BÀI ĐƠN GIẢN ---
-window.nopBai = function() {
-    if (isSubmitted) return;
-    if (!confirm("Con chắc chắn muốn nộp bài chứ?")) return;
-
-    isSubmitted = true;
-    alert("Chúc mừng con đã hoàn thành bài tập!");
-    window.location.href = "Menu.html";
 };

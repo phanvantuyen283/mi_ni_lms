@@ -1,219 +1,113 @@
 /* ============================================================
-   STYLE.CSS - GIAO DIỆN HỆ THỐNG MINI LMS LỚP 4A
-   Phiên bản: Full Option (3D, Bảo mật, Popup, Review)
+   STYLE.CSS - BẢN DUNG HỢP ĐA NHIỆM (MINI LMS V4.1)
+   Hỗ trợ: Trắc nghiệm, Tự luận, File Upload, Video & 3D UI
    ============================================================ */
 
-/* 1. CẤU HÌNH CHUNG */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #e0f2fe; /* Nền xanh nhạt dịu mắt */
-    background-image: radial-gradient(#bae6fd 1px, transparent 1px);
-    background-size: 20px 20px; /* Họa tiết chấm bi */
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: #333;
+/* 1. CẤU HÌNH CHUNG & NỀN CHẤM BI (Kế thừa bản cũ) */
+:root { 
+    --primary: #0284c7; 
+    --bg: #e0f2fe; 
+    --text: #1e293b; 
+    --border: #bae6fd;
+    --system-color: #34d399; --system-text: #059669;
+    --ai-color: #a78bfa; --ai-text: #7c3aed;
+    --teacher-color: #fb923c; --teacher-text: #ea580c;
 }
 
-/* 2. KHUNG CHỨA (CONTAINER) */
-.quiz-container, .login-container {
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: var(--bg); 
+    background-image: radial-gradient(#bae6fd 1px, transparent 1px);
+    background-size: 20px 20px; 
+    margin: 0; 
+    color: var(--text); 
+    padding-bottom: 40px; 
+}
+
+/* 2. KHUNG CHỨA BÀI TẬP (Cải tiến từ .quiz-container cũ) */
+.exam-container { 
     background: white;
-    width: 100%;
-    max-width: 600px; /* Độ rộng tối ưu cho máy tính bảng/PC */
-    padding: 30px;
+    width: 90%;
+    max-width: 800px; 
+    padding: 25px;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    border: 4px solid #fff; /* Viền trắng tạo độ nổi */
-    position: relative;
-    margin: auto;
+    border: 4px solid #fff; 
+    margin: 30px auto; 
 }
 
-/* Riêng cho màn hình đăng nhập thì nhỏ hơn chút */
-.login-container { max-width: 400px; text-align: center; }
+/* HEADER */
+header { background: white; padding: 15px 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-bottom: 4px solid var(--primary); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+.back-btn { background: #e0f2fe; color: var(--primary); border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; transition: 0.2s; }
+.back-btn:hover { background: #bae6fd; }
+.subject-title { margin: 0; color: var(--primary); font-size: 1.2rem; font-weight: bold; text-transform: uppercase; }
 
-h2 { color: #0284c7; margin-top: 0; }
+.student-info { background: #f0f9ff; padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid var(--primary); font-weight: bold; }
 
-/* 3. CÁC Ô NHẬP LIỆU (INPUT & SELECT) */
-select, input[type="text"] {
-    width: 100%;
-    padding: 15px 20px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    border: 3px solid #bae6fd;
-    font-size: 18px;
-    font-weight: bold;
-    color: #0284c7;
-    background-color: #f0f9ff;
-    outline: none;
-    box-sizing: border-box; /* Đảm bảo padding không làm vỡ khung */
-    transition: 0.3s;
-}
+/* 3. KHU VỰC 3 LÀN (System - AI - Teacher) */
+.section-box { background: white; padding: 20px; border-radius: 15px; border: 2px solid var(--border); margin-bottom: 25px; box-shadow: 0 4px 0 var(--border); }
+.section-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px dashed #e2e8f0; }
 
-select:focus, input[type="text"]:focus {
-    border-color: #0284c7;
-    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.2);
-}
+.System_grade { border-color: var(--system-color); box-shadow: 0 4px 0 var(--system-color); } 
+.System_grade .section-title { color: var(--system-text); }
+.AI_grade { border-color: var(--ai-color); box-shadow: 0 4px 0 var(--ai-color); } 
+.AI_grade .section-title { color: var(--ai-text); }
+.Teacher_grade { border-color: var(--teacher-color); box-shadow: 0 4px 0 var(--teacher-color); } 
+.Teacher_grade .section-title { color: var(--teacher-text); }
 
-/* Tùy chỉnh ô Mã Bảo Mật (Access Code) */
-#access-code {
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: #dc2626; /* Chữ đỏ nổi bật */
-    border-color: #fca5a5;
-    background-color: #fef2f2;
-}
-#access-code::placeholder {
-    color: #9ca3af;
-    letter-spacing: normal;
-    text-transform: none;
-    font-size: 14px;
-    font-weight: normal;
-}
-
-/* 4. NÚT BẤM 3D (BUTTONS) */
-button, .btn-submit {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: white;
-    cursor: pointer;
-    background: linear-gradient(to bottom, #38bdf8, #0284c7);
-    box-shadow: 0 6px 0 #075985; /* Bóng đổ 3D */
-    transition: all 0.1s;
-    position: relative;
-    top: 0;
-    margin-top: 10px;
-}
-
-button:hover { filter: brightness(1.1); }
-button:active { top: 6px; box-shadow: none; } /* Hiệu ứng nhấn lún */
-button:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; top: 0; }
-
-/* 5. MENU MÔN HỌC (GRID) */
-.menu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 2 cột */
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.subject-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    color: #0284c7;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 20px 10px;
-    border-radius: 15px;
-    border: 2px solid #bae6fd;
-    box-shadow: 0 5px 0 #bae6fd; /* 3D nhẹ */
-    transition: 0.1s;
-    position: relative;
-    top: 0;
-}
-
-.subject-card:active { top: 5px; box-shadow: none; }
-.subject-card span { margin-bottom: 5px; display: block; }
-
-/* 6. GIAO DIỆN LÀM BÀI (QUIZ) */
-.header {
-    background: #f0f9ff;
-    padding: 15px;
-    border-radius: 12px;
-    border: 2px dashed #bae6fd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.header h2 { font-size: 1.1rem; margin: 0; }
-.timer { font-size: 1.5rem; font-weight: 900; color: #dc2626; }
-
-.question-block {
-    background: #fff;
-    border: 2px solid #e2e8f0;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 0 #e2e8f0;
-}
-.question-text { font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; }
-
+/* 4. TRẮC NGHIỆM ĐA LỰA CHỌN (Giữ nguyên tinh hoa bản cũ) */
 .options label {
     display: block;
-    padding: 12px;
+    padding: 12px 15px;
     margin-top: 8px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
     cursor: pointer;
     transition: 0.2s;
+    font-weight: 500;
 }
 .options label:hover { background: #f0f9ff; border-color: #0284c7; color: #0284c7; }
-.options input { margin-right: 10px; transform: scale(1.3); }
+.options input[type="radio"], .options input[type="checkbox"] { margin-right: 10px; transform: scale(1.3); accent-color: var(--primary); }
 
-/* Menu nhỏ trên cùng */
-.menu-top a {
-    text-decoration: none;
-    color: #64748b;
-    font-weight: bold;
-    display: inline-flex;
-    align-items: center;
-    margin-bottom: 15px;
+/* 5. CÁC Ô NHẬP LIỆU (Điền khuyết, Tự luận) */
+.question-item { margin-bottom: 15px; }
+.question-item > label { font-weight: 600; display: block; margin-bottom: 8px; line-height: 1.4; font-size: 1.1rem;}
+input[type="text"], input[type="number"], textarea, select { 
+    width: 100%; padding: 15px; border-radius: 12px; border: 3px solid var(--border); font-size: 16px; background-color: #f8fafc; outline: none; box-sizing: border-box; transition: 0.3s; font-family: inherit; 
 }
-.menu-top a:hover { color: #0284c7; }
+input:focus, textarea:focus, select:focus { border-color: var(--primary); background-color: #fff; box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15); }
+textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
 
-/* 7. POPUP KẾT QUẢ (Overlay) */
-.result-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8); /* Màn hình tối */
-    display: flex; justify-content: center; align-items: center;
-    z-index: 9999;
-    animation: fadeIn 0.3s;
-}
-.result-box {
-    background: white;
-    padding: 40px;
-    width: 90%; max-width: 400px;
-    border-radius: 20px;
-    text-align: center;
-    border-top: 8px solid #ea580c; /* Cam nổi bật */
-    animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.result-score { font-size: 4rem; font-weight: 900; color: #ea580c; margin: 10px 0; text-shadow: 2px 2px 0 #fed7aa; }
-.btn-group-result { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+/* 6. UPLOAD ẢNH & KHUNG VIDEO CHUẨN */
+.file-upload-wrapper { background: #f8fafc; border: 2px dashed #94a3b8; padding: 20px; text-align: center; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+.file-upload-wrapper:hover { background: #e0f2fe; border-color: var(--primary); }
+.file-upload-wrapper input[type="file"] { display: none; }
+#file-name-display { margin-top: 10px; font-size: 14px; color: #10b981; font-weight: bold; }
 
-/* Nút trong Popup */
-.btn-review { background: linear-gradient(to bottom, #f59e0b, #d97706); box-shadow: 0 6px 0 #b45309; }
-.btn-finish { background: linear-gradient(to bottom, #64748b, #475569); box-shadow: 0 6px 0 #334155; }
+.video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; background-color: #000; border: 2px solid var(--border); }
+.video-wrapper iframe, .video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 10px; }
 
-/* 8. CHẾ ĐỘ XEM LẠI BÀI (REVIEW MODE) */
-/* Đúng: Xanh lá */
-.res-correct {
-    background-color: #dcfce7 !important;
-    border: 2px solid #22c55e !important;
-    color: #15803d !important;
+/* 7. NÚT BẤM 3D (Kế thừa bản cũ) */
+.btn-submit { 
+    width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 18px; font-weight: 900; text-transform: uppercase; color: white; cursor: pointer; 
+    background: linear-gradient(to bottom, #38bdf8, #0284c7); 
+    box-shadow: 0 6px 0 #075985; transition: all 0.1s; position: relative; top: 0; margin-top: 15px; 
 }
+.btn-submit:hover { filter: brightness(1.1); }
+.btn-submit:active { top: 6px; box-shadow: none; }
+.btn-submit:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; top: 0; }
+
+.btn-hint { background: #fef3c7; color: #d97706; border: 2px solid #fde68a; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 4px 0 #fde68a; position: relative; transition: 0.1s;}
+.btn-hint:active { top: 4px; box-shadow: none; }
+#hint-result { display: none; margin-top: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 6px; font-size: 15px; color: #b45309; line-height: 1.5; }
+
+/* 8. CHẾ ĐỘ CHẤM ĐIỂM TỨC THÌ (Giữ lại để hệ thống tự động gán class báo đúng/sai) */
+.res-correct { background-color: #dcfce7 !important; border: 2px solid #22c55e !important; color: #15803d !important; }
 .res-correct::after { content: " ✅ Chính xác!"; float: right; font-weight: bold; }
-
-/* Sai: Đỏ */
-.res-wrong {
-    background-color: #fee2e2 !important;
-    border: 2px solid #ef4444 !important;
-    color: #b91c1c !important;
-}
+.res-wrong { background-color: #fee2e2 !important; border: 2px solid #ef4444 !important; color: #b91c1c !important; }
 .res-wrong::after { content: " ❌ Bạn chọn sai"; float: right; font-weight: bold; }
 
-/* Animation */
-@keyframes popUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* MÀN HÌNH LOADING */
+#loading-overlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.9); z-index: 1000; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.spinner { border: 5px solid #e0f2fe; border-top: 5px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 15px; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
