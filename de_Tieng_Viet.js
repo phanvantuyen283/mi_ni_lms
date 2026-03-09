@@ -5,7 +5,12 @@
 
 const currentSubject = "Tiếng Việt";
 const EXAM_STRUCTURE = [
-    {
+    {    id:"infor_1",
+         type:"infor",
+         website_link:"https://hanhtrangso.nxbgd.vn/ebook/read/tieng-viet-4-tap-hai-11383",
+         max_score:0
+    },
+   {
         id: "t1",
         type: "system",
         question: "Câu 1 (Khởi động): Hãy sắp xếp các sự việc sau theo trình tự thời gian đúng của một câu chuyện kể:",
