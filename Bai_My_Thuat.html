@@ -2,51 +2,209 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Làm Bài Tập - Lớp 4A</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bài Mĩ Thuật - Lớp 4A</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="config.js"></script>
+    <script src="ai_config.js"></script>
+    <script src="de_My_Thuat.js"></script> 
+    <script src="core.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Tối ưu hiển thị cho di động */
+        .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin: 15px 0; }
+        .video-responsive iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .img-responsive { max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0; border: 1px solid #e2e8f0; }
+        .link-btn { display: inline-block; padding: 10px 15px; background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; }
+    </style>
 </head>
 <body>
 
-    <div class="quiz-container">
-        <div style="margin-bottom:15px">
-            <a href="Menu.html" style="text-decoration:none; color:#64748b; font-weight:bold;">⬅ Quay về Menu</a>
+    <header>
+        <button class="back-btn" onclick="window.location.href='index.html'">🔙 Trở lại</button>
+        <h2 class="subject-title" id="subject-title">📐 ĐANG TẢI...</h2>
+        <div style="width: 80px;"></div>
+    </header>
+
+    <div class="exam-container">
+        <div class="student-info">
+            👤 Học sinh: <span id="display-name" style="color: var(--primary);">Đang xác thực...</span>
         </div>
 
-        <div class="header">
-            <div class="info">
-                <h2 id="ten-bai-tap"> MỸ THUẬT</h2>
-                <p style="margin-top:5px; font-size:13px">Học sinh: <span id="student-display">...</span></p>
-            </div>
-            <div class="timer">⏱ <span id="timer">00:00</span></div>
+        <div id="dynamic-exam-container">
+            <p style="text-align:center; padding: 20px;">⌛ Đang tải đề thi môn Toán...</p>
         </div>
 
-        <div class="question-block">
-            <div class="question-text">Câu 1: Phân số nào bằng 1/2?</div>
-            <div class="options">
-                <label><input type="radio" name="q1" value="A"> A. 2/5</label>
-                <label><input type="radio" name="q1" value="B" data-correct="true"> B. 2/4</label>
-                <label><input type="radio" name="q1" value="C"> C. 3/7</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">Câu 2: Kết quả của 10 + 5 là?</div>
-            <div class="options">
-                <label><input type="radio" name="q2" value="A"> A. 14</label>
-                <label><input type="radio" name="q2" value="B" data-correct="true"> B. 15</label>
-            </div>
-        </div>
-
-        <button id="btn-nop" onclick="nopBai()">NỘP BÀI</button>
+        <button class="btn-submit" id="btn-submit" onclick="submitExam()">🚀 NỘP BÀI MÔN TOÁN</button>
     </div>
 
-    <script src="config.js"></script>
-    <script src="core.js"></script>
+    <div id="loading-overlay" style="display:none;">
+        <div class="spinner"></div>
+        <h3 style="color: var(--primary);">Đang gửi bài cho thầy...</h3>
+        <p style="color: #64748b; margin-top: 5px;">Hệ thống đang chấm điểm và lưu ảnh lên Drive.</p>
+    </div>
 
+    <script>
+    // BIẾN LƯU TRỮ ẢNH TẠM THỜI
+    window.STUDENT_FILES = {};
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // 1. Kiểm tra đăng nhập
+        const studentName = sessionStorage.getItem("LMS_User");
+        if (!studentName) {
+            alert("Em chưa đăng nhập!"); window.location.href = "index.html"; return;
+        }
+        document.getElementById("display-name").innerText = studentName;
+
+        // 2. Lấy tên môn từ file de_Toan.js
+        if (typeof currentSubject !== 'undefined') {
+            document.getElementById("subject-title").innerText = `📐 MÔN ${currentSubject.toUpperCase()}`;
+        }
+
+        // 3. Vẽ đề thi
+        renderQuestions();
+    });
+
+    // HÀM VẼ GIAO DIỆN CÂU HỎI
+    function renderQuestions() {
+        const container = document.getElementById("dynamic-exam-container");
+        container.innerHTML = ""; 
+
+        if (typeof EXAM_STRUCTURE === 'undefined') {
+            container.innerHTML = "<div class='section-box'>❌ Lỗi: Không tìm thấy đề thi trong file de_Toan.js!</div>";
+            return;
+        }
+
+        EXAM_STRUCTURE.forEach((q) => {
+            let html = `<div class="section-box" style="border-left: 4px solid var(--primary);">`;
+            html += `<div class="question-item"><label id="qtext-${q.id}" style="font-weight: bold; color: #1e293b; font-size:16px;">${q.question}</label>`;
+
+            // Nếu có Youtube
+            if (q.youtube_url) {
+                html += `<div class="video-responsive"><iframe src="${q.youtube_url}" frameborder="0" allowfullscreen></iframe></div>`;
+            }
+            // Nếu có Ảnh minh họa
+            if (q.image_url) {
+                html += `<div style="text-align:center;"><img src="${q.image_url}" class="img-responsive"></div>`;
+            }
+            // Nếu có Link tài liệu
+            if (q.website_link) {
+                html += `<div style="margin: 10px 0;"><a href="${q.website_link}" target="_blank" class="link-btn">🔗 Xem tài liệu tham khảo</a></div>`;
+            }
+
+            // Vẽ phần trả lời dựa trên TYPE
+            if (q.type === "system") {
+                if (q.options) {
+                    html += `<div class="options">`;
+                    q.options.forEach(opt => {
+                        html += `<label><input type="radio" name="sys_${q.id}" value="${opt}"> ${opt}</label>`;
+                    });
+                    html += `</div>`;
+                } else {
+                    html += `<input type="text" id="sys_${q.id}" placeholder="Nhập đáp số..." style="margin-top:10px;">`;
+                }
+            } 
+            else if (q.type === "ai") {
+                html += `<textarea id="ai_${q.id}" placeholder="Viết câu trả lời của em vào đây..." style="margin-top:10px;"></textarea>`;
+                html += `<button class="btn-hint" onclick="getAIHint('${q.id}')" style="margin-top:10px;">💡 Xin gợi ý AI</button>`;
+                html += `<div id="hint-${q.id}" style="display:none; margin-top:10px; padding:10px; background:#f0fdf4; border-radius:5px; font-size:14px;"></div>`;
+            } 
+            else if (q.type === "multimedia") {
+                html += `<div class="file-upload-wrapper" onclick="document.getElementById('file_${q.id}').click()" style="margin-top:10px;">`;
+                html += `<div style="font-size:30px;">📸</div><div>Nhấn để chụp hoặc chọn ảnh</div>`;
+                html += `<input type="file" id="file_${q.id}" accept="image/*" style="display:none" onchange="handleFile(event, '${q.id}')">`;
+                html += `<div id="display_${q.id}" style="font-size:12px; color:#64748b; margin-top:5px;">Chưa có ảnh</div></div>`;
+            }
+
+            html += `</div></div>`;
+            container.innerHTML += html;
+        });
+    }
+
+    // XỬ LÝ CHỌN FILE ẢNH
+    function handleFile(event, qId) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        const display = document.getElementById(`display_${qId}`);
+        display.innerText = "⏳ Đang nạp ảnh...";
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            window.STUDENT_FILES[qId] = {
+                base64: e.target.result.split(',')[1],
+                name: file.name,
+                mime: file.type
+            };
+            display.innerText = "✅ Đã nạp: " + file.name;
+            display.style.color = "#22c55e";
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // XIN GỢI Ý AI
+    async function getAIHint(qId) {
+        const qText = document.getElementById(`qtext-${qId}`).innerText;
+        const currentAns = document.getElementById(`ai_${qId}`).value.trim();
+        const hintBox = document.getElementById(`hint-${qId}`);
+        
+        hintBox.style.display = "block";
+        hintBox.innerHTML = "<i>⏳ AI đang suy nghĩ...</i>";
+        
+        try {
+            const hint = await CoreSystem.getAIHint(currentSubject, qText, currentAns);
+            hintBox.innerHTML = `<b>🤖 Gợi ý:</b> ${hint}`;
+        } catch (e) {
+            hintBox.innerHTML = "❌ AI bận rồi, em tự nghĩ nhé!";
+        }
+    }
+
+    // NỘP BÀI
+    async function submitExam() {
+        if (typeof CoreSystem === 'undefined') {
+            alert("❌ Lỗi hệ thống: Không tìm thấy file core.js! Hãy kiểm tra lại code.");
+            return;
+        }
+
+        let answers = { system: {}, ai: {}, multimedia: {} };
+        let hasData = false;
+
+        EXAM_STRUCTURE.forEach(q => {
+            if (q.type === "system") {
+                let r = document.querySelector(`input[name="sys_${q.id}"]:checked`);
+                let t = document.getElementById(`sys_${q.id}`);
+                let val = r ? r.value : (t ? t.value.trim() : "");
+                if (val) { answers.system[q.id] = val; hasData = true; }
+            } else if (q.type === "ai") {
+                let val = document.getElementById(`ai_${q.id}`).value.trim();
+                if (val) { answers.ai[q.id] = { answer: val, rubric: q.rubric }; hasData = true; }
+            } else if (q.type === "multimedia") {
+                if (window.STUDENT_FILES[q.id]) { answers.multimedia[q.id] = window.STUDENT_FILES[q.id]; hasData = true; }
+            }
+        });
+
+        if (!hasData) return alert("Em chưa làm bài nào cả!");
+
+        document.getElementById("loading-overlay").style.display = "flex";
+        document.getElementById("btn-submit").disabled = true;
+
+        try {
+            await CoreSystem.submitExam({
+                subject: currentSubject,
+                answers: answers
+            });
+            alert("🎉 Chúc mừng em đã nộp bài thành công!");
+            window.location.href = "index.html";
+        } catch (error) {
+            document.getElementById("loading-overlay").style.display = "none";
+            document.getElementById("btn-submit").disabled = false;
+            alert("❌ Lỗi nộp bài: " + error.message);
+        }
+    }
+    </script>
 </body>
 </html>
-
