@@ -5,7 +5,7 @@
 
 const currentSubject = "Lịch sử & Địa lý";
 const EXAM_STRUCTURE = [
-    {   question: " Xem video sau đây để trả lời các câu hỏi liên quan.",
+    { 
        youtube_url:"https://youtube.com/embed/Wq0yG11iKvg",
         id: "t1",
         type: "system",
