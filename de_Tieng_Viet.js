@@ -7,6 +7,7 @@ const currentSubject = "Tiếng Việt";
 const EXAM_STRUCTURE = [
     {    id:"infor_1",
          type:"infor",
+         question:"Hãy bấm link sau, chọn đọc câu chuyện Ông Bụt đã đến- Sách giáo khoa Tiếng Việt tập 2, chủ điểm Sống để yêu thương và trả lời các câu hỏi phía dưới",
          website_link:"https://hanhtrangso.nxbgd.vn/ebook/read/tieng-viet-4-tap-hai-11383",
          max_score:0
     },
