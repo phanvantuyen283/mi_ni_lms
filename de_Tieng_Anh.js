@@ -1,7 +1,7 @@
 /* ============================================================
    FILE: de_TiengAnh.js
    NỘI DUNG: ENGLISH TEST - UNIT 10 (OUR SUMMER HOLIDAYS)
-   CHUẨN: MINI LMS V6.0 (100% English Content)
+   CHUẨN: MINI LMS V6.0 (Đã sửa lỗi cấu trúc)
    ============================================================ */
 
 const currentSubject = "Tiếng Anh";
@@ -30,7 +30,7 @@ const EXAM_STRUCTURE = [
         id: "ta_u10_t3",
         type: "ai",
         question: "Question 3 (AI Assistant): Based on Unit 10, role-play as two friends and write a short conversation (2 sentences):\n- Person A asks if Person B was in the countryside last weekend.\n- Person B answers negatively and says they were in the mountains.",
-        rubric: "- Correct question structure 'Were you in the countryside...?' (2 pts)\n- Correct negative response and location 'No, I wasn't. I was in...' (2 pts)\n- Proper punctuation and capitalization (1 pt).",
+        rubric: "- Correct question: 'Were you in the countryside last weekend?' (2đ)\n- Correct answer: 'No, I wasn't. I was in the mountains.' (2đ)\n- Spelling & Grammar (1đ).",
         max_score: 5
     },
 
@@ -38,10 +38,9 @@ const EXAM_STRUCTURE = [
     {
         id: "ta_u10_t4",
         type: "multimedia",
-        question: "Question 4 (Notebook Photo): Practice writing 3 pairs of questions and answers using 'Were you...' based on page 139 of your textbook. Write neatly in your notebook, take a clear picture, and upload it here!",
+        question: "Question 4 (Notebook Photo): Practice writing 3 pairs of questions and answers using 'Were you...' based on page 139 of your textbook. Take a clear picture and upload it here!",
         max_score: 1
     }
 ];
 
-// Giữ nguyên tên môn bằng Tiếng Việt để đồng bộ với GLOBAL_CONFIG.SUBJECTS trong config.js
 const SUBJECT_NAME = "Tiếng Anh";
