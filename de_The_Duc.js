@@ -10,7 +10,7 @@ const EXAM_STRUCTURE = [
       id: "t0",
       type: "system",
       question: " Hãy xem video hướng dẫn sau",
-      youtube_url:"https://youtube.com/eHgLwKK1dHA?si",
+      youtube_url:"https://www.youtube.com/eHgLwKK1dHA?si",
       option:[""],
       max_score: 0
     },
