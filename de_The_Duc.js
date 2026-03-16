@@ -7,10 +7,11 @@ const currentSubject = "Giáo dục thể chất";
 const EXAM_STRUCTURE = [
     // 1. Kiểm tra kiến thức về kỹ thuật hít thở (System)
    {
-      id: "t0"
+      id: "t0",
       type: "system"
       question: " Hãy xem video hướng dẫn sau",
       youtube_url:"https://youtube.com/eHgLwKK1dHA?si",
+      option:[""],
       max_score: 0
     },
          
