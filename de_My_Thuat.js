@@ -20,7 +20,7 @@ const EXAM_STRUCTURE = [
         id: "t2",
         type: "ai",
         question: "Câu 2: Quan sát bức tranh phong cảnh quê hương của họa sĩ (trang 13 SGK). Em hãy nêu cảm nhận về màu sắc và chất liệu của bức tranh đó. Em học tập được gì về cách sắp xếp bố cục?",
-        youtube_url: "https://www.youtube.com/embed/S_vU1yG6Lz4", // Video minh họa tranh phong cảnh (nếu có)
+        youtube_url: "https://youtube.com/embed/iO9zbESMjkk?si", // Video minh họa tranh phong cảnh (nếu có)
         rubric: "- Nêu được chất liệu và hình thức thể hiện (2đ)\n- Cảm nhận được cảm xúc mà màu sắc mang lại (2đ)\n- Rút ra bài học về cách sắp xếp không gian/bố cục (1đ).",
         max_score: 5
     },
