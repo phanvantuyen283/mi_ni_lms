@@ -10,7 +10,7 @@ const EXAM_STRUCTURE = [
         id: "t1",
         type: "system",
         question: "Câu 1: Bài hát 'Tình bạn tuổi thơ' được sáng tác bởi nhạc sĩ nào và có sắc thái như thế nào?",
-        youtube_url:"https://youtube/embed/aGom9sYhpCI",
+        youtube_url:"https://www.youtube.com/embed/aGom9sYhpCI",
         options: [
             "Nhạc sĩ Hoàng Long - Vui tươi, hồn nhiên", 
             "Nhạc sĩ Nguyễn Quốc Việt - Hơi nhanh, vui tươi", 
