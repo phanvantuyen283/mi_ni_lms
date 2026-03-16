@@ -12,7 +12,7 @@ const EXAM_STRUCTURE = [
       question: " Hãy xem video hướng dẫn sau",
       youtube_url:"https://youtube.com/eHgLwKK1dHA?si",
       max_score: 0
-    }
+    },
          
     {
         id: "t1",
