@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LMS_STUDENT</title>
     
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0284c7">
+    <link rel="icon" type="image/png" href="icon.png">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Lớp 4A">
+    <link rel="apple-touch-icon" href="icon.png">
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
@@ -27,6 +35,9 @@
         .result-item { background: white; padding: 15px 20px; border-radius: 12px; border-left: 5px solid #cbd5e1; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .result-item.approved { border-left-color: var(--success); }
         .score-box { font-size: 20px; font-weight: bold; color: var(--primary); background: #e0f2fe; padding: 8px 15px; border-radius: 8px; }
+        
+        /* Hiệu ứng mũi tên Zalo */
+        @keyframes bounce { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(10px, -10px); } }
     </style>
 </head>
 <body>
@@ -52,13 +63,26 @@
 
     <div id="dashboard-section">
         <div class="welcome-box">
-            <div><h2 id="display-name">...</h2><p>Chúc em một ngày học tập vui vẻ.</p></div>
-            <button onclick="sessionStorage.clear(); location.reload();" style="background:rgba(255,255,255,0.2); border:1px solid white; color:white; padding:10px; border-radius:8px; cursor:pointer;">Thoát</button>
+            <div><h2 id="display-name">...</h2><p style="margin: 5px 0 0 0; opacity: 0.9;">Chúc em một ngày học tập vui vẻ.</p></div>
+            <button onclick="sessionStorage.clear(); location.reload();" style="background:rgba(255,255,255,0.2); border:1px solid white; color:white; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold;">Thoát</button>
         </div>
-        <h3 style="color:var(--primary)">📚 BÀI TẬP HÔM NAY</h3>
+        <h3 style="color:var(--primary); border-bottom: 2px solid #bae6fd; padding-bottom: 10px;">📚 BÀI TẬP HÔM NAY</h3>
         <div class="subject-grid" id="active-subjects"></div>
-        <h3 style="color:var(--primary); margin-top:30px;">📝 KẾT QUẢ CỦA EM</h3>
+        <h3 style="color:var(--primary); margin-top:30px; border-bottom: 2px solid #bae6fd; padding-bottom: 10px;">📝 KẾT QUẢ CỦA EM</h3>
         <div id="my-results"></div>
+    </div>
+
+    <div id="zalo-warning" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30,41,59,0.95); z-index: 10000; color: white; text-align: center; padding-top: 60px;">
+        <div style="position: absolute; top: 10px; right: 20px; font-size: 40px; animation: bounce 1s infinite;">↗️</div>
+        <h2 style="color: var(--secondary); margin-bottom: 10px;">⚠️ Chú ý!</h2>
+        <p style="font-size: 18px; line-height: 1.5; padding: 0 20px;">Để vào lớp học và cài đặt Ứng dụng, phụ huynh vui lòng:<br><br>1. Bấm vào nút <b>3 chấm (⋮)</b> ở góc trên cùng bên phải.<br>2. Chọn <b>"Mở bằng trình duyệt"</b> (hoặc Chrome/Safari).</p>
+    </div>
+
+    <div id="install-banner" style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(2, 132, 199, 0.2); text-align: center; z-index: 9999; width: 85%; max-width: 350px; border: 3px solid var(--primary);">
+        <h3 style="margin: 0 0 10px 0; color: var(--primary); font-size: 20px;">📲 Cài đặt Ứng dụng</h3>
+        <p style="margin: 0 0 20px 0; font-size: 15px; color: var(--text);">Thêm ứng dụng Lớp 4A vào màn hình chính để vào lớp siêu tốc nhé!</p>
+        <button id="btn-install" style="background: var(--primary); color: white; border: none; padding: 14px 25px; border-radius: 50px; font-weight: bold; font-size: 16px; cursor: pointer; width: 100%; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);">Cài đặt ngay</button>
+        <button id="btn-close-install" style="background: none; border: none; color: #64748b; margin-top: 15px; text-decoration: underline; cursor: pointer; font-size: 14px;">Để sau</button>
     </div>
 
     <script>
@@ -144,7 +168,7 @@
             else alert("Môn này đang được thầy cập nhật!");
         }
 
-        // 4. HIỂN THỊ KẾT QUẢ (SỬA LỖI UNDEFINED & MẤT BÀI)
+        // 4. HIỂN THỊ KẾT QUẢ
         async function loadMyResults(userName) {
             const list = document.getElementById("my-results");
             try {
@@ -160,7 +184,6 @@
                 results.forEach(data => {
                     const isApproved = data.status === "approved";
                     const timeStr = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString('vi-VN') : "Vừa xong";
-                    // SỬA LỖI: Gọi đúng scores.teacher_final
                     const scoreDisplay = isApproved ? (data.scores.teacher_final + "đ") : "⏳ Đang chấm";
                     html += `<div class="result-item ${isApproved ? 'approved' : ''}">
                         <div>
@@ -173,6 +196,50 @@
                 });
                 list.innerHTML = html;
             } catch (e) { console.error(e); }
+        }
+
+        // ==========================================
+        // LOGIC KÍCH HOẠT PWA & NHẬN DIỆN ZALO
+        // ==========================================
+        
+        // Đăng ký Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(() => console.log('✅ Service Worker đã kích hoạt!'))
+                    .catch(err => console.log('❌ Lỗi SW:', err));
+            });
+        }
+
+        // Mắt thần quét Zalo
+        const isZalo = /Zalo/i.test(navigator.userAgent);
+        
+        if (isZalo) {
+            document.getElementById('zalo-warning').style.display = 'block';
+        } else {
+            let deferredPrompt;
+            const installBanner = document.getElementById('install-banner');
+            const btnInstall = document.getElementById('btn-install');
+            const btnClose = document.getElementById('btn-close-install');
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault(); 
+                deferredPrompt = e; 
+                installBanner.style.display = 'block'; 
+            });
+
+            btnInstall.addEventListener('click', async () => {
+                installBanner.style.display = 'none'; 
+                if(deferredPrompt) {
+                    deferredPrompt.prompt(); 
+                    await deferredPrompt.userChoice;
+                    deferredPrompt = null;
+                }
+            });
+
+            btnClose.addEventListener('click', () => {
+                installBanner.style.display = 'none';
+            });
         }
     </script>
 </body>
