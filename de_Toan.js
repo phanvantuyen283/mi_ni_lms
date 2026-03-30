@@ -1,95 +1,117 @@
+/* ============================================================
+   FILE: de_Toan.js (Môn: Toán - Phép Cộng & Trừ Phân Số)
+   Hệ thống: Mini LMS V6.0
+   Nhiệm vụ: Tự động chấm điểm (System)
+   ============================================================ */
+
 const currentSubject = "Toán";
+
 const EXAM_STRUCTURE = [
-    // --- MỨC ĐỘ: NHẬN BIẾT (4 CÂU) ---
-    {
-        id: "t1",
-        type: "system",
-        question: "Muốn cộng hai phân số khác mẫu số, bước đầu tiên ta cần làm gì?",
-        options: [
-            "Cộng tử số với tử số, giữ nguyên mẫu số",
-            "Quy đồng mẫu số hai phân số đó",
-            "Lấy tử số của phân số này nhân với mẫu số phân số kia",
-            "Trừ mẫu số của hai phân số cho nhau"
-        ],
-        answer: "Quy đồng mẫu số hai phân số đó",
-        max_score: 0.75
-    },
-    {
-        id: "t2",
-        type: "system",
-        question: "Phân số nào sau đây là kết quả của việc quy đồng phân số $\\frac{1}{2}$ để có mẫu số chung là 8?",
-        options: ["$\\frac{2}{8}$", "$\\frac{3}{8}$", "$\\frac{4}{8}$", "$\\frac{5}{8}$"],
-        answer: "$\\frac{4}{8}$",
-        max_score: 0.75
-    },
-    {
-        id: "t3",
-        type: "system",
-        question: "Trong phép tính $\\frac{1}{3} + \\frac{1}{6}$, mẫu số chung nhỏ nhất có thể chọn là bao nhiêu?",
-        options: ["3", "6", "9", "18"],
-        answer: "6",
-        max_score: 0.75
-    },
-    {
-        id: "t4",
-        type: "system",
-        question: "Sau khi quy đồng mẫu số, ta thực hiện cộng hai phân số đó như thế nào?",
-        options: [
-            "Cộng tử số với tử số, cộng mẫu số với mẫu số",
-            "Cộng tử số với tử số, giữ nguyên mẫu số chung",
-            "Nhân tử số với tử số, giữ nguyên mẫu số chung",
-            "Giữ nguyên tử số, cộng mẫu số với mẫu số"
-        ],
-        answer: "Cộng tử số với tử số, giữ nguyên mẫu số chung",
-        max_score: 0.75
-    },
+  // --- PHẦN 1: PHÉP CỘNG PHÂN SỐ (TIẾT 4) ---
+  {
+    id: "t1",
+    type: "system",
+    question: "Bài 1a: Tính 2/15 + 11/15",
+    options: ["13/30", "13/15", "1", "3/15"],
+    answer: "13/15",
+    max_score: 0.5
+  },
+  {
+    id: "t2",
+    type: "system",
+    question: "Bài 1b: Tính 8/19 + 7/19",
+    options: ["15/38", "1/19", "15/19", "15"],
+    answer: "15/19",
+    max_score: 0.5
+  },
+  {
+    id: "t3",
+    type: "system",
+    question: "Bài 1c: Tính 5/12 + 1/4 (Gợi ý: Quy đồng mẫu số)",
+    options: ["6/16", "8/12", "2/3", "4/12"],
+    answer: "2/3", // 5/12 + 3/12 = 8/12 = 2/3
+    max_score: 0.5
+  },
+  {
+    id: "t4",
+    type: "system",
+    question: "Bài 1d: Tính 7/20 + 3/10",
+    options: ["10/30", "13/20", "1/2", "10/20"],
+    answer: "13/20", // 7/20 + 6/20 = 13/20
+    max_score: 0.5
+  },
+  {
+    id: "t5",
+    type: "system",
+    question: "Bài 3 (Thuận tiện): Tính 40/41 + 93/41 + 60/41",
+    options: ["193/123", "193/41", "100/41", "4"],
+    answer: "193/41",
+    max_score: 1
+  },
+  {
+    id: "t6",
+    type: "system",
+    question: "Bài 5 (Giải toán): Ngày Chủ nhật, Nam đọc sách: sáng 1/2 cuốn, chiều 1/3 cuốn, tối 1/12 cuốn. Tổng cộng Nam đã đọc bao nhiêu phần cuốn sách?",
+    options: ["3/17", "11/12", "1", "10/12"],
+    answer: "11/12", // 6/12 + 4/12 + 1/12 = 11/12
+    max_score: 1.5
+  },
 
-    // --- MỨC ĐỘ: THÔNG HIỂU (4 CÂU) ---
-    {
-        id: "t5",
-        type: "system",
-        question: "Kết quả của phép tính $\\frac{1}{5} + \\frac{2}{10}$ là:",
-        options: ["$\\frac{3}{10}$", "$\\frac{4}{10}$", "$\\frac{3}{15}$", "$\\frac{4}{20}$"],
-        answer: "$\\frac{4}{10}$",
-        max_score: 0.75
-    },
-    {
-        id: "t6",
-        type: "system",
-        question: "Tính: $\\frac{1}{4} + \\frac{3}{8} = ?$",
-        options: ["$\\frac{4}{12}$", "$\\frac{5}{8}$", "$\\frac{7}{8}$", "$\\frac{4}{8}$"],
-        answer: "$\\frac{5}{8}$",
-        max_score: 0.75
-    },
-    {
-        id: "t7",
-        type: "system",
-        question: "Điền số thích hợp vào chỗ trống: $\\frac{1}{2} + \\frac{1}{6} = \\frac{...}{6}$",
-        options: ["2", "3", "4", "5"],
-        answer: "4",
-        max_score: 0.75
-    },
-    {
-        id: "t8",
-        type: "system",
-        question: "Nam tô màu $\\frac{1}{2}$ băng giấy, Mai tô màu $\\frac{1}{8}$ băng giấy. Tổng số phần băng giấy hai bạn đã tô màu là:",
-        options: ["$\\frac{2}{10}$", "$\\frac{5}{8}$", "$\\frac{4}{8}$", "$\\frac{3}{8}$"],
-        answer: "$\\frac{5}{8}$",
-        max_score: 0.75
-    },
-
-    // --- MỨC ĐỘ: VẬN DỤNG (AI & MULTIMEDIA) ---
-    {
-        id: "t9",
-        type: "ai",
-        question: "Một thợ may dùng $\\frac{1}{6}$ tấm vải để may áo và $\\frac{1}{3}$ tấm vải để may túi. Em hãy tính tổng phần vải đã dùng và giải thích các bước làm.",
-        rubric: "- Tính đúng kết quả $\\frac{1}{2}$ hoặc $\\frac{3}{6}$ (1đ).\n- Giải thích đủ 2 bước: Quy đồng mẫu số và Cộng tử số (1đ).",
-        max_score: 2
-    },
-    {
-        id: "t10",
-        type: "multimedia",
-        question: "Em hãy trình bày cách tính phép cộng: $\\frac{2}{3} + \\frac{1}{5}$ vào vở (ghi rõ bước quy đồng). Sau đó chụp ảnh bài làm gửi thầy nhé.",
-        max_score: 2
-    }
+  // --- PHẦN 2: PHÉP TRỪ PHÂN SỐ (TIẾT 1 - BÀI 61) ---
+  {
+    id: "t7",
+    type: "system",
+    question: "Bài 1a (Trừ): 9/13 - 4/13",
+    options: ["13/13", "5/0", "5/13", "5/26"],
+    answer: "5/13",
+    max_score: 0.5
+  },
+  {
+    id: "t8",
+    type: "system",
+    question: "Bài 1b (Trừ): 8/7 - 5/7",
+    options: ["3/7", "3/14", "13/7", "1"],
+    answer: "3/7",
+    max_score: 0.5
+  },
+  {
+    id: "t9",
+    type: "system",
+    question: "Bài 1c (Trừ): 15/19 - 4/19",
+    options: ["11/0", "11/38", "11/19", "19/19"],
+    answer: "11/19",
+    max_score: 0.5
+  },
+  {
+    id: "t10",
+    type: "system",
+    question: "Bài 1d (Trừ): 85/57 - 23/57",
+    options: ["62/57", "62/0", "108/57", "1"],
+    answer: "62/57",
+    max_score: 0.5
+  },
+  {
+    id: "t11",
+    type: "system",
+    question: "Bài 2b (Hình ảnh): Viết phép tính trừ thích hợp với hình: Có 5/6 tấm hình, bớt đi 2/6. Còn lại bao nhiêu?",
+    options: ["5/6 - 2/6 = 3/6", "5/6 - 3/6 = 2/6", "3/6 + 2/6 = 5/6", "1 - 2/6 = 4/6"],
+    answer: "5/6 - 2/6 = 3/6",
+    max_score: 1.5
+  },
+  {
+    id: "t12",
+    type: "system",
+    question: "Bài 3d (Đúng/Sai): Phép tính '3/11 - 2/11 = (3-2)/(11-11) = 1/0' là Đúng hay Sai?",
+    options: ["Đúng", "Sai"],
+    answer: "Sai",
+    max_score: 1
+  },
+  {
+    id: "t13",
+    type: "system",
+    question: "Bài 4 (Trang 79): Mai cần 1/2 giờ để quét nhà và 1/6 giờ để lau nhà. Tổng thời gian Mai cần là:",
+    options: ["2/6 giờ", "2/3 giờ", "1/4 giờ", "4/6 giờ"],
+    answer: "2/3 giờ", // 3/6 + 1/6 = 4/6 = 2/3
+    max_score: 1
+  }
 ];
