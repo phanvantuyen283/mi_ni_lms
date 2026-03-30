@@ -1,20 +1,20 @@
 /* ============================================================
    FILE: de_Toan.js (Môn: Toán - Phép Cộng & Trừ Phân Số)
    Hệ thống: Mini LMS V6.0
-   Nhiệm vụ: Tự động chấm điểm (System)
+   Nhiệm vụ: Cung cấp cấu trúc đề thi cho CoreSystem xử lý
    ============================================================ */
 
 const currentSubject = "Toán";
 
 const EXAM_STRUCTURE = [
-  // --- PHẦN 1: PHÉP CỘNG PHÂN SỐ (TIẾT 4) ---
+  // --- PHẦN 1: PHÉP CỘNG PHÂN SỐ ---
   {
-     id: "t0",
-     type: "system",
-     question: "Nếu chưa biết cộng phân số, Hãy xem lại video dưới đây",
-      youtube_url:"https://www.youtube.com/embed/zurPaPnF3pQ",
-     max_score: 0
-},
+    id: "t0",
+    type: "system",
+    question: "Nếu chưa biết cộng phân số, Hãy xem lại video dưới đây",
+    youtube_url: "https://www.youtube.com/embed/zurPaPnF3pQ",
+    max_score: 0
+  },
   {
     id: "t1",
     type: "system",
@@ -36,7 +36,7 @@ const EXAM_STRUCTURE = [
     type: "system",
     question: "Bài 1c: Tính 5/12 + 1/4 (Gợi ý: Quy đồng mẫu số)",
     options: ["6/16", "8/12", "2/3", "4/12"],
-    answer: "2/3", // 5/12 + 3/12 = 8/12 = 2/3
+    answer: "2/3",
     max_score: 0.5
   },
   {
@@ -44,7 +44,7 @@ const EXAM_STRUCTURE = [
     type: "system",
     question: "Bài 1d: Tính 7/20 + 3/10",
     options: ["10/30", "13/20", "1/2", "10/20"],
-    answer: "13/20", // 7/20 + 6/20 = 13/20
+    answer: "13/20",
     max_score: 0.5
   },
   {
@@ -60,11 +60,11 @@ const EXAM_STRUCTURE = [
     type: "system",
     question: "Bài 5 (Giải toán): Ngày Chủ nhật, Nam đọc sách: sáng 1/2 cuốn, chiều 1/3 cuốn, tối 1/12 cuốn. Tổng cộng Nam đã đọc bao nhiêu phần cuốn sách?",
     options: ["3/17", "11/12", "1", "10/12"],
-    answer: "11/12", // 6/12 + 4/12 + 1/12 = 11/12
+    answer: "11/12",
     max_score: 1.5
   },
 
-  // --- PHẦN 2: PHÉP TRỪ PHÂN SỐ (TIẾT 1 - BÀI 61) ---
+  // --- PHẦN 2: PHÉP TRỪ PHÂN SỐ ---
   {
     id: "t7",
     type: "system",
@@ -118,7 +118,7 @@ const EXAM_STRUCTURE = [
     type: "system",
     question: "Bài 4 (Trang 79): Mai cần 1/2 giờ để quét nhà và 1/6 giờ để lau nhà. Tổng thời gian Mai cần là:",
     options: ["2/6 giờ", "2/3 giờ", "1/4 giờ", "4/6 giờ"],
-    answer: "2/3 giờ", // 3/6 + 1/6 = 4/6 = 2/3
+    answer: "2/3 giờ",
     max_score: 1
   }
 ];
