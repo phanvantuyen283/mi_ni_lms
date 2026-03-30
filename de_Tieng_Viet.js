@@ -1,6 +1,16 @@
 const currentSubject = "Tiếng Việt";
 const EXAM_STRUCTURE = [
   {
+    id: "t0",
+    type: "system",
+    question: "Hãy xem video sau đây và cho biết Lễ hội chùa Hương diễn ra vào thời gian nào?",
+    youtube_url:"https://www.youtube.com/embed//iEFW8PWQgRg",
+    options:["mùa xuân", "mùa hè", "mùa thu", "mùa đông"],
+    answer:"mùa xuân",
+    max_score: 0
+  },
+      
+  {
     id: "t1",
     type: "system",
     question: "Câu 1: Trong bài thơ, cảnh vật thiên nhiên rừng mơ được miêu tả thay đổi như thế nào khi vào mùa hội?",
