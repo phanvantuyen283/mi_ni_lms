@@ -11,7 +11,7 @@ const EXAM_STRUCTURE = [
   {
      id: "t0",
      type: "system",
-     question: "Nếu chưa biết cộng phân số, Hãy xem lại video dưới đây"
+     question: "Nếu chưa biết cộng phân số, Hãy xem lại video dưới đây",
       youtube_url:"https://www.youtube.com/embed/zurPaPnF3pQ",
      max_score: 0
 },
