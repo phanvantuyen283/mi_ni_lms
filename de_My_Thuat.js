@@ -56,7 +56,7 @@ const EXAM_STRUCTURE = [
         id: "t5",
         type: "multimedia",
         question: "Câu 5 (Thực hành): Em hãy vẽ một bức tranh về chủ đề 'Hoạt động vì cộng đồng' (Ví dụ: Quyên góp sách vở, dọn rác bãi biển, giúp đỡ người già...). Sau khi hoàn thiện, hãy chụp ảnh bài vẽ thật rõ nét và tải lên đây nhé!",
-        youtube_url:"https://wwww.youtube.com/embed/3JUVH1VsRFY", // Link ảnh minh họa các bước nếu có
+        youtube_url: "https://www.youtube.com/embed/ZFCMNK28rjo", // Link ảnh minh họa các bước nếu có
         max_score: 10 
     }
 ];
