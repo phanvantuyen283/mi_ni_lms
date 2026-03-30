@@ -9,6 +9,13 @@ const currentSubject = "Toán";
 const EXAM_STRUCTURE = [
   // --- PHẦN 1: PHÉP CỘNG PHÂN SỐ (TIẾT 4) ---
   {
+     id: "t0",
+     type: "system",
+     question: "Nếu chưa biết cộng phân số, Hãy xem lại video dưới đây"
+      youtube_url:"https://www.youtube.com/embed/zurPaPnF3pQ",
+     max_score: 0
+},
+  {
     id: "t1",
     type: "system",
     question: "Bài 1a: Tính 2/15 + 11/15",
